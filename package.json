@@ -1,0 +1,47 @@
+{
+  "name": "snaptoad",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.11.1",
+    "@gsap/react": "^2.1.2",
+    "@prisma/adapter-pg": "^7.4.2",
+    "@prisma/client": "^7.4.2",
+    "@tanstack/react-query": "^5.90.21",
+    "bcryptjs": "^3.0.3",
+    "date-fns": "^4.1.0",
+    "gsap": "^3.14.2",
+    "lenis": "^1.3.18",
+    "lucide-react": "^0.575.0",
+    "next": "16.1.6",
+    "next-auth": "5.0.0-beta.30",
+    "nextjs-toploader": "^3.9.17",
+    "pg": "^8.20.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-dropzone": "^15.0.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@prisma/config": "^7.4.2",
+    "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/node": "^20",
+    "@types/pg": "^8.18.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^17.3.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "prisma": "^7.4.2",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be"
+}
