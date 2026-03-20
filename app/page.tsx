@@ -148,17 +148,21 @@ export default function WigoExpress() {
           // Inside text base states
           steps.forEach(step => {
              const title = step.querySelector('h2');
+             const titleSpan = step.querySelector('h2 span.gradient-text');
              const desc = step.querySelector('p');
              const badge = step.querySelector('.step-badge');
              if(title) gsap.set(title, { color: "#d4d4d4" }); // neutral-300
+             if(titleSpan) gsap.set(titleSpan, { opacity: 0.3, filter: "grayscale(100%)" });
              if(desc) gsap.set(desc, { color: "#a3a3a3" }); // neutral-400
              if(badge) gsap.set(badge, { opacity: 0.4, filter: "grayscale(100%)" });
           });
           
           const firstTitle = steps[0].querySelector('h2');
+          const firstTitleSpan = steps[0].querySelector('h2 span.gradient-text');
           const firstDesc = steps[0].querySelector('p');
           const firstBadge = steps[0].querySelector('.step-badge');
           if(firstTitle) gsap.set(firstTitle, { color: "#111111" });
+          if(firstTitleSpan) gsap.set(firstTitleSpan, { opacity: 1, filter: "grayscale(0%)" });
           if(firstDesc) gsap.set(firstDesc, { color: "#525252" });
           if(firstBadge) gsap.set(firstBadge, { opacity: 1, filter: "grayscale(0%)" });
 
@@ -176,18 +180,22 @@ export default function WigoExpress() {
             // Text Anims
             steps.forEach((s) => {
                const t = s.querySelector('h2');
+               const ts = s.querySelector('h2 span.gradient-text');
                const d = s.querySelector('p');
                const b = s.querySelector('.step-badge');
                if(t) gsap.to(t, { color: "#d4d4d4", duration: 0.3 });
+               if(ts) gsap.to(ts, { opacity: 0.3, filter: "grayscale(100%)", duration: 0.3 });
                if(d) gsap.to(d, { color: "#a3a3a3", duration: 0.3 });
                if(b) gsap.to(b, { opacity: 0.4, filter: "grayscale(100%)", duration: 0.3 });
             });
 
             const stepElem = steps[index];
             const currentTitle = stepElem.querySelector('h2');
+            const currentTitleSpan = stepElem.querySelector('h2 span.gradient-text');
             const currentDesc = stepElem.querySelector('p');
             const currentBadge = stepElem.querySelector('.step-badge');
             if(currentTitle) gsap.to(currentTitle, { color: "#111111", duration: 0.3 });
+            if(currentTitleSpan) gsap.to(currentTitleSpan, { opacity: 1, filter: "grayscale(0%)", duration: 0.3 });
             if(currentDesc) gsap.to(currentDesc, { color: "#525252", duration: 0.3 });
             if(currentBadge) gsap.to(currentBadge, { opacity: 1, filter: "grayscale(0%)", duration: 0.3 });
 
@@ -456,6 +464,12 @@ export default function WigoExpress() {
 
       {/*  NARRATIVE SCROLL : HOW IT WORKS / KYC (Pinned GSAP Section) */}
       <section className="steps-container relative w-full bg-white z-20 py-20 lg:py-0 border-t border-black/5">
+        <div className="container mx-auto px-6 pt-10 lg:pt-32 text-center lg:text-left z-20 relative">
+           <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-tight text-[#111] text-center">
+             Comment ça marche ?
+           </h2>
+        </div>
+
         <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 relative">
           {/* Left Text / The scrolling steps */}
           <div className="lg:py-[30vh] flex flex-col gap-16 lg:gap-[15vh] relative z-10 w-full max-w-xl mx-auto lg:mx-0">
@@ -467,7 +481,7 @@ export default function WigoExpress() {
               <div className="relative z-10">
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-[#111]">
                   Le bon départ, <br />
-                  <span className="text-neutral-500 lg:text-current">au bon moment.</span>
+                  <span className="gradient-text lg:transition-colors lg:duration-300 text-transparent bg-clip-text bg-linear-to-br from-primary to-[#1e3a8a]">au bon moment.</span>
                 </h2>
                 <p className="text-lg md:text-xl text-neutral-600 font-medium pt-2 max-w-lg">
                   Indiquez votre destination et découvrez instantanément les trajets disponibles. Nous mettons en avant les conducteurs les mieux notés pour vous garantir un voyage agréable et serein.
@@ -483,7 +497,7 @@ export default function WigoExpress() {
               <div className="relative z-10">
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-[#111]">
                   Une communauté <br />
-                  <span className="text-neutral-500 lg:text-current">de confiance.</span>
+                  <span className="gradient-text lg:transition-colors lg:duration-300 text-transparent bg-clip-text bg-linear-to-br from-primary to-[#1e3a8a]">de confiance.</span>
                 </h2>
                 <p className="text-lg md:text-xl text-neutral-600 font-medium mb-8 pt-2 max-w-lg">
                   Pièce d'identité, permis de conduire et historique : chaque membre est contrôlé avant de pouvoir réserver ou prendre le volant. Vous voyagez toujours avec des personnes fiables.
@@ -508,7 +522,7 @@ export default function WigoExpress() {
               <div className="relative z-10">
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-[#111]">
                   Réglez sans <br />
-                  <span className="text-neutral-500 lg:text-current">y penser.</span>
+                  <span className="gradient-text lg:transition-colors lg:duration-300 text-transparent bg-clip-text bg-linear-to-br from-primary to-[#1e3a8a]">y penser.</span>
                 </h2>
                 <p className="text-lg md:text-xl text-neutral-600 font-medium pt-2 max-w-lg">
                   Pas besoin de monnaie en voiture. Votre place est payée en ligne lors de la réservation et transférée automatiquement au conducteur à l'arrivée. Le paiement est 100% sécurisé.
@@ -519,16 +533,16 @@ export default function WigoExpress() {
 
           {/* Right Illustrations / Pinned during scroll */}
           <div className="sticky-illustrator hidden lg:flex h-screen items-center justify-center overflow-visible w-full sticky top-0">
-            <div className="w-full max-w-[500px] aspect-[4/5] relative">
+            <div className="w-full max-w-[500px] aspect-4/5 relative">
               
               {/* Illus 1 : Search Map UI */}
-              <div className="illust-step absolute inset-0 bg-white rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.08)] border border-neutral-100 overflow-hidden flex flex-col">
+              <div className="illust-step absolute inset-0 bg-white rounded-[2.5rem] shadow-2xl border border-neutral-100 overflow-hidden flex flex-col">
                 <div className="w-full h-[55%] bg-[#f8f9fa] relative overflow-hidden">
                   <Image
                     src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop"
                     alt="Carte avec des marqueurs"
                     fill
-                    className="object-cover opacity-80 mix-blend-multiply grayscale-[20%]"
+                    className="object-cover opacity-80 mix-blend-multiply grayscale-20%"
                   />
                   {/* Decorative map pins */}
                   <div className="absolute top-1/3 left-1/3 w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
@@ -561,13 +575,13 @@ export default function WigoExpress() {
               </div>
 
               {/* Illus 2 : KYC Trust Badge ID */}
-              <div className="illust-step absolute inset-0 bg-[#050505] rounded-[2.5rem] shadow-[0_30px_100px_rgba(22,163,74,0.15)] border border-neutral-800 p-10 flex flex-col items-center justify-center text-white origin-bottom">
+              <div className="illust-step absolute inset-0 bg-[#050505] rounded-[2.5rem] shadow-2xl border border-neutral-800 p-10 flex flex-col items-center justify-center text-white origin-bottom">
                 
                 {/* ID Card abstract representation */}
                 <div className="w-[120%] h-40 absolute top-[10%] -rotate-6 bg-white/5 rounded-3xl border border-white/10 blur-[2px] pointer-events-none"></div>
                 <div className="w-full max-w-sm bg-linear-to-br from-white/10 to-transparent backdrop-blur-xl rounded-2xl border border-white/20 p-6 relative z-10 shadow-2xl mb-8 transform -rotate-2">
                    <div className="flex justify-between items-start mb-6">
-                      <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-green-500 relative">
+                      <div className="w-16 h-16 rounded-full overflow-hidden relative">
                         <Image
                           src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
                           alt="Conducteur"
@@ -586,7 +600,6 @@ export default function WigoExpress() {
 
                 <div className="text-center relative z-10 mt-4">
                   <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-400 px-4 py-2 rounded-full text-xs font-black tracking-widest mb-4 border border-green-500/20">
-                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                     VERIFICATION WIGO
                   </div>
                   <h3 className="text-3xl font-bold mb-3 tracking-tight">Identité Confirmée</h3>
@@ -597,7 +610,7 @@ export default function WigoExpress() {
               </div>
 
               {/* Illus 3 : Wigo Wallet */}
-              <div className="illust-step absolute inset-0 bg-primary rounded-[2.5rem] shadow-[0_30px_100px_rgba(37,99,235,0.3)] border border-blue-500/30 p-10 flex flex-col justify-between text-white overflow-hidden origin-bottom">
+              <div className="illust-step absolute inset-0 bg-primary rounded-[2.5rem] shadow-2xl border border-blue-500/30 p-10 flex flex-col justify-between text-white overflow-hidden origin-bottom">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
                 
                 <div className="relative z-10 text-center mt-6">
@@ -646,11 +659,9 @@ export default function WigoExpress() {
       <section className="dark-mode-section relative py-32 px-6 flex flex-col items-center text-center overflow-hidden">
         <div className="container mx-auto z-10">
           <div className="mb-16">
-            <span className="text-primary font-bold tracking-widest uppercase text-xs mb-4 block">
-              Confort et Qualité
-            </span>
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">
-              Voyagez dans de <br /> meilleures conditions.
+              Voyagez dans de <br />
+                  <span className="gradient-text lg:transition-colors lg:duration-300 text-transparent bg-clip-text bg-linear-to-br from-primary to-[#1e3a8a]">meilleures conditions.</span>
             </h2>
             <p className="text-neutral-400 text-lg md:text-xl font-light max-w-3xl mx-auto">
               Fini les mauvaises surprises. Sur Wigo, vous choisissez le modèle
