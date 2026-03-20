@@ -77,6 +77,37 @@ export default function WigoExpress() {
         });
       });
 
+      // 2.5. Floating UI Cards Parallax & Entrance
+      gsap.utils.toArray(".floating-card").forEach((card: any, index) => {
+        // Organic random-like offsets based on index
+        const yOffset = index === 0 ? 120 : index === 1 ? -100 : 80;
+        const xOffset = index === 0 ? -60 : index === 1 ? 60 : -40;
+        const rotation = index === 0 ? -8 : index === 1 ? 10 : -6;
+        
+        gsap.fromTo(
+          card,
+          { 
+            y: yOffset, 
+            x: xOffset, 
+            rotation: rotation * 2, 
+            scale: 0.8
+          },
+          {
+            y: 0,
+            x: 0,
+            rotation: rotation,
+            scale: 1,
+            ease: "back.out(1.5)",
+            scrollTrigger: {
+              trigger: ".hero-floating-img",
+              start: "top 85%", // Starts a bit before the image enters fully
+              end: "bottom 30%", 
+              scrub: 1.5, // Smooth scrubbing parallax effect
+            },
+          }
+        );
+      });
+
       // 3. Staggered Simple Reveals
       gsap.utils.toArray(".reveal-fade").forEach((elem: any) => {
         gsap.fromTo(
@@ -217,17 +248,15 @@ export default function WigoExpress() {
 
         <div className="container mx-auto relative z-10 flex flex-col items-center justify-center text-center">
           <h1 className="hero-text-elem text-[12vw] md:text-[3vw] max-w-5xl font-black tracking-tighter leading-tight mt-16 mb-8">
-            Covoiturage, simplement, sereinement.
+            Le covoiturage, enfin
             <br />
             <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-[#1e3a8a]">
-              Zéro compromis.
+              sûr, simple et fiable.
             </span>
           </h1>
 
-          <p className="hero-text-elem text-lg md:text-2xl opacity-60 font-medium mb-16 max-w-2xl leading-relaxed">
-            Trouvez ou offrez un trajet dans des véhicules vérifiés. Paiement
-            instantané et profils sécurisés (KYC). Plus haut, plus loin,
-            ensemble.
+          <p className="hero-text-elem text-lg md:text-xl opacity-80 font-medium mb-16 max-w-2xl leading-relaxed">
+            Trouvez ou offrez un trajet l'esprit tranquille, profils 100% vérifiés et paiement automatisé. La nouvelle norme pour vos déplacements interurbains.
           </p>
 
           {/* Web Search Widget - The Core Tool */}
@@ -292,20 +321,75 @@ export default function WigoExpress() {
             </button>
           </div>
 
-          {/* Web Dashboard Visual Preview (Instead of purely mobile UI) */}
-          <div
-            className="hero-floating-img w-full max-w-7xl h-[40vh] md:h-[50vh] bg-white rounded-3xl border-t border-x shadow-[0_0_80px_rgba(0,0,0,0.05)] border-neutral-100 overflow-hidden relative float-parallax mt-18"
-            data-speed="0.5"
-          >
-            {/* IMAGE PLACEHOLDER: Platform Dashboard / Dashboard Covoiturage */}
-            <div className="relative w-full h-full">
-              <Image
-                src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070&auto=format&fit=crop"
-                alt="Capture d'écran conceptuelle (Web UI) d'un tableau de bord de covoiturage premium WIGO EXPRESS, affichant une carte interactive claire, des listes de trajets élégantes et des profils vérifiés, tons blanc et bleu."
-                fill
-                className="object-cover object-top opacity-90"
-              />
+          {/* Dashboard Preview & Floating UI Cards Container */}
+          <div className="relative w-full max-w-7xl mt-18 z-20">
+            {/* Main Web Dashboard Visual Preview */}
+            <div
+              className="hero-floating-img w-full h-[40vh] md:h-[50vh] bg-white rounded-3xl border-t border-x shadow-[0_0_80px_rgba(0,0,0,0.05)] border-neutral-100 overflow-hidden relative float-parallax z-10"
+              data-speed="0.5"
+            >
+              <div className="relative w-full h-full">
+                <Image
+                  src="/images/hero-image.webp"
+                  alt="Capture d'écran conceptuelle (Web UI) d'un tableau de bord de covoiturage premium WIGO EXPRESS, affichant une carte interactive claire, des listes de trajets élégantes et des profils vérifiés, tons blanc et bleu."
+                  fill
+                  className="object-cover object-top opacity-90"
+                />
+              </div>
             </div>
+
+            {/* Floating UI Card 1: Verified Profile */}
+            <div className="floating-card absolute -left-4 md:-left-12 lg:-left-20 top-[-2%] z-20 bg-white/90 backdrop-blur-xl p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.12)] border border-white/60 w-56 md:w-64 text-left hidden sm:block">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shadow-md shrink-0">
+                  <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" fill alt="Driver" className="object-cover" />
+                </div>
+                <div>
+                  <h4 className="text-sm md:text-base font-bold text-[#111] leading-tight mb-1">Profil Vérifié</h4>
+                  <p className="text-[10px] md:text-xs font-bold flex items-center gap-1 uppercase tracking-wider"><IoShieldCheckmarkOutline className="text-base text-green-600 " /> Identité Wigo</p>
+                </div>
+              </div>
+              <div className="bg-[#f8f9fa] rounded-xl p-3 flex justify-between items-center border border-black/5 shadow-inner">
+                  <span className="text-[10px] md:text-xs text-neutral-500 font-medium">Note globale</span>
+                  <span className="text-[10px] md:text-xs font-black text-[#111] flex items-center gap-1">4.9/5 ★</span>
+              </div>
+            </div>
+
+            {/* Floating UI Card 2: Instant Payment */}
+            <div className="floating-card absolute -right-4 md:-right-8 lg:-right-16 top-[15%] lg:top-[25%] z-30 bg-[#050505]/95 backdrop-blur-xl p-5 md:p-6 rounded-2xl md:rounded-3xl shadow-[0_30px_60px_rgba(37,99,235,0.15)] border border-neutral-800/80 w-48 md:w-56 text-left hidden sm:block">
+               <div className="flex items-center gap-3 mb-4">
+                 <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
+                   <IoWalletOutline className="text-lg md:text-xl" />
+                 </div>
+                 <h4 className="text-xs md:text-sm font-bold text-white uppercase tracking-widest">Paiement Wigo</h4>
+               </div>
+               <p className="text-3xl md:text-4xl font-black text-white mb-2 leading-none">45<span className="text-xl md:text-2xl text-neutral-500">.00 $</span></p>
+               <div className="flex items-center gap-2">
+                 <div className="w-2 h-2 rounded-full bg-white"></div>
+                 <p className="text-[10px] md:text-xs text-neutral-400 font-medium">Reçu à l'instant (CAD)</p>
+               </div>
+            </div>
+
+            {/* Floating UI Card 3: Route Match */}
+            <div className="floating-card absolute left-[5%] lg:left-[8%] bottom-[5%] lg:bottom-[8%] z-30 bg-white/90 backdrop-blur-xl p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.1)] border border-white/60 w-56 md:w-64 text-left hidden sm:block">
+
+                <div className="bg-primary/10 mb-4 text-primary text-[9px] md:text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">
+                  Match Parfait
+                </div>
+
+              <div className="space-y-4 relative ml-1">
+                 <div className="absolute left-[7px] md:left-[9px] top-2 bottom-2 w-0.5 bg-neutral-200"></div>
+                 <div className="flex items-center gap-4 relative z-10">
+                   <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-primary ring-4 ring-white shadow-sm shrink-0"></div>
+                   <p className="text-sm md:text-base font-bold text-[#111]">Montréal, QC</p>
+                 </div>
+                 <div className="flex items-center gap-4 relative z-10">
+                   <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-[#111] ring-4 ring-white shadow-sm shrink-0"></div>
+                   <p className="text-sm md:text-base font-bold text-[#111]">Québec, QC</p>
+                 </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -317,31 +401,25 @@ export default function WigoExpress() {
           <div className="lg:py-[30vh] flex flex-col gap-[30vh]">
             <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
               <span className="text-primary font-black text-xl mb-4">
-                01. Recherche & Match
+                01. Trouvez votre trajet
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">
-                Mise en relation intelligente
+                Le bon départ, au bon moment.
               </h2>
               <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg">
-                Oubliez la recherche fastidieuse. Indiquez votre point de
-                départ, et notre algorithme vous propose immédiatement les
-                meilleurs trajets disponibles, avec la note globale de chaque
-                conducteur.
+                Indiquez votre destination et découvrez instantanément les trajets disponibles. Nous mettons en avant les conducteurs les mieux notés pour vous garantir un voyage agréable et serein.
               </p>
             </div>
 
             <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
               <span className="text-green-600 font-black text-xl mb-4">
-                02. Sécurité Inébranlable
+                02. Sécurité absolue
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">
-                Trust & KYC Intégré
+                Une communauté de confiance.
               </h2>
               <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg mb-8">
-                Nous vérifions manuellement la carte d'identité, la plaque
-                d'immatriculation et l'historique de conduite. Ce badge de
-                vérification est notre promesse d'excellence et de tranquillité
-                pour chaque passager.
+                Pièce d'identité, permis de conduire et historique : chaque membre est contrôlé avant de pouvoir réserver ou prendre le volant. Vous voyagez toujours avec des personnes fiables.
               </p>
               <div className="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-neutral-100">
                 <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-green-600">
@@ -349,10 +427,10 @@ export default function WigoExpress() {
                 </div>
                 <div>
                   <h4 className="font-bold text-sm">
-                    Passager & Conducteur Vérifiés
+                    Identité Contrôlée
                   </h4>
                   <p className="text-xs text-neutral-400">
-                    Badge KYC Vert obtenu
+                    Badge de confiance validé
                   </p>
                 </div>
               </div>
@@ -360,15 +438,13 @@ export default function WigoExpress() {
 
             <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
               <span className="text-primary font-black text-xl mb-4">
-                03. Wigo Wallet
+                03. Paiement garanti
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">
-                Zéro espèce. Zéro tracas.
+                Réglez sans y penser.
               </h2>
               <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg">
-                Le trajet est payé automatiquement via la plateforme. Le
-                chauffeur reçoit directement les fonds dans son portefeuille
-                Wigo à l'arrivée. Transférez vers votre banque en 1 clic.
+                Pas besoin de monnaie en voiture. Votre place est payée en ligne lors de la réservation et transférée automatiquement au conducteur à l'arrivée. Le paiement est 100% sécurisé.
               </p>
             </div>
           </div>
@@ -422,13 +498,13 @@ export default function WigoExpress() {
                 <h3 className="text-xl font-medium opacity-80 mb-2">
                   Solde Wigo
                 </h3>
-                <h2 className="text-6xl font-black mb-10">€ 244.50</h2>
+                <h2 className="text-6xl font-black mb-10">244.50 $</h2>
                 <div className="bg-white/10 w-full p-4 rounded-2xl backdrop-blur flex justify-between">
                   <div className="text-left">
                     <p className="text-xs font-medium opacity-70">
-                      Reçu (Trajet Paris - Lyon)
+                      Reçu (Trajet Montréal - Québec)
                     </p>
-                    <p className="font-bold">+ 45.00 €</p>
+                    <p className="font-bold">+ 45.00 $</p>
                   </div>
                   <IoShieldCheckmarkOutline className="w-6 h-6" />
                 </div>
@@ -443,15 +519,13 @@ export default function WigoExpress() {
         <div className="container mx-auto z-10">
           <div className="mb-16">
             <span className="text-primary font-bold tracking-widest uppercase text-xs mb-4 block">
-              Publiez ou Réservez
+              Confort et Qualité
             </span>
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">
-              Le standard n'est <br /> plus une option.
+              Voyagez dans de <br /> meilleures conditions.
             </h2>
             <p className="text-neutral-400 text-lg md:text-xl font-light max-w-3xl mx-auto">
-              Notre communauté de conducteurs partage des trajets dans des
-              berlines confortables, des véhicules électriques (EV) ou des SUV
-              spacieux. Indiquez la plaque et le modèle, nous faisons le reste.
+              Fini les mauvaises surprises. Sur Wigo, vous choisissez le modèle qui vous convient : berlines, véhicules électriques ou SUV. Vous savez exactement dans quel véhicule vous allez monter.
             </p>
           </div>
 
@@ -462,7 +536,7 @@ export default function WigoExpress() {
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-6">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-white font-bold text-xl">
-                    Trajet : Paris → Lyon
+                    Trajet : Montréal → Québec
                   </h3>
                   <span className="bg-primary/20 text-primary font-bold text-xs px-3 py-1 rounded-full">
                     Proposé aujourd'hui
@@ -501,7 +575,7 @@ export default function WigoExpress() {
                   </div>
                   <div className="text-right">
                     <strong className="text-3xl font-black text-white">
-                      €45
+                      45 $
                     </strong>
                     <p className="text-neutral-500 text-xs">/ passager</p>
                   </div>
@@ -548,8 +622,7 @@ export default function WigoExpress() {
                 />
               </Link>
               <p className="text-neutral-400 text-lg md:text-xl font-light mb-10 max-w-sm leading-relaxed mt-6">
-                Le réseau de covoiturage Premium. Vérification stricte,
-                véhicules choisis, paiements instantanés. Plus haut, plus loin.
+                La plateforme de covoiturage nouvelle génération. Trajets sécurisés, profils vérifiés et paiement garanti.
               </p>
             </div>
 
@@ -575,13 +648,19 @@ export default function WigoExpress() {
                   href="#"
                   className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
                 >
-                  Destinations Magiques
+                  Destinations Populaires
                 </Link>
                 <Link
                   href="#"
                   className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
                 >
-                  Paris - Lyon
+                  Montréal - Québec
+                </Link>
+                <Link
+                  href="#"
+                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
+                >
+                  Toronto - Ottawa
                 </Link>
               </div>
               <div className="flex flex-col gap-4">
