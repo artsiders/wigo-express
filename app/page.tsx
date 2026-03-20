@@ -325,7 +325,7 @@ export default function WigoExpress() {
       <Navbar />
 
       {/*  EPIC HERO SECTION */}
-      <section className="relative min-h-screen pt-36 md:pt-40 pb-20 px-6 flex flex-col items-center justify-center">
+      <section className="relative bg-[url(/images/bg-texture.png)] min-h-screen pt-36 md:pt-40 pb-20 px-6 flex flex-col items-center justify-center">
         {/* Abstract shapes for premium feel */}
         <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-primary/10 rounded-full blur-[140px] pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
         <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none"></div>
@@ -806,7 +806,7 @@ export default function WigoExpress() {
       </section>
 
       {/*  DARK MODE SECTION : Vehicles Focus Web Layout */}
-      <section className="dark-mode-section relative py-32 px-6 flex flex-col items-center text-center overflow-hidden">
+      <section className="dark-mode-section bg-[url(/images/bg-texture.png)] relative py-32 px-6 flex flex-col items-center text-center overflow-hidden">
         <div className="container mx-auto z-10">
           <div className="mb-16">
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">
