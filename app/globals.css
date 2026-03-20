@@ -1,28 +1,86 @@
 @import "tailwindcss";
 
-:root {
-  --primary: #4d80c4;
-  --dark: #050505;
-  --light: #f8f9fa;
+@theme inline {
+  /* Design System Variables */
+
+  /* Palette Primaire (Bleu) */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #4d80c4; /* Origine */
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+
+  /* Palette Secondaire (Or/Jaune) */
+  --color-secondary-50: #fefce8;
+  --color-secondary-100: #fef9c3;
+  --color-secondary-200: #fef08a;
+  --color-secondary-300: #fde047;
+  --color-secondary-400: #facc15;
+  --color-secondary-500: #eab308;
+  --color-secondary-600: #ca8a04;
+  --color-secondary-700: #a16207;
+  --color-secondary-800: #854d0e;
+  --color-secondary-900: #713f12;
+  --color-secondary-950: #422006;
+
+  /* Palette Dark */
+  --color-dark-50: #f6f6f6;
+  --color-dark-100: #e7e7e7;
+  --color-dark-200: #d1d1d1;
+  --color-dark-300: #b0b0b0;
+  --color-dark-400: #888888;
+  --color-dark-500: #6d6d6d;
+  --color-dark-600: #5d5d5d;
+  --color-dark-700: #4f4f4f;
+  --color-dark-800: #454545;
+  --color-dark-900: #151515; /* Section bg */
+  --color-dark-950: #050505; /* Origine */
+
+  /* Palette Light */
+  --color-light-50: #ffffff;
+  --color-light-100: #fcfcfc;
+  --color-light-200: #fafafa;
+  --color-light-300: #f8f9fa; /* Origine */
+  --color-light-400: #f4f5f7; /* Background element */
+  --color-light-500: #eeeeee;
+
+  /* Semantic Colors */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+
+  /* Alias pour la rétrocompatibilité ou usage simplifié */
+  --color-primary: var(--color-primary-500);
+  --color-dark: var(--color-dark-950);
+  --color-light: var(--color-light-300);
+
+  /* Police globale */
   --font-sans: var(--font-outfit), Arial, Helvetica, sans-serif;
 }
 
-@theme inline {
-  --color-primary: var(--primary);
-  --color-dark: var(--dark);
-  --color-light: var(--light);
-  --font-sans: var(--font-sans);
+@layer components {
+  /* Bouton Principal */
+  .btn-primary {
+    @apply bg-primary-500 text-white font-extrabold text-lg px-10 py-7 rounded-3xl hover:bg-dark-950 transition-colors shadow-xl shadow-primary-500/20 flex justify-center items-center gap-2;
+  }
 }
 
 body {
-  background: var(--light);
+  background: var(--color-light);
   color: #fff;
   overscroll-behavior: none;
 }
 
 /* Animations globales */
 ::selection {
-  background: var(--primary);
+  background: var(--color-primary);
   color: #fff;
 }
 

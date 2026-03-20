@@ -58,7 +58,7 @@ export default function Navbar() {
           </Link>
           <Link
             href="/register"
-            className="bg-primary text-white font-bold text-xs md:text-sm px-6 py-3 rounded-full hover:bg-[#111] transition-colors shadow-lg shadow-blue-500/20 flex items-center gap-2"
+            className="bg-primary text-white font-bold text-xs md:text-sm px-6 py-3 rounded-full hover:bg-dark transition-colors shadow-lg shadow-primary-500/20 flex items-center gap-2"
           >
             Nous rejoindre <IoChevronForward />
           </Link>
