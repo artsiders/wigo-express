@@ -71,7 +71,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             Sauvegarder & Générer
           </h2>
           <p className="text-center text-gray-500 mb-8 text-sm leading-relaxed">
-            Créez un compte gratuitement pour lancer la génération de votre vidéo haute définition et la sauvegarder.
+            Créez un compte gratuitement pour lancer la génération de votre
+            vidéo haute définition et la sauvegarder.
           </p>
 
           <div className="space-y-4">
@@ -83,8 +84,13 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               {isLoadingGoogle ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
-                <div className="w-5 h-5 relative shrink-0 group-hover:scale-110 transition-transform">
-                  <Image src="/google-icon.svg" alt="Google" width={20} height={20} />
+                <div className="w-5 h-5 relative shrink-0 transition-transform">
+                  <Image
+                    src="/google-icon.svg"
+                    alt="Google"
+                    width={20}
+                    height={20}
+                  />
                 </div>
               )}
               Continuer avec Google
@@ -107,7 +113,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           </div>
 
           <p className="mt-8 text-center text-xs text-gray-400">
-            En continuant, vous acceptez nos <Link href="/legal" className="underline hover:text-gray-600">Conditions et notre Politique de confidentialité</Link>.
+            En continuant, vous acceptez nos{" "}
+            <Link href="/legal" className="underline hover:text-gray-600">
+              Conditions et notre Politique de confidentialité
+            </Link>
+            .
           </p>
         </div>
       </div>

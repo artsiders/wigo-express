@@ -514,13 +514,13 @@ export default function WigoExpress() {
             </div>
 
             {/* IMAGE PLACEHOLDER: Premium Car Profile aligned with Web content */}
-            <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-full min-h-[300px] rounded-2xl overflow-hidden group">
-              <div className="absolute inset-0 bg-linear-to-r from-[#151515] to-transparent z-10 pointer-events-none"></div>
+            <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-full min-h-[300px] overflow-hidden group">
+              <div className="absolute inset-0 bg-linear-to-r from-[#151515]/95 via-[#151515]/50 to-transparent z-10 pointer-events-none"></div>
               <Image
                 src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop"
                 alt="Vue d'une Tesla Model 3 noire, style studio premium sombre. Véhicule typique du covoiturage haut de gamme proposé sur la plateforme."
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
+                className="object-cover transition-transform duration-1000 ease-out rounded-2xl"
               />
             </div>
           </div>
@@ -536,12 +536,18 @@ export default function WigoExpress() {
           <div className="flex flex-col xl:flex-row justify-between items-start gap-16 flex-1 border-b border-white/10 pb-20 mb-10">
             {/* Brand & Mission */}
             <div className="xl:w-5/12 flex flex-col items-start pr-0 md:pr-10">
-              <Link href="/" className="mb-8 block group">
-                <span className="text-[60px] md:text-[80px] font-black tracking-tighter leading-none text-transparent bg-clip-text bg-linear-to-br from-white to-white/40 group-hover:to-primary transition-all duration-500">
-                  wigo.
-                </span>
+              {/* Logo */}
+              <Link href="/">
+                <Image
+                  src="/images/logo.png"
+                  alt="Wigo Express Logo"
+                  width={200}
+                  height={200}
+                  className="object-contain transition-transform"
+                  priority
+                />
               </Link>
-              <p className="text-neutral-400 text-lg md:text-xl font-light mb-10 max-w-sm leading-relaxed">
+              <p className="text-neutral-400 text-lg md:text-xl font-light mb-10 max-w-sm leading-relaxed mt-6">
                 Le réseau de covoiturage Premium. Vérification stricte,
                 véhicules choisis, paiements instantanés. Plus haut, plus loin.
               </p>
