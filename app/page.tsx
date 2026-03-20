@@ -17,8 +17,8 @@ import {
   IoCalendarOutline,
   IoPersonOutline,
   IoArrowForwardOutline,
-  IoCheckmarkOutline,
   IoStar,
+  IoIdCardOutline,
 } from "react-icons/io5";
 
 if (typeof window !== "undefined") {
@@ -635,7 +635,7 @@ export default function WigoExpress() {
               {/* Illus 2 : KYC Trust Badge ID */}
               <div className="illust-step absolute inset-0 bg-dark rounded-[2.5rem] shadow-2xl border border-neutral-800 p-6 xl:p-10 flex flex-col items-center justify-between text-white origin-bottom pb-8 xl:pb-12 pt-6 xl:pt-10 overflow-visible z-10">
                 {/* 3D Canadian Premium ID Card that overflows top */}
-                <div className="w-[calc(100%-20px)] aspect-4/2 bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-3xl p-1.5 shadow-[0_30px_60px_rgba(0,0,0,0.6),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-3 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 -mt-16 xl:-mt-20">
+                <div className="w-[calc(100%-20px)] aspect-4/2 bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-3xl p-2 shadow-[0_30px_60px_rgba(0,0,0,0.6),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-3 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 -mt-16 xl:-mt-20">
                   <Image
                     src="/images/canada-flag-icon.png"
                     alt="Canada"
@@ -716,10 +716,35 @@ export default function WigoExpress() {
                   <h3 className="text-2xl xl:text-3xl font-bold mb-2 xl:mb-3 tracking-tight">
                     Identité Confirmée
                   </h3>
-                  <p className="text-neutral-400 text-xs xl:text-sm max-w-[220px] xl:max-w-[250px] mx-auto leading-relaxed">
-                    Tous les conducteurs sont vérifiés grâce au scan de leur
-                    passeport et permis de conduire, pour une sécurité optimale.
-                  </p>
+                  {/* Modern Visual ID Verification Steps with Labels */}
+                  <div className="flex items-center justify-center gap-3 xl:gap-4 mt-6 xl:mt-8 w-full max-w-[200px] xl:max-w-[240px] mx-auto opacity-90">
+                    <div className="flex flex-col items-center gap-1.5">
+                      <div className="w-8 h-8 xl:w-12 xl:h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
+                        <IoPersonOutline className="w-4 h-4 xl:w-5 xl:h-5" />
+                      </div>
+                      <span className="text-[9px] xl:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
+                        Permis
+                      </span>
+                    </div>
+                    <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 relative shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+                    <div className="flex flex-col items-center gap-1.5">
+                      <div className="w-8 h-8 xl:w-12 xl:h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
+                        <IoIdCardOutline className="w-4 h-4 xl:w-5 xl:h-5" />
+                      </div>
+                      <span className="text-[9px] xl:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
+                        Selfie
+                      </span>
+                    </div>
+                    <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 relative shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+                    <div className="flex flex-col items-center gap-1.5">
+                      <div className="w-8 h-8 xl:w-12 xl:h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
+                        <IoShieldCheckmarkOutline className="w-4 h-4 xl:w-5 xl:h-5" />
+                      </div>
+                      <span className="text-[9px] xl:text-[10px] font-black text-white uppercase tracking-widest text-center mt-1 drop-shadow-[0_0_5px_rgba(255,255,255,0.4)]">
+                        Sécurisé
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
