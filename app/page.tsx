@@ -737,10 +737,10 @@ export default function WigoExpress() {
           </div>
 
           {/* Web Data Grid / Showcase */}
-          <div className="w-full max-w-6xl mx-auto bg-dark-900 rounded-[2.5rem] border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-center">
+          <div className="w-full max-w-6xl mx-auto bg-dark rounded-[2.5rem] border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-center">
             {/* Text / Data part */}
             <div className="w-full lg:w-1/2">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-6">
+              <div className="bg-white/10 border border-white/10 rounded-2xl p-6 mb-6">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-white font-bold text-xl">
                     Trajet : Montréal → Québec
@@ -796,9 +796,9 @@ export default function WigoExpress() {
 
             {/* IMAGE PLACEHOLDER: Premium Car Profile aligned with Web content */}
             <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-full min-h-[300px] overflow-hidden group">
-              <div className="absolute inset-0 bg-linear-to-b lg:bg-linear-to-r from-[#151515]/95 via-[#151515]/50 to-transparent z-10 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-linear-to-b lg:bg-linear-to-r from-dark/95 via-dark/20 to-transparent z-10 pointer-events-none"></div>
               <Image
-                src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop"
+                src="/images/wigo-express-red-card.jpg"
                 alt="Vue d'une Tesla Model 3 noire, style studio premium sombre. Véhicule typique du covoiturage haut de gamme proposé sur la plateforme."
                 fill
                 className="object-cover transition-transform duration-1000 ease-out rounded-2xl"
