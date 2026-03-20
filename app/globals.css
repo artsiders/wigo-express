@@ -1,23 +1,24 @@
 @import "tailwindcss";
 
-/* Primary color: #4D80C4 */
-@theme inline {
-  --color-primary: #4d80c4;
-  --color-wigo-blue: var(--color-primary);
-  --color-wigo-dark: #050505;
-  --color-wigo-card: #111111;
+:root {
+  --primary: #4d80c4;
   --font-sans: var(--font-outfit), Arial, Helvetica, sans-serif;
 }
 
+@theme inline {
+  --color-primary: var(--primary);
+  --font-sans: var(--font-sans);
+}
+
 body {
-  background: var(--color-wigo-dark);
-  color: #fff;
+  background: var(--primary);
+  color: #fff;  
   overscroll-behavior: none;
 }
 
 /* Animations globales */
 ::selection {
-  background: var(--color-primary);
+  background: var(--primary);
   color: #fff;
 }
 

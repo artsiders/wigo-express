@@ -151,25 +151,25 @@ export default function WigoExpress() {
           
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-2xl font-extrabold tracking-tight text-[#4D80C4] group-hover:scale-105 transition-transform">
+            <span className="text-2xl font-extrabold tracking-tight text-primary group-hover:scale-105 transition-transform">
               wigo<span className="font-light text-current">express</span>
             </span>
           </Link>
           
           {/* Center Links */}
           <div className="hidden lg:flex gap-10 items-center text-sm font-semibold text-current opacity-80">
-            <Link href="/search" className="hover:text-[#4D80C4] hover:opacity-100 transition-all">Rechercher</Link>
-            <Link href="/publish" className="hover:text-[#4D80C4] hover:opacity-100 transition-all">Publier</Link>
-            <Link href="/safety" className="hover:text-[#4D80C4] hover:opacity-100 transition-all">Sécurité KYC</Link>
-            <Link href="/wallet" className="hover:text-[#4D80C4] hover:opacity-100 transition-all">Portefeuille Wigo</Link>
+            <Link href="/search" className="hover:text-primary hover:opacity-100 transition-all">Rechercher</Link>
+            <Link href="/publish" className="hover:text-primary hover:opacity-100 transition-all">Publier</Link>
+            <Link href="/safety" className="hover:text-primary hover:opacity-100 transition-all">Sécurité KYC</Link>
+            <Link href="/wallet" className="hover:text-primary hover:opacity-100 transition-all">Portefeuille Wigo</Link>
           </div>
           
           {/* Right CTAs */}
           <div className="flex gap-4 items-center">
-            <Link href="/login" className="hidden md:flex font-bold text-sm text-current opacity-80 hover:opacity-100 hover:text-[#4D80C4] transition-all">
+            <Link href="/login" className="hidden md:flex font-bold text-sm text-current opacity-80 hover:opacity-100 hover:text-primary transition-all">
               Login
             </Link>
-            <Link href="/register" className="bg-[#4D80C4] text-white font-bold text-xs md:text-sm px-6 py-3 rounded-full hover:bg-black transition-colors shadow-lg shadow-blue-500/20 flex items-center gap-2">
+            <Link href="/register" className="bg-primary text-white font-bold text-xs md:text-sm px-6 py-3 rounded-full hover:bg-black transition-colors shadow-lg shadow-blue-500/20 flex items-center gap-2">
               Nous rejoindre <IoChevronForward />
             </Link>
           </div>
@@ -180,18 +180,15 @@ export default function WigoExpress() {
       {/*  EPIC HERO SECTION */}
       <section className="relative min-h-screen pt-40 pb-20 px-6 flex flex-col items-center justify-center">
         {/* Abstract shapes for premium feel */}
-        <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-[#4D80C4]/10 rounded-full blur-[140px] pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
+        <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-primary/10 rounded-full blur-[140px] pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
         <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div className="container mx-auto relative z-10 flex flex-col items-center justify-center text-center">
           
-          <div className="hero-text-elem inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full text-xs font-extrabold text-[#4D80C4] uppercase tracking-[0.2em] shadow-[0_8px_16px_rgba(0,0,0,0.04)] mb-8 border border-neutral-100">
-            Le Standard Premium
-          </div>
-          
-          <h1 className="hero-text-elem text-[12vw] md:text-[8vw] lg:text-[7vw] font-black tracking-tighter leading-[0.85] mb-8">
+
+          <h1 className="hero-text-elem text-[12vw] md:text-[8vw] lg:text-[7vw] font-black tracking-tighter leading-[0.85] mt-16 mb-8">
             Covoiturage.<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#4D80C4] to-[#1e3a8a]">Zéro compromis.</span>
+            <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-[#1e3a8a]">Zéro compromis.</span>
           </h1>
           
           <p className="hero-text-elem text-lg md:text-2xl opacity-60 font-medium mb-16 max-w-2xl leading-relaxed">
@@ -201,8 +198,8 @@ export default function WigoExpress() {
           {/* Web Search Widget - The Core Tool */}
           <div className="search-widget w-full max-w-5xl bg-white p-3 md:p-4 rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.06)] border border-neutral-100 flex flex-col lg:flex-row items-center gap-3 mb-10">
             
-            <div className="flex-1 w-full bg-[#f4f5f7] rounded-3xl flex items-center px-6 py-4 border border-transparent focus-within:bg-white focus-within:border-[#4D80C4]/40 transition-colors shadow-inner group">
-              <IoLocationOutline className="text-2xl text-neutral-400 group-focus-within:text-[#4D80C4]" />
+            <div className="flex-1 w-full bg-[#f4f5f7] rounded-3xl flex items-center px-6 py-4 border border-transparent focus-within:bg-white focus-within:border-primary/40 transition-colors shadow-inner group">
+              <IoLocationOutline className="text-2xl text-neutral-400 group-focus-within:text-primary" />
               <div className="ml-4 w-full text-left">
                 <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Départ</span>
                 <input type="text" placeholder="D'où partez-vous ?" className="w-full bg-transparent text-lg font-bold text-[#111] outline-none placeholder:text-neutral-300" />
@@ -213,8 +210,8 @@ export default function WigoExpress() {
               <IoArrowForwardOutline />
             </div>
 
-            <div className="flex-1 w-full bg-[#f4f5f7] rounded-3xl flex items-center px-6 py-4 border border-transparent focus-within:bg-white focus-within:border-[#4D80C4]/40 transition-colors shadow-inner group">
-              <IoMapOutline className="text-2xl text-neutral-400 group-focus-within:text-[#4D80C4]" />
+            <div className="flex-1 w-full bg-[#f4f5f7] rounded-3xl flex items-center px-6 py-4 border border-transparent focus-within:bg-white focus-within:border-primary/40 transition-colors shadow-inner group">
+              <IoMapOutline className="text-2xl text-neutral-400 group-focus-within:text-primary" />
               <div className="ml-4 w-full text-left">
                 <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Arrivée</span>
                 <input type="text" placeholder="Où allez-vous ?" className="w-full bg-transparent text-lg font-bold text-[#111] outline-none placeholder:text-neutral-300" />
@@ -223,14 +220,14 @@ export default function WigoExpress() {
 
             <div className="w-full lg:w-auto flex gap-3">
               <div className="flex-1 lg:w-40 bg-[#f4f5f7] rounded-3xl flex items-center px-6 py-4 hover:bg-neutral-200 transition-colors cursor-pointer group">
-                <IoCalendarOutline className="text-xl text-neutral-400 group-hover:text-[#4D80C4]" />
+                <IoCalendarOutline className="text-xl text-neutral-400 group-hover:text-primary" />
                 <div className="ml-3 text-left">
                   <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Date</span>
                   <span className="block text-sm font-bold truncate">Aujourd'hui</span>
                 </div>
               </div>
               <div className="flex-1 lg:w-32 bg-[#f4f5f7] rounded-3xl flex items-center px-6 py-4 hover:bg-neutral-200 transition-colors cursor-pointer group">
-                <IoPersonOutline className="text-xl text-neutral-400 group-hover:text-[#4D80C4]" />
+                <IoPersonOutline className="text-xl text-neutral-400 group-hover:text-primary" />
                 <div className="ml-3 text-left">
                   <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Places</span>
                   <span className="block text-sm font-bold">1</span>
@@ -238,7 +235,7 @@ export default function WigoExpress() {
               </div>
             </div>
 
-            <button className="w-full lg:w-auto bg-[#4D80C4] text-white font-extrabold text-lg px-10 py-5 rounded-3xl hover:bg-[#111] transition-colors shadow-xl shadow-blue-500/20 h-full flex justify-center items-center gap-2">
+            <button className="w-full lg:w-auto bg-primary text-white font-extrabold text-lg px-10 py-5 rounded-3xl hover:bg-[#111] transition-colors shadow-xl shadow-blue-500/20 h-full flex justify-center items-center gap-2">
               <IoSearchOutline /> <span className="lg:hidden">Rechercher</span>
             </button>
           </div>
@@ -267,7 +264,7 @@ export default function WigoExpress() {
           <div className="lg:py-[30vh] flex flex-col gap-[30vh]">
              
             <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
-               <span className="text-[#4D80C4] font-black text-xl mb-4">01. Recherche & Match</span>
+               <span className="text-primary font-black text-xl mb-4">01. Recherche & Match</span>
                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">Mise en relation intelligente</h2>
                <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg">
                  Oubliez la recherche fastidieuse. Indiquez votre point de départ, et notre algorithme vous propose immédiatement les meilleurs trajets disponibles, avec la note globale de chaque conducteur.
@@ -292,7 +289,7 @@ export default function WigoExpress() {
             </div>
 
             <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
-               <span className="text-[#4D80C4] font-black text-xl mb-4">03. Wigo Wallet</span>
+               <span className="text-primary font-black text-xl mb-4">03. Wigo Wallet</span>
                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">Zéro espèce. Zéro tracas.</h2>
                <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg">
                  Le trajet est payé automatiquement via la plateforme. Le chauffeur reçoit directement les fonds dans son portefeuille Wigo à l'arrivée. Transférez vers votre banque en 1 clic.
@@ -302,7 +299,7 @@ export default function WigoExpress() {
           </div>
 
           {/* Right Illustrations / Pinned during scroll */}
-          <div className="sticky-illustrator hidden lg:flex h-screen items-center justify-center sticky top-0 relative overflow-hidden">
+          <div className="sticky-illustrator hidden lg:flex h-screen items-center justify-center sticky top-0 overflow-hidden">
             <div className="w-full max-w-lg aspect-square relative float-parallax" data-speed="0.2">
               
               {/* Illus 1 : Search Map UI */}
@@ -311,7 +308,7 @@ export default function WigoExpress() {
                   <Image src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop" alt="Carte avec des marqueurs" fill className="object-cover opacity-80" />
                 </div>
                 <div className="bg-[#f8f9fa] p-4 rounded-xl flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#4D80C4] rounded-lg"></div>
+                  <div className="w-12 h-12 bg-primary rounded-lg"></div>
                   <div className="flex-1"><div className="w-2/3 h-4 bg-neutral-200 rounded mb-2"></div><div className="w-1/3 h-3 bg-neutral-200 rounded"></div></div>
                 </div>
               </div>
@@ -327,7 +324,7 @@ export default function WigoExpress() {
               </div>
 
               {/* Illus 3 : Wigo Wallet */}
-              <div className="illust-step illust-step-2 absolute inset-0 bg-[#4D80C4] rounded-[3rem] shadow-[0_40px_80px_rgba(77,128,196,0.2)] border border-[#3a659e] p-8 flex flex-col items-center justify-center text-white opacity-0 scale-95">
+              <div className="illust-step illust-step-2 absolute inset-0 bg-primary rounded-[3rem] shadow-[0_40px_80px_rgba(77,128,196,0.2)] border border-[#3a659e] p-8 flex flex-col items-center justify-center text-white opacity-0 scale-95">
                 <IoWalletOutline className="w-20 h-20 mb-6 opacity-80" />
                 <h3 className="text-xl font-medium opacity-80 mb-2">Solde Wigo</h3>
                 <h2 className="text-6xl font-black mb-10">€ 244.50</h2>
@@ -350,7 +347,7 @@ export default function WigoExpress() {
       <section className="dark-mode-section relative py-32 px-6 flex flex-col items-center text-center overflow-hidden">
         <div className="container mx-auto z-10">
           <div className="mb-16">
-            <span className="text-[#4D80C4] font-bold tracking-widest uppercase text-xs mb-4 block">Publiez ou Réservez</span>
+            <span className="text-primary font-bold tracking-widest uppercase text-xs mb-4 block">Publiez ou Réservez</span>
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">
               Le standard n'est <br/> plus une option.
             </h2>
@@ -367,7 +364,7 @@ export default function WigoExpress() {
                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-6">
                  <div className="flex justify-between items-center mb-4">
                    <h3 className="text-white font-bold text-xl">Trajet : Paris → Lyon</h3>
-                   <span className="bg-[#4D80C4]/20 text-[#4D80C4] font-bold text-xs px-3 py-1 rounded-full">Proposé aujourd'hui</span>
+                   <span className="bg-primary/20 text-primary font-bold text-xs px-3 py-1 rounded-full">Proposé aujourd'hui</span>
                  </div>
                  
                  <div className="flex items-center gap-4 mb-6">
@@ -376,7 +373,7 @@ export default function WigoExpress() {
                    </div>
                    <div>
                      <p className="text-white font-bold text-sm">Marc D. <span className="text-neutral-400 font-normal">★ 4.9</span></p>
-                     <p className="text-[#4D80C4] text-xs font-bold uppercase tracking-widest mt-1"><IoShieldCheckmarkOutline className="inline mr-1" />Profil vérifié</p>
+                     <p className="text-primary text-xs font-bold uppercase tracking-widest mt-1"><IoShieldCheckmarkOutline className="inline mr-1" />Profil vérifié</p>
                    </div>
                  </div>
 
@@ -398,8 +395,8 @@ export default function WigoExpress() {
              </div>
 
              {/* IMAGE PLACEHOLDER: Premium Car Profile aligned with Web content */}
-             <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-[100%] min-h-[300px] rounded-2xl overflow-hidden group">
-               <div className="absolute inset-0 bg-gradient-to-r from-[#151515] to-transparent z-10 pointer-events-none"></div>
+             <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-full min-h-[300px] rounded-2xl overflow-hidden group">
+               <div className="absolute inset-0 bg-linear-to-r from-[#151515] to-transparent z-10 pointer-events-none"></div>
                <Image 
                  src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop" 
                  alt="Vue d'une Tesla Model 3 noire, style studio premium sombre. Véhicule typique du covoiturage haut de gamme proposé sur la plateforme."
@@ -418,7 +415,7 @@ export default function WigoExpress() {
           
           <div className="flex flex-col lg:flex-row justify-between items-start gap-16 flex-1">
             <div className="lg:w-1/2">
-              <h2 className="text-[15vw] md:text-[8vw] font-black tracking-tighter leading-[0.8] mb-8 text-[#4D80C4]">
+              <h2 className="text-[15vw] md:text-[8vw] font-black tracking-tighter leading-[0.8] mb-8 text-primary">
                 wigo.
               </h2>
               <p className="text-neutral-400 text-lg md:text-2xl font-light mb-12 max-w-md leading-relaxed">
@@ -428,19 +425,19 @@ export default function WigoExpress() {
 
             <div className="lg:w-1/2 flex flex-col sm:flex-row gap-12 sm:gap-24 lg:justify-end text-sm">
               <div className="flex flex-col gap-4">
-                <h4 className="font-extrabold uppercase tracking-widest text-[#4D80C4] mb-2 border-b border-white/10 pb-4">Roulez</h4>
+                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2 border-b border-white/10 pb-4">Roulez</h4>
                 <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Rechercher</Link>
                 <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Proposer</Link>
                 <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Trajets populaires</Link>
               </div>
               <div className="flex flex-col gap-4">
-                <h4 className="font-extrabold uppercase tracking-widest text-[#4D80C4] mb-2 border-b border-white/10 pb-4">Découvrez</h4>
+                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2 border-b border-white/10 pb-4">Découvrez</h4>
                 <Link href="#" className="text-neutral-400 hover:text-white transition-colors">La sécurité (KYC)</Link>
                 <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Portefeuille Digital</Link>
                 <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Assurances</Link>
               </div>
               <div className="flex flex-col gap-4">
-                <h4 className="font-extrabold uppercase tracking-widest text-[#4D80C4] mb-2 border-b border-white/10 pb-4">Société</h4>
+                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2 border-b border-white/10 pb-4">Société</h4>
                 <Link href="#" className="text-neutral-400 hover:text-white transition-colors">À Propos</Link>
                 <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Presse</Link>
                 <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Contact</Link>
