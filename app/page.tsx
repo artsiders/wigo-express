@@ -331,7 +331,7 @@ export default function WigoExpress() {
         <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div className="container mx-auto relative z-10 flex flex-col items-center justify-center text-center">
-          <h1 className="hero-text-elem relative text-center text-4xl font-black sm:text-5xl lg:text-7xl max-w-7xl container mx-auto justify-center leading-tight md:mt-16 mb-8">
+          <h1 className="hero-text-elem uppercase relative text-center text-4xl font-black sm:text-5xl lg:text-7xl max-w-7xl container mx-auto justify-center leading-tight md:mt-16 mb-8">
             Le covoiturage, enfin
             <br />
             <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
