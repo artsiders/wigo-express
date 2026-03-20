@@ -590,10 +590,10 @@ export default function WigoExpress() {
 
           {/* Right Illustrations / Pinned during scroll */}
           <div className="sticky-illustrator hidden lg:flex h-screen items-center justify-center overflow-visible w-full sticky top-0">
-            <div className="w-full max-w-[500px] aspect-4/5 relative">
+            <div className="w-full aspect-4/3 relative">
               {/* Illus 1 : Search Map UI */}
               <div className="illust-step absolute inset-0 bg-white rounded-[2.5rem] shadow-2xl border border-neutral-100 overflow-hidden flex flex-col">
-                <div className="w-full h-[55%] bg-light relative overflow-hidden">
+                <div className="w-full h-[50%] xl:h-[55%] bg-light relative overflow-hidden shrink-0">
                   <Image
                     src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop"
                     alt="Carte avec des marqueurs"
@@ -601,115 +601,144 @@ export default function WigoExpress() {
                     className="object-cover opacity-80 mix-blend-multiply grayscale-20%"
                   />
                   {/* Decorative map pins */}
-                  <div className="absolute top-1/3 left-1/3 w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
-                    <div className="w-4 h-4 bg-primary rounded-full shadow-lg border-2 border-white"></div>
+                  <div className="absolute top-1/3 left-1/3 w-8 h-8 xl:w-10 xl:h-10 bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
+                    <div className="w-3 h-3 xl:w-4 xl:h-4 bg-primary rounded-full shadow-lg border-2 border-white"></div>
                   </div>
-                  <div className="absolute bottom-1/3 right-1/4 w-10 h-10 bg-dark/10 rounded-full flex items-center justify-center">
-                    <div className="w-4 h-4 bg-dark rounded-full shadow-lg border-2 border-white"></div>
+                  <div className="absolute bottom-1/3 right-1/4 w-8 h-8 xl:w-10 xl:h-10 bg-dark/10 rounded-full flex items-center justify-center">
+                    <div className="w-3 h-3 xl:w-4 xl:h-4 bg-dark rounded-full shadow-lg border-2 border-white"></div>
                   </div>
                 </div>
-                <div className="flex-1 p-8 flex flex-col justify-center bg-white">
-                  <div className="bg-light p-4 rounded-2xl flex items-center gap-4 mb-4 border border-black/5">
-                    <div className="w-12 h-12 bg-white rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center text-primary">
-                      <IoLocationOutline className="text-2xl" />
+                <div className="flex-1 p-6 xl:p-8 flex flex-col justify-center bg-white space-y-3 xl:space-y-4">
+                  <div className="bg-light p-3 xl:p-4 rounded-2xl flex items-center gap-3 xl:gap-4 border border-black/5">
+                    <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center text-primary shrink-0">
+                      <IoLocationOutline className="text-xl xl:text-2xl" />
                     </div>
                     <div className="flex-1">
-                      <div className="w-24 h-2.5 bg-neutral-200 rounded-full mb-2"></div>
-                      <div className="w-40 h-3.5 bg-neutral-800 rounded-full"></div>
+                      <div className="w-20 xl:w-24 h-2 xl:h-2.5 bg-neutral-200 rounded-full mb-1.5 xl:mb-2"></div>
+                      <div className="w-32 xl:w-40 h-2.5 xl:h-3.5 bg-neutral-800 rounded-full max-w-[80%]"></div>
                     </div>
                   </div>
-                  <div className="bg-light p-4 rounded-2xl flex items-center gap-4 border border-black/5">
-                    <div className="w-12 h-12 bg-white rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center text-primary">
-                      <IoMapOutline className="text-2xl" />
+                  <div className="bg-light p-3 xl:p-4 rounded-2xl flex items-center gap-3 xl:gap-4 border border-black/5">
+                    <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center text-primary shrink-0">
+                      <IoMapOutline className="text-xl xl:text-2xl" />
                     </div>
                     <div className="flex-1">
-                      <div className="w-24 h-2.5 bg-neutral-200 rounded-full mb-2"></div>
-                      <div className="w-32 h-3.5 bg-neutral-800 rounded-full"></div>
+                      <div className="w-20 xl:w-24 h-2 xl:h-2.5 bg-neutral-200 rounded-full mb-1.5 xl:mb-2"></div>
+                      <div className="w-28 xl:w-32 h-2.5 xl:h-3.5 bg-neutral-800 rounded-full max-w-[70%]"></div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Illus 2 : KYC Trust Badge ID */}
-              <div className="illust-step absolute inset-0 bg-dark rounded-[2.5rem] shadow-2xl border border-neutral-800 p-10 flex flex-col items-center justify-center text-white origin-bottom">
-                {/* ID Card abstract representation */}
-                <div className="w-[120%] h-40 absolute top-[10%] -rotate-6 bg-white/5 rounded-3xl border border-white/10 blur-[2px] pointer-events-none"></div>
-                <div className="w-full max-w-sm bg-linear-to-br from-white/10 to-transparent backdrop-blur-xl rounded-2xl border border-white/20 p-6 relative z-10 shadow-2xl mb-8 transform -rotate-2">
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="w-16 h-16 rounded-full overflow-hidden relative">
+              <div className="illust-step absolute inset-0 bg-dark rounded-[2.5rem] shadow-2xl border border-neutral-800 p-6 xl:p-10 flex flex-col items-center justify-between text-white origin-bottom pb-8 xl:pb-12 pt-6 xl:pt-10 overflow-visible z-10">
+                {/* 3D Canadian Premium ID Card that overflows top */}
+                <div className="w-[calc(100%-20px)] aspect-4/2 bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-3xl p-1.5 shadow-[0_30px_60px_rgba(0,0,0,0.6),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-3 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 -mt-16 xl:-mt-20">
+                    <Image
+                      src="/images/canada-flag-icon.png"
+                      alt="Canada"
+                      width={300}
+                      height={300}
+                      className="object-contain absolute bottom-0 right-0 w-42 h-42 -rotate-45 opacity-10"
+                    />
+                  {/* Inner card with noise/texture feel */}
+                  <div className="border border-neutral-200/60 rounded-2xl p-4 xl:p-6 h-full relative z-10 overflow-hidden">
+                    {/* Subtle Canadian flags/accents holograms */}
+                    <div className="absolute -top-10 -right-10 w-32 h-32 bg-red-400/20 rounded-full blur-2xl pointer-events-none"></div>
+                    <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                    <div className="flex justify-between items-start">
+                      {/* canada flag */}
                       <Image
-                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
-                        alt="Conducteur"
-                        fill
-                        className="object-cover"
+                        src="/images/canada-flag.png"
+                        alt="Canada"
+                        width={30}
+                        height={30}
+                        className="object-contain"
                       />
+                      <IoShieldCheckmarkOutline className="w-6 h-6 xl:w-8 xl:h-8 text-green-700 drop-shadow-[0_0_12px_rgba(34,197,94,0.4)]" />
                     </div>
-                    <IoShieldCheckmarkOutline className="w-8 h-8 text-green-500 drop-shadow-[0_0_15px_rgba(34,197,94,0.5)]" />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="w-1/2 h-2.5 bg-white/20 rounded-full"></div>
-                    <div className="w-3/4 h-2.5 bg-white/20 rounded-full"></div>
-                    <div className="w-1/3 h-2.5 bg-white/20 rounded-full"></div>
+
+                    <div className="flex gap-4 xl:gap-5 items-start relative z-10">
+                      <div className="w-46 h-46 aspect-square rounded-xl overflow-hidden relative shadow-lg shrink-0">
+                        <Image
+                          src="/images/profile.jpg"
+                          alt="Conducteur"
+                          fill
+                          className="object-cover bg-neutral-100 w-full h-full"
+                        />
+                      </div>
+                      <div className="space-y-2 xl:space-y-2.5 w-full mt-2">
+                        <div className="w-1/3 h-2 xl:h-2.5 bg-neutral-300 rounded-sm"></div>
+                        <div className="w-3/4 h-2 xl:h-2.5 bg-neutral-300 rounded-sm"></div>
+                        <div className="w-1/2 h-2 xl:h-2.5 bg-neutral-300 rounded-sm"></div>
+                        <div className="w-full h-1.5 xl:h-2 bg-neutral-200/80 rounded-sm mt-3 xl:mt-4"></div>
+                        <div className="w-5/6 h-1.5 xl:h-2 bg-neutral-200/80 rounded-sm"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <div className="text-center relative z-10 mt-4">
-                  <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-400 px-4 py-2 rounded-full text-xs font-black tracking-widest mb-4 border border-green-500/20">
+                <div className="text-center relative z-10 shrink-0 mt-auto">
+                  <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-400 px-3 py-1.5 xl:px-4 xl:py-2 rounded-full text-[10px] xl:text-xs font-black tracking-widest mb-3 xl:mb-4 border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.1)]">
                     VERIFICATION WIGO
                   </div>
-                  <h3 className="text-3xl font-bold mb-3 tracking-tight">
+                  <h3 className="text-2xl xl:text-3xl font-bold mb-2 xl:mb-3 tracking-tight">
                     Identité Confirmée
                   </h3>
-                  <p className="text-neutral-400 text-sm max-w-[250px] mx-auto leading-relaxed">
+                  <p className="text-neutral-400 text-xs xl:text-sm max-w-[220px] xl:max-w-[250px] mx-auto leading-relaxed">
                     Scan passeport et permis de conduire validés avec succès.
                   </p>
                 </div>
               </div>
 
               {/* Illus 3 : Wigo Wallet */}
-              <div className="illust-step absolute inset-0 bg-primary rounded-[2.5rem] shadow-2xl border border-blue-500/30 p-10 flex flex-col justify-between text-white overflow-hidden origin-bottom">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
+              <div className="illust-step absolute inset-0 bg-primary rounded-[2.5rem] shadow-2xl border border-blue-500/30 p-6 xl:p-10 flex flex-col justify-center text-white overflow-hidden origin-bottom">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
-                <div className="relative z-10 text-center mt-6">
-                  <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 backdrop-blur-md border border-white/20 shadow-inner">
-                    <IoWalletOutline className="w-8 h-8" />
+                <div className="relative z-10 text-center flex-1 flex flex-col justify-center pb-4 xl:pb-6">
+                  <div className="w-12 h-12 xl:w-16 xl:h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 xl:mb-6 backdrop-blur-md border border-white/20 shadow-inner">
+                    <IoWalletOutline className="w-6 h-6 xl:w-8 xl:h-8" />
                   </div>
-                  <h3 className="text-xs font-bold opacity-80 mb-2 uppercase tracking-widest">
+                  <h3 className="text-[10px] xl:text-xs font-bold opacity-80 mb-1 xl:mb-2 uppercase tracking-widest">
                     Solde Disponible
                   </h3>
-                  <h2 className="text-6xl font-black mb-1 tracking-tighter drop-shadow-md">
+                  <h2 className="text-5xl xl:text-6xl font-black mb-1 tracking-tighter drop-shadow-md">
                     244.50 $
                   </h2>
-                  <p className="text-xs font-bold text-blue-200 tracking-wider">
+                  <p className="text-[10px] xl:text-xs font-bold text-blue-200 tracking-wider">
                     CAD
                   </p>
                 </div>
 
-                <div className="relative z-10 space-y-4 mt-10">
-                  <div className="bg-white/10 w-full p-5 rounded-2xl backdrop-blur-md border border-white/20 flex justify-between items-center transform transition-all hover:scale-[1.02] cursor-pointer shadow-lg">
+                <div className="relative z-10 space-y-3 xl:space-y-4 w-full max-w-sm mx-auto shrink-0">
+                  <div className="bg-white/10 w-full p-4 xl:p-5 rounded-2xl backdrop-blur-md border border-white/20 flex justify-between items-center transform transition-all hover:scale-[1.02] cursor-pointer shadow-lg">
                     <div className="text-left">
-                      <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-1.5">
+                      <p className="text-[9px] xl:text-[10px] font-black text-blue-200 uppercase tracking-widest mb-1 xl:mb-1.5">
                         Reçu hier
                       </p>
-                      <p className="font-bold text-sm tracking-tight">
+                      <p className="font-bold text-xs xl:text-sm tracking-tight text-white">
                         Trajet Montréal - Québec
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-black text-xl text-green-300 drop-shadow-[0_0_10px_rgba(134,239,172,0.3)]">
+                    <div className="text-right shrink-0 ml-2">
+                      <p className="font-black text-lg xl:text-xl text-green-300 drop-shadow-[0_0_10px_rgba(134,239,172,0.3)]">
                         + 45.00 $
                       </p>
                     </div>
                   </div>
-                  <div className="bg-black/10 w-full p-4 rounded-xl backdrop-blur-md border border-transparent flex justify-between items-center opacity-70">
+                  <div className="bg-black/10 w-full p-3 xl:p-4 rounded-xl backdrop-blur-md border border-transparent flex justify-between items-center opacity-70">
                     <div className="text-left">
-                      <p className="text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1">
+                      <p className="text-[9px] xl:text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1 text-white">
                         Il y a 3 jours
                       </p>
-                      <p className="font-semibold text-sm">Paiement trajet</p>
+                      <p className="font-semibold text-xs xl:text-sm text-white">
+                        Paiement trajet
+                      </p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-bold text-lg text-white">- 35.00 $</p>
+                    <div className="text-right shrink-0 ml-2">
+                      <p className="font-bold text-base xl:text-lg text-white">
+                        - 35.00 $
+                      </p>
                     </div>
                   </div>
                 </div>
