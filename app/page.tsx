@@ -123,7 +123,7 @@ export default function WigoExpress() {
             scrollTrigger: {
               trigger: elem,
               start: "top 85%",
-              toggleActions: "play reverse play reverse",
+              once: true,
             },
           },
         );
@@ -506,7 +506,7 @@ export default function WigoExpress() {
       </section>
 
       {/*  NARRATIVE SCROLL : HOW IT WORKS / KYC (Pinned GSAP Section) */}
-      <section className="steps-container relative w-full bg-white z-20 py-20 lg:py-0 border-t border-black/5">
+      <section id="comment-ca-marche" className="steps-container relative w-full bg-white z-20 py-20 lg:py-0 border-t border-black/5">
         <div className="container mx-auto px-6 pt-10 lg:pt-32 text-center lg:text-left z-20 relative">
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-tight text-dark text-center">
             Comment ça marche ?
@@ -805,8 +805,97 @@ export default function WigoExpress() {
         </div>
       </section>
 
-      {/*  DARK MODE SECTION : Vehicles Focus Web Layout */}
-      <section className="dark-mode-section bg-[url(/images/bg-texture.png)] relative py-32 px-6 flex flex-col items-center text-center overflow-hidden">
+      {/*  NEW SECTION : CÔTÉ CONDUCTEUR (Drivers Pitch) */}
+      <section id="conducteur" className="relative w-full bg-light-400 z-20 overflow-hidden py-32 border-t border-black/5">
+        <div className="absolute top-0 right-1/4 w-[40vw] h-[40vw] bg-primary/10 rounded-full blur-[140px] pointer-events-none -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-[50vw] h-[20vw] bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none translate-y-1/2"></div>
+        
+        <div className="container mx-auto px-6 relative z-10 flex flex-col items-center">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-6 text-dark leading-tight reveal-fade">
+              Rentabilisez vos trajets <br />
+              <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
+                sans aucun effort.
+              </span>
+            </h2>
+            <p className="text-neutral-500 text-lg md:text-xl font-medium max-w-2xl mx-auto reveal-fade">
+              Rejoignez le réseau de conducteurs Wigo Express. Vous conduisez, nous nous chargeons de remplir votre véhicule avec des passagers fiables et vérifiés.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10 w-full max-w-7xl">
+            {/* Card 1 */}
+            <div className="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-500 reveal-fade relative overflow-hidden group">
+              <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10 border border-primary/20">
+                <IoWalletOutline className="w-7 h-7" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-dark mb-4 tracking-tight">Paiement Garanti</h3>
+                <p className="text-neutral-500 font-medium leading-relaxed">
+                  Fini les passagers qui annulent à la dernière minute sans payer. L'argent est sécurisé lors de la réservation et vous est reversé automatiquement.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2 : Highlighted Digital Experience */}
+            <div className="bg-dark text-white rounded-[2.5rem] squircle p-8 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.2)] md:-translate-y-6 hover:-translate-y-8 transition-transform duration-500 reveal-fade relative overflow-hidden border border-white/10">
+              <div className="absolute inset-0 mesh-bg-creative opacity-20 pointer-events-none mix-blend-screen scale-150 animate-pulse-glow"></div>
+              
+              <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-10 border border-white/20 relative z-10">
+                <IoShieldCheckmarkOutline className="w-7 h-7" />
+              </div>
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-2 bg-green-500/20 text-green-400 px-3 py-1.5 rounded-full text-[10px] font-black tracking-widest mb-4 border border-green-500/30">
+                  PAIX D'ESPRIT
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Passagers Vérifiés</h3>
+                <p className="text-neutral-400 font-medium leading-relaxed mb-6">
+                  Vous ne prenez pas de preneurs au hasard. Chaque identité est rigoureusement confirmée par notre système KYC premium avant la réservation.
+                </p>
+                <div className="w-full flex -space-x-3">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-dark bg-neutral-800 overflow-hidden relative shadow-lg">
+                      <Image 
+                        src={`https://images.unsplash.com/photo-${1505000000000 + i * 100000}?q=80&w=100&auto=format&fit=crop`} 
+                        alt="Passager" 
+                        fill 
+                        className="object-cover"
+                      />
+                    </div>
+                  ))}
+                  <div className="w-10 h-10 rounded-full border-2 border-dark bg-white/10 text-xs font-bold flex items-center justify-center backdrop-blur-sm">
+                    +2k
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-500 reveal-fade relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-full h-1 bg-linear-to-l from-transparent via-yellow-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-14 h-14 bg-yellow-400/10 rounded-2xl flex items-center justify-center text-yellow-600 mb-10 border border-yellow-400/20">
+                <IoCalendarOutline className="w-7 h-7" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-dark mb-4 tracking-tight">Flexibilité Totale</h3>
+                <p className="text-neutral-500 font-medium leading-relaxed">
+                  C'est votre voiture, ce sont vos règles. Décidez quand vous partez, combien de sièges vous offrez et acceptez ou refusez les demandes librement.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-16 text-center reveal-fade">
+             <button className="btn-primary">
+                Devenir Conducteur 
+             </button>
+          </div>
+        </div>
+      </section>
+
+      {/*  DARK MODE SECTION : Vehicles Focus Web Layout (VOYAGEUR) */}
+      <section id="voyageur" className="dark-mode-section bg-[url(/images/bg-texture.png)] relative py-32 px-6 flex flex-col items-center text-center overflow-hidden border-t border-white/5">
         <div className="container mx-auto z-10">
           <div className="mb-16">
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">

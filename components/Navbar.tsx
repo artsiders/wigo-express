@@ -23,28 +23,22 @@ export default function Navbar() {
         {/* Center Links */}
         <div className="hidden lg:flex gap-10 items-center text-sm font-semibold text-current opacity-80">
           <Link
-            href="/search"
+            href="#comment-ca-marche"
             className="hover:text-primary hover:opacity-100 transition-all"
           >
-            Rechercher
+            Comment ça marche
           </Link>
           <Link
-            href="/publish"
+            href="#voyageur"
             className="hover:text-primary hover:opacity-100 transition-all"
           >
-            Publier
+            Côté Voyageur
           </Link>
           <Link
-            href="/safety"
+            href="#conducteur"
             className="hover:text-primary hover:opacity-100 transition-all"
           >
-            Sécurité KYC
-          </Link>
-          <Link
-            href="/wallet"
-            className="hover:text-primary hover:opacity-100 transition-all"
-          >
-            Portefeuille Wigo
+            Côté Conducteur
           </Link>
         </div>
 
