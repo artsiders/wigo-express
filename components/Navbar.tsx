@@ -5,7 +5,7 @@ import { IoChevronForward } from "react-icons/io5";
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 transition-all">
+    <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] container z-50 transition-all">
       <div className="nav-bg absolute inset-0 bg-white rounded-full border border-black/5 shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-colors duration-1000"></div>
       <div className="relative z-10 px-6 py-3 md:py-4 flex justify-between items-center w-full">
         {/* Logo */}
