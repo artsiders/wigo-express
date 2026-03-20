@@ -634,13 +634,13 @@ export default function WigoExpress() {
               <div className="illust-step absolute inset-0 bg-dark rounded-[2.5rem] shadow-2xl border border-neutral-800 p-6 xl:p-10 flex flex-col items-center justify-between text-white origin-bottom pb-8 xl:pb-12 pt-6 xl:pt-10 overflow-visible z-10">
                 {/* 3D Canadian Premium ID Card that overflows top */}
                 <div className="w-[calc(100%-20px)] aspect-4/2 bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-3xl p-1.5 shadow-[0_30px_60px_rgba(0,0,0,0.6),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-3 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 -mt-16 xl:-mt-20">
-                    <Image
-                      src="/images/canada-flag-icon.png"
-                      alt="Canada"
-                      width={300}
-                      height={300}
-                      className="object-contain absolute bottom-0 right-0 w-42 h-42 -rotate-45 opacity-10"
-                    />
+                  <Image
+                    src="/images/canada-flag-icon.png"
+                    alt="Canada"
+                    width={300}
+                    height={300}
+                    className="object-contain absolute bottom-0 right-0 w-42 h-42 -rotate-45 opacity-10"
+                  />
                   {/* Inner card with noise/texture feel */}
                   <div className="border border-neutral-200/60 rounded-2xl p-4 xl:p-6 h-full relative z-10 overflow-hidden">
                     {/* Subtle Canadian flags/accents holograms */}
@@ -668,12 +668,61 @@ export default function WigoExpress() {
                           className="object-cover bg-neutral-100 w-full h-full"
                         />
                       </div>
+                      {/* Info conducteur + éléments visuels */}
                       <div className="space-y-2 xl:space-y-2.5 w-full mt-2">
-                        <div className="w-1/3 h-2 xl:h-2.5 bg-neutral-300 rounded-sm"></div>
-                        <div className="w-3/4 h-2 xl:h-2.5 bg-neutral-300 rounded-sm"></div>
-                        <div className="w-1/2 h-2 xl:h-2.5 bg-neutral-300 rounded-sm"></div>
-                        <div className="w-full h-1.5 xl:h-2 bg-neutral-200/80 rounded-sm mt-3 xl:mt-4"></div>
-                        <div className="w-5/6 h-1.5 xl:h-2 bg-neutral-200/80 rounded-sm"></div>
+                        {/* Nom conducteur */}
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-lg xl:text-xl text-neutral-800">
+                            Jean Tremblay
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-500/30 text-green-600 text-xs rounded-full">
+                            <IoShieldCheckmarkOutline className="w-4 h-4" />{" "}
+                            Vérifié
+                          </span>
+                        </div>
+                        {/* Icônes étoile & note */}
+                        <div className="flex items-center gap-1 text-yellow-400">
+                          {[...Array(5)].map((_, i) => (
+                            <svg
+                              key={i}
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 w-4"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.165c.969 0 1.371 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.287 3.958c.3.921-.755 1.688-1.54 1.118l-3.371-2.448a1 1 0 00-1.175 0l-3.371 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.958a1 1 0 00-.364-1.118L2.07 9.385c-.783-.57-.38-1.81.588-1.81h4.165a1 1 0 00.95-.69l1.286-3.958z" />
+                            </svg>
+                          ))}
+                          <span className="font-semibold text-neutral-700 ml-2">
+                            4.8/5
+                          </span>
+                        </div>
+                        {/* Expérience */}
+                        <div className="flex items-center gap-2 text-sm text-neutral-600">
+                          <IoMapOutline className="w-5 h-5" />
+                          <span>+150 trajets réalisés</span>
+                        </div>
+                        {/* Document validé */}
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="text-dark flex gap-1 items-center font-bold">
+                            <svg
+                              className="w-4 h-4"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414L8.414 15l-4.121-4.121a1 1 0 011.414-1.415l2.707 2.707 7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            Pièce d'identité vérifiée
+                          </span>
+                        </div>
+                        {/* Faux numéro de permis stylisé */}
+                        <div className="mt-2 w-fit px-3 py-1 rounded bg-neutral-200/50 text-xs text-neutral-700 tracking-widest font-mono border border-neutral-400/20">
+                          Permis: QC-928183****
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -686,7 +735,8 @@ export default function WigoExpress() {
                     Identité Confirmée
                   </h3>
                   <p className="text-neutral-400 text-xs xl:text-sm max-w-[220px] xl:max-w-[250px] mx-auto leading-relaxed">
-                    Scan passeport et permis de conduire validés avec succès.
+                    Tous les conducteurs sont vérifiés grâce au scan de leur
+                    passeport et permis de conduire, pour une sécurité optimale.
                   </p>
                 </div>
               </div>
