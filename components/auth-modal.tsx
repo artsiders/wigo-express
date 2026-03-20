@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, Lock, Play, Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { IoLockOpen } from "react-icons/io5";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -59,12 +59,12 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           onClick={onClose}
           className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-black/5 hover:bg-black/10 transition-colors z-10"
         >
-          <X className="w-4 h-4 text-black/60" />
+          <i className="w-4 h-4 text-black/60" />
         </button>
 
         <div className="p-8 sm:p-10">
           <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-            <Lock className="w-8 h-8 text-emerald-600" />
+            <IoLockOpen className="w-8 h-8 text-emerald-600" />
           </div>
 
           <h2 className="text-2xl font-bold text-center text-gray-900 mb-2 font-sans tracking-tight">
@@ -82,7 +82,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               className="w-full relative flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-gray-100 rounded-full text-sm font-bold text-gray-900 hover:border-black/20 hover:bg-gray-50 transition-all font-sans disabled:opacity-50 disabled:cursor-not-allowed group"
             >
               {isLoadingGoogle ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <i className="w-5 h-5 animate-spin" />
               ) : (
                 <div className="w-5 h-5 relative shrink-0 transition-transform">
                   <Image

@@ -17,6 +17,8 @@ import {
   IoCalendarOutline,
   IoPersonOutline,
   IoArrowForwardOutline,
+  IoCheckmarkOutline,
+  IoStar,
 } from "react-icons/io5";
 
 if (typeof window !== "undefined") {
@@ -683,15 +685,7 @@ export default function WigoExpress() {
                         {/* Icônes étoile & note */}
                         <div className="flex items-center gap-1 text-yellow-400">
                           {[...Array(5)].map((_, i) => (
-                            <svg
-                              key={i}
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-4 w-4"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.165c.969 0 1.371 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.287 3.958c.3.921-.755 1.688-1.54 1.118l-3.371-2.448a1 1 0 00-1.175 0l-3.371 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.958a1 1 0 00-.364-1.118L2.07 9.385c-.783-.57-.38-1.81.588-1.81h4.165a1 1 0 00.95-.69l1.286-3.958z" />
-                            </svg>
+                            <IoStar key={i} className="h-4 w-4" />
                           ))}
                           <span className="font-semibold text-neutral-700 ml-2">
                             4.8/5
@@ -699,23 +693,11 @@ export default function WigoExpress() {
                         </div>
                         {/* Expérience */}
                         <div className="flex items-center gap-2 text-sm text-neutral-600">
-                          <IoMapOutline className="w-5 h-5" />
                           <span>+150 trajets réalisés</span>
                         </div>
                         {/* Document validé */}
                         <div className="flex items-center gap-2 mt-2">
-                          <span className="text-dark flex gap-1 items-center font-bold">
-                            <svg
-                              className="w-4 h-4"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M16.707 5.293a1 1 0 010 1.414L8.414 15l-4.121-4.121a1 1 0 011.414-1.415l2.707 2.707 7.293-7.293a1 1 0 011.414 0z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
+                          <span className="text-dark font-bold">
                             Pièce d'identité vérifiée
                           </span>
                         </div>
