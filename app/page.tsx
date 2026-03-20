@@ -127,58 +127,91 @@ export default function WigoExpress() {
         );
       });
 
-      // 4. 🌟 PINNED NARRATIVE SCROLL (How it Works & KYC)
-      // Ne fonctionne que sur desktop pour l'expérience (sur mobile on stack simplement)
+      // 4. 🌟 NARRATIVE SCROLL (How it Works & KYC) - SIMPLE & CLEAR
       ScrollTrigger.matchMedia({
         "(min-width: 1024px)": function () {
-          ScrollTrigger.create({
-            trigger: ".steps-container",
-            start: "top top",
-            end: "bottom bottom",
-            pin: ".sticky-illustrator",
-            pinSpacing: false,
+          const steps = gsap.utils.toArray(".step-item") as HTMLElement[];
+          const illustrations = gsap.utils.toArray(".illust-step") as HTMLElement[];
+
+          // Base state for illustrations: simple crossfade + subtle vertical slide
+          gsap.set(illustrations, { 
+             opacity: 0, 
+             y: 20, 
+             zIndex: 0
+          });
+          gsap.set(illustrations[0] as HTMLElement, { 
+             opacity: 1, 
+             y: 0, 
+             zIndex: 10
           });
 
-          const steps = gsap.utils.toArray(".step-item");
+          // Inside text base states
+          steps.forEach(step => {
+             const title = step.querySelector('h2');
+             const desc = step.querySelector('p');
+             const badge = step.querySelector('.step-badge');
+             if(title) gsap.set(title, { color: "#d4d4d4" }); // neutral-300
+             if(desc) gsap.set(desc, { color: "#a3a3a3" }); // neutral-400
+             if(badge) gsap.set(badge, { opacity: 0.4, filter: "grayscale(100%)" });
+          });
+          
+          const firstTitle = steps[0].querySelector('h2');
+          const firstDesc = steps[0].querySelector('p');
+          const firstBadge = steps[0].querySelector('.step-badge');
+          if(firstTitle) gsap.set(firstTitle, { color: "#111111" });
+          if(firstDesc) gsap.set(firstDesc, { color: "#525252" });
+          if(firstBadge) gsap.set(firstBadge, { opacity: 1, filter: "grayscale(0%)" });
+
           steps.forEach((step: any, i) => {
             ScrollTrigger.create({
               trigger: step,
-              start: "top 50%", // Quand le texte arrive au centre
-              end: "bottom 50%", // Quand il le quitte
-              onEnter: () => {
-                gsap.to(step, { opacity: 1, x: 20, duration: 0.5 });
-                gsap.to(`.illust-step`, {
-                  opacity: 0,
-                  scale: 0.95,
-                  duration: 0.5,
-                });
-                gsap.to(`.illust-step-${i}`, {
-                  opacity: 1,
-                  scale: 1,
-                  duration: 0.5,
-                  ease: "back.out(1.5)",
-                });
-              },
-              onEnterBack: () => {
-                gsap.to(step, { opacity: 1, x: 20, duration: 0.5 });
-                gsap.to(`.illust-step`, {
-                  opacity: 0,
-                  scale: 0.95,
-                  duration: 0.5,
-                });
-                gsap.to(`.illust-step-${i}`, {
-                  opacity: 1,
-                  scale: 1,
-                  duration: 0.5,
-                  ease: "back.out(1.5)",
-                });
-              },
-              onLeave: () =>
-                gsap.to(step, { opacity: 0.2, x: 0, duration: 0.5 }),
-              onLeaveBack: () =>
-                gsap.to(step, { opacity: 0.2, x: 0, duration: 0.5 }),
+              start: "top 50%", 
+              end: "bottom 50%",
+              onEnter: () => activateStep(i),
+              onEnterBack: () => activateStep(i),
             });
           });
+
+          function activateStep(index: number) {
+            // Text Anims
+            steps.forEach((s) => {
+               const t = s.querySelector('h2');
+               const d = s.querySelector('p');
+               const b = s.querySelector('.step-badge');
+               if(t) gsap.to(t, { color: "#d4d4d4", duration: 0.3 });
+               if(d) gsap.to(d, { color: "#a3a3a3", duration: 0.3 });
+               if(b) gsap.to(b, { opacity: 0.4, filter: "grayscale(100%)", duration: 0.3 });
+            });
+
+            const stepElem = steps[index];
+            const currentTitle = stepElem.querySelector('h2');
+            const currentDesc = stepElem.querySelector('p');
+            const currentBadge = stepElem.querySelector('.step-badge');
+            if(currentTitle) gsap.to(currentTitle, { color: "#111111", duration: 0.3 });
+            if(currentDesc) gsap.to(currentDesc, { color: "#525252", duration: 0.3 });
+            if(currentBadge) gsap.to(currentBadge, { opacity: 1, filter: "grayscale(0%)", duration: 0.3 });
+
+            // Illustrations Anims
+            illustrations.forEach((illus: any, i) => {
+              if (i === index) {
+                gsap.to(illus, { 
+                   opacity: 1, 
+                   y: 0, 
+                   duration: 0.5, 
+                   ease: "power2.out",
+                   zIndex: 10
+                });
+              } else {
+                gsap.to(illus, { 
+                   opacity: 0, 
+                   y: i < index ? -20 : 20, 
+                   duration: 0.4, 
+                   ease: "power2.inOut",
+                   zIndex: i
+                });
+              }
+            });
+          }
         },
       });
 
@@ -235,7 +268,7 @@ export default function WigoExpress() {
   return (
     <div
       ref={container}
-      className="bg-[#f8f9fa] text-[#111] overflow-hidden transition-colors duration-1000"
+      className="bg-[#f8f9fa] text-[#111] overflow-clip transition-colors duration-1000"
     >
       {/* PREMIUM MULTI-LAYERED NAVBAR (Extracted to component) */}
       <Navbar />
@@ -422,124 +455,188 @@ export default function WigoExpress() {
       </section>
 
       {/*  NARRATIVE SCROLL : HOW IT WORKS / KYC (Pinned GSAP Section) */}
-      <section className="steps-container relative w-full bg-[#fbfbfb] border-t border-black/5 z-20">
-        <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <section className="steps-container relative w-full bg-white z-20 py-20 lg:py-0 border-t border-black/5">
+        <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 relative">
           {/* Left Text / The scrolling steps */}
-          <div className="lg:py-[30vh] flex flex-col gap-[30vh]">
-            <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
-              <span className="text-primary font-black text-xl mb-4">
-                01. Trouvez votre trajet
-              </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">
-                Le bon départ, au bon moment.
-              </h2>
-              <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg">
-                Indiquez votre destination et découvrez instantanément les
-                trajets disponibles. Nous mettons en avant les conducteurs les
-                mieux notés pour vous garantir un voyage agréable et serein.
-              </p>
+          <div className="lg:py-[30vh] flex flex-col gap-16 lg:gap-[15vh] relative z-10 w-full max-w-xl mx-auto lg:mx-0">
+            {/* Step 1 */}
+            <div className="step-item relative min-h-auto lg:min-h-[40vh] flex flex-col justify-center py-6 transition-colors">
+              <div className="absolute top-10 -translate-y-1/2 left-0 text-[180px] lg:text-[250px] font-black text-[#111] opacity-5 pointer-events-none leading-none z-0 tracking-tighter select-none">
+                01
+              </div>
+              <div className="relative z-10">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-[#111]">
+                  Le bon départ, <br />
+                  <span className="text-neutral-500 lg:text-current">au bon moment.</span>
+                </h2>
+                <p className="text-lg md:text-xl text-neutral-600 font-medium pt-2 max-w-lg">
+                  Indiquez votre destination et découvrez instantanément les trajets disponibles. Nous mettons en avant les conducteurs les mieux notés pour vous garantir un voyage agréable et serein.
+                </p>
+              </div>
             </div>
 
-            <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
-              <span className="text-green-600 font-black text-xl mb-4">
-                02. Sécurité absolue
-              </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">
-                Une communauté de confiance.
-              </h2>
-              <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg mb-8">
-                Pièce d'identité, permis de conduire et historique : chaque
-                membre est contrôlé avant de pouvoir réserver ou prendre le
-                volant. Vous voyagez toujours avec des personnes fiables.
-              </p>
-              <div className="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-neutral-100">
-                <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-green-600">
-                  <IoShieldCheckmarkOutline className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-sm">Identité Contrôlée</h4>
-                  <p className="text-xs text-neutral-400">
-                    Badge de confiance validé
-                  </p>
+            {/* Step 2 */}
+            <div className="step-item relative min-h-auto lg:min-h-[40vh] flex flex-col justify-center py-6 transition-colors">
+              <div className="absolute top-10 -translate-y-1/2 left-0 text-[180px] lg:text-[250px] font-black text-[#111] opacity-5 pointer-events-none leading-none z-0 tracking-tighter select-none">
+                02
+              </div>
+              <div className="relative z-10">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-[#111]">
+                  Une communauté <br />
+                  <span className="text-neutral-500 lg:text-current">de confiance.</span>
+                </h2>
+                <p className="text-lg md:text-xl text-neutral-600 font-medium mb-8 pt-2 max-w-lg">
+                  Pièce d'identité, permis de conduire et historique : chaque membre est contrôlé avant de pouvoir réserver ou prendre le volant. Vous voyagez toujours avec des personnes fiables.
+                </p>
+                <div className="step-badge flex items-center gap-4 bg-[#f8f9fa] p-4 rounded-2xl border border-black/5 w-max">
+                  <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center text-green-600">
+                    <IoShieldCheckmarkOutline className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm text-[#111]">Identité Contrôlée</h4>
+                    <p className="text-xs text-neutral-500 font-medium">Badge de confiance validé</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
-              <span className="text-primary font-black text-xl mb-4">
-                03. Paiement garanti
-              </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">
-                Réglez sans y penser.
-              </h2>
-              <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg">
-                Pas besoin de monnaie en voiture. Votre place est payée en ligne
-                lors de la réservation et transférée automatiquement au
-                conducteur à l'arrivée. Le paiement est 100% sécurisé.
-              </p>
+            {/* Step 3 */}
+            <div className="step-item relative min-h-auto lg:min-h-[40vh] flex flex-col justify-center py-6 transition-colors">
+              <div className="absolute top-10 -translate-y-1/2 left-0 text-[180px] lg:text-[250px] font-black text-[#111] opacity-5 pointer-events-none leading-none z-0 tracking-tighter select-none">
+                03
+              </div>
+              <div className="relative z-10">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-[#111]">
+                  Réglez sans <br />
+                  <span className="text-neutral-500 lg:text-current">y penser.</span>
+                </h2>
+                <p className="text-lg md:text-xl text-neutral-600 font-medium pt-2 max-w-lg">
+                  Pas besoin de monnaie en voiture. Votre place est payée en ligne lors de la réservation et transférée automatiquement au conducteur à l'arrivée. Le paiement est 100% sécurisé.
+                </p>
+              </div>
             </div>
           </div>
 
           {/* Right Illustrations / Pinned during scroll */}
-          <div className="sticky-illustrator hidden lg:flex h-screen items-center justify-center sticky top-0 overflow-hidden">
-            <div
-              className="w-full max-w-lg aspect-square relative float-parallax"
-              data-speed="0.2"
-            >
+          <div className="sticky-illustrator hidden lg:flex h-screen items-center justify-center overflow-visible w-full sticky top-0">
+            <div className="w-full max-w-[500px] aspect-[4/5] relative">
+              
               {/* Illus 1 : Search Map UI */}
-              <div className="illust-step illust-step-0 absolute inset-0 bg-white rounded-[3rem] shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-neutral-100 p-8 flex flex-col overflow-hidden">
-                <div className="w-full h-1/2 bg-[#f8f9fa] rounded-2xl relative mb-4 overflow-hidden">
+              <div className="illust-step absolute inset-0 bg-white rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.08)] border border-neutral-100 overflow-hidden flex flex-col">
+                <div className="w-full h-[55%] bg-[#f8f9fa] relative overflow-hidden">
                   <Image
                     src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop"
                     alt="Carte avec des marqueurs"
                     fill
-                    className="object-cover opacity-80"
+                    className="object-cover opacity-80 mix-blend-multiply grayscale-[20%]"
                   />
+                  {/* Decorative map pins */}
+                  <div className="absolute top-1/3 left-1/3 w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
+                    <div className="w-4 h-4 bg-primary rounded-full shadow-lg border-2 border-white"></div>
+                  </div>
+                  <div className="absolute bottom-1/3 right-1/4 w-10 h-10 bg-[#111]/10 rounded-full flex items-center justify-center">
+                    <div className="w-4 h-4 bg-[#111] rounded-full shadow-lg border-2 border-white"></div>
+                  </div>
                 </div>
-                <div className="bg-[#f8f9fa] p-4 rounded-xl flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary rounded-lg"></div>
-                  <div className="flex-1">
-                    <div className="w-2/3 h-4 bg-neutral-200 rounded mb-2"></div>
-                    <div className="w-1/3 h-3 bg-neutral-200 rounded"></div>
+                <div className="flex-1 p-8 flex flex-col justify-center bg-white">
+                  <div className="bg-[#f8f9fa] p-4 rounded-2xl flex items-center gap-4 mb-4 border border-black/5">
+                    <div className="w-12 h-12 bg-white rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center text-primary">
+                      <IoLocationOutline className="text-2xl" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="w-24 h-2.5 bg-neutral-200 rounded-full mb-2"></div>
+                      <div className="w-40 h-3.5 bg-neutral-800 rounded-full"></div>
+                    </div>
+                  </div>
+                  <div className="bg-[#f8f9fa] p-4 rounded-2xl flex items-center gap-4 border border-black/5">
+                     <div className="w-12 h-12 bg-white rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center text-primary">
+                      <IoMapOutline className="text-2xl" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="w-24 h-2.5 bg-neutral-200 rounded-full mb-2"></div>
+                      <div className="w-32 h-3.5 bg-neutral-800 rounded-full"></div>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Illus 2 : KYC Trust Badge ID */}
-              <div className="illust-step illust-step-1 absolute inset-0 bg-[#0a0a0a] rounded-[3rem] shadow-[0_40px_80px_rgba(34,197,94,0.1)] border border-neutral-800 p-8 flex flex-col items-center justify-center text-white opacity-0 scale-95">
-                <div className="w-32 h-32 rounded-full border-4 border-green-500 mb-6 relative overflow-hidden flex items-center justify-center shadow-[0_0_40px_rgba(34,197,94,0.4)]">
-                  <Image
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
-                    alt="Scan visage KYC"
-                    fill
-                    className="object-cover opacity-60"
-                  />
-                  <IoShieldCheckmarkOutline className="w-12 h-12 text-green-400 absolute z-10" />
+              <div className="illust-step absolute inset-0 bg-[#050505] rounded-[2.5rem] shadow-[0_30px_100px_rgba(22,163,74,0.15)] border border-neutral-800 p-10 flex flex-col items-center justify-center text-white origin-bottom">
+                
+                {/* ID Card abstract representation */}
+                <div className="w-[120%] h-40 absolute top-[10%] -rotate-6 bg-white/5 rounded-3xl border border-white/10 blur-[2px] pointer-events-none"></div>
+                <div className="w-full max-w-sm bg-linear-to-br from-white/10 to-transparent backdrop-blur-xl rounded-2xl border border-white/20 p-6 relative z-10 shadow-2xl mb-8 transform -rotate-2">
+                   <div className="flex justify-between items-start mb-6">
+                      <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-green-500 relative">
+                        <Image
+                          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
+                          alt="Conducteur"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <IoShieldCheckmarkOutline className="w-8 h-8 text-green-500 drop-shadow-[0_0_15px_rgba(34,197,94,0.5)]" />
+                   </div>
+                   <div className="space-y-3">
+                     <div className="w-1/2 h-2.5 bg-white/20 rounded-full"></div>
+                     <div className="w-3/4 h-2.5 bg-white/20 rounded-full"></div>
+                     <div className="w-1/3 h-2.5 bg-white/20 rounded-full"></div>
+                   </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-2">Identité Confirmée</h3>
-                <p className="text-neutral-400 text-center">
-                  Scan passeport et permis de conduire validés par Wigo
-                  Security.
-                </p>
+
+                <div className="text-center relative z-10 mt-4">
+                  <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-400 px-4 py-2 rounded-full text-xs font-black tracking-widest mb-4 border border-green-500/20">
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    VERIFICATION WIGO
+                  </div>
+                  <h3 className="text-3xl font-bold mb-3 tracking-tight">Identité Confirmée</h3>
+                  <p className="text-neutral-400 text-sm max-w-[250px] mx-auto leading-relaxed">
+                    Scan passeport et permis de conduire validés avec succès.
+                  </p>
+                </div>
               </div>
 
               {/* Illus 3 : Wigo Wallet */}
-              <div className="illust-step illust-step-2 absolute inset-0 bg-primary rounded-[3rem] shadow-[0_40px_80px_rgba(77,128,196,0.2)] border border-[#3a659e] p-8 flex flex-col items-center justify-center text-white opacity-0 scale-95">
-                <IoWalletOutline className="w-20 h-20 mb-6 opacity-80" />
-                <h3 className="text-xl font-medium opacity-80 mb-2">
-                  Solde Wigo
-                </h3>
-                <h2 className="text-6xl font-black mb-10">244.50 $</h2>
-                <div className="bg-white/10 w-full p-4 rounded-2xl backdrop-blur flex justify-between">
-                  <div className="text-left">
-                    <p className="text-xs font-medium opacity-70">
-                      Reçu (Trajet Montréal - Québec)
-                    </p>
-                    <p className="font-bold">+ 45.00 $</p>
+              <div className="illust-step absolute inset-0 bg-primary rounded-[2.5rem] shadow-[0_30px_100px_rgba(37,99,235,0.3)] border border-blue-500/30 p-10 flex flex-col justify-between text-white overflow-hidden origin-bottom">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
+                
+                <div className="relative z-10 text-center mt-6">
+                  <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 backdrop-blur-md border border-white/20 shadow-inner">
+                    <IoWalletOutline className="w-8 h-8" />
                   </div>
-                  <IoShieldCheckmarkOutline className="w-6 h-6" />
+                  <h3 className="text-xs font-bold opacity-80 mb-2 uppercase tracking-widest">
+                    Solde Disponible
+                  </h3>
+                  <h2 className="text-6xl font-black mb-1 tracking-tighter drop-shadow-md">244.50 $</h2>
+                  <p className="text-xs font-bold text-blue-200 tracking-wider">CAD</p>
+                </div>
+
+                <div className="relative z-10 space-y-4 mt-10">
+                  <div className="bg-white/10 w-full p-5 rounded-2xl backdrop-blur-md border border-white/20 flex justify-between items-center transform transition-all hover:scale-[1.02] cursor-pointer shadow-lg">
+                    <div className="text-left">
+                      <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-1.5">
+                        Reçu hier
+                      </p>
+                      <p className="font-bold text-sm tracking-tight">Trajet Montréal - Québec</p>
+                    </div>
+                    <div className="text-right">
+                       <p className="font-black text-xl text-green-300 drop-shadow-[0_0_10px_rgba(134,239,172,0.3)]">+ 45.00 $</p>
+                    </div>
+                  </div>
+                  <div className="bg-black/10 w-full p-4 rounded-xl backdrop-blur-md border border-transparent flex justify-between items-center opacity-70">
+                    <div className="text-left">
+                      <p className="text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1">
+                        Il y a 3 jours
+                      </p>
+                      <p className="font-semibold text-sm">Paiement trajet</p>
+                    </div>
+                    <div className="text-right">
+                       <p className="font-bold text-lg text-white">- 35.00 $</p>
+                    </div>
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
