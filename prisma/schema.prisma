@@ -15,9 +15,14 @@ model User {
   password      String?
   accounts      Account[]
   sessions      Session[]
-  generations   Generation[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // Wigo Express Relations
+  vehicles     Vehicle[]
+  tripsAsDriver Trip[]    @relation("DriverTrips")
+  bookings     Booking[]
 }
 
 model Account {
@@ -55,22 +60,54 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Generation {
-  id           String   @id @default(cuid())
-  prompt       String?
-  tone         String?
-  script       String?  @db.Text
-  imageUrl     String?
-  videoUrl     String?
-  status       String   @default("PENDING") // PENDING, COMPLETED, FAILED
-  
-  // Peut être lié à un utilisateur connecté
-  userId       String?
-  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  
-  // Ou à un utilisateur anonyme (guest) via un identifiant de session local
-  guestId      String?
+model Vehicle {
+  id            String   @id @default(cuid())
+  userId        String
+  make          String
+  model         String
+  year          Int
+  licensePlate  String   @unique
+  color         String?
+  seatsCapacity Int      @default(4)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  owner         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trips         Trip[]
+}
+
+model Trip {
+  id            String   @id @default(cuid())
+  driverId      String
+  vehicleId     String
+  departureCity String
+  arrivalCity   String
+  departureDate DateTime
+  price         Float
+  totalSeats    Int
+  availableSeats Int
+  status        String   @default("SCHEDULED") // SCHEDULED, CANCELLED, COMPLETED
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  driver        User     @relation("DriverTrips", fields: [driverId], references: [id], onDelete: Cascade)
+  vehicle       Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  bookings      Booking[]
+}
+
+model Booking {
+  id            String   @id @default(cuid())
+  tripId        String
+  passengerId   String
+  bookedSeats   Int      @default(1)
+  totalPrice    Float
+  status        String   @default("PENDING") // PENDING, CONFIRMED, CANCELLED
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  trip          Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  passenger     User     @relation(fields: [passengerId], references: [id], onDelete: Cascade)
+
 }

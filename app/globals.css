@@ -1,34 +1,25 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-wigo-blue: #4D80C4;
+  --color-wigo-dark: #050505;
+  --color-wigo-card: #111111;
+  --font-sans: var(--font-outfit), Arial, Helvetica, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-wigo-dark);
+  color: #fff;
+  overscroll-behavior: none;
 }
 
-button {
-  cursor: pointer;
+/* Animations globales */
+::selection {
+  background: var(--color-wigo-blue);
+  color: #fff;
 }
 
+/* Lenis classes indispensables */
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -47,4 +38,13 @@ html.lenis, html.lenis body {
 
 .lenis.lenis-smooth iframe {
   pointer-events: none;
-}
+}
+
+/* Utilitaires pour masquer les barres de défilement */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

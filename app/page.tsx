@@ -1,795 +1,442 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-import Lenis from 'lenis';
-import { Image as ImageIcon, Layers, Zap, Mic, ArrowUpRight, Play, Star } from 'lucide-react';
+import React, { useRef, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import Lenis from "lenis";
+import { 
+  IoSearchOutline, 
+  IoWalletOutline, 
+  IoMapOutline, 
+  IoLocationOutline, 
+  IoChevronForward, 
+  IoStar, 
+  IoShieldCheckmarkOutline,
+  IoPulseOutline,
+  IoCarSportOutline,
+  IoCalendarOutline,
+  IoPersonOutline
+} from "react-icons/io5";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
-const SplitText = ({ text, className, wordClass }: { text: string; className?: string, wordClass?: string }) => {
-  return (
-    <span className={className}>
-      {text.split(" ").map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden mr-[0.25em] align-bottom pb-2">
-          <span className={`inline-block split-word translate-y-full ${wordClass || ''}`}>{word}</span>
-        </span>
-      ))}
-    </span>
-  );
-};
-
-const mockHistory = [
-  {
-    id: 1,
-    name: "Coffee Mug",
-    tone: "Humoristique",
-    date: "1j",
-    thumbnail: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=300&h=533&fit=crop"
-  },
-  {
-    id: 2,
-    name: "Laptop Pro",
-    tone: "Urgent",
-    date: "3j",
-    thumbnail: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=300&h=533&fit=crop"
-  },
-  {
-    id: 3,
-    name: "Watch Classic",
-    tone: "Luxe",
-    date: "5j",
-    thumbnail: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=300&h=533&fit=crop"
-  },
-  {
-    id: 4,
-    name: "Skincare Serum",
-    tone: "Urgent",
-    date: "1 sem",
-    thumbnail: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=300&h=533&fit=crop"
-  },
-  {
-    id: 5,
-    name: "Gaming Headset",
-    tone: "Humoristique",
-    date: "1 sem",
-    thumbnail: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=300&h=533&fit=crop"
-  }
-];
-
-export default function LandingPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
+export default function WigoExpress() {
+  const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const lenis = new Lenis();
-
+    const lenis = new Lenis({
+      lerp: 0.1,
+      smoothWheel: true,
+    });
     lenis.on('scroll', ScrollTrigger.update);
-
-    const ticker = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(ticker);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
-
     return () => {
       lenis.destroy();
-      gsap.ticker.remove(ticker);
+      gsap.ticker.remove((time) => lenis.raf(time * 1000));
     };
   }, []);
 
   useGSAP(() => {
-    // --- 1. Hero Entrance Animation ---
-    const heroTl = gsap.timeline();
-    heroTl.to(".split-word", {
-      y: 0,
-      duration: 1.2,
-      stagger: 0.04,
-      ease: "power4.out",
-      delay: 0.2
-    })
-      .fromTo(".hero-element",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1.2, stagger: 0.1, ease: "power3.out" },
-        "-=0.9"
-      );
+    // 1. Hero Animations
+    const tl = gsap.timeline();
+    tl.fromTo(".hero-text-elem", 
+      { opacity: 0, y: 40 }, 
+      { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.1 }
+    )
+    .fromTo(".search-widget", 
+      { opacity: 0, y: 50, scale: 0.98 },
+      { opacity: 1, y: 0, scale: 1, duration: 1, ease: "expo.out" },
+      "-=0.6"
+    )
+    .fromTo(".hero-floating-img", 
+      { opacity: 0, y: 80 },
+      { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: "expo.out" },
+      "-=0.8"
+    );
 
-    // --- 2. Hero Scroll Parallax ---
-    gsap.to(".hero-section", {
-      yPercent: 40,
-      opacity: 0,
-      scrollTrigger: {
-        trigger: ".hero-section",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      }
-    });
-
-    // --- 2.5 Showcase Carousel Subtle Parallax ---
-    gsap.fromTo(".carousel-track",
-      { x: "25vw" }, // Starts offset to the right
-      {
-        x: "-10vw", // Moves towards the left/center
+    // 2. Parallax Floating Elements on Scroll
+    gsap.utils.toArray(".float-parallax").forEach((el: any) => {
+      const speed = el.dataset.speed || 1;
+      gsap.to(el, {
+        yPercent: -15 * speed,
         ease: "none",
         scrollTrigger: {
-          trigger: ".carousel-section",
+          trigger: el.parentElement,
           start: "top bottom",
           end: "bottom top",
           scrub: 1,
         }
-      }
-    );
-
-    // --- 3. Pinned Transformation Section (Black to White) ---
-    const transTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".transformation-wrapper",
-        start: "top top",
-        end: () => window.innerWidth < 768 ? "+=100%" : "+=150%", // Dynamic scroll depth
-        pin: true,
-        scrub: 1,
-      }
+      });
     });
 
-    transTl
-      .fromTo(".card-static",
-        { x: "0vw", scale: 1, rotation: 0 },
-        { x: "-15vw", scale: 0.85, rotation: -6, duration: 1, ease: "power1.inOut" }
-      )
-      .fromTo(".card-reel",
-        { x: "40vw", y: "20vh", scale: 0.6, rotation: 12, opacity: 0 },
-        { x: "10vw", y: 0, scale: 1, rotation: 4, opacity: 1, zIndex: 20, duration: 1, ease: "power1.inOut" },
-        "<"
-      )
-      .to(".transformation-bg-text", { x: "-10%", duration: 1 }, "<")
-      .to(".card-reel", {
-        x: "0vw",
-        scale: 1.8,
-        rotation: 0,
-        y: "5vh",
-        duration: 1.2,
-        ease: "power2.inOut"
-      }, "+=0.2");
-
-    // --- 4. Features Section (Sidebar Pinned, Cards Scroll) ---
-    ScrollTrigger.matchMedia({
-      "(min-width: 768px)": function () {
-        ScrollTrigger.create({
-          trigger: ".features-container",
-          start: "top top",
-          end: "bottom bottom",
-          pin: ".features-sidebar",
-          pinSpacing: false
-        });
-      }
-    });
-
-    gsap.utils.toArray(".bento-card").forEach((card: any, i) => {
-      gsap.fromTo(card,
-        { opacity: 0, y: 100, scale: 0.95 },
-        {
-          opacity: 1, y: 0, scale: 1,
-          duration: 1.2,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            toggleActions: "play reverse play reverse",
-          }
-        }
-      );
-    });
-
-    // --- 5. Workflow Narrative (Sticky Stacked Cards) ---
-    const cards = gsap.utils.toArray<HTMLElement>('.workflow-card');
-    cards.forEach((card, index) => {
-      // Entrance reveal for added fluidity
-      gsap.fromTo(card,
+    // 3. Staggered Sections Fade-in
+    gsap.utils.toArray(".reveal-section").forEach((section: any) => {
+      gsap.fromTo(section, 
         { opacity: 0, y: 80 },
         {
-          opacity: 1, y: 0,
-          duration: 1.2,
-          ease: "power3.out",
+          opacity: 1, y: 0, duration: 1, ease: "power3.out",
           scrollTrigger: {
-            trigger: card,
-            start: "top 90%",
-            toggleActions: "play none none reverse"
+            trigger: section,
+            start: "top 85%",
+            toggleActions: "play reverse play reverse"
           }
         }
       );
-
-      // Parallax effect on the image 
-      const img = card.querySelector('.card-image');
-      if (img) {
-        gsap.fromTo(img,
-          { scale: 1.3 },
-          {
-            scale: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: card,
-              start: "top bottom",
-              end: "center center",
-              scrub: 1,
-            }
-          }
-        );
-      }
-
-      // Stack effect: Shrink & Blur previous card
-      if (index < cards.length - 1) {
-        gsap.fromTo(card,
-          {
-            scale: 1,
-            opacity: 1,
-            filter: "blur(0px)"
-          },
-          {
-            scale: 0.92,
-            opacity: 0.3,
-            filter: "blur(12px)",
-            ease: "none",
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: cards[index + 1],
-              start: "top 40%",
-              end: "top 15%",
-              scrub: true, // Switched to true for perfect real-time sync when scrolling up
-            }
-          }
-        );
-      }
     });
 
-    // --- 6. Footer Curtain Reveal Parallax ---
-    gsap.fromTo(".footer-content",
-      { y: "-40%" },
-      {
-        y: "0%",
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: ".footer-wrapper",
-          start: "top bottom",
-          end: "bottom bottom",
-          scrub: true,
-        }
-      }
-    );
+    // 4. Dark Mode Transition (Car Details / Web View)
+    ScrollTrigger.create({
+      trigger: ".dark-mode-section",
+      start: "top 50%",
+      end: "bottom 50%",
+      onEnter: () => gsap.to("body", { backgroundColor: "#0a0a0a", color: "#ffffff", duration: 0.8 }),
+      onLeaveBack: () => gsap.to("body", { backgroundColor: "#f8f9fa", color: "#111111", duration: 0.8 }),
+      onEnterBack: () => gsap.to("body", { backgroundColor: "#0a0a0a", color: "#ffffff", duration: 0.8 }),
+      onLeave: () => gsap.to("body", { backgroundColor: "#f8f9fa", color: "#111111", duration: 0.8 }),
+    });
 
-  }, { scope: containerRef });
+  }, { scope: container });
 
   return (
-    <div ref={containerRef} className="bg-black text-white min-h-screen font-sans selection:bg-white selection:text-black">
-
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 p-6 md:px-12 mix-blend-difference text-white flex justify-between items-center pointer-events-none">
-        <Link href="/" className="flex items-center gap-2 pointer-events-auto">
-          <div className="relative w-8 h-8 sm:w-10 sm:h-10">
-            <Image src="/images/dark-logo.png" alt="SnapToAd Logo" fill className="object-contain" priority />
+    <div ref={container} className="min-h-screen font-sans selection:bg-[#4D80C4] selection:text-white bg-[#f8f9fa] text-[#111] transition-colors duration-1000">
+      
+      {/* 🔴 NAVIGATION (Web Focus) */}
+      <nav className="fixed top-0 w-full z-50 px-6 py-4 flex justify-center backdrop-blur-xl bg-white/70 border-b border-black/5 shadow-sm transition-all">
+        <div className="container mx-auto flex justify-between items-center">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-2xl font-extrabold tracking-tight text-[#4D80C4]">
+              wigo<span className="font-light text-black">express</span>
+            </span>
+          </Link>
+          <div className="hidden lg:flex gap-8 items-center text-sm font-medium text-neutral-600">
+            <Link href="/search" className="hover:text-[#4D80C4] transition-colors">Rechercher un trajet</Link>
+            <Link href="/publish" className="hover:text-[#4D80C4] transition-colors">Publier un trajet</Link>
+            <Link href="/safety" className="hover:text-[#4D80C4] transition-colors">Confiance & Sécurité</Link>
           </div>
-          <span className="text-sm font-bold tracking-widest">SnapToAd</span>
-        </Link>
-        <Link
-          href="/create"
-          className="group relative inline-flex items-center gap-1 sm:gap-3 rounded-full bg-white p-1 pl-3 sm:pl-5 font-extrabold text-black transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] hover:scale-[1.02] hover:bg-neutral-100 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] active:scale-95 pointer-events-auto"
-          style={{ WebkitTapHighlightColor: "transparent" }}
-        >
-          <span className="text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em] pt-px whitespace-nowrap">
-            Accéder à l'App
-          </span>
-          <div className="relative flex h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 items-center justify-center overflow-hidden rounded-full bg-black text-white">
-            <ArrowUpRight className="absolute h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-x-[150%] group-hover:-translate-y-[150%]" />
-            <ArrowUpRight className="absolute h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 -translate-x-[150%] translate-y-[150%] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-x-0 group-hover:translate-y-0" />
-          </div>
-        </Link>
-      </nav>
-
-      {/* 
-        MAIN WRAPPER FOR CONTENT 
-        Crucial: Has a solid background and high z-index to block the sticky footer from showing through
-      */}
-      <div className="relative z-10 bg-[#060606] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-
-        {/* Hero Section */}
-        <section className="hero-section h-svh flex flex-col justify-center items-center text-center px-4 relative pt-16 overflow-hidden">
-          {/* Fallback Image tag to guarantee rendering */}
-          <Image
-            src="/images/landing-light.png"
-            alt="Landing Background"
-            fill
-            className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none brightness-125"
-            style={{ opacity: 1 }}
-            priority
-            sizes="100vw"
-          />
-          <Image
-            src="/images/landing-light.png"
-            alt="Landing Background"
-            fill
-            className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none brightness-125"
-            style={{ opacity: 1, transform: "scaleX(-1)" }}
-            priority
-            sizes="100vw"
-          />
-
-          <div className="relative z-10 hero-element inline-flex items-center gap-2 px-4 py-2 border-b border-white/20 text-xs text-neutral-300 mb-10 tracking-widest uppercase">
-            L'avenir de la Création
-          </div>
-
-          <h1 className="relative z-10 text-[14vw] md:text-[8vw] font-bold tracking-tighter leading-[0.85] uppercase">
-            <SplitText text="Passez d'une Image" className="block text-white" />
-            <SplitText text="à un Reel Viral." className="block text-neutral-400" />
-          </h1>
-
-          <p className="relative z-10 hero-element mt-12 text-lg md:text-2xl text-neutral-300 max-w-xl font-light leading-relaxed">
-            Zéro compétence technique, zéro montage.
-            Une simplicité absolue pour transformer vos produits en vidéos qui vendent.
-          </p>
-
-          <div className="relative z-10 hero-element mt-14">
-            <Link
-              href="/create"
-              className="group relative inline-flex items-center gap-5 sm:gap-8 rounded-full bg-white p-2 pl-6 sm:pl-8 font-extrabold text-black transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] hover:scale-[1.02] hover:bg-neutral-100 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] active:scale-95"
-              style={{ WebkitTapHighlightColor: "transparent" }}
-            >
-              <span className="text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] pt-px">
-                Lancez-vous en 3 clics
-              </span>
-              <div className="relative flex h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 items-center justify-center overflow-hidden rounded-full bg-black text-white">
-                <ArrowUpRight className="absolute h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-x-[150%] group-hover:-translate-y-[150%]" />
-                <ArrowUpRight className="absolute h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 -translate-x-[150%] translate-y-[150%] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-x-0 group-hover:translate-y-0" />
-              </div>
+          <div className="flex gap-4 items-center">
+            <Link href="/login" className="hidden md:block font-bold text-sm text-[#111] hover:text-[#4D80C4] transition-colors">
+              Se connecter
+            </Link>
+            <Link href="/register" className="bg-[#4D80C4] text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-black transition-colors shadow-lg shadow-blue-500/20">
+              S'inscrire
             </Link>
           </div>
-        </section>
+        </div>
+      </nav>
 
-        {/* Showcase Carousel */}
-        <section className="carousel-section w-full pb-24 pt-12 md:pb-32 relative z-20 overflow-hidden">
-          <div className="w-full">
-            <div className="max-w-7xl mx-auto px-6 mb-8 md:mb-12 flex flex-col md:flex-row md:items-end justify-between hero-element w-full shrink-0">
-              <div className="max-w-xl">
-                <h2 className="text-xs font-bold tracking-widest uppercase text-neutral-500 mb-4 flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
-                  Ce que vous allez créer
-                </h2>
-                <p className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tighter text-white leading-[0.85]">
-                  Ce niveau de rendu.<br />
-                  <span className="text-neutral-600">Sans effort.</span>
-                </p>
+      {/* 🔴 HERO SECTION : Web Carpooling Search */}
+      <section className="relative min-h-[90vh] pt-32 pb-20 px-6 flex flex-col items-center justify-center overflow-hidden">
+        {/* Background Ambient Decor */}
+        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-[#4D80C4]/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/3 translate-x-1/4"></div>
+
+        <div className="container mx-auto relative z-10 flex flex-col items-center text-center">
+          
+          <div className="hero-text-elem inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full text-xs font-bold text-[#4D80C4] uppercase tracking-widest shadow-sm mb-6 border border-black/5">
+            <IoStar className="text-yellow-400" /> Le Covoiturage Premium
+          </div>
+          
+          <h1 className="hero-text-elem text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] text-[#111] mb-6 max-w-5xl">
+            Partagez la route en<br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#4D80C4] to-[#1e3a8a]">Classe Affaires.</span>
+          </h1>
+          
+          <p className="hero-text-elem text-lg md:text-2xl text-neutral-500 font-light mb-12 max-w-2xl leading-relaxed">
+            Rejoignez une communauté de membres vérifiés. Réservez votre siège dans des véhicules d'exception et participez aux frais en toute simplicité.
+          </p>
+
+          {/* Web Search Widget (Core Carpooling Feature) */}
+          <div className="search-widget w-full max-w-4xl bg-white p-2 md:p-3 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-neutral-100 flex flex-col md:flex-row items-center gap-2 mb-16 relative z-30">
+            
+            <div className="flex-1 flex w-full md:w-auto items-center gap-3 px-4 py-3 md:py-4 bg-[#f8f9fa] rounded-2xl hover:bg-[#f0f2f5] transition-colors cursor-text group border border-transparent focus-within:border-[#4D80C4]/30 focus-within:bg-white">
+              <IoLocationOutline className="text-neutral-400 text-xl group-focus-within:text-[#4D80C4]" />
+              <div className="flex flex-col text-left w-full">
+                <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Départ</span>
+                <input type="text" placeholder="Ville de départ" className="bg-transparent text-[#111] font-bold outline-none placeholder:text-neutral-800 placeholder:font-medium w-full" />
               </div>
             </div>
 
-            <div className="carousel-track">
-              <div
-                className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-5 pb-10 pt-2 w-full"
-                style={{
-                  paddingLeft: 'max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem))',
-                  paddingRight: 'max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem))'
-                }}
-              >
-                {mockHistory.map((item) => (
-                  <div
-                    key={item.id}
-                    className="hero-element shrink-0 w-[240px] md:w-[320px] lg:w-[360px] group cursor-pointer"
-                  >
-                    <div className="relative aspect-9/16 overflow-hidden rounded-4xl bg-[#0a0a0a] ring-1 ring-white/5 group-hover:ring-white/20 transition-all duration-700 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.8)]">
-                      {/* Background gradient for text legibility */}
-                      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black via-black/40 to-transparent z-10 pointer-events-none opacity-80" />
+            <div className="hidden md:flex w-8 h-8 rounded-full bg-white border border-neutral-200 items-center justify-center shrink-0 z-10 -mx-4 shadow-sm text-neutral-400">
+              <IoChevronForward />
+            </div>
 
-                      <Image
-                        src={item.thumbnail}
-                        alt={item.name}
-                        fill
-                        className="object-cover scale-[1.03] group-hover:scale-110 transition-all duration-[1.5s] ease-[cubic-bezier(0.2,1,0.2,1)]"
-                        sizes="(max-width: 768px) 240px, (max-width: 1024px) 320px, 360px"
-                      />
-
-                      {/* Bottom Info inside the card for a premium look */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20 flex flex-col justify-end">
-                        <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                          <div className="flex gap-2 mb-3 lg:mb-4">
-                            <span className="inline-flex items-center px-2.5 py-1.5 rounded-md bg-white/10 backdrop-blur-md border border-white/10 text-[9px] font-bold uppercase tracking-widest text-white shadow-xl">
-                              {item.tone}
-                            </span>
-                          </div>
-                          <h3 className="text-2xl md:text-3xl font-bold uppercase text-white tracking-tight leading-none drop-shadow-lg">{item.name}</h3>
-                        </div>
-                      </div>
-
-                      {/* Play Button Overlay */}
-                      <div className="absolute inset-0 z-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-black/10 backdrop-blur-[2px]">
-                        <div className="relative flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/5 border border-white/20 backdrop-blur-lg group-hover:scale-100 scale-75 transition-all duration-700 ease-[cubic-bezier(0.2,1,0.2,1)]">
-                          <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-2" fill="currentColor" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+            <div className="flex-1 flex w-full md:w-auto items-center gap-3 px-4 py-3 md:py-4 bg-[#f8f9fa] rounded-2xl hover:bg-[#f0f2f5] transition-colors cursor-text group border border-transparent focus-within:border-[#4D80C4]/30 focus-within:bg-white">
+              <IoMapOutline className="text-neutral-400 text-xl group-focus-within:text-[#4D80C4]" />
+              <div className="flex flex-col text-left w-full">
+                <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Arrivée</span>
+                <input type="text" placeholder="Ville d'arrivée" className="bg-transparent text-[#111] font-bold outline-none placeholder:text-neutral-800 placeholder:font-medium w-full" />
               </div>
+            </div>
+
+            <div className="flex w-full md:w-auto gap-2">
+              <div className="flex-1 md:w-40 flex items-center gap-3 px-4 py-3 md:py-4 bg-[#f8f9fa] rounded-2xl hover:bg-[#f0f2f5] transition-colors cursor-pointer group">
+                <IoCalendarOutline className="text-neutral-400 text-xl group-hover:text-[#4D80C4]" />
+                <div className="flex flex-col text-left">
+                  <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Date</span>
+                  <span className="text-[#111] font-bold truncate">Aujourd'hui</span>
+                </div>
+              </div>
+
+              <div className="flex-1 md:w-32 flex items-center gap-3 px-4 py-3 md:py-4 bg-[#f8f9fa] rounded-2xl hover:bg-[#f0f2f5] transition-colors cursor-pointer group">
+                <IoPersonOutline className="text-neutral-400 text-xl group-hover:text-[#4D80C4]" />
+                <div className="flex flex-col text-left">
+                  <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Passagers</span>
+                  <span className="text-[#111] font-bold">1</span>
+                </div>
+              </div>
+            </div>
+
+            <button className="w-full md:w-auto bg-[#4D80C4] text-white font-bold text-sm px-8 py-5 rounded-xl hover:bg-[#3a659e] transition-colors shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 h-full mt-2 md:mt-0">
+              <IoSearchOutline className="text-lg" />
+              <span>Rechercher</span>
+            </button>
+          </div>
+
+          {/* Web Dashboard Visual Preview (Instead of purely mobile UI) */}
+          <div className="hero-floating-img w-full max-w-5xl h-[40vh] md:h-[50vh] bg-white rounded-t-[3rem] shadow-[0_0_80px_rgba(0,0,0,0.05)] border-t border-x border-neutral-100 overflow-hidden relative float-parallax" data-speed="0.5">
+            {/* Fake Web Wrapper for visual impact */}
+            <div className="h-10 border-b border-neutral-100 flex items-center px-6 gap-2 bg-[#fafafa]">
+               <div className="w-3 h-3 rounded-full bg-red-400"></div>
+               <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+               <div className="w-3 h-3 rounded-full bg-green-400"></div>
+            </div>
+            {/* IMAGE PLACEHOLDER: Platform Dashboard / Dashboard Covoiturage */}
+            <div className="relative w-full h-full">
+              <Image 
+                src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070&auto=format&fit=crop" 
+                alt="Capture d'écran conceptuelle (Web UI) d'un tableau de bord de covoiturage premium WIGO EXPRESS, affichant une carte interactive claire, des listes de trajets élégantes et des profils vérifiés, tons blanc et bleu."
+                fill
+                className="object-cover object-top opacity-90"
+              />
+              {/* Fade out to white at the bottom */}
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+      {/* 🔴 FEATURES / TRUST Grid */}
+      <section className="reveal-section relative py-24 px-6 bg-white z-20">
+        <div className="container mx-auto">
+          <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <div>
+              <h2 className="text-sm font-bold tracking-widest uppercase text-[#4D80C4] mb-4">La Différence Wigo</h2>
+              <h3 className="text-4xl md:text-5xl font-bold uppercase tracking-tighter leading-[0.9] text-[#111]">
+                Un réseau de confiance, <br/><span className="text-neutral-400">sans compromis.</span>
+              </h3>
+            </div>
+            <p className="max-w-md text-neutral-500 text-lg font-light">
+              Le covoiturage a évolué. Finies les mauvaises surprises, les retards inexpliqués ou les annulations de dernière minute.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Card 1: Security/KYC */}
+            <div className="bg-[#f8f9fa] rounded-[2rem] border border-neutral-100 p-10 overflow-hidden relative group hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all">
+              <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
+                <IoShieldCheckmarkOutline className="w-7 h-7 text-[#4D80C4]" />
+              </div>
+              <h4 className="text-2xl font-bold mb-4 text-[#111]">KYC & Profils Vérifiés</h4>
+              <p className="text-neutral-500 font-light text-base leading-relaxed">
+                Conducteurs et passagers passent par une vérification d'identité stricte. Montez à bord avec une totale tranquillité d'esprit.
+              </p>
+            </div>
+
+            {/* Card 2: Premium Cars */}
+            <div className="bg-[#f8f9fa] rounded-[2rem] border border-neutral-100 p-10 overflow-hidden relative group hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all">
+              <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
+                <IoCarSportOutline className="w-7 h-7 text-neutral-800" />
+              </div>
+              <h4 className="text-2xl font-bold mb-4 text-[#111]">Flotte Privilège</h4>
+              <p className="text-neutral-500 font-light text-base leading-relaxed">
+                Notre algorithme privilégie les véhicules récents, spacieux et confortables. Pour que la route redevienne un plaisir.
+              </p>
+            </div>
+
+            {/* Card 3: Exact Location */}
+            <div className="bg-[#f8f9fa] rounded-[2rem] border border-neutral-100 p-10 overflow-hidden relative group hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all">
+              <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
+                <IoMapOutline className="w-7 h-7 text-[#4D80C4]" />
+              </div>
+              <h4 className="text-2xl font-bold mb-4 text-[#111]">Suivi GPS Exact</h4>
+              <p className="text-neutral-500 font-light text-base leading-relaxed">
+                Suivez votre conducteur sur la carte en temps réel jusqu'au point de rendez-vous. Ne cherchez plus votre véhicule.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 🔴 THE DIGITAL POCKET (Web Carpooling logic) */}
+      <section className="reveal-section relative py-32 px-6 bg-[#f4f5f7] border-t border-black/5 overflow-hidden">
+        <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-16 relative z-10">
+          
+          <div className="w-full lg:w-1/2 relative">
+            {/* "Your Digital Pocket" Web/Card Component */}
+            <div className="w-full max-w-md mx-auto bg-white rounded-[2.5rem] shadow-2xl border border-neutral-100 p-8 relative overflow-hidden float-parallax" data-speed="0.8">
+               <h3 className="text-2xl font-extrabold mb-6">Le Wigo Wallet</h3>
+               
+               {/* Dark Card Inside */}
+               <div className="bg-[#111] p-6 rounded-3xl text-white mb-8 relative shadow-xl overflow-hidden">
+                 <div className="absolute right-[-20%] top-[-20%] w-40 h-40 bg-[#4D80C4] rounded-full blur-[40px] opacity-40"></div>
+                 <p className="text-sm font-bold mb-1 relative z-10 text-neutral-400">Solde Disponible</p>
+                 <h4 className="text-4xl font-black mb-6 relative z-10">€ 142.50</h4>
+                 
+                 <div className="flex gap-4 relative z-10">
+                   <button className="bg-white/10 backdrop-blur-sm px-4 py-3 rounded-xl text-xs font-bold text-white flex-1 hover:bg-white/20 transition-colors">Participer aux frais</button>
+                   <button className="bg-[#4D80C4] px-4 py-3 rounded-xl text-xs font-bold text-white hover:bg-[#3a659e] transition-colors flex items-center justify-center"><IoWalletOutline className="text-lg" /></button>
+                 </div>
+               </div>
+
+               <div className="space-y-4">
+                 <div className="bg-[#f8f9fa] p-4 rounded-2xl flex items-center gap-4">
+                   <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4D80C4] shadow-sm"><IoPersonOutline /></div>
+                   <div className="flex-1">
+                     <p className="text-sm font-bold text-neutral-800">Paiement au Conducteur</p>
+                     <p className="text-xs text-neutral-400">Validation automatique à l'arrivée</p>
+                   </div>
+                   <IoShieldCheckmarkOutline className="text-green-500 text-lg" />
+                 </div>
+               </div>
             </div>
           </div>
 
-          {/* Style blocks for custom scrollbars */}
-          <style>{`
-          .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-          }
-          .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-          }
-        `}</style>
-        </section>
-
-        {/* The Transformation (Pinned Section) */}
-        <div className="transformation-wrapper relative h-screen w-full bg-[#f2f2f2] text-black overflow-hidden z-20">
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden mix-blend-multiply">
-            <h2 className="transformation-bg-text text-[15vw] md:text-[12vw] font-bold tracking-tighter opacity-10 whitespace-nowrap pl-[10vw]">
-              100% AUTOMATISÉ
+          <div className="w-full lg:w-1/2">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-wigo-blue/30 text-xs font-bold text-[#4D80C4] mb-6 uppercase tracking-widest bg-[#4D80C4]/10">
+              <IoWalletOutline className="w-4 h-4" /> Transactions sans friction
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6">
+              Votre participation.<br/>
+              <span className="text-[#4D80C4]">Hautement sécurisée.</span>
             </h2>
-          </div>
-
-          <div className="absolute inset-0 flex items-center justify-center">
-            {/* Static Image Card */}
-            <div className="card-static absolute w-[260px] md:w-[350px] aspect-4/5 bg-white border border-neutral-200 shadow-2xl p-4 md:p-6 rounded-3xl flex flex-col justify-between z-10">
-              <div className="flex items-center gap-3 mb-3 md:mb-4">
-                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/5 flex items-center justify-center shrink-0">
-                  <ImageIcon className="w-4 h-4 md:w-5 md:h-5 text-black" />
-                </div>
-                <span className="text-[10px] md:text-sm font-extrabold text-black uppercase tracking-widest px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-neutral-200 bg-neutral-50 shadow-[0_2px_10px_rgba(0,0,0,0.05)] w-full text-center">Photo Produit</span>
-              </div>
-              <div className="flex-1 bg-neutral-100 rounded-xl overflow-hidden relative">
-                <Image
-                  src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&h=1600&fit=crop"
-                  alt="Sneaker Source"
-                  fill
-                  className="w-full h-full object-cover grayscale opacity-80"
-                  priority
-                  sizes="(max-width: 768px) 260px, 350px"
-                />
-              </div>
-            </div>
-
-            {/* Reel Output Card */}
-            <div className="card-reel absolute w-[280px] md:w-[320px] aspect-9/16 bg-black text-white p-2 rounded-4xl shadow-2xl border-4 border-[#111]">
-              <div className="w-full h-full rounded-3xl overflow-hidden relative">
-                <video
-                  src="/videos/product-video.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover scale-110"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent flex flex-col justify-end p-6">
-                  <div className="w-1/2 h-1 bg-white/30 rounded-full mb-4">
-                    <div className="w-2/3 h-full bg-white rounded-full"></div>
-                  </div>
-                  <p className="text-xl md:text-2xl font-bold mb-2 leading-tight">POV : Tu trouves enfin la paire de tes rêves pour cet été...</p>
-                  <button className="mt-4 px-4 py-3 bg-white text-black font-bold uppercase text-xs tracking-widest rounded flex items-center justify-center gap-2">
-                    Acheter <ArrowUpRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+            <p className="text-neutral-500 text-lg md:text-xl font-light mb-8 max-w-lg">
+              Terminé les passages au distributeur avant le départ ou la monnaie exacte à prévoir. Votre portefeuille intégré sécurise la transaction : vous payez à la réservation, le conducteur est payé à l'arrivée.
+            </p>
+            <div className="flex gap-4">
+               <button className="bg-[#111] text-white font-bold text-sm px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
+                  Comment ça marche ?
+               </button>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Features Section */}
-        <section className="features-container relative min-h-[200vh] bg-[#060606] px-6 md:px-12 py-32 z-30">
-          {/* Fallback Image tag to guarantee rendering */}
-          <Image
-            src="/images/landing-light.png"
-            alt="Landing Background"
-            fill
-            className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none brightness-175"
-            style={{ opacity: 1 }}
-            priority
-            sizes="100vw"
-          />
+      {/* 🔴 DARK MODE SECTION : Vehicles Focus Web Layout */}
+      <section className="dark-mode-section relative py-32 px-6 flex flex-col items-center text-center overflow-hidden">
+        <div className="container mx-auto z-10">
+          <div className="mb-16">
+            <span className="text-[#4D80C4] font-bold tracking-widest uppercase text-xs mb-4 block">Publiez ou Réservez</span>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">
+              Le standard n'est <br/> plus une option.
+            </h2>
+            <p className="text-neutral-400 text-lg md:text-xl font-light max-w-3xl mx-auto">
+               Notre communauté de conducteurs partage des trajets dans des berlines confortables, des véhicules électriques (EV) ou des SUV spacieux. Indiquez la plaque et le modèle, nous faisons le reste.
+            </p>
+          </div>
 
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 md:gap-20">
+          {/* Web Data Grid / Showcase */}
+          <div className="w-full max-w-6xl mx-auto bg-[#151515] rounded-[2.5rem] border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-center">
+             
+            {/* Text / Data part */}
+             <div className="w-full lg:w-1/2">
+               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-6">
+                 <div className="flex justify-between items-center mb-4">
+                   <h3 className="text-white font-bold text-xl">Trajet : Paris → Lyon</h3>
+                   <span className="bg-[#4D80C4]/20 text-[#4D80C4] font-bold text-xs px-3 py-1 rounded-full">Proposé aujourd'hui</span>
+                 </div>
+                 
+                 <div className="flex items-center gap-4 mb-6">
+                   <div className="w-12 h-12 bg-neutral-800 rounded-full overflow-hidden relative border-2 border-neutral-700">
+                     <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="Conducteur vérifié" fill className="object-cover" />
+                   </div>
+                   <div>
+                     <p className="text-white font-bold text-sm">Marc D. <span className="text-neutral-400 font-normal">★ 4.9</span></p>
+                     <p className="text-[#4D80C4] text-xs font-bold uppercase tracking-widest mt-1"><IoShieldCheckmarkOutline className="inline mr-1" />Profil vérifié</p>
+                   </div>
+                 </div>
 
-            <div className="features-sidebar md:w-5/12 flex flex-col justify-start h-auto md:h-screen md:sticky top-10 pt-20">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 text-xs text-neutral-400 mb-6 uppercase tracking-widest w-max bg-white/5">
-                Une simplicité radicale
-              </div>
-              <h3 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.85]">
-                L'arsenal <br /><span className="text-neutral-600">complet.</span>
-              </h3>
-              <p className="mt-8 text-neutral-400 text-lg md:text-xl font-light leading-relaxed max-w-sm">
-                L'application est conçue pour être utilisable par un enfant. Aucune timeline complexe, aucun logiciel à installer.
-              </p>
-            </div>
-
-            <div className="md:w-7/12 flex flex-col gap-8 md:pt-[20vh] pb-[20vh]">
-
-              <div className="bento-card bg-[#0b0b0b] overflow-hidden rounded-4xl p-10 border border-white/10 shadow-2xl flex flex-col">
-                <Zap className="w-8 h-8 text-white mb-6" />
-                <h4 className="text-3xl font-bold uppercase tracking-tight mb-4">Scripts IA</h4>
-                <p className="text-neutral-400 font-light text-lg mb-8">Fournissez simplement l'image. L'IA rédige instantanément la phrase d'accroche (Hook) parfaite pour retenir l'attention de votre cible.</p>
-                {/* Espace Réservé : Image/Illustration Feature 1 */}
-                <div className="w-full aspect-video bg-[#111] rounded-xl border border-white/5 flex flex-col items-center justify-center overflow-hidden mt-auto relative">
-                  <Image
-                    src="/images/feature-copywriting.webp"
-                    alt="IA Copywriting"
-                    fill
-                    className="w-full h-full object-cover absolute inset-0 opacity-80 hover:scale-105 transition-transform duration-500"
-                    sizes="100vw"
-                  />
-                </div>
-              </div>
-
-              <div className="bento-card bg-[#0b0b0b] overflow-hidden rounded-4xl p-10 border border-white/10 shadow-2xl flex flex-col">
-                <Mic className="w-8 h-8 text-white mb-6" />
-                <h4 className="text-3xl font-bold uppercase tracking-tight mb-4">Voix Narratives</h4>
-                <p className="text-neutral-400 font-light text-lg mb-8">L'application synchronise automatiquement des voix de synthèse ultra-réalistes qui imitent les créateurs de tendances.</p>
-                {/* Espace Réservé : Image/Illustration Feature 2 */}
-                <div className="w-full h-32 bg-[#111] rounded-xl border border-white/5 flex flex-col items-center justify-center overflow-hidden mt-auto relative">
-                  <Image
-                    src="/images/feature-audio.webp"
-                    alt="Audio Features"
-                    fill
-                    className="w-full h-full object-cover absolute inset-0 opacity-50 hover:scale-105 transition-transform duration-500"
-                    sizes="100vw"
-                  />
-                  {/* Animation visuelle simulant l'audio */}
-                  <style>{`
-                    @keyframes snapToAdAudioWave {
-                      0%, 100% { transform: scaleY(0.2); }
-                      50% { transform: scaleY(1); }
-                    }
-                  `}</style>
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
-                    <div className="flex items-center justify-center gap-1 opacity-80 h-12">
-                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((i) => {
-                        const heights = [20, 35, 25, 45, 30, 50, 20, 40, 30, 45, 25, 35, 15, 30, 20];
-                        // Slower animation durations (between 1.2s and 1.8s)
-                        const duration = (1.2 + (i % 3) * 0.3) + 's';
-                        // Slightly longer delay offsets for the slower wave
-                        const delay = `-${i * 0.2}s`;
-
-                        return (
-                          <div
-                            key={i}
-                            className="w-1.5 bg-white rounded-full shrink-0"
-                            style={{
-                              height: heights[i - 1] + 'px',
-                              animation: `snapToAdAudioWave ${duration} ease-in-out infinite`,
-                              animationDelay: delay,
-                              transformOrigin: 'center'
-                            }}
-                          ></div>
-                        );
-                      })}
+                 <div className="border-t border-white/10 pt-4 flex justify-between items-end">
+                    <div>
+                      <p className="text-neutral-400 text-xs mb-1">Véhicule</p>
+                      <p className="text-white font-bold px-3 py-1 bg-white/10 rounded-lg inline-block text-sm">Tesla Model 3 • Noire</p>
                     </div>
-                  </div>
-                </div>
-              </div>
+                    <div className="text-right">
+                      <strong className="text-3xl font-black text-white">€45</strong>
+                      <p className="text-neutral-500 text-xs">/ passager</p>
+                    </div>
+                 </div>
+               </div>
+               
+               <button className="bg-white text-black font-bold py-4 px-8 w-full rounded-xl shadow-lg hover:bg-neutral-200 transition-colors uppercase text-xs tracking-widest">
+                 Réserver 1 Siège
+               </button>
+             </div>
 
-              <div className="bento-card bg-[#0b0b0b] overflow-hidden rounded-4xl p-10 border border-white/10 shadow-2xl flex flex-col">
-                <Layers className="w-8 h-8 text-white mb-6" />
-                <h4 className="text-3xl font-bold uppercase tracking-tight mb-4">Rendu 9:16</h4>
-                <p className="text-neutral-400 font-light text-lg mb-8">Exportez directement en vertical. Aucun redimensionnement requis. Prêt à briller sur l'algorithme TikTok et Instagram.</p>
-                {/* Espace Réservé : Image/Illustration Feature 3 */}
-                <div className="w-full aspect-video bg-[#111] rounded-xl border border-white/5 flex flex-col items-center justify-center relative overflow-hidden mt-auto group">
-                  <Image
-                    src="/images/feature-video.webp"
-                    alt="Video Output"
-                    fill
-                    className="w-full h-full object-cover absolute inset-0 opacity-80 hover:scale-105 transition-transform duration-500"
-                    sizes="100vw"
-                  />
-                </div>
-              </div>
-
-            </div>
+             {/* IMAGE PLACEHOLDER: Premium Car Profile aligned with Web content */}
+             <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-[100%] min-h-[300px] rounded-2xl overflow-hidden group">
+               <div className="absolute inset-0 bg-gradient-to-r from-[#151515] to-transparent z-10 pointer-events-none"></div>
+               <Image 
+                 src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop" 
+                 alt="Vue d'une Tesla Model 3 noire, style studio premium sombre. Véhicule typique du covoiturage haut de gamme proposé sur la plateforme."
+                 fill
+                 className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
+               />
+             </div>
+             
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Value Proposition / Stats Section (White Background) */}
-        <section className="relative bg-[#f4f4f4] text-black py-24 md:py-32 px-6 md:px-12 z-30 overflow-hidden">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
-            <div className="md:w-1/2">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/10 text-[10px] sm:text-xs font-bold text-neutral-500 mb-6 uppercase tracking-widest bg-white shadow-sm">
-                L'Avantage Vidéo
-              </div>
-              <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter uppercase leading-[0.9] mb-6">
-                Le format <br /><span className="text-neutral-400">qui domine.</span>
-              </h3>
-              <p className="text-neutral-600 text-lg md:text-xl font-medium max-w-md">
-                Les images statiques sont noyées dans la masse. Un Reel dynamique capte l'attention, raconte une histoire et décuple vos chances de viralité.
+      {/* 🔴 FOOTER (Web Layout) */}
+      <footer className="bg-white text-black border-t border-black/5 py-20 px-6 mt-10 rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.03)] relative z-20">
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
+            
+            <div className="w-full md:w-1/3">
+              <span className="text-2xl font-extrabold tracking-tight text-[#4D80C4] block mb-6">
+                wigo<span className="font-light text-black">express</span>
+              </span>
+              <p className="text-neutral-500 font-medium text-sm leading-relaxed max-w-sm">
+                L'alternative de covoiturage moderne, sécurisée et haut de gamme. Transformez vos déplacements quotidiens.
               </p>
             </div>
 
-            <div className="md:w-1/2 flex flex-col gap-6 w-full">
-              <div className="flex bg-white rounded-4xl p-6 md:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-neutral-100 items-center gap-6 group hover:-translate-y-1 transition-transform duration-500">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black flex items-center justify-center shrink-0">
-                  <span className="text-white font-extrabold text-xl sm:text-2xl">+80%</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-xl sm:text-2xl uppercase tracking-tight mb-1">D'engagement</h4>
-                  <p className="text-neutral-500 text-sm sm:text-base">Générez des interactions massives face à un simple post photo.</p>
-                </div>
+            <div className="w-full md:w-2/3 flex flex-col sm:flex-row gap-12 sm:gap-24 justify-end">
+              <div>
+                <h4 className="font-bold mb-4">Covoiturage</h4>
+                <ul className="space-y-3 text-neutral-500 text-sm font-medium">
+                  <li><Link href="/search" className="hover:text-[#4D80C4] transition-colors">Rechercher un trajet</Link></li>
+                  <li><Link href="/publish" className="hover:text-[#4D80C4] transition-colors">Proposer un trajet</Link></li>
+                  <li><Link href="/destinations" className="hover:text-[#4D80C4] transition-colors">Trajets populaires</Link></li>
+                </ul>
               </div>
-
-              <div className="flex bg-white rounded-4xl p-6 md:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-neutral-100 items-center gap-6 group hover:-translate-y-1 transition-transform duration-500">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black flex items-center justify-center shrink-0">
-                  <span className="text-white font-extrabold text-xl sm:text-2xl">-10h</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-xl sm:text-2xl uppercase tracking-tight mb-1">De Montage</h4>
-                  <p className="text-neutral-500 text-sm sm:text-base">Évitez la timeline de montage. Notre IA gère la direction artistique complète.</p>
-                </div>
+              <div>
+                <h4 className="font-bold mb-4">À Propos</h4>
+                <ul className="space-y-3 text-neutral-500 text-sm font-medium">
+                  <li><Link href="/how-it-works" className="hover:text-[#4D80C4] transition-colors">Fonctionnement</Link></li>
+                  <li><Link href="/wallet" className="hover:text-[#4D80C4] transition-colors">Le Portefeuille Wigo</Link></li>
+                  <li><Link href="/contact" className="hover:text-[#4D80C4] transition-colors">Contactez-nous</Link></li>
+                </ul>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Workflow / Process */}
-        <section className="workflow-container relative py-32 md:py-48 px-6 md:px-12 border-t border-white/5 z-30">
-          <div className="absolute inset-0 pointer-events-none z-0">
-            <div className="w-full h-full bg-[url(/images/landing-light.png)] bg-no-repeat bg-cover bg-position-[center_top] bg-fixed bg-[scroll] opacity-100"></div>
-          </div>
-          {/* Fallback Image tag to guarantee rendering */}
-          {/* <Image
-            src="/images/landing-light.png"
-            alt="Landing Background"
-            fill
-            className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none brightness-175"
-            style={{ opacity: .2 }}
-            priority
-            sizes="100vw"
-          /> */}
-
-          <div className="max-w-4xl mx-auto text-center mb-20 md:mb-32 relative z-10">
-            <h3 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.85] mb-8">
-              Vous avez <br /><span className="text-neutral-600">3 tâches.</span>
-            </h3>
-            <p className="text-xl text-neutral-400 font-light">Littéralement. Tout le reste est géré par l'Intelligence Artificielle.</p>
-          </div>
-
-          <div className="relative max-w-6xl mx-auto pb-32">
-
-            {[
-              {
-                step: "01",
-                title: "Glissez, Déposez.",
-                desc: "Fournissez la photo brute de votre produit. Aucune préparation n'est requise de votre côté, l'IA l'habille pour vous.",
-                img: "/images/step-upload.webp"
-              },
-              {
-                step: "02",
-                title: "Indiquez l'humeur.",
-                desc: "Sélectionnez le style de présentation (Luxe, Humour, Urgent). Un seul clic et l'IA rédige une histoire autour de votre image.",
-                img: "/images/step-context.webp"
-              },
-              {
-                step: "03",
-                title: "Générez. Postez.",
-                desc: "Récupérez instantanément votre vidéo montée. Prête à percer les plafonds de vues sur TikTok et Reels.",
-                img: "/images/step-export.webp"
-              }
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="workflow-card sticky w-full h-auto min-h-[50vh] bg-[#0c0c0c] border border-white/10 rounded-4xl mb-[15vh] flex flex-col md:flex-row items-stretch gap-0 origin-top last:mb-0 overflow-hidden" // items-stretch et gap-0 + overflow-hidden
-                style={{ top: `calc(15vh + ${index * 30}px)` }}
-              >
-                {/* Section Texte */}
-                <div className="md:w-1/2 flex flex-col justify-center p-8 md:p-12 lg:p-16">
-                  <span
-                    className="text-transparent font-bold text-6xl md:text-8xl mb-4 md:mb-6 leading-none"
-                    style={{ WebkitTextStroke: '2px rgba(255,255,255,0.26)' }}
-                  >
-                    {item.step}
-                  </span>
-                  <h4 className="text-3xl md:text-5xl font-bold uppercase tracking-tight mb-4 md:mb-6">
-                    {item.title}
-                  </h4>
-                  <p className="text-neutral-400 font-light text-lg md:text-2xl leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-
-                {/* Section Image - Remplissage total */}
-                <div className="md:w-1/2 w-full relative min-h-[300px] md:min-h-full">
-                  <Image
-                    src={item.img}
-                    alt={`Step ${item.step}`}
-                    fill
-                    className="card-image object-cover opacity-80"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority={index === 0}
-                  />
-                </div>
-              </div>
-            ))}
 
           </div>
-        </section>
 
-      </div>
-      {/* END MAIN WRAPPER */}
-
-      {/* 
-        Curtain Reveal Footer
-        Now correctly works because the main wrapper has bg-[#060606] and high z-index.
-      */}
-      <footer className="footer-wrapper bg-[#f4f4f4] text-black overflow-hidden sticky bottom-0 z-0 flex flex-col">
-        <div className="footer-content w-full h-full flex flex-col justify-between px-6 pt-24 pb-6 md:px-12 md:pt-32 md:pb-12 relative">
-
-          {/* Top Section */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end w-full container mx-auto flex-1 py-6">
-            <div className="max-w-2xl">
-              <h3 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter uppercase mb-6 leading-[0.9]">
-                Prêt à briser <br /><span className="text-neutral-400">l'algorithme ?</span>
-              </h3>
-              <p className="text-neutral-500 text-base md:text-xl font-medium max-w-md">
-                Générez votre première vidéo virale en moins de 2 minutes. Aucune compétence requise.
-              </p>
-            </div>
-            <div className="mt-12 md:mt-0 pb-4">
-              <Link
-                href="/create"
-                className="group relative inline-flex items-center gap-5 sm:gap-8 rounded-full bg-[#0a0a0a] border border-white/20 p-2 pl-6 sm:pl-8 font-extrabold text-white transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] hover:scale-[1.02] hover:bg-black hover:shadow-[0_0_40px_rgba(0,0,0,0.15)] active:scale-95"
-                style={{ WebkitTapHighlightColor: "transparent" }}
-              >
-                <span className="text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] pt-px whitespace-nowrap">
-                  Générer mon Reel
-                </span>
-                <div className="relative flex h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 items-center justify-center overflow-hidden rounded-full bg-white text-black shadow-[inset_0_-2px_4px_rgba(0,0,0,0.2)] shrink-0">
-                  <ArrowUpRight className="absolute h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-x-[150%] group-hover:-translate-y-[150%]" />
-                  <ArrowUpRight className="absolute h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 -translate-x-[150%] translate-y-[150%] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-x-0 group-hover:translate-y-0" />
-                </div>
-              </Link>
+          <div className="pt-8 border-t border-neutral-100 flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs font-bold text-neutral-400 uppercase tracking-widest gap-4">
+            <span>© {new Date().getFullYear()} Wigo Express. Tous droits réservés.</span>
+            <div className="flex gap-6">
+              <Link href="/legal" className="hover:text-[#4D80C4] transition-colors">Mentions Légales</Link>
+              <Link href="/privacy" className="hover:text-[#4D80C4] transition-colors">Confidentialité</Link>
             </div>
           </div>
-
-          {/* Bottom Section */}
-          <div className="flex flex-col w-full container mx-auto mt-auto">
-            <div className="w-full h-px bg-neutral-300 mb-6 md:mb-8 z-10 relative"></div>
-
-            <div className="flex flex-col md:flex-row justify-between items-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-neutral-500 gap-6 z-10 relative">
-              {/* <div className="flex gap-8">
-                <a href="#" className="hover:text-black transition-colors relative group">
-                  Twitter
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#" className="hover:text-black transition-colors relative group">
-                  Instagram
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#" className="hover:text-black transition-colors relative group">
-                  TikTok
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
-                </a>
-              </div> */}
-
-              <div className="flex items-center gap-2">
-                <span className="text-neutral-400 font-medium normal-case tracking-normal">
-                  Powered by
-                </span>
-                <a href="https://altplus.dev" target="_blank" rel="noopener noreferrer" className="hover:text-black lowercase text-neutral-600 transition-colors relative group">
-                  Altplus
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
-                </a>
-              </div>
-
-              <Link href="/legal" className="hover:text-black transition-colors relative group">
-                Légal & CGU
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </div>
-          </div>
-
         </div>
       </footer>
 

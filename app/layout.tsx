@@ -1,34 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
-import { Providers } from "@/components/providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "SnapToAd | Transformez vos images en Reels viraux",
-  description: "Passez d'une simple image à une vidéo promotionnelle virale en quelques clics. Zéro compétence technique, zéro montage. Parfait pour TikTok et Instagram Reels.",
-  icons: [
-    {
-      media: "(prefers-color-scheme: light)",
-      url: "/light-favicon.ico",
-      href: "/light-favicon.ico",
-    },
-    {
-      media: "(prefers-color-scheme: dark)",
-      url: "/dark-favicon.ico",
-      href: "/dark-favicon.ico",
-    },
-  ],
+  title: "WIGO EXPRESS | Premium Carpooling",
+  description: "L'élégance et la technologie au service de votre trajet. Plateforme haut de gamme, sécurisée et ultra-rapide.",
 };
 
 export default function RootLayout({
@@ -39,12 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${outfit.variable} antialiased font-sans bg-black text-white`}
       >
-        <NextTopLoader showSpinner={false} color="#C3131C" />
-        <Providers>
-          {children}
-        </Providers>
+        <NextTopLoader showSpinner={false} color="#4D80C4" />
+        {children}
       </body>
     </html>
   );
