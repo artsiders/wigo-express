@@ -325,13 +325,13 @@ export default function WigoExpress() {
       <Navbar />
 
       {/*  EPIC HERO SECTION */}
-      <section className="relative min-h-screen pt-40 pb-20 px-6 flex flex-col items-center justify-center">
+      <section className="relative min-h-screen pt-36 md:pt-40 pb-20 px-6 flex flex-col items-center justify-center">
         {/* Abstract shapes for premium feel */}
         <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-primary/10 rounded-full blur-[140px] pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
         <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div className="container mx-auto relative z-10 flex flex-col items-center justify-center text-center">
-          <h1 className="hero-text-elem text-[12vw] md:text-[3vw] max-w-5xl font-black tracking-tighter leading-tight mt-16 mb-8">
+          <h1 className="hero-text-elem relative text-center text-4xl font-black sm:text-5xl lg:text-7xl max-w-7xl container mx-auto justify-center leading-tight md:mt-16 mb-8">
             Le covoiturage, enfin
             <br />
             <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
@@ -594,7 +594,7 @@ export default function WigoExpress() {
           <div className="sticky-illustrator hidden lg:flex h-screen items-center justify-center overflow-visible w-full sticky top-0">
             <div className="w-full aspect-4/3 relative">
               {/* Illus 1 : Search Map UI */}
-              <div className="illust-step absolute inset-0 bg-white rounded-[2.5rem] shadow-2xl border border-neutral-100 overflow-hidden flex flex-col">
+              <div className="illust-step absolute inset-0 bg-white rounded-[2.5rem] shadow-2xl squircle border border-neutral-100 overflow-hidden flex flex-col">
                 <div className="w-full h-[50%] xl:h-[55%] bg-light relative overflow-hidden shrink-0">
                   <Image
                     src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop"
@@ -633,7 +633,7 @@ export default function WigoExpress() {
               </div>
 
               {/* Illus 2 : KYC Trust Badge ID */}
-              <div className="illust-step absolute inset-0 bg-dark rounded-[2.5rem] shadow-2xl border border-neutral-800 p-6 xl:p-10 flex flex-col items-center justify-between text-white origin-bottom pb-8 xl:pb-12 pt-6 xl:pt-10 overflow-visible z-10">
+              <div className="illust-step absolute inset-0 bg-dark rounded-[2.5rem] shadow-2xl squircle border border-neutral-800 p-6 xl:p-10 flex flex-col items-center justify-between text-white origin-bottom pb-8 xl:pb-12 pt-6 xl:pt-10 overflow-visible z-10">
                 {/* 3D Canadian Premium ID Card that overflows top */}
                 <div className="w-[calc(100%-20px)] aspect-4/2 bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-3xl p-2 shadow-[0_30px_60px_rgba(0,0,0,0.6),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-3 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 -mt-16 xl:-mt-20">
                   <Image
@@ -749,7 +749,7 @@ export default function WigoExpress() {
               </div>
 
               {/* Illus 3 : Wigo Wallet */}
-              <div className="illust-step absolute inset-0 bg-primary rounded-[2.5rem] shadow-2xl border border-blue-500/30 p-6 xl:p-10 flex flex-col justify-center text-white overflow-hidden origin-bottom">
+              <div className="illust-step absolute inset-0 bg-primary rounded-[2.5rem] shadow-2xl squircle border border-blue-500/30 p-6 xl:p-10 flex flex-col justify-center text-white overflow-hidden origin-bottom">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
                 <div className="relative z-10 text-center flex-1 flex flex-col justify-center pb-4 xl:pb-6">
@@ -823,7 +823,7 @@ export default function WigoExpress() {
           </div>
 
           {/* Web Data Grid / Showcase */}
-          <div className="w-full max-w-6xl mx-auto bg-dark rounded-[2.5rem] border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-center">
+          <div className="w-full max-w-6xl mx-auto bg-dark rounded-[2.5rem] squircle border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-center">
             {/* Text / Data part */}
             <div className="w-full lg:w-1/2">
               <div className="bg-white/10 border border-white/10 rounded-2xl p-6 mb-6">
@@ -895,7 +895,7 @@ export default function WigoExpress() {
       </section>
 
       {/*  FOOTER  */}
-      <footer className="footer-wrapper relative z-0 bg-dark text-white overflow-hidden rounded-t-[2.5rem] border-t border-white/5">
+      <footer className="footer-wrapper relative z-0 bg-dark text-white overflow-hidden rounded-t-[3rem] squircle">
         {/* Subtle top glow effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-primary/20 rounded-full blur-[150px] pointer-events-none opacity-50"></div>
 

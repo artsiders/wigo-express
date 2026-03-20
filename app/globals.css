@@ -78,6 +78,10 @@ body {
   overscroll-behavior: none;
 }
 
+.squircle {
+  corner-shape: squircle;
+}
+
 /* Animations globales */
 ::selection {
   background: var(--color-primary);
