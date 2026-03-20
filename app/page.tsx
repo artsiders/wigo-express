@@ -83,14 +83,14 @@ export default function WigoExpress() {
         const yOffset = index === 0 ? 120 : index === 1 ? -100 : 80;
         const xOffset = index === 0 ? -60 : index === 1 ? 60 : -40;
         const rotation = index === 0 ? -8 : index === 1 ? 10 : -6;
-        
+
         gsap.fromTo(
           card,
-          { 
-            y: yOffset, 
-            x: xOffset, 
-            rotation: rotation * 2, 
-            scale: 0.8
+          {
+            y: yOffset,
+            x: xOffset,
+            rotation: rotation * 2,
+            scale: 0.8,
           },
           {
             y: 0,
@@ -101,10 +101,10 @@ export default function WigoExpress() {
             scrollTrigger: {
               trigger: ".hero-floating-img",
               start: "top 85%", // Starts a bit before the image enters fully
-              end: "bottom 30%", 
+              end: "bottom 30%",
               scrub: 1.5, // Smooth scrubbing parallax effect
             },
-          }
+          },
         );
       });
 
@@ -256,7 +256,9 @@ export default function WigoExpress() {
           </h1>
 
           <p className="hero-text-elem text-lg md:text-xl opacity-80 font-medium mb-16 max-w-2xl leading-relaxed">
-            Trouvez ou offrez un trajet l'esprit tranquille, profils 100% vérifiés et paiement automatisé. La nouvelle norme pour vos déplacements interurbains.
+            Trouvez ou offrez un trajet l'esprit tranquille, profils 100%
+            vérifiés et paiement automatisé. La nouvelle norme pour vos
+            déplacements interurbains.
           </p>
 
           {/* Web Search Widget - The Core Tool */}
@@ -342,54 +344,79 @@ export default function WigoExpress() {
             <div className="floating-card absolute -left-4 md:-left-12 lg:-left-20 top-[-2%] z-20 bg-white/90 backdrop-blur-xl p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.12)] border border-white/60 w-56 md:w-64 text-left hidden sm:block">
               <div className="flex items-center gap-3 mb-3">
                 <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shadow-md shrink-0">
-                  <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" fill alt="Driver" className="object-cover" />
+                  <Image
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
+                    fill
+                    alt="Driver"
+                    className="object-cover"
+                  />
                 </div>
                 <div>
-                  <h4 className="text-sm md:text-base font-bold text-[#111] leading-tight mb-1">Profil Vérifié</h4>
-                  <p className="text-[10px] md:text-xs font-bold flex items-center gap-1 uppercase tracking-wider"><IoShieldCheckmarkOutline className="text-base text-green-600 " /> Identité Wigo</p>
+                  <h4 className="text-sm md:text-base font-bold text-[#111] leading-tight mb-1">
+                    Profil Vérifié
+                  </h4>
+                  <p className="text-[10px] md:text-xs font-bold flex items-center gap-1 uppercase tracking-wider">
+                    <IoShieldCheckmarkOutline className="text-base text-green-600 " />{" "}
+                    Identité Wigo
+                  </p>
                 </div>
               </div>
               <div className="bg-[#f8f9fa] rounded-xl p-3 flex justify-between items-center border border-black/5 shadow-inner">
-                  <span className="text-[10px] md:text-xs text-neutral-500 font-medium">Note globale</span>
-                  <span className="text-[10px] md:text-xs font-black text-[#111] flex items-center gap-1">4.9/5 ★</span>
+                <span className="text-[10px] md:text-xs text-neutral-500 font-medium">
+                  Note globale
+                </span>
+                <span className="text-[10px] md:text-xs font-black text-[#111] flex items-center gap-1">
+                  4.9/5 ★
+                </span>
               </div>
             </div>
 
             {/* Floating UI Card 2: Instant Payment */}
             <div className="floating-card absolute -right-4 md:-right-8 lg:-right-16 top-[15%] lg:top-[25%] z-30 bg-[#050505]/95 backdrop-blur-xl p-5 md:p-6 rounded-2xl md:rounded-3xl shadow-[0_30px_60px_rgba(37,99,235,0.15)] border border-neutral-800/80 w-48 md:w-56 text-left hidden sm:block">
-               <div className="flex items-center gap-3 mb-4">
-                 <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
-                   <IoWalletOutline className="text-lg md:text-xl" />
-                 </div>
-                 <h4 className="text-xs md:text-sm font-bold text-white uppercase tracking-widest">Paiement Wigo</h4>
-               </div>
-               <p className="text-3xl md:text-4xl font-black text-white mb-2 leading-none">45<span className="text-xl md:text-2xl text-neutral-500">.00 $</span></p>
-               <div className="flex items-center gap-2">
-                 <div className="w-2 h-2 rounded-full bg-white"></div>
-                 <p className="text-[10px] md:text-xs text-neutral-400 font-medium">Reçu à l'instant (CAD)</p>
-               </div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
+                  <IoWalletOutline className="text-lg md:text-xl" />
+                </div>
+                <h4 className="text-xs md:text-sm font-bold text-white uppercase tracking-widest">
+                  Paiement Wigo
+                </h4>
+              </div>
+              <p className="text-3xl md:text-4xl font-black text-white mb-2 leading-none">
+                45
+                <span className="text-xl md:text-2xl text-neutral-500">
+                  .00 $
+                </span>
+              </p>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-white"></div>
+                <p className="text-[10px] md:text-xs text-neutral-400 font-medium">
+                  Reçu à l'instant (CAD)
+                </p>
+              </div>
             </div>
 
             {/* Floating UI Card 3: Route Match */}
             <div className="floating-card absolute left-[5%] lg:left-[8%] bottom-[5%] lg:bottom-[8%] z-30 bg-white/90 backdrop-blur-xl p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.1)] border border-white/60 w-56 md:w-64 text-left hidden sm:block">
-
-                <div className="bg-primary/10 mb-4 text-primary text-[9px] md:text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">
-                  Match Parfait
-                </div>
+              <div className="bg-primary/10 mb-4 text-primary text-[9px] md:text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">
+                Match Parfait
+              </div>
 
               <div className="space-y-4 relative ml-1">
-                 <div className="absolute left-[7px] md:left-[9px] top-2 bottom-2 w-0.5 bg-neutral-200"></div>
-                 <div className="flex items-center gap-4 relative z-10">
-                   <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-primary ring-4 ring-white shadow-sm shrink-0"></div>
-                   <p className="text-sm md:text-base font-bold text-[#111]">Montréal, QC</p>
-                 </div>
-                 <div className="flex items-center gap-4 relative z-10">
-                   <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-[#111] ring-4 ring-white shadow-sm shrink-0"></div>
-                   <p className="text-sm md:text-base font-bold text-[#111]">Québec, QC</p>
-                 </div>
+                <div className="absolute left-[7px] md:left-[9px] top-2 bottom-2 w-0.5 bg-neutral-200"></div>
+                <div className="flex items-center gap-4 relative z-10">
+                  <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-primary ring-4 ring-white shadow-sm shrink-0"></div>
+                  <p className="text-sm md:text-base font-bold text-[#111]">
+                    Montréal, QC
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 relative z-10">
+                  <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-[#111] ring-4 ring-white shadow-sm shrink-0"></div>
+                  <p className="text-sm md:text-base font-bold text-[#111]">
+                    Québec, QC
+                  </p>
+                </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -407,7 +434,9 @@ export default function WigoExpress() {
                 Le bon départ, au bon moment.
               </h2>
               <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg">
-                Indiquez votre destination et découvrez instantanément les trajets disponibles. Nous mettons en avant les conducteurs les mieux notés pour vous garantir un voyage agréable et serein.
+                Indiquez votre destination et découvrez instantanément les
+                trajets disponibles. Nous mettons en avant les conducteurs les
+                mieux notés pour vous garantir un voyage agréable et serein.
               </p>
             </div>
 
@@ -419,16 +448,16 @@ export default function WigoExpress() {
                 Une communauté de confiance.
               </h2>
               <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg mb-8">
-                Pièce d'identité, permis de conduire et historique : chaque membre est contrôlé avant de pouvoir réserver ou prendre le volant. Vous voyagez toujours avec des personnes fiables.
+                Pièce d'identité, permis de conduire et historique : chaque
+                membre est contrôlé avant de pouvoir réserver ou prendre le
+                volant. Vous voyagez toujours avec des personnes fiables.
               </p>
               <div className="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-neutral-100">
                 <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-green-600">
                   <IoShieldCheckmarkOutline className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm">
-                    Identité Contrôlée
-                  </h4>
+                  <h4 className="font-bold text-sm">Identité Contrôlée</h4>
                   <p className="text-xs text-neutral-400">
                     Badge de confiance validé
                   </p>
@@ -444,7 +473,9 @@ export default function WigoExpress() {
                 Réglez sans y penser.
               </h2>
               <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg">
-                Pas besoin de monnaie en voiture. Votre place est payée en ligne lors de la réservation et transférée automatiquement au conducteur à l'arrivée. Le paiement est 100% sécurisé.
+                Pas besoin de monnaie en voiture. Votre place est payée en ligne
+                lors de la réservation et transférée automatiquement au
+                conducteur à l'arrivée. Le paiement est 100% sécurisé.
               </p>
             </div>
           </div>
@@ -525,7 +556,9 @@ export default function WigoExpress() {
               Voyagez dans de <br /> meilleures conditions.
             </h2>
             <p className="text-neutral-400 text-lg md:text-xl font-light max-w-3xl mx-auto">
-              Fini les mauvaises surprises. Sur Wigo, vous choisissez le modèle qui vous convient : berlines, véhicules électriques ou SUV. Vous savez exactement dans quel véhicule vous allez monter.
+              Fini les mauvaises surprises. Sur Wigo, vous choisissez le modèle
+              qui vous convient : berlines, véhicules électriques ou SUV. Vous
+              savez exactement dans quel véhicule vous allez monter.
             </p>
           </div>
 
@@ -589,7 +622,7 @@ export default function WigoExpress() {
 
             {/* IMAGE PLACEHOLDER: Premium Car Profile aligned with Web content */}
             <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-full min-h-[300px] overflow-hidden group">
-              <div className="absolute inset-0 bg-linear-to-r from-[#151515]/95 via-[#151515]/50 to-transparent z-10 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-linear-to-b lg:bg-linear-to-r from-[#151515]/95 via-[#151515]/50 to-transparent z-10 pointer-events-none"></div>
               <Image
                 src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop"
                 alt="Vue d'une Tesla Model 3 noire, style studio premium sombre. Véhicule typique du covoiturage haut de gamme proposé sur la plateforme."
@@ -622,7 +655,8 @@ export default function WigoExpress() {
                 />
               </Link>
               <p className="text-neutral-400 text-lg md:text-xl font-light mb-10 max-w-sm leading-relaxed mt-6">
-                La plateforme de covoiturage nouvelle génération. Trajets sécurisés, profils vérifiés et paiement garanti.
+                La plateforme de covoiturage nouvelle génération. Trajets
+                sécurisés, profils vérifiés et paiement garanti.
               </p>
             </div>
 
