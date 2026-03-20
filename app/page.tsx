@@ -15,10 +15,12 @@ import {
   IoChevronForward, 
   IoStar, 
   IoShieldCheckmarkOutline,
-  IoPulseOutline,
   IoCarSportOutline,
   IoCalendarOutline,
-  IoPersonOutline
+  IoPersonOutline,
+  IoArrowForwardOutline,
+  IoLogoApple,
+  IoLogoGooglePlaystore
 } from "react-icons/io5";
 
 if (typeof window !== "undefined") {
@@ -30,7 +32,7 @@ export default function WigoExpress() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.1,
+      lerp: 0.08, // un scroll encore plus onctueux
       smoothWheel: true,
     });
     lenis.on('scroll', ScrollTrigger.update);
@@ -43,31 +45,26 @@ export default function WigoExpress() {
   }, []);
 
   useGSAP(() => {
-    // 1. Hero Animations
+    // 1. Initial Hero Stagger
     const tl = gsap.timeline();
     tl.fromTo(".hero-text-elem", 
-      { opacity: 0, y: 40 }, 
-      { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.1 }
+      { opacity: 0, y: 50 }, 
+      { opacity: 1, y: 0, duration: 1.2, stagger: 0.1, ease: "power3.out", delay: 0.2 }
     )
     .fromTo(".search-widget", 
-      { opacity: 0, y: 50, scale: 0.98 },
-      { opacity: 1, y: 0, scale: 1, duration: 1, ease: "expo.out" },
-      "-=0.6"
-    )
-    .fromTo(".hero-floating-img", 
-      { opacity: 0, y: 80 },
-      { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: "expo.out" },
+      { opacity: 0, y: 60, scale: 0.95 },
+      { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "expo.out" },
       "-=0.8"
     );
 
-    // 2. Parallax Floating Elements on Scroll
+    // 2. Parallax Basics
     gsap.utils.toArray(".float-parallax").forEach((el: any) => {
       const speed = el.dataset.speed || 1;
       gsap.to(el, {
-        yPercent: -15 * speed,
+        yPercent: -20 * speed,
         ease: "none",
         scrollTrigger: {
-          trigger: el.parentElement,
+          trigger: el.closest("section"),
           start: "top bottom",
           end: "bottom top",
           scrub: 1,
@@ -75,14 +72,14 @@ export default function WigoExpress() {
       });
     });
 
-    // 3. Staggered Sections Fade-in
-    gsap.utils.toArray(".reveal-section").forEach((section: any) => {
-      gsap.fromTo(section, 
-        { opacity: 0, y: 80 },
+    // 3. Staggered Simple Reveals
+    gsap.utils.toArray(".reveal-fade").forEach((elem: any) => {
+      gsap.fromTo(elem, 
+        { opacity: 0, y: 60 },
         {
           opacity: 1, y: 0, duration: 1, ease: "power3.out",
           scrollTrigger: {
-            trigger: section,
+            trigger: elem,
             start: "top 85%",
             toggleActions: "play reverse play reverse"
           }
@@ -90,121 +87,164 @@ export default function WigoExpress() {
       );
     });
 
-    // 4. Dark Mode Transition (Car Details / Web View)
+    // 4. 🌟 PINNED NARRATIVE SCROLL (How it Works & KYC)
+    // Ne fonctionne que sur desktop pour l'expérience (sur mobile on stack simplement)
+    ScrollTrigger.matchMedia({
+      "(min-width: 1024px)": function() {
+        ScrollTrigger.create({
+          trigger: ".steps-container",
+          start: "top top",
+          end: "bottom bottom",
+          pin: ".sticky-illustrator",
+          pinSpacing: false
+        });
+
+        const steps = gsap.utils.toArray(".step-item");
+        steps.forEach((step: any, i) => {
+          ScrollTrigger.create({
+            trigger: step,
+            start: "top 50%",    // Quand le texte arrive au centre
+            end: "bottom 50%",   // Quand il le quitte
+            onEnter: () => {
+              gsap.to(step, { opacity: 1, x: 20, duration: 0.5 });
+              gsap.to(`.illust-step`, { opacity: 0, scale: 0.95, duration: 0.5 });
+              gsap.to(`.illust-step-${i}`, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" });
+            },
+            onEnterBack: () => {
+              gsap.to(step, { opacity: 1, x: 20, duration: 0.5 });
+              gsap.to(`.illust-step`, { opacity: 0, scale: 0.95, duration: 0.5 });
+              gsap.to(`.illust-step-${i}`, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" });
+            },
+            onLeave: () => gsap.to(step, { opacity: 0.2, x: 0, duration: 0.5 }),
+            onLeaveBack: () => gsap.to(step, { opacity: 0.2, x: 0, duration: 0.5 })
+          });
+        });
+      }
+    });
+
+    // 5. Dark Mode Transition
     ScrollTrigger.create({
       trigger: ".dark-mode-section",
-      start: "top 50%",
-      end: "bottom 50%",
-      onEnter: () => gsap.to("body", { backgroundColor: "#0a0a0a", color: "#ffffff", duration: 0.8 }),
-      onLeaveBack: () => gsap.to("body", { backgroundColor: "#f8f9fa", color: "#111111", duration: 0.8 }),
-      onEnterBack: () => gsap.to("body", { backgroundColor: "#0a0a0a", color: "#ffffff", duration: 0.8 }),
-      onLeave: () => gsap.to("body", { backgroundColor: "#f8f9fa", color: "#111111", duration: 0.8 }),
+      start: "top 60%",
+      end: "bottom 40%",
+      onEnter: () => gsap.to("body, .nav-bg", { backgroundColor: "#050505", color: "#ffffff", borderColor: "rgba(255,255,255,0.1)", duration: 0.8 }),
+      onLeaveBack: () => gsap.to("body, .nav-bg", { backgroundColor: "#f8f9fa", color: "#111111", borderColor: "rgba(0,0,0,0.05)", duration: 0.8 }),
+      onEnterBack: () => gsap.to("body, .nav-bg", { backgroundColor: "#050505", color: "#ffffff", borderColor: "rgba(255,255,255,0.1)", duration: 0.8 }),
+      onLeave: () => gsap.to("body, .nav-bg", { backgroundColor: "#f8f9fa", color: "#111111", borderColor: "rgba(0,0,0,0.05)", duration: 0.8 }),
     });
+
+    // 6. Footer Parallax Reveal
+    gsap.fromTo(".footer-content", 
+      { y: "-30%" },
+      { y: "0%", ease: "none", scrollTrigger: { trigger: ".footer-wrapper", start: "top bottom", end: "bottom bottom", scrub: true }}
+    );
 
   }, { scope: container });
 
   return (
-    <div ref={container} className="min-h-screen font-sans selection:bg-[#4D80C4] selection:text-white bg-[#f8f9fa] text-[#111] transition-colors duration-1000">
+    <div ref={container} className="bg-[#f8f9fa] text-[#111] overflow-hidden transition-colors duration-1000">
       
-      {/* 🔴 NAVIGATION (Web Focus) */}
-      <nav className="fixed top-0 w-full z-50 px-6 py-4 flex justify-center backdrop-blur-xl bg-white/70 border-b border-black/5 shadow-sm transition-all">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-extrabold tracking-tight text-[#4D80C4]">
-              wigo<span className="font-light text-black">express</span>
+      {/*  PREMIUM MULTI-LAYERED NAVBAR */}
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 transition-all">
+        <div className="nav-bg absolute inset-0 bg-white/70 backdrop-blur-2xl rounded-full border border-black/5 shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-colors duration-1000"></div>
+        <div className="relative z-10 px-6 py-3 md:py-4 flex justify-between items-center w-full">
+          
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <span className="text-2xl font-extrabold tracking-tight text-[#4D80C4] group-hover:scale-105 transition-transform">
+              wigo<span className="font-light text-current">express</span>
             </span>
           </Link>
-          <div className="hidden lg:flex gap-8 items-center text-sm font-medium text-neutral-600">
-            <Link href="/search" className="hover:text-[#4D80C4] transition-colors">Rechercher un trajet</Link>
-            <Link href="/publish" className="hover:text-[#4D80C4] transition-colors">Publier un trajet</Link>
-            <Link href="/safety" className="hover:text-[#4D80C4] transition-colors">Confiance & Sécurité</Link>
+          
+          {/* Center Links */}
+          <div className="hidden lg:flex gap-10 items-center text-sm font-semibold text-current opacity-80">
+            <Link href="/search" className="hover:text-[#4D80C4] hover:opacity-100 transition-all">Rechercher</Link>
+            <Link href="/publish" className="hover:text-[#4D80C4] hover:opacity-100 transition-all">Publier</Link>
+            <Link href="/safety" className="hover:text-[#4D80C4] hover:opacity-100 transition-all">Sécurité KYC</Link>
+            <Link href="/wallet" className="hover:text-[#4D80C4] hover:opacity-100 transition-all">Portefeuille Wigo</Link>
           </div>
+          
+          {/* Right CTAs */}
           <div className="flex gap-4 items-center">
-            <Link href="/login" className="hidden md:block font-bold text-sm text-[#111] hover:text-[#4D80C4] transition-colors">
-              Se connecter
+            <Link href="/login" className="hidden md:flex font-bold text-sm text-current opacity-80 hover:opacity-100 hover:text-[#4D80C4] transition-all">
+              Login
             </Link>
-            <Link href="/register" className="bg-[#4D80C4] text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-black transition-colors shadow-lg shadow-blue-500/20">
-              S'inscrire
+            <Link href="/register" className="bg-[#4D80C4] text-white font-bold text-xs md:text-sm px-6 py-3 rounded-full hover:bg-black transition-colors shadow-lg shadow-blue-500/20 flex items-center gap-2">
+              Nous rejoindre <IoChevronForward />
             </Link>
           </div>
+          
         </div>
       </nav>
 
-      {/* 🔴 HERO SECTION : Web Carpooling Search */}
-      <section className="relative min-h-[90vh] pt-32 pb-20 px-6 flex flex-col items-center justify-center overflow-hidden">
-        {/* Background Ambient Decor */}
-        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-[#4D80C4]/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/3 translate-x-1/4"></div>
+      {/*  EPIC HERO SECTION */}
+      <section className="relative min-h-screen pt-40 pb-20 px-6 flex flex-col items-center justify-center">
+        {/* Abstract shapes for premium feel */}
+        <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-[#4D80C4]/10 rounded-full blur-[140px] pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
+        <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none"></div>
 
-        <div className="container mx-auto relative z-10 flex flex-col items-center text-center">
+        <div className="container mx-auto relative z-10 flex flex-col items-center justify-center text-center">
           
-          <div className="hero-text-elem inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full text-xs font-bold text-[#4D80C4] uppercase tracking-widest shadow-sm mb-6 border border-black/5">
-            <IoStar className="text-yellow-400" /> Le Covoiturage Premium
+          <div className="hero-text-elem inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full text-xs font-extrabold text-[#4D80C4] uppercase tracking-[0.2em] shadow-[0_8px_16px_rgba(0,0,0,0.04)] mb-8 border border-neutral-100">
+            Le Standard Premium
           </div>
           
-          <h1 className="hero-text-elem text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] text-[#111] mb-6 max-w-5xl">
-            Partagez la route en<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#4D80C4] to-[#1e3a8a]">Classe Affaires.</span>
+          <h1 className="hero-text-elem text-[12vw] md:text-[8vw] lg:text-[7vw] font-black tracking-tighter leading-[0.85] mb-8">
+            Covoiturage.<br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#4D80C4] to-[#1e3a8a]">Zéro compromis.</span>
           </h1>
           
-          <p className="hero-text-elem text-lg md:text-2xl text-neutral-500 font-light mb-12 max-w-2xl leading-relaxed">
-            Rejoignez une communauté de membres vérifiés. Réservez votre siège dans des véhicules d'exception et participez aux frais en toute simplicité.
+          <p className="hero-text-elem text-lg md:text-2xl opacity-60 font-medium mb-16 max-w-2xl leading-relaxed">
+            Trouvez ou offrez un trajet dans des véhicules vérifiés. Paiement instantané et profils sécurisés (KYC). Plus haut, plus loin, ensemble.
           </p>
 
-          {/* Web Search Widget (Core Carpooling Feature) */}
-          <div className="search-widget w-full max-w-4xl bg-white p-2 md:p-3 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-neutral-100 flex flex-col md:flex-row items-center gap-2 mb-16 relative z-30">
+          {/* Web Search Widget - The Core Tool */}
+          <div className="search-widget w-full max-w-5xl bg-white p-3 md:p-4 rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.06)] border border-neutral-100 flex flex-col lg:flex-row items-center gap-3 mb-10">
             
-            <div className="flex-1 flex w-full md:w-auto items-center gap-3 px-4 py-3 md:py-4 bg-[#f8f9fa] rounded-2xl hover:bg-[#f0f2f5] transition-colors cursor-text group border border-transparent focus-within:border-[#4D80C4]/30 focus-within:bg-white">
-              <IoLocationOutline className="text-neutral-400 text-xl group-focus-within:text-[#4D80C4]" />
-              <div className="flex flex-col text-left w-full">
-                <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Départ</span>
-                <input type="text" placeholder="Ville de départ" className="bg-transparent text-[#111] font-bold outline-none placeholder:text-neutral-800 placeholder:font-medium w-full" />
+            <div className="flex-1 w-full bg-[#f4f5f7] rounded-3xl flex items-center px-6 py-4 border border-transparent focus-within:bg-white focus-within:border-[#4D80C4]/40 transition-colors shadow-inner group">
+              <IoLocationOutline className="text-2xl text-neutral-400 group-focus-within:text-[#4D80C4]" />
+              <div className="ml-4 w-full text-left">
+                <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Départ</span>
+                <input type="text" placeholder="D'où partez-vous ?" className="w-full bg-transparent text-lg font-bold text-[#111] outline-none placeholder:text-neutral-300" />
               </div>
             </div>
 
-            <div className="hidden md:flex w-8 h-8 rounded-full bg-white border border-neutral-200 items-center justify-center shrink-0 z-10 -mx-4 shadow-sm text-neutral-400">
-              <IoChevronForward />
+            <div className="hidden lg:flex w-12 h-12 rounded-full bg-white shadow-md border border-neutral-100 items-center justify-center shrink-0 -mx-6 z-10 text-neutral-400 font-black">
+              <IoArrowForwardOutline />
             </div>
 
-            <div className="flex-1 flex w-full md:w-auto items-center gap-3 px-4 py-3 md:py-4 bg-[#f8f9fa] rounded-2xl hover:bg-[#f0f2f5] transition-colors cursor-text group border border-transparent focus-within:border-[#4D80C4]/30 focus-within:bg-white">
-              <IoMapOutline className="text-neutral-400 text-xl group-focus-within:text-[#4D80C4]" />
-              <div className="flex flex-col text-left w-full">
-                <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Arrivée</span>
-                <input type="text" placeholder="Ville d'arrivée" className="bg-transparent text-[#111] font-bold outline-none placeholder:text-neutral-800 placeholder:font-medium w-full" />
+            <div className="flex-1 w-full bg-[#f4f5f7] rounded-3xl flex items-center px-6 py-4 border border-transparent focus-within:bg-white focus-within:border-[#4D80C4]/40 transition-colors shadow-inner group">
+              <IoMapOutline className="text-2xl text-neutral-400 group-focus-within:text-[#4D80C4]" />
+              <div className="ml-4 w-full text-left">
+                <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Arrivée</span>
+                <input type="text" placeholder="Où allez-vous ?" className="w-full bg-transparent text-lg font-bold text-[#111] outline-none placeholder:text-neutral-300" />
               </div>
             </div>
 
-            <div className="flex w-full md:w-auto gap-2">
-              <div className="flex-1 md:w-40 flex items-center gap-3 px-4 py-3 md:py-4 bg-[#f8f9fa] rounded-2xl hover:bg-[#f0f2f5] transition-colors cursor-pointer group">
-                <IoCalendarOutline className="text-neutral-400 text-xl group-hover:text-[#4D80C4]" />
-                <div className="flex flex-col text-left">
-                  <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Date</span>
-                  <span className="text-[#111] font-bold truncate">Aujourd'hui</span>
+            <div className="w-full lg:w-auto flex gap-3">
+              <div className="flex-1 lg:w-40 bg-[#f4f5f7] rounded-3xl flex items-center px-6 py-4 hover:bg-neutral-200 transition-colors cursor-pointer group">
+                <IoCalendarOutline className="text-xl text-neutral-400 group-hover:text-[#4D80C4]" />
+                <div className="ml-3 text-left">
+                  <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Date</span>
+                  <span className="block text-sm font-bold truncate">Aujourd'hui</span>
                 </div>
               </div>
-
-              <div className="flex-1 md:w-32 flex items-center gap-3 px-4 py-3 md:py-4 bg-[#f8f9fa] rounded-2xl hover:bg-[#f0f2f5] transition-colors cursor-pointer group">
-                <IoPersonOutline className="text-neutral-400 text-xl group-hover:text-[#4D80C4]" />
-                <div className="flex flex-col text-left">
-                  <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Passagers</span>
-                  <span className="text-[#111] font-bold">1</span>
+              <div className="flex-1 lg:w-32 bg-[#f4f5f7] rounded-3xl flex items-center px-6 py-4 hover:bg-neutral-200 transition-colors cursor-pointer group">
+                <IoPersonOutline className="text-xl text-neutral-400 group-hover:text-[#4D80C4]" />
+                <div className="ml-3 text-left">
+                  <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Places</span>
+                  <span className="block text-sm font-bold">1</span>
                 </div>
               </div>
             </div>
 
-            <button className="w-full md:w-auto bg-[#4D80C4] text-white font-bold text-sm px-8 py-5 rounded-xl hover:bg-[#3a659e] transition-colors shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 h-full mt-2 md:mt-0">
-              <IoSearchOutline className="text-lg" />
-              <span>Rechercher</span>
+            <button className="w-full lg:w-auto bg-[#4D80C4] text-white font-extrabold text-lg px-10 py-5 rounded-3xl hover:bg-[#111] transition-colors shadow-xl shadow-blue-500/20 h-full flex justify-center items-center gap-2">
+              <IoSearchOutline /> <span className="lg:hidden">Rechercher</span>
             </button>
           </div>
 
           {/* Web Dashboard Visual Preview (Instead of purely mobile UI) */}
-          <div className="hero-floating-img w-full max-w-5xl h-[40vh] md:h-[50vh] bg-white rounded-t-[3rem] shadow-[0_0_80px_rgba(0,0,0,0.05)] border-t border-x border-neutral-100 overflow-hidden relative float-parallax" data-speed="0.5">
-            {/* Fake Web Wrapper for visual impact */}
-            <div className="h-10 border-b border-neutral-100 flex items-center px-6 gap-2 bg-[#fafafa]">
-               <div className="w-3 h-3 rounded-full bg-red-400"></div>
-               <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-               <div className="w-3 h-3 rounded-full bg-green-400"></div>
-            </div>
+          <div className="hero-floating-img w-full max-w-7xl h-[40vh] md:h-[50vh] bg-white rounded-3xl border-t border-x shadow-[0_0_80px_rgba(0,0,0,0.05)] border-neutral-100 overflow-hidden relative float-parallax" data-speed="0.5">
             {/* IMAGE PLACEHOLDER: Platform Dashboard / Dashboard Covoiturage */}
             <div className="relative w-full h-full">
               <Image 
@@ -213,123 +253,100 @@ export default function WigoExpress() {
                 fill
                 className="object-cover object-top opacity-90"
               />
-              {/* Fade out to white at the bottom */}
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
             </div>
           </div>
           
         </div>
       </section>
 
-      {/* 🔴 FEATURES / TRUST Grid */}
-      <section className="reveal-section relative py-24 px-6 bg-white z-20">
-        <div className="container mx-auto">
-          <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <div>
-              <h2 className="text-sm font-bold tracking-widest uppercase text-[#4D80C4] mb-4">La Différence Wigo</h2>
-              <h3 className="text-4xl md:text-5xl font-bold uppercase tracking-tighter leading-[0.9] text-[#111]">
-                Un réseau de confiance, <br/><span className="text-neutral-400">sans compromis.</span>
-              </h3>
-            </div>
-            <p className="max-w-md text-neutral-500 text-lg font-light">
-              Le covoiturage a évolué. Finies les mauvaises surprises, les retards inexpliqués ou les annulations de dernière minute.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* Card 1: Security/KYC */}
-            <div className="bg-[#f8f9fa] rounded-[2rem] border border-neutral-100 p-10 overflow-hidden relative group hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all">
-              <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
-                <IoShieldCheckmarkOutline className="w-7 h-7 text-[#4D80C4]" />
-              </div>
-              <h4 className="text-2xl font-bold mb-4 text-[#111]">KYC & Profils Vérifiés</h4>
-              <p className="text-neutral-500 font-light text-base leading-relaxed">
-                Conducteurs et passagers passent par une vérification d'identité stricte. Montez à bord avec une totale tranquillité d'esprit.
-              </p>
-            </div>
-
-            {/* Card 2: Premium Cars */}
-            <div className="bg-[#f8f9fa] rounded-[2rem] border border-neutral-100 p-10 overflow-hidden relative group hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all">
-              <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
-                <IoCarSportOutline className="w-7 h-7 text-neutral-800" />
-              </div>
-              <h4 className="text-2xl font-bold mb-4 text-[#111]">Flotte Privilège</h4>
-              <p className="text-neutral-500 font-light text-base leading-relaxed">
-                Notre algorithme privilégie les véhicules récents, spacieux et confortables. Pour que la route redevienne un plaisir.
-              </p>
-            </div>
-
-            {/* Card 3: Exact Location */}
-            <div className="bg-[#f8f9fa] rounded-[2rem] border border-neutral-100 p-10 overflow-hidden relative group hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all">
-              <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
-                <IoMapOutline className="w-7 h-7 text-[#4D80C4]" />
-              </div>
-              <h4 className="text-2xl font-bold mb-4 text-[#111]">Suivi GPS Exact</h4>
-              <p className="text-neutral-500 font-light text-base leading-relaxed">
-                Suivez votre conducteur sur la carte en temps réel jusqu'au point de rendez-vous. Ne cherchez plus votre véhicule.
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* 🔴 THE DIGITAL POCKET (Web Carpooling logic) */}
-      <section className="reveal-section relative py-32 px-6 bg-[#f4f5f7] border-t border-black/5 overflow-hidden">
-        <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-16 relative z-10">
+      {/*  NARRATIVE SCROLL : HOW IT WORKS / KYC (Pinned GSAP Section) */}
+      <section className="steps-container relative w-full bg-[#fbfbfb] border-t border-black/5 z-20">
+        <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
           
-          <div className="w-full lg:w-1/2 relative">
-            {/* "Your Digital Pocket" Web/Card Component */}
-            <div className="w-full max-w-md mx-auto bg-white rounded-[2.5rem] shadow-2xl border border-neutral-100 p-8 relative overflow-hidden float-parallax" data-speed="0.8">
-               <h3 className="text-2xl font-extrabold mb-6">Le Wigo Wallet</h3>
-               
-               {/* Dark Card Inside */}
-               <div className="bg-[#111] p-6 rounded-3xl text-white mb-8 relative shadow-xl overflow-hidden">
-                 <div className="absolute right-[-20%] top-[-20%] w-40 h-40 bg-[#4D80C4] rounded-full blur-[40px] opacity-40"></div>
-                 <p className="text-sm font-bold mb-1 relative z-10 text-neutral-400">Solde Disponible</p>
-                 <h4 className="text-4xl font-black mb-6 relative z-10">€ 142.50</h4>
-                 
-                 <div className="flex gap-4 relative z-10">
-                   <button className="bg-white/10 backdrop-blur-sm px-4 py-3 rounded-xl text-xs font-bold text-white flex-1 hover:bg-white/20 transition-colors">Participer aux frais</button>
-                   <button className="bg-[#4D80C4] px-4 py-3 rounded-xl text-xs font-bold text-white hover:bg-[#3a659e] transition-colors flex items-center justify-center"><IoWalletOutline className="text-lg" /></button>
+          {/* Left Text / The scrolling steps */}
+          <div className="lg:py-[30vh] flex flex-col gap-[30vh]">
+             
+            <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
+               <span className="text-[#4D80C4] font-black text-xl mb-4">01. Recherche & Match</span>
+               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">Mise en relation intelligente</h2>
+               <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg">
+                 Oubliez la recherche fastidieuse. Indiquez votre point de départ, et notre algorithme vous propose immédiatement les meilleurs trajets disponibles, avec la note globale de chaque conducteur.
+               </p>
+            </div>
+
+            <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
+               <span className="text-green-600 font-black text-xl mb-4">02. Sécurité Inébranlable</span>
+               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">Trust & KYC Intégré</h2>
+               <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg mb-8">
+                 Nous vérifions manuellement la carte d'identité, la plaque d'immatriculation et l'historique de conduite. Ce badge de vérification est notre promesse d'excellence et de tranquillité pour chaque passager.
+               </p>
+               <div className="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-neutral-100">
+                 <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-green-600">
+                   <IoShieldCheckmarkOutline className="w-6 h-6" />
+                 </div>
+                 <div>
+                   <h4 className="font-bold text-sm">Passager & Conducteur Vérifiés</h4>
+                   <p className="text-xs text-neutral-400">Badge KYC Vert obtenu</p>
                  </div>
                </div>
+            </div>
 
-               <div className="space-y-4">
-                 <div className="bg-[#f8f9fa] p-4 rounded-2xl flex items-center gap-4">
-                   <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4D80C4] shadow-sm"><IoPersonOutline /></div>
-                   <div className="flex-1">
-                     <p className="text-sm font-bold text-neutral-800">Paiement au Conducteur</p>
-                     <p className="text-xs text-neutral-400">Validation automatique à l'arrivée</p>
+            <div className="step-item opacity-100 lg:opacity-20 transition-opacity duration-300 min-h-[40vh] flex flex-col justify-center">
+               <span className="text-[#4D80C4] font-black text-xl mb-4">03. Wigo Wallet</span>
+               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight">Zéro espèce. Zéro tracas.</h2>
+               <p className="text-lg md:text-xl text-neutral-500 font-medium max-w-lg">
+                 Le trajet est payé automatiquement via la plateforme. Le chauffeur reçoit directement les fonds dans son portefeuille Wigo à l'arrivée. Transférez vers votre banque en 1 clic.
+               </p>
+            </div>
+
+          </div>
+
+          {/* Right Illustrations / Pinned during scroll */}
+          <div className="sticky-illustrator hidden lg:flex h-screen items-center justify-center sticky top-0 relative overflow-hidden">
+            <div className="w-full max-w-lg aspect-square relative float-parallax" data-speed="0.2">
+              
+              {/* Illus 1 : Search Map UI */}
+              <div className="illust-step illust-step-0 absolute inset-0 bg-white rounded-[3rem] shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-neutral-100 p-8 flex flex-col overflow-hidden">
+                <div className="w-full h-1/2 bg-[#f8f9fa] rounded-2xl relative mb-4 overflow-hidden">
+                  <Image src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop" alt="Carte avec des marqueurs" fill className="object-cover opacity-80" />
+                </div>
+                <div className="bg-[#f8f9fa] p-4 rounded-xl flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[#4D80C4] rounded-lg"></div>
+                  <div className="flex-1"><div className="w-2/3 h-4 bg-neutral-200 rounded mb-2"></div><div className="w-1/3 h-3 bg-neutral-200 rounded"></div></div>
+                </div>
+              </div>
+
+              {/* Illus 2 : KYC Trust Badge ID */}
+              <div className="illust-step illust-step-1 absolute inset-0 bg-[#0a0a0a] rounded-[3rem] shadow-[0_40px_80px_rgba(34,197,94,0.1)] border border-neutral-800 p-8 flex flex-col items-center justify-center text-white opacity-0 scale-95">
+                <div className="w-32 h-32 rounded-full border-4 border-green-500 mb-6 relative overflow-hidden flex items-center justify-center shadow-[0_0_40px_rgba(34,197,94,0.4)]">
+                   <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="Scan visage KYC" fill className="object-cover opacity-60" />
+                   <IoShieldCheckmarkOutline className="w-12 h-12 text-green-400 absolute z-10" />
+                </div>
+                <h3 className="text-2xl font-bold mb-2">Identité Confirmée</h3>
+                <p className="text-neutral-400 text-center">Scan passeport et permis de conduire validés par Wigo Security.</p>
+              </div>
+
+              {/* Illus 3 : Wigo Wallet */}
+              <div className="illust-step illust-step-2 absolute inset-0 bg-[#4D80C4] rounded-[3rem] shadow-[0_40px_80px_rgba(77,128,196,0.2)] border border-[#3a659e] p-8 flex flex-col items-center justify-center text-white opacity-0 scale-95">
+                <IoWalletOutline className="w-20 h-20 mb-6 opacity-80" />
+                <h3 className="text-xl font-medium opacity-80 mb-2">Solde Wigo</h3>
+                <h2 className="text-6xl font-black mb-10">€ 244.50</h2>
+                <div className="bg-white/10 w-full p-4 rounded-2xl backdrop-blur flex justify-between">
+                   <div className="text-left">
+                     <p className="text-xs font-medium opacity-70">Reçu (Trajet Paris - Lyon)</p>
+                     <p className="font-bold">+ 45.00 €</p>
                    </div>
-                   <IoShieldCheckmarkOutline className="text-green-500 text-lg" />
-                 </div>
-               </div>
+                   <IoShieldCheckmarkOutline className="w-6 h-6" />
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <div className="w-full lg:w-1/2">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-wigo-blue/30 text-xs font-bold text-[#4D80C4] mb-6 uppercase tracking-widest bg-[#4D80C4]/10">
-              <IoWalletOutline className="w-4 h-4" /> Transactions sans friction
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6">
-              Votre participation.<br/>
-              <span className="text-[#4D80C4]">Hautement sécurisée.</span>
-            </h2>
-            <p className="text-neutral-500 text-lg md:text-xl font-light mb-8 max-w-lg">
-              Terminé les passages au distributeur avant le départ ou la monnaie exacte à prévoir. Votre portefeuille intégré sécurise la transaction : vous payez à la réservation, le conducteur est payé à l'arrivée.
-            </p>
-            <div className="flex gap-4">
-               <button className="bg-[#111] text-white font-bold text-sm px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
-                  Comment ça marche ?
-               </button>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* 🔴 DARK MODE SECTION : Vehicles Focus Web Layout */}
+     {/*  DARK MODE SECTION : Vehicles Focus Web Layout */}
       <section className="dark-mode-section relative py-32 px-6 flex flex-col items-center text-center overflow-hidden">
         <div className="container mx-auto z-10">
           <div className="mb-16">
@@ -395,48 +412,50 @@ export default function WigoExpress() {
         </div>
       </section>
 
-      {/* 🔴 FOOTER (Web Layout) */}
-      <footer className="bg-white text-black border-t border-black/5 py-20 px-6 mt-10 rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.03)] relative z-20">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
-            
-            <div className="w-full md:w-1/3">
-              <span className="text-2xl font-extrabold tracking-tight text-[#4D80C4] block mb-6">
-                wigo<span className="font-light text-black">express</span>
-              </span>
-              <p className="text-neutral-500 font-medium text-sm leading-relaxed max-w-sm">
-                L'alternative de covoiturage moderne, sécurisée et haut de gamme. Transformez vos déplacements quotidiens.
+      {/*  FOOTER  */}
+      <footer className="footer-wrapper relative z-0 bg-[#050505] text-white overflow-hidden rounded-t-[3rem] shadow-[0_-30px_60px_rgba(0,0,0,0.5)]">
+        <div className="footer-content container mx-auto px-6 py-24 md:py-32 flex flex-col h-full min-h-[90vh]">
+          
+          <div className="flex flex-col lg:flex-row justify-between items-start gap-16 flex-1">
+            <div className="lg:w-1/2">
+              <h2 className="text-[15vw] md:text-[8vw] font-black tracking-tighter leading-[0.8] mb-8 text-[#4D80C4]">
+                wigo.
+              </h2>
+              <p className="text-neutral-400 text-lg md:text-2xl font-light mb-12 max-w-md leading-relaxed">
+                Rejoignez le réseau de covoiturage nouvelle génération. Sécurité, élégance et réactivité absolues.
               </p>
             </div>
 
-            <div className="w-full md:w-2/3 flex flex-col sm:flex-row gap-12 sm:gap-24 justify-end">
-              <div>
-                <h4 className="font-bold mb-4">Covoiturage</h4>
-                <ul className="space-y-3 text-neutral-500 text-sm font-medium">
-                  <li><Link href="/search" className="hover:text-[#4D80C4] transition-colors">Rechercher un trajet</Link></li>
-                  <li><Link href="/publish" className="hover:text-[#4D80C4] transition-colors">Proposer un trajet</Link></li>
-                  <li><Link href="/destinations" className="hover:text-[#4D80C4] transition-colors">Trajets populaires</Link></li>
-                </ul>
+            <div className="lg:w-1/2 flex flex-col sm:flex-row gap-12 sm:gap-24 lg:justify-end text-sm">
+              <div className="flex flex-col gap-4">
+                <h4 className="font-extrabold uppercase tracking-widest text-[#4D80C4] mb-2 border-b border-white/10 pb-4">Roulez</h4>
+                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Rechercher</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Proposer</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Trajets populaires</Link>
               </div>
-              <div>
-                <h4 className="font-bold mb-4">À Propos</h4>
-                <ul className="space-y-3 text-neutral-500 text-sm font-medium">
-                  <li><Link href="/how-it-works" className="hover:text-[#4D80C4] transition-colors">Fonctionnement</Link></li>
-                  <li><Link href="/wallet" className="hover:text-[#4D80C4] transition-colors">Le Portefeuille Wigo</Link></li>
-                  <li><Link href="/contact" className="hover:text-[#4D80C4] transition-colors">Contactez-nous</Link></li>
-                </ul>
+              <div className="flex flex-col gap-4">
+                <h4 className="font-extrabold uppercase tracking-widest text-[#4D80C4] mb-2 border-b border-white/10 pb-4">Découvrez</h4>
+                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">La sécurité (KYC)</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Portefeuille Digital</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Assurances</Link>
+              </div>
+              <div className="flex flex-col gap-4">
+                <h4 className="font-extrabold uppercase tracking-widest text-[#4D80C4] mb-2 border-b border-white/10 pb-4">Société</h4>
+                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">À Propos</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Presse</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Contact</Link>
               </div>
             </div>
-
           </div>
 
-          <div className="pt-8 border-t border-neutral-100 flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs font-bold text-neutral-400 uppercase tracking-widest gap-4">
-            <span>© {new Date().getFullYear()} Wigo Express. Tous droits réservés.</span>
-            <div className="flex gap-6">
-              <Link href="/legal" className="hover:text-[#4D80C4] transition-colors">Mentions Légales</Link>
-              <Link href="/privacy" className="hover:text-[#4D80C4] transition-colors">Confidentialité</Link>
+          <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs font-bold text-neutral-600 uppercase tracking-widest gap-6">
+            <span>© {new Date().getFullYear()} Wigo Express Inc.</span>
+            <div className="flex gap-8">
+              <Link href="#" className="hover:text-white transition-colors">CGU</Link>
+              <Link href="#" className="hover:text-white transition-colors">Politique de Confidentialité</Link>
             </div>
           </div>
+
         </div>
       </footer>
 

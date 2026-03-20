@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
+/* Primary color: #4D80C4 */
 @theme inline {
-  --color-wigo-blue: #4D80C4;
+  --color-primary: #4d80c4;
+  --color-wigo-blue: var(--color-primary);
   --color-wigo-dark: #050505;
   --color-wigo-card: #111111;
   --font-sans: var(--font-outfit), Arial, Helvetica, sans-serif;
@@ -15,12 +17,13 @@ body {
 
 /* Animations globales */
 ::selection {
-  background: var(--color-wigo-blue);
+  background: var(--color-primary);
   color: #fff;
 }
 
 /* Lenis classes indispensables */
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
