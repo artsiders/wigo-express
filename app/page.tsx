@@ -202,7 +202,7 @@ export default function WigoExpress() {
               </div>
             </div>
 
-            <button className="w-full lg:w-auto bg-primary text-white font-extrabold text-lg px-10 py-5 rounded-3xl hover:bg-[#111] transition-colors shadow-xl shadow-blue-500/20 h-full flex justify-center items-center gap-2">
+            <button className="w-full lg:w-auto bg-primary text-white font-extrabold text-lg px-10 py-6 rounded-3xl hover:bg-[#111] transition-colors shadow-xl shadow-blue-500/20 flex justify-center items-center gap-2">
               <IoSearchOutline /> <span className="lg:hidden">Rechercher</span>
             </button>
           </div>
