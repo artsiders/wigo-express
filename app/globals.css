@@ -2,17 +2,21 @@
 
 :root {
   --primary: #4d80c4;
+  --dark: #050505;
+  --light: #f8f9fa;
   --font-sans: var(--font-outfit), Arial, Helvetica, sans-serif;
 }
 
 @theme inline {
   --color-primary: var(--primary);
+  --color-dark: var(--dark);
+  --color-light: var(--light);
   --font-sans: var(--font-sans);
 }
 
 body {
-  background: var(--primary);
-  color: #fff;  
+  background: var(--light);
+  color: #fff;
   overscroll-behavior: none;
 }
 

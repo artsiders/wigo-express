@@ -413,7 +413,7 @@ export default function WigoExpress() {
             </div>
 
             {/* Floating UI Card 2: Instant Payment */}
-            <div className="floating-card absolute -right-4 md:-right-8 lg:-right-16 top-[15%] lg:top-[25%] z-30 bg-[#050505]/95 backdrop-blur-xl p-5 md:p-6 rounded-2xl md:rounded-3xl shadow-[0_30px_60px_rgba(37,99,235,0.15)] border border-neutral-800/80 w-48 md:w-56 text-left hidden sm:block">
+            <div className="floating-card absolute -right-4 md:-right-8 lg:-right-16 top-[15%] lg:top-[25%] z-30 bg-dark/95 backdrop-blur-xl p-5 md:p-6 rounded-2xl md:rounded-3xl shadow-[0_30px_60px_rgba(37,99,235,0.15)] border border-neutral-800/80 w-48 md:w-56 text-left hidden sm:block">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
                   <IoWalletOutline className="text-lg md:text-xl" />
@@ -575,7 +575,7 @@ export default function WigoExpress() {
               </div>
 
               {/* Illus 2 : KYC Trust Badge ID */}
-              <div className="illust-step absolute inset-0 bg-[#050505] rounded-[2.5rem] shadow-2xl border border-neutral-800 p-10 flex flex-col items-center justify-center text-white origin-bottom">
+              <div className="illust-step absolute inset-0 bg-dark rounded-[2.5rem] shadow-2xl border border-neutral-800 p-10 flex flex-col items-center justify-center text-white origin-bottom">
                 
                 {/* ID Card abstract representation */}
                 <div className="w-[120%] h-40 absolute top-[10%] -rotate-6 bg-white/5 rounded-3xl border border-white/10 blur-[2px] pointer-events-none"></div>
@@ -742,8 +742,8 @@ export default function WigoExpress() {
         </div>
       </section>
 
-      {/*  PREMIUM INTERACTIVE FOOTER  */}
-      <footer className="footer-wrapper relative z-0 bg-[#050505] text-white overflow-hidden rounded-t-[2.5rem] border-t border-white/5">
+      {/*  FOOTER  */}
+      <footer className="footer-wrapper relative z-0 bg-dark text-white overflow-hidden rounded-t-[2.5rem] border-t border-white/5">
         {/* Subtle top glow effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-primary/20 rounded-full blur-[150px] pointer-events-none opacity-50"></div>
 
