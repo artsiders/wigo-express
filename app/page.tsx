@@ -7,15 +7,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Lenis from "lenis";
+import Navbar from "@/components/Navbar";
 import { 
   IoSearchOutline, 
   IoWalletOutline, 
   IoMapOutline, 
   IoLocationOutline, 
-  IoChevronForward, 
-  IoStar, 
   IoShieldCheckmarkOutline,
-  IoCarSportOutline,
   IoCalendarOutline,
   IoPersonOutline,
   IoArrowForwardOutline,
@@ -127,10 +125,10 @@ export default function WigoExpress() {
       trigger: ".dark-mode-section",
       start: "top 60%",
       end: "bottom 40%",
-      onEnter: () => gsap.to("body, .nav-bg", { backgroundColor: "#050505", color: "#ffffff", borderColor: "rgba(255,255,255,0.1)", duration: 0.8 }),
-      onLeaveBack: () => gsap.to("body, .nav-bg", { backgroundColor: "#f8f9fa", color: "#111111", borderColor: "rgba(0,0,0,0.05)", duration: 0.8 }),
-      onEnterBack: () => gsap.to("body, .nav-bg", { backgroundColor: "#050505", color: "#ffffff", borderColor: "rgba(255,255,255,0.1)", duration: 0.8 }),
-      onLeave: () => gsap.to("body, .nav-bg", { backgroundColor: "#f8f9fa", color: "#111111", borderColor: "rgba(0,0,0,0.05)", duration: 0.8 }),
+      onEnter: () => gsap.to("body", { backgroundColor: "#050505", color: "#ffffff", duration: 0.8 }),
+      onLeaveBack: () => gsap.to("body", { backgroundColor: "#f8f9fa", color: "#111111", duration: 0.8 }),
+      onEnterBack: () => gsap.to("body", { backgroundColor: "#050505", color: "#ffffff", duration: 0.8 }),
+      onLeave: () => gsap.to("body", { backgroundColor: "#f8f9fa", color: "#111111", duration: 0.8 }),
     });
 
     // 6. Footer Parallax Reveal
@@ -143,39 +141,8 @@ export default function WigoExpress() {
 
   return (
     <div ref={container} className="bg-[#f8f9fa] text-[#111] overflow-hidden transition-colors duration-1000">
-      
-      {/*  PREMIUM MULTI-LAYERED NAVBAR */}
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 transition-all">
-        <div className="nav-bg absolute inset-0 bg-white/70 backdrop-blur-2xl rounded-full border border-black/5 shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-colors duration-1000"></div>
-        <div className="relative z-10 px-6 py-3 md:py-4 flex justify-between items-center w-full">
-          
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-2xl font-extrabold tracking-tight text-primary group-hover:scale-105 transition-transform">
-              wigo<span className="font-light text-current">express</span>
-            </span>
-          </Link>
-          
-          {/* Center Links */}
-          <div className="hidden lg:flex gap-10 items-center text-sm font-semibold text-current opacity-80">
-            <Link href="/search" className="hover:text-primary hover:opacity-100 transition-all">Rechercher</Link>
-            <Link href="/publish" className="hover:text-primary hover:opacity-100 transition-all">Publier</Link>
-            <Link href="/safety" className="hover:text-primary hover:opacity-100 transition-all">Sécurité KYC</Link>
-            <Link href="/wallet" className="hover:text-primary hover:opacity-100 transition-all">Portefeuille Wigo</Link>
-          </div>
-          
-          {/* Right CTAs */}
-          <div className="flex gap-4 items-center">
-            <Link href="/login" className="hidden md:flex font-bold text-sm text-current opacity-80 hover:opacity-100 hover:text-primary transition-all">
-              Login
-            </Link>
-            <Link href="/register" className="bg-primary text-white font-bold text-xs md:text-sm px-6 py-3 rounded-full hover:bg-black transition-colors shadow-lg shadow-blue-500/20 flex items-center gap-2">
-              Nous rejoindre <IoChevronForward />
-            </Link>
-          </div>
-          
-        </div>
-      </nav>
+      {/* PREMIUM MULTI-LAYERED NAVBAR (Extracted to component) */}
+      <Navbar />
 
       {/*  EPIC HERO SECTION */}
       <section className="relative min-h-screen pt-40 pb-20 px-6 flex flex-col items-center justify-center">
@@ -241,7 +208,7 @@ export default function WigoExpress() {
           </div>
 
           {/* Web Dashboard Visual Preview (Instead of purely mobile UI) */}
-          <div className="hero-floating-img w-full max-w-7xl h-[40vh] md:h-[50vh] bg-white rounded-3xl border-t border-x shadow-[0_0_80px_rgba(0,0,0,0.05)] border-neutral-100 overflow-hidden relative float-parallax" data-speed="0.5">
+          <div className="hero-floating-img w-full max-w-7xl h-[40vh] md:h-[50vh] bg-white rounded-3xl border-t border-x shadow-[0_0_80px_rgba(0,0,0,0.05)] border-neutral-100 overflow-hidden relative float-parallax mt-18" data-speed="0.5">
             {/* IMAGE PLACEHOLDER: Platform Dashboard / Dashboard Covoiturage */}
             <div className="relative w-full h-full">
               <Image 
@@ -409,50 +376,62 @@ export default function WigoExpress() {
         </div>
       </section>
 
-      {/*  FOOTER  */}
-      <footer className="footer-wrapper relative z-0 bg-[#050505] text-white overflow-hidden rounded-t-[3rem] shadow-[0_-30px_60px_rgba(0,0,0,0.5)]">
-        <div className="footer-content container mx-auto px-6 py-24 md:py-32 flex flex-col h-full min-h-[90vh]">
+      {/*  PREMIUM INTERACTIVE FOOTER  */}
+      <footer className="footer-wrapper relative z-0 bg-[#050505] text-white overflow-hidden rounded-t-[2.5rem] border-t border-white/5">
+        
+        {/* Subtle top glow effect */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-primary/20 rounded-full blur-[150px] pointer-events-none opacity-50"></div>
+        
+        <div className="footer-content container mx-auto px-6 py-20 md:py-28 flex flex-col h-full relative z-10">
           
-          <div className="flex flex-col lg:flex-row justify-between items-start gap-16 flex-1">
-            <div className="lg:w-1/2">
-              <h2 className="text-[15vw] md:text-[8vw] font-black tracking-tighter leading-[0.8] mb-8 text-primary">
-                wigo.
-              </h2>
-              <p className="text-neutral-400 text-lg md:text-2xl font-light mb-12 max-w-md leading-relaxed">
-                Rejoignez le réseau de covoiturage nouvelle génération. Sécurité, élégance et réactivité absolues.
+          <div className="flex flex-col xl:flex-row justify-between items-start gap-16 flex-1 border-b border-white/10 pb-20 mb-10">
+            {/* Brand & Mission */}
+            <div className="xl:w-5/12 flex flex-col items-start pr-0 md:pr-10">
+              <Link href="/" className="mb-8 block group">
+                <span className="text-[60px] md:text-[80px] font-black tracking-tighter leading-none text-transparent bg-clip-text bg-linear-to-br from-white to-white/40 group-hover:to-primary transition-all duration-500">
+                  wigo.
+                </span>
+              </Link>
+              <p className="text-neutral-400 text-lg md:text-xl font-light mb-10 max-w-sm leading-relaxed">
+                Le réseau de covoiturage Premium. Vérification stricte, véhicules choisis, paiements instantanés. Plus haut, plus loin.
               </p>
+
             </div>
 
-            <div className="lg:w-1/2 flex flex-col sm:flex-row gap-12 sm:gap-24 lg:justify-end text-sm">
+            {/* Links Grid */}
+            <div className="xl:w-7/12 w-full grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-8 lg:justify-end text-sm">
               <div className="flex flex-col gap-4">
-                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2 border-b border-white/10 pb-4">Roulez</h4>
-                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Rechercher</Link>
-                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Proposer</Link>
-                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Trajets populaires</Link>
+                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2">Roulez</h4>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">Rechercher un trajet</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">Proposer un départ</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">Destinations Magiques</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">Paris - Lyon</Link>
               </div>
               <div className="flex flex-col gap-4">
-                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2 border-b border-white/10 pb-4">Découvrez</h4>
-                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">La sécurité (KYC)</Link>
-                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Portefeuille Digital</Link>
-                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Assurances</Link>
+                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2">Découvrez</h4>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">La sécurité (KYC)</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">Portefeuille Digital</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">Assurances</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">Engagement carbone</Link>
               </div>
               <div className="flex flex-col gap-4">
-                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2 border-b border-white/10 pb-4">Société</h4>
-                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">À Propos</Link>
-                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Presse</Link>
-                <Link href="#" className="text-neutral-400 hover:text-white transition-colors">Contact</Link>
+                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2">Société</h4>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">À Propos</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">Carrières</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">Presse</Link>
+                <Link href="#" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">Partenaires</Link>
               </div>
             </div>
           </div>
 
-          <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs font-bold text-neutral-600 uppercase tracking-widest gap-6">
-            <span>© {new Date().getFullYear()} Wigo Express Inc.</span>
+          <div className="flex flex-col md:flex-row justify-between items-center text-xs font-bold text-neutral-600 uppercase tracking-widest gap-6">
+            <span>© {new Date().getFullYear()} Wigo Express Inc. Tous droits réservés.</span>
             <div className="flex gap-8">
               <Link href="#" className="hover:text-white transition-colors">CGU</Link>
               <Link href="#" className="hover:text-white transition-colors">Politique de Confidentialité</Link>
+              <Link href="#" className="hover:text-white transition-colors">Cookies</Link>
             </div>
           </div>
-
         </div>
       </footer>
 
