@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { IoChevronForward } from "react-icons/io5";
+import { IoChevronForward, IoGlobe, IoGlobeOutline } from "react-icons/io5";
+import { IoChevronDownOutline } from "react-icons/io5";
 
 export default function Navbar() {
+  const [locale, setLocale] = useState<"fr" | "en">("fr");
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
+    if (open) {
+      window.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      window.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
+
+  const handleLocaleSelect = (selected: "fr" | "en") => {
+    setLocale(selected);
+    setOpen(false);
+    // Rajoutez ici la logique de changement de langue si besoin
+  };
+
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] container z-50 transition-all">
       <div className="nav-bg absolute inset-0 bg-white rounded-full border border-black/5 shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-colors duration-1000"></div>
@@ -44,6 +73,55 @@ export default function Navbar() {
 
         {/* Right CTAs */}
         <div className="flex gap-4 items-center">
+          {/* Custom Language Selector */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="flex items-center gap-1 px-3 py-1 rounded-md border border-gray-200 text-sm font-bold bg-white hover:border-primary focus:outline-none transition"
+              aria-haspopup="listbox"
+              aria-expanded={open}
+              aria-label="Sélection de la langue"
+              type="button"
+            >
+              <IoGlobeOutline className="opacity-50" />
+              <span>{locale.toUpperCase()}</span>
+              <IoChevronDownOutline
+                className={`transition-transform ${open ? "rotate-180" : ""}`}
+              />
+            </button>
+            {open && (
+              <div
+                className="absolute right-0 mt-2 min-w-[80px] bg-white border border-gray-200 rounded-md shadow-lg z-50 p-1"
+                role="listbox"
+              >
+                <button
+                  className={`w-full text-left px-2 py-1 text-sm hover:bg-primary/10 rounded-md ${
+                    locale === "fr"
+                      ? "font-extrabold text-primary"
+                      : "font-semibold"
+                  }`}
+                  onClick={() => handleLocaleSelect("fr")}
+                  role="option"
+                  aria-selected={locale === "fr"}
+                >
+                  Français
+                </button>
+                <button
+                  className={`w-full text-left px-2 py-1 text-sm hover:bg-primary/10 rounded-md ${
+                    locale === "en"
+                      ? "font-extrabold text-primary"
+                      : "font-semibold"
+                  }`}
+                  onClick={() => handleLocaleSelect("en")}
+                  role="option"
+                  aria-selected={locale === "en"}
+                >
+                  Anglais
+                </button>
+              </div>
+            )}
+          </div>
+
           <Link
             href="/login"
             className="hidden md:flex font-bold text-sm text-current opacity-80 hover:opacity-100 hover:text-primary transition-all"

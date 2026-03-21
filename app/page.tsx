@@ -402,7 +402,7 @@ export default function WigoExpress() {
               </div>
             </div>
 
-            <button className="w-full lg:w-auto btn-primary">
+            <button className="w-full lg:w-auto btn-primary px-10 py-7">
               <IoSearchOutline /> <span className="lg:hidden">Rechercher</span>
             </button>
           </div>
