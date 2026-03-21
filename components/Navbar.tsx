@@ -87,30 +87,29 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* DESKTOP NAV (Cachée sur mobile) */}
-          <div className="hidden lg:flex gap-10 items-center text-sm font-bold text-gray-800">
-            <Link
-              href="#comment-ca-marche"
-              className="hover:text-primary transition-all"
-            >
-              Comment ça marche
-            </Link>
-            <Link
-              href="#voyageur"
-              className="hover:text-primary transition-all"
-            >
-              Voyageur
-            </Link>
-            <Link
-              href="#conducteur"
-              className="hover:text-primary transition-all"
-            >
-              Conducteur
-            </Link>
-          </div>
-
           {/* ACTIONS DROITE */}
           <div className="flex gap-4 items-center">
+            {/* DESKTOP NAV (Cachée sur mobile) */}
+            <div className="hidden lg:flex gap-4 items-center text-sm font-bold text-dark-700">
+              <Link
+                href="#comment-ca-marche"
+                className="hover:text-primary text-dark transition-all flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-sm font-bold hover:shadow-md"
+              >
+                Comment ça marche
+              </Link>
+              <Link
+                href="#voyageur"
+                className="hover:text-primary text-dark transition-all flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-sm font-bold hover:shadow-md"
+              >
+                Voyageur
+              </Link>
+              <Link
+                href="#conducteur"
+                className="hover:text-primary text-dark transition-all flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-sm font-bold hover:shadow-md"
+              >
+                Conducteur
+              </Link>
+            </div>
             {/* Langue Desktop Only */}
             <div className="relative hidden lg:block" ref={dropdownRef}>
               <button
