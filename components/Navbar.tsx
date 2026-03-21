@@ -77,10 +77,7 @@ export default function Navbar() {
 
         <div className="relative z-10 px-4 py-4 flex justify-between items-center w-full">
           {/* LOGO */}
-          <Link
-            href="/"
-            className="shrink-0 transition-transform hover:scale-105"
-          >
+          <Link href="/" className="shrink-0 transition-transform">
             <Image
               src="/images/logo.png"
               alt="Logo"
@@ -191,7 +188,7 @@ export default function Navbar() {
                 onClick={() => setLocale(l as any)}
                 className={`flex-1 py-4 rounded-xl text-lg font-black transition-all ${
                   locale === l
-                    ? "bg-white text-primary shadow-sm scale-[1.02]"
+                    ? "bg-white text-primary shadow-sm"
                     : "text-gray-400"
                 }`}
               >
