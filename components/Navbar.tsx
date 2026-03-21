@@ -75,7 +75,7 @@ export default function Navbar() {
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-7xl z-100">
         <div className="absolute inset-0 bg-white/80 backdrop-blur-xl rounded-full border border-black/5 shadow-2xl"></div>
 
-        <div className="relative z-10 px-6 py-3 flex justify-between items-center w-full">
+        <div className="relative z-10 px-4 py-4 flex justify-between items-center w-full">
           {/* LOGO */}
           <Link
             href="/"
