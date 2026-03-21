@@ -636,7 +636,7 @@ export default function WigoExpress() {
               </div>
 
               {/* Illus 2 : KYC Trust Badge ID */}
-              <div className="illust-step absolute inset-0 bg-dark rounded-[2.5rem] shadow-2xl squircle border border-neutral-800 p-6 xl:p-10 flex flex-col items-center justify-between text-white origin-bottom pb-8 xl:pb-12 pt-6 xl:pt-10 overflow-visible z-10">
+              <div className="illust-step absolute inset-0 bg-dark-900 rounded-[2.5rem] shadow-2xl squircle border border-neutral-800 p-6 xl:p-10 flex flex-col items-center justify-between text-white origin-bottom pb-8 xl:pb-12 pt-6 xl:pt-10 overflow-visible z-10">
                 {/* 3D Canadian Premium ID Card that overflows top */}
                 <div className="w-[calc(100%-20px)] aspect-4/2 bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-3xl p-2 shadow-[0_30px_60px_rgba(0,0,0,0.6),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-3 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 -mt-16 xl:-mt-20">
                   <Image
@@ -850,16 +850,11 @@ export default function WigoExpress() {
             </div>
 
             {/* Card 2 : Highlighted Digital Experience */}
-            <div className="bg-dark text-white rounded-[2.5rem] squircle p-8 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.2)] md:-translate-y-6 hover:-translate-y-8 transition-transform duration-500 reveal-fade relative overflow-hidden border border-white/10">
-              <div className="absolute inset-0 mesh-bg-creative opacity-20 pointer-events-none mix-blend-screen scale-150 animate-pulse-glow"></div>
-
+            <div className="bg-dark-900 text-white rounded-[2.5rem] squircle p-8 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.2)] md:-translate-y-6 hover:-translate-y-8 transition-transform duration-500 reveal-fade relative overflow-hidden border border-white/10">
               <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-10 border border-white/20 relative z-10">
                 <IoShieldCheckmarkOutline className="w-7 h-7" />
               </div>
               <div className="relative z-10">
-                <div className="inline-flex items-center gap-2 bg-green-500/20 text-green-400 px-3 py-1.5 rounded-full text-[10px] font-black tracking-widest mb-4 border border-green-500/30">
-                  PAIX D'ESPRIT
-                </div>
                 <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">
                   Passagers Vérifiés
                 </h3>
