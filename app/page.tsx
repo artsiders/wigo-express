@@ -659,7 +659,7 @@ export default function WigoExpress() {
                 </div>
 
                 <div className="space-y-4 w-full">
-                  <div className="bg-white/10 w-full p-5 rounded-2xl backdrop-blur-md border border-white/20 flex justify-between items-center transform transition-all hover:scale-[1.02] cursor-pointer shadow-xl">
+                  <div className="bg-white/10 w-full p-5 rounded-2xl backdrop-blur-md border border-white/20 flex justify-between items-center transform transition-all shadow-xl">
                     <div className="text-left">
                       <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-1.5">
                         Reçu hier
@@ -669,7 +669,7 @@ export default function WigoExpress() {
                       </p>
                     </div>
                     <div className="text-right shrink-0 ml-2">
-                      <p className="font-black text-xl text-green-300 drop-shadow-[0_0_10px_rgba(134,239,172,0.3)]">
+                      <p className="font-black text-xl text-green-400">
                         + 45.00 $
                       </p>
                     </div>
