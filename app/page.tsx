@@ -573,31 +573,42 @@ export default function WigoExpress() {
                 </div>
               </div>
 
-              {/* Steps Visual */}
-              <div className="flex items-center justify-center gap-4 mt-12 w-full max-w-[280px] mx-auto opacity-90">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
-                    <IoPersonOutline className="w-5 h-5" />
+              {/* Steps Visual - Bauhaus Style (Fixed Alignment) */}
+              <div className="flex items-start justify-between w-full max-w-[320px] mx-auto mt-12 px-2">
+                {/* Step 1: Permis */}
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-neutral-900 text-neutral-400 border border-neutral-800">
+                    <IoPersonOutline className="w-6 h-6" />
                   </div>
-                  <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
+                  <span className="text-[11px] font-medium tracking-tight text-neutral-500">
                     Permis
                   </span>
                 </div>
-                <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
-                    <IoIdCardOutline className="w-5 h-5" />
+
+                {/* Separator 1 (Aligned with icon center) */}
+                <div className="flex-1 h-[2px] mt-[28px] mx-2 bg-neutral-800 overflow-hidden">
+                  <div className="h-full w-full bg-neutral-600 origin-left scale-x-75" />
+                </div>
+
+                {/* Step 2: Selfie */}
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-neutral-900 text-neutral-400 border border-neutral-800">
+                    <IoIdCardOutline className="w-6 h-6" />
                   </div>
-                  <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
+                  <span className="text-[11px] font-medium tracking-tight text-neutral-500">
                     Selfie
                   </span>
                 </div>
-                <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
-                    <IoShieldCheckmarkOutline className="w-5 h-5" />
+
+                {/* Separator 2 (Aligned with icon center) */}
+                <div className="flex-1 h-[2px] mt-[28px] mx-2 bg-neutral-800" />
+
+                {/* Step 3: Sécurisé (Active) */}
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white text-black scale-110 shadow-[0_10px_25px_-5px_rgba(255,255,255,0.2)]">
+                    <IoShieldCheckmarkOutline className="w-6 h-6" />
                   </div>
-                  <span className="text-[10px] font-black text-white uppercase tracking-widest text-center mt-1 drop-shadow-[0_0_5px_rgba(255,255,255,0.4)]">
+                  <span className="text-[11px] font-medium tracking-tight text-white">
                     Sécurisé
                   </span>
                 </div>
