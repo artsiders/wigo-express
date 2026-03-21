@@ -132,7 +132,8 @@ export default function WigoExpress() {
       // 4. 🌟 NARRATIVE SCROLL: STACKING CARDS
       const stackCards = gsap.utils.toArray(".stack-card") as HTMLElement[];
       stackCards.forEach((card, i) => {
-        if (i !== stackCards.length - 1) { // Don't scale the last card
+        if (i !== stackCards.length - 1) {
+          // Don't scale the last card
           const nextCard = stackCards[i + 1];
           gsap.to(card, {
             scale: 0.92,
@@ -141,7 +142,7 @@ export default function WigoExpress() {
             scrollTrigger: {
               trigger: nextCard,
               // Starts exactly when the next card's top touches the bottom of the sticky card
-              start: () => `top ${(96 + i * 32) + card.offsetHeight}`,
+              start: () => `top ${96 + i * 32 + card.offsetHeight}`,
               // Ends when the next card reaches its own sticky point
               end: () => `top ${96 + (i + 1) * 32}`,
               scrub: true,
@@ -405,14 +406,13 @@ export default function WigoExpress() {
         </div>
 
         <div className="container mx-auto px-6 relative pb-20">
-          
           {/* Card 1 : Le bon départ */}
           <div className="stack-card sticky top-24 z-10 w-full min-h-[50vh] xl:min-h-[60vh] bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
             {/* Background absolute text */}
             <div className="absolute top-18 -mt-10 left-18 text-[150px] lg:text-[250px] font-black text-dark opacity-[0.05] pointer-events-none leading-none z-0 tracking-tighter select-none">
               01
             </div>
-            
+
             <div className="flex-1 w-full relative z-10">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-dark">
                 Le bon départ, <br />
@@ -477,7 +477,7 @@ export default function WigoExpress() {
             <div className="absolute top-18 -mt-10 right-18 text-[150px] lg:text-[250px] font-black text-white opacity-[0.06] pointer-events-none leading-none z-0 tracking-tighter select-none">
               02
             </div>
-            
+
             <div className="flex-1 w-full relative z-10 flex flex-col lg:items-end lg:text-right">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white lg:text-right">
                 Une communauté <br />
@@ -506,102 +506,101 @@ export default function WigoExpress() {
             </div>
 
             <div className="flex-1 w-full relative z-10 flex flex-col items-center justify-center mt-10 lg:mt-0">
-               {/* 3D Canadian Premium ID Card */}
-               <div className="w-full max-w-lg aspect-[1.6] bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-4xl p-2 shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-1 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 mx-auto">
+              {/* 3D Canadian Premium ID Card */}
+              <div className="w-full max-w-lg aspect-[1.6] bg-white rounded-3xl p-2 relative z-20 transform -rotate-1 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 mx-auto">
+                <Image
+                  src="/images/canada-flag-icon.png"
+                  alt="Canada"
+                  width={300}
+                  height={300}
+                  className="object-contain absolute bottom-0 right-0 w-48 h-48 -rotate-45 opacity-10 pointer-events-none"
+                />
+                <div className="border border-neutral-200/60 rounded-2xl p-5 sm:p-7 h-full relative z-10 overflow-hidden text-left flex flex-col justify-between bg-white/50 backdrop-blur-xs">
+                  <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-400/10 rounded-full blur-2xl pointer-events-none"></div>
+
                   <Image
-                    src="/images/canada-flag-icon.png"
+                    src="/images/canada-flag.png"
                     alt="Canada"
-                    width={300}
-                    height={300}
-                    className="object-contain absolute bottom-0 right-0 w-48 h-48 -rotate-45 opacity-10 pointer-events-none"
+                    width={36}
+                    height={36}
+                    className="object-contain"
                   />
-                  <div className="border border-neutral-200/60 rounded-2xl p-5 sm:p-7 h-full relative z-10 overflow-hidden text-left shadow-inner flex flex-col justify-between bg-white/40 backdrop-blur-xs">
-                    <div className="absolute -top-10 -right-10 w-40 h-40 bg-red-400/20 rounded-full blur-2xl pointer-events-none"></div>
-                    <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-400/10 rounded-full blur-2xl pointer-events-none"></div>
 
-                    {/* Top row */}
-                    <div className="flex justify-between items-start">
+                  {/* Profile row */}
+                  <div className="flex gap-5 sm:gap-6 items-center relative z-10">
+                    <div className="w-24 h-24 sm:w-38 sm:h-38 aspect-square rounded-2xl overflow-hidden relative shadow-md shrink-0 border border-black/5">
                       <Image
-                        src="/images/canada-flag.png"
-                        alt="Canada"
-                        width={36}
-                        height={36}
-                        className="object-contain"
+                        src="/images/profile.jpg"
+                        alt="Conducteur"
+                        fill
+                        className="object-cover bg-neutral-100"
                       />
-                      <IoShieldCheckmarkOutline className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 drop-shadow-[0_0_10px_rgba(34,197,94,0.3)]" />
                     </div>
-
-                    {/* Profile row */}
-                    <div className="flex gap-5 sm:gap-6 items-center relative z-10">
-                      <div className="w-24 h-24 sm:w-32 sm:h-32 aspect-square rounded-2xl overflow-hidden relative shadow-md shrink-0 border border-black/5">
-                        <Image
-                          src="/images/profile.jpg"
-                          alt="Conducteur"
-                          fill
-                          className="object-cover bg-neutral-100"
-                        />
+                    <div className="space-y-1.5 w-full">
+                      <div className="flex items-center gap-2">
+                        <span className="font-black text-xl sm:text-3xl text-neutral-800 tracking-tight leading-none mb-1 block">
+                          Jean Tremblay
+                        </span>
                       </div>
-                      <div className="space-y-1.5 w-full">
-                        <div className="flex items-center gap-2">
-                          <span className="font-black text-xl sm:text-3xl text-neutral-800 tracking-tight leading-none mb-1 block">
-                            Jean Tremblay
-                          </span>
-                        </div>
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-500/20 text-green-700 text-[10px] sm:text-xs font-black uppercase rounded-lg tracking-widest leading-none mb-1 shadow-sm border border-green-500/20 w-max">
-                           <IoShieldCheckmarkOutline className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Vérifié
-                        </div>
-                        <div className="flex items-center gap-1.5 text-yellow-500 mt-1">
-                          {[...Array(5)].map((_, i) => (
-                            <IoStar key={i} className="h-4 w-4 sm:h-5 sm:w-5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]" />
-                          ))}
-                          <span className="font-bold text-neutral-700 ml-1.5 text-xs sm:text-sm">
-                            4.8
-                          </span>
-                        </div>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-500/20 text-green-700 text-[10px] sm:text-xs font-semibold uppercase rounded-lg tracking-widest leading-none mb-1 shadow-sm border border-green-500/20 w-max">
+                        <IoShieldCheckmarkOutline className="w-3.5 h-3.5 sm:w-4 sm:h-4" />{" "}
+                        Vérifié
+                      </div>
+                      <div className="flex items-center gap-1.5 text-yellow-500 mt-1">
+                        {[...Array(5)].map((_, i) => (
+                          <IoStar
+                            key={i}
+                            className="h-4 w-4 sm:h-5 sm:w-5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]"
+                          />
+                        ))}
+                        <span className="font-bold text-neutral-700 ml-1.5 text-xs sm:text-sm">
+                          4.8
+                        </span>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Bottom row */}
-                    <div className="flex justify-between items-end relative z-10 mt-3">
-                       <div className="text-xs sm:text-sm text-neutral-500 font-medium whitespace-nowrap">
-                          +150 trajets
-                       </div>
-                       <div className="px-4 py-2 rounded-lg bg-white/80 text-[10px] sm:text-xs text-neutral-600 tracking-widest font-mono border border-neutral-200 font-bold shadow-inner inline-flex items-center whitespace-nowrap">
-                          QC-928183****
-                       </div>
+                  {/* Bottom row */}
+                  <div className="flex justify-between items-end relative z-10 mt-3">
+                    <div className="text-xs sm:text-sm text-neutral-500 font-medium whitespace-nowrap">
+                      +150 trajets
+                    </div>
+                    <div className="px-4 py-2 rounded-lg bg-white/80 text-[10px] sm:text-xs text-neutral-600 tracking-widest font-mono border border-neutral-200 font-bold shadow-inner inline-flex items-center whitespace-nowrap">
+                      QC-928183****
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Steps Visual */}
-                <div className="flex items-center justify-center gap-4 mt-12 w-full max-w-[280px] mx-auto opacity-90">
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
-                      <IoPersonOutline className="w-5 h-5" />
-                    </div>
-                    <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
-                      Permis
-                    </span>
+              {/* Steps Visual */}
+              <div className="flex items-center justify-center gap-4 mt-12 w-full max-w-[280px] mx-auto opacity-90">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
+                    <IoPersonOutline className="w-5 h-5" />
                   </div>
-                  <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
-                      <IoIdCardOutline className="w-5 h-5" />
-                    </div>
-                    <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
-                      Selfie
-                    </span>
-                  </div>
-                  <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
-                      <IoShieldCheckmarkOutline className="w-5 h-5" />
-                    </div>
-                    <span className="text-[10px] font-black text-white uppercase tracking-widest text-center mt-1 drop-shadow-[0_0_5px_rgba(255,255,255,0.4)]">
-                      Sécurisé
-                    </span>
-                  </div>
+                  <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
+                    Permis
+                  </span>
                 </div>
+                <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
+                    <IoIdCardOutline className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
+                    Selfie
+                  </span>
+                </div>
+                <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
+                    <IoShieldCheckmarkOutline className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-black text-white uppercase tracking-widest text-center mt-1 drop-shadow-[0_0_5px_rgba(255,255,255,0.4)]">
+                    Sécurisé
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -615,8 +614,7 @@ export default function WigoExpress() {
 
             <div className="flex-1 w-full relative z-10">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white">
-                Réglez sans <br />
-                  y penser.
+                Réglez sans <br />y penser.
               </h2>
               <p className="text-lg text-blue-100/80 font-medium max-w-lg mb-8 leading-relaxed">
                 Pas besoin de monnaie en voiture. Votre place est payée en ligne
@@ -624,61 +622,61 @@ export default function WigoExpress() {
                 conducteur à l'arrivée. Le paiement est 100% sécurisé.
               </p>
               <div className="flex items-center gap-3">
-                 <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
-                   <IoWalletOutline className="text-xl"/>
-                 </div>
-                 <span className="text-sm font-bold tracking-widest uppercase text-white">Paiement Wigo Garanti</span>
+                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
+                  <IoWalletOutline className="text-xl" />
+                </div>
+                <span className="text-sm font-bold tracking-widest uppercase text-white">
+                  Paiement Wigo Garanti
+                </span>
               </div>
             </div>
 
             <div className="flex-1 w-full relative z-10 flex flex-col justify-center items-center mt-6 lg:mt-0">
-               {/* Illus 3 : Wigo Wallet */}
-               <div className="w-full max-w-md">
-                 <div className="text-center flex flex-col justify-center pb-8 border-b border-white/10 mb-8">
-                   <h3 className="text-xs font-bold opacity-80 mb-2 uppercase tracking-widest text-blue-100">
-                     Solde Disponible
-                   </h3>
-                   <h2 className="text-5xl lg:text-7xl font-black mb-1 tracking-tighter drop-shadow-md text-white">
-                     244.50 $
-                   </h2>
-                   <p className="text-xs font-bold text-blue-200 tracking-wider">
-                     CAD
-                   </p>
-                 </div>
+              {/* Illus 3 : Wigo Wallet */}
+              <div className="w-full max-w-md">
+                <div className="text-center flex flex-col justify-center pb-8 border-b border-white/10 mb-8">
+                  <h3 className="text-xs font-bold opacity-80 mb-2 uppercase tracking-widest text-blue-100">
+                    Solde Disponible
+                  </h3>
+                  <h2 className="text-5xl lg:text-7xl font-black mb-1 tracking-tighter drop-shadow-md text-white">
+                    244.50 $
+                  </h2>
+                  <p className="text-xs font-bold text-blue-200 tracking-wider">
+                    CAD
+                  </p>
+                </div>
 
-                 <div className="space-y-4 w-full">
-                   <div className="bg-white/10 w-full p-5 rounded-2xl backdrop-blur-md border border-white/20 flex justify-between items-center transform transition-all hover:scale-[1.02] cursor-pointer shadow-xl">
-                     <div className="text-left">
-                       <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-1.5">
-                         Reçu hier
-                       </p>
-                       <p className="font-bold text-sm tracking-tight text-white">
-                         Trajet Montréal - Québec
-                       </p>
-                     </div>
-                     <div className="text-right shrink-0 ml-2">
-                       <p className="font-black text-xl text-green-300 drop-shadow-[0_0_10px_rgba(134,239,172,0.3)]">
-                         + 45.00 $
-                       </p>
-                     </div>
-                   </div>
-                   <div className="bg-black/10 w-full p-4 rounded-xl backdrop-blur-md border border-transparent flex justify-between items-center opacity-70">
-                     <div className="text-left">
-                       <p className="text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1 text-white">
-                         Il y a 3 jours
-                       </p>
-                       <p className="font-semibold text-sm text-white">
-                         Paiement trajet
-                       </p>
-                     </div>
-                     <div className="text-right shrink-0 ml-2">
-                       <p className="font-bold text-lg text-white">
-                         - 35.00 $
-                       </p>
-                     </div>
-                   </div>
-                 </div>
-               </div>
+                <div className="space-y-4 w-full">
+                  <div className="bg-white/10 w-full p-5 rounded-2xl backdrop-blur-md border border-white/20 flex justify-between items-center transform transition-all hover:scale-[1.02] cursor-pointer shadow-xl">
+                    <div className="text-left">
+                      <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-1.5">
+                        Reçu hier
+                      </p>
+                      <p className="font-bold text-sm tracking-tight text-white">
+                        Trajet Montréal - Québec
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0 ml-2">
+                      <p className="font-black text-xl text-green-300 drop-shadow-[0_0_10px_rgba(134,239,172,0.3)]">
+                        + 45.00 $
+                      </p>
+                    </div>
+                  </div>
+                  <div className="bg-black/10 w-full p-4 rounded-xl backdrop-blur-md border border-transparent flex justify-between items-center opacity-70">
+                    <div className="text-left">
+                      <p className="text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1 text-white">
+                        Il y a 3 jours
+                      </p>
+                      <p className="font-semibold text-sm text-white">
+                        Paiement trajet
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0 ml-2">
+                      <p className="font-bold text-lg text-white">- 35.00 $</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
