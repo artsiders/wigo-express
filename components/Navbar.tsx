@@ -205,7 +205,7 @@ export default function Navbar() {
                 key={i}
                 href="#"
                 onClick={() => setMenuOpen(false)}
-                className="animate-item text-3xl font-black text-gray-900 hover:text-primary transition-colors"
+                className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
               >
                 {text}
               </Link>
