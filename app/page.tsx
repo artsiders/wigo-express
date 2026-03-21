@@ -904,7 +904,9 @@ export default function WigoExpress() {
           </div>
 
           <div className="mt-16 text-center reveal-fade">
-            <button className="btn-primary">Devenir Conducteur</button>
+            <button className="btn-primary uppercase">
+              Devenir Conducteur
+            </button>
           </div>
         </div>
       </section>

@@ -68,9 +68,9 @@
 @layer components {
   /* Bouton Principal */
   .btn-primary {
-    @apply bg-primary-500 text-white font-extrabold text-lg px-10 py-7 rounded-3xl hover:bg-dark-950 transition-colors shadow-xl shadow-primary-500/20 flex justify-center items-center gap-2;
+    @apply bg-primary-500 text-white font-extrabold text-base px-6 py-3 rounded-3xl hover:bg-dark-950 transition-colors shadow-xl shadow-primary-500/20 flex justify-center items-center gap-2;
   }
-  
+
   .glass-panel {
     @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-[0_30px_60px_rgba(0,0,0,0.05)];
   }
@@ -82,18 +82,33 @@
 
 /* Nouvelles animations créatives */
 @keyframes floatCustom {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(2deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
 }
 
 @keyframes floatReverse {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(15px) rotate(-2deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(15px) rotate(-2deg);
+  }
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.2); }
-  50% { box-shadow: 0 0 50px rgba(37, 99, 235, 0.5); }
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(37, 99, 235, 0.5);
+  }
 }
 
 .animate-float-custom {
@@ -109,10 +124,22 @@
 }
 
 .mesh-bg-creative {
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(234, 179, 8, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(239, 246, 255, 1) 100%, transparent 100%);
+  background-image:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(37, 99, 235, 0.08) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(234, 179, 8, 0.05) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(239, 246, 255, 1) 100%,
+      transparent 100%
+    );
 }
 
 body {
@@ -129,6 +156,10 @@ body {
 ::selection {
   background: var(--color-primary);
   color: #fff;
+}
+
+button {
+  cursor: pointer;
 }
 
 /* Lenis classes indispensables */
