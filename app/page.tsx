@@ -221,14 +221,13 @@ export default function WigoExpress() {
             Le covoiturage, enfin
             <br />
             <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-              sûr, simple et fiable.
+              sûr, simple et fiable <br />avec Wigo
             </span>
           </h1>
 
           <p className="hero-text-elem text-lg md:text-xl opacity-80 font-medium mb-16 max-w-2xl leading-relaxed">
-            Trouvez ou offrez un trajet l'esprit tranquille, profils 100%
-            vérifiés et paiement automatisé. La nouvelle norme pour vos
-            déplacements interurbains.
+            Trouvez ou offrez un trajet l'esprit tranquille. Voyagez en toute confiance avec des profils 100% 
+            vérifiés et un paiement garanti. C'est ça, la simplicité Wigo Express.
           </p>
 
           {/* Web Search Widget - The Core Tool */}
@@ -416,15 +415,15 @@ export default function WigoExpress() {
 
             <div className="flex-1 w-full relative z-10">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-dark">
-                Le bon départ, <br />
+                Où et quand <br />
                 <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-                  au bon moment.
+                  vous voulez.
                 </span>
               </h2>
               <p className="text-lg text-neutral-600 font-medium max-w-lg mb-8 leading-relaxed">
-                Indiquez votre destination et découvrez instantanément les
-                trajets disponibles. Nous mettons en avant les conducteurs les
-                mieux notés pour vous garantir un voyage agréable et serein.
+                Indiquez votre destination et trouvez instantanément les
+                trajets disponibles. Sur Wigo Express, nous mettons en avant vos 
+                trajets préférés pour un voyage agréable et serein.
               </p>
               <button className="btn-primary px-8 py-4 text-sm shadow-xl shadow-primary/20">
                 Chercher un trajet
@@ -481,15 +480,15 @@ export default function WigoExpress() {
 
             <div className="flex-1 w-full relative z-10 flex flex-col lg:items-end lg:text-right">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white lg:text-right">
-                Une communauté <br />
+                Voyagez en toute <br />
                 <span className="text-green-400 drop-shadow-[0_0_15px_rgba(74,222,128,0.2)]">
-                  de confiance.
+                  confiance.
                 </span>
               </h2>
               <p className="text-lg text-neutral-400 font-medium max-w-lg mb-8 leading-relaxed">
                 Pièce d'identité, permis de conduire et historique : chaque
-                membre est contrôlé avant de pouvoir réserver ou prendre le
-                volant. Vous voyagez toujours avec des personnes fiables.
+                membre Wigo Express est contrôlé avec soin. Nous prenons le temps 
+                de vérifier les profils pour que vous restiez sereins.
               </p>
               <div className="step-badge flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 w-max backdrop-blur-sm">
                 <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center text-green-400">
@@ -626,12 +625,12 @@ export default function WigoExpress() {
 
             <div className="flex-1 w-full relative z-10">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white">
-                Réglez sans <br />y penser.
+                Vos trajets favoris <br />à petits prix.
               </h2>
               <p className="text-lg text-blue-100/80 font-medium max-w-lg mb-8 leading-relaxed">
                 Pas besoin de monnaie en voiture. Votre place est payée en ligne
                 lors de la réservation et transférée automatiquement au
-                conducteur à l'arrivée. Le paiement est 100% sécurisé.
+                conducteur. Avec Wigo Express, tout est simple et 100% sécurisé.
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
@@ -711,7 +710,7 @@ export default function WigoExpress() {
               </span>
             </h2>
             <p className="text-neutral-500 text-lg md:text-xl font-medium max-w-2xl mx-auto reveal-fade">
-              Rejoignez le réseau de conducteurs Wigo Express. Vous conduisez,
+              Rejoignez le réseau de conducteurs Wigo. Vous conduisez,
               nous nous chargeons de remplir votre véhicule avec des passagers
               fiables et vérifiés.
             </p>
@@ -805,15 +804,15 @@ export default function WigoExpress() {
         <div className="container mx-auto z-10">
           <div className="mb-16">
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">
-              Voyagez dans de <br />
+              Ça n'arrive qu'en <br />
               <span className="gradient-text lg:transition-colors lg:duration-300 text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-                meilleures conditions.
+                Wigo Express...
               </span>
             </h2>
             <p className="text-neutral-400 text-lg md:text-xl font-light max-w-3xl mx-auto">
-              Fini les mauvaises surprises. Sur Wigo, vous choisissez le modèle
-              qui vous convient : berlines, véhicules électriques ou SUV. Vous
-              savez exactement dans quel véhicule vous allez monter.
+              Voyagez dans de meilleures conditions. Sur Wigo, vous choisissez 
+              le véhicule qui vous convient, et vous savez exactement dans 
+              quel confort vous allez rouler.
             </p>
           </div>
 
