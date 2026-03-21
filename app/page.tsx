@@ -407,7 +407,7 @@ export default function WigoExpress() {
 
         <div className="container mx-auto px-6 relative pb-20">
           {/* Card 1 : Le bon départ */}
-          <div className="stack-card sticky top-24 z-10 w-full min-h-[50vh] xl:min-h-[60vh] bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
+          <div className="stack-card sticky top-44 z-10 w-full min-h-[50vh] xl:min-h-[60vh] bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
             <div className="absolute inset-0 -z-10 bg-[url('/images/carte-bg.webp')] bg-cover bg-center opacity-15"></div>
             {/* Background absolute text */}
             <div className="absolute top-18 -mt-10 left-18 text-[150px] lg:text-[250px] font-black text-dark opacity-[0.05] pointer-events-none leading-none z-0 tracking-tighter select-none">
@@ -474,7 +474,7 @@ export default function WigoExpress() {
           </div>
 
           {/* Card 2 : Communauté de confiance */}
-          <div className="stack-card sticky top-32 z-20 w-full min-h-[50vh] xl:min-h-[60vh] bg-dark-900 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(0,0,0,0.4)] border border-neutral-800 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
+          <div className="stack-card sticky top-44 z-20 w-full min-h-[50vh] xl:min-h-[60vh] bg-dark-900 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(0,0,0,0.4)] border border-neutral-800 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
             <div className="absolute top-18 -mt-10 right-18 text-[150px] lg:text-[250px] font-black text-white opacity-[0.06] pointer-events-none leading-none z-0 tracking-tighter select-none">
               02
             </div>
@@ -606,7 +606,7 @@ export default function WigoExpress() {
           </div>
 
           {/* Card 3 : Paiement */}
-          <div className="stack-card sticky top-40 z-30 w-full min-h-[50vh] xl:min-h-[60vh] bg-linear-to-br from-primary to-primary-800 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(37,99,235,0.4)] border border-blue-400/30 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 overflow-hidden">
+          <div className="stack-card sticky top-44 z-30 w-full min-h-[50vh] xl:min-h-[60vh] bg-linear-to-br from-primary to-primary-800 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(37,99,235,0.4)] border border-blue-400/30 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 overflow-hidden">
             <div className="absolute top-18 -mt-10 left-18 text-[150px] lg:text-[250px] font-black text-white opacity-[0.06] pointer-events-none leading-none z-0 tracking-tighter select-none">
               03
             </div>
