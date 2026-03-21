@@ -507,62 +507,68 @@ export default function WigoExpress() {
 
             <div className="flex-1 w-full relative z-10 flex flex-col items-center justify-center mt-10 lg:mt-0">
                {/* 3D Canadian Premium ID Card */}
-               <div className="w-full max-w-sm aspect-4/2 bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-3xl p-2 shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-2 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 mx-auto">
+               <div className="w-full max-w-lg aspect-[1.6] bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-4xl p-2 shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-1 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 mx-auto">
                   <Image
                     src="/images/canada-flag-icon.png"
                     alt="Canada"
                     width={300}
                     height={300}
-                    className="object-contain absolute bottom-0 right-0 w-42 h-42 -rotate-45 opacity-10"
+                    className="object-contain absolute bottom-0 right-0 w-48 h-48 -rotate-45 opacity-10 pointer-events-none"
                   />
-                  <div className="border border-neutral-200/60 rounded-2xl p-6 h-full relative z-10 overflow-hidden text-left shadow-inner">
-                    <div className="absolute -top-10 -right-10 w-32 h-32 bg-red-400/20 rounded-full blur-2xl pointer-events-none"></div>
-                    <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl pointer-events-none"></div>
+                  <div className="border border-neutral-200/60 rounded-2xl p-5 sm:p-7 h-full relative z-10 overflow-hidden text-left shadow-inner flex flex-col justify-between bg-white/40 backdrop-blur-xs">
+                    <div className="absolute -top-10 -right-10 w-40 h-40 bg-red-400/20 rounded-full blur-2xl pointer-events-none"></div>
+                    <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-400/10 rounded-full blur-2xl pointer-events-none"></div>
 
-                    <div className="flex justify-between items-start mb-2">
+                    {/* Top row */}
+                    <div className="flex justify-between items-start">
                       <Image
                         src="/images/canada-flag.png"
                         alt="Canada"
-                        width={30}
-                        height={30}
+                        width={36}
+                        height={36}
                         className="object-contain"
                       />
-                      <IoShieldCheckmarkOutline className="w-8 h-8 text-green-700 drop-shadow-[0_0_12px_rgba(34,197,94,0.4)]" />
+                      <IoShieldCheckmarkOutline className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 drop-shadow-[0_0_10px_rgba(34,197,94,0.3)]" />
                     </div>
 
-                    <div className="flex gap-5 items-start relative z-10">
-                      <div className="w-46 h-46 aspect-square rounded-xl overflow-hidden relative shadow-lg shrink-0 border border-black/5">
+                    {/* Profile row */}
+                    <div className="flex gap-5 sm:gap-6 items-center relative z-10">
+                      <div className="w-24 h-24 sm:w-32 sm:h-32 aspect-square rounded-2xl overflow-hidden relative shadow-md shrink-0 border border-black/5">
                         <Image
                           src="/images/profile.jpg"
                           alt="Conducteur"
                           fill
-                          className="object-cover bg-neutral-100 w-full h-full"
+                          className="object-cover bg-neutral-100"
                         />
                       </div>
-                      <div className="space-y-2.5 w-full mt-2">
+                      <div className="space-y-1.5 w-full">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-xl text-neutral-800 tracking-tight">
+                          <span className="font-black text-xl sm:text-3xl text-neutral-800 tracking-tight leading-none mb-1 block">
                             Jean Tremblay
                           </span>
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-500/30 text-green-700 text-[10px] font-bold uppercase rounded-full tracking-widest leading-none">
-                            <IoShieldCheckmarkOutline className="w-3 h-3" /> Vérifié
-                          </span>
                         </div>
-                        <div className="flex items-center gap-1 text-yellow-500">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-500/20 text-green-700 text-[10px] sm:text-xs font-black uppercase rounded-lg tracking-widest leading-none mb-1 shadow-sm border border-green-500/20 w-max">
+                           <IoShieldCheckmarkOutline className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Vérifié
+                        </div>
+                        <div className="flex items-center gap-1.5 text-yellow-500 mt-1">
                           {[...Array(5)].map((_, i) => (
-                            <IoStar key={i} className="h-4 w-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]" />
+                            <IoStar key={i} className="h-4 w-4 sm:h-5 sm:w-5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]" />
                           ))}
-                          <span className="font-bold text-neutral-700 ml-2 text-sm">
-                            4.8/5
+                          <span className="font-bold text-neutral-700 ml-1.5 text-xs sm:text-sm">
+                            4.8
                           </span>
-                        </div>
-                        <div className="flex items-center gap-2 text-xs font-medium text-neutral-600">
-                          <span>+150 trajets réalisés</span>
-                        </div>
-                        <div className="mt-2 w-fit px-3 py-1.5 rounded-lg bg-white/80 text-[10px] text-neutral-800 tracking-widest font-mono border border-neutral-200 font-bold shadow-sm">
-                          ID: QC-928183****
                         </div>
                       </div>
+                    </div>
+
+                    {/* Bottom row */}
+                    <div className="flex justify-between items-end relative z-10 mt-3">
+                       <div className="text-xs sm:text-sm text-neutral-500 font-medium whitespace-nowrap">
+                          +150 trajets
+                       </div>
+                       <div className="px-4 py-2 rounded-lg bg-white/80 text-[10px] sm:text-xs text-neutral-600 tracking-widest font-mono border border-neutral-200 font-bold shadow-inner inline-flex items-center whitespace-nowrap">
+                          QC-928183****
+                       </div>
                     </div>
                   </div>
                 </div>
@@ -610,9 +616,7 @@ export default function WigoExpress() {
             <div className="flex-1 w-full relative z-10">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white">
                 Réglez sans <br />
-                <span className="text-blue-100 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
                   y penser.
-                </span>
               </h2>
               <p className="text-lg text-blue-100/80 font-medium max-w-lg mb-8 leading-relaxed">
                 Pas besoin de monnaie en voiture. Votre place est payée en ligne
