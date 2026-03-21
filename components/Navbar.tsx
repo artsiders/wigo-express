@@ -16,7 +16,6 @@ export default function Navbar() {
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef(null);
-  const burgerRef = useRef(null);
 
   // --- ANIMATION GSAP ---
   useLayoutEffect(() => {
@@ -72,7 +71,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-7xl z-100">
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] container z-100">
         <div className="absolute inset-0 bg-white/80 backdrop-blur-xl rounded-full border border-black/5 shadow-2xl"></div>
 
         <div className="relative z-10 px-4 py-4 flex justify-between items-center w-full">

@@ -129,141 +129,26 @@ export default function WigoExpress() {
         );
       });
 
-      // 4. 🌟 NARRATIVE SCROLL (How it Works & KYC) - SIMPLE & CLEAR
-      ScrollTrigger.matchMedia({
-        "(min-width: 1024px)": function () {
-          const steps = gsap.utils.toArray(".step-item") as HTMLElement[];
-          const illustrations = gsap.utils.toArray(
-            ".illust-step",
-          ) as HTMLElement[];
-
-          // Base state for illustrations: simple crossfade + subtle vertical slide
-          gsap.set(illustrations, {
-            opacity: 0,
-            y: 20,
-            zIndex: 0,
+      // 4. 🌟 NARRATIVE SCROLL: STACKING CARDS
+      const stackCards = gsap.utils.toArray(".stack-card") as HTMLElement[];
+      stackCards.forEach((card, i) => {
+        if (i !== stackCards.length - 1) { // Don't scale the last card
+          const nextCard = stackCards[i + 1];
+          gsap.to(card, {
+            scale: 0.92,
+            transformOrigin: "top center",
+            ease: "none",
+            scrollTrigger: {
+              trigger: nextCard,
+              // Starts exactly when the next card's top touches the bottom of the sticky card
+              start: () => `top ${(96 + i * 32) + card.offsetHeight}`,
+              // Ends when the next card reaches its own sticky point
+              end: () => `top ${96 + (i + 1) * 32}`,
+              scrub: true,
+              invalidateOnRefresh: true, // Recalculates smoothly if window resizes
+            },
           });
-          gsap.set(illustrations[0] as HTMLElement, {
-            opacity: 1,
-            y: 0,
-            zIndex: 10,
-          });
-
-          // Inside text base states
-          steps.forEach((step) => {
-            const title = step.querySelector("h2");
-            const titleSpan = step.querySelector("h2 span.gradient-text");
-            const desc = step.querySelector("p");
-            const badge = step.querySelector(".step-badge");
-            if (title) gsap.set(title, { color: "var(--color-dark-200)" }); // neutral-300
-            if (titleSpan)
-              gsap.set(titleSpan, { opacity: 0.3, filter: "grayscale(100%)" });
-            if (desc) gsap.set(desc, { color: "var(--color-dark-400)" }); // neutral-400
-            if (badge)
-              gsap.set(badge, { opacity: 0.4, filter: "grayscale(100%)" });
-          });
-
-          const firstTitle = steps[0].querySelector("h2");
-          const firstTitleSpan = steps[0].querySelector(
-            "h2 span.gradient-text",
-          );
-          const firstDesc = steps[0].querySelector("p");
-          const firstBadge = steps[0].querySelector(".step-badge");
-          if (firstTitle) gsap.set(firstTitle, { color: "var(--color-dark)" });
-          if (firstTitleSpan)
-            gsap.set(firstTitleSpan, { opacity: 1, filter: "grayscale(0%)" });
-          if (firstDesc)
-            gsap.set(firstDesc, { color: "var(--color-dark-600)" });
-          if (firstBadge)
-            gsap.set(firstBadge, { opacity: 1, filter: "grayscale(0%)" });
-
-          steps.forEach((step: any, i) => {
-            ScrollTrigger.create({
-              trigger: step,
-              start: "top 50%",
-              end: "bottom 50%",
-              onEnter: () => activateStep(i),
-              onEnterBack: () => activateStep(i),
-            });
-          });
-
-          function activateStep(index: number) {
-            // Text Anims
-            steps.forEach((s) => {
-              const t = s.querySelector("h2");
-              const ts = s.querySelector("h2 span.gradient-text");
-              const d = s.querySelector("p");
-              const b = s.querySelector(".step-badge");
-              if (t)
-                gsap.to(t, { color: "var(--color-dark-200)", duration: 0.3 });
-              if (ts)
-                gsap.to(ts, {
-                  opacity: 0.3,
-                  filter: "grayscale(100%)",
-                  duration: 0.3,
-                });
-              if (d)
-                gsap.to(d, { color: "var(--color-dark-400)", duration: 0.3 });
-              if (b)
-                gsap.to(b, {
-                  opacity: 0.4,
-                  filter: "grayscale(100%)",
-                  duration: 0.3,
-                });
-            });
-
-            const stepElem = steps[index];
-            const currentTitle = stepElem.querySelector("h2");
-            const currentTitleSpan = stepElem.querySelector(
-              "h2 span.gradient-text",
-            );
-            const currentDesc = stepElem.querySelector("p");
-            const currentBadge = stepElem.querySelector(".step-badge");
-            if (currentTitle)
-              gsap.to(currentTitle, {
-                color: "var(--color-dark)",
-                duration: 0.3,
-              });
-            if (currentTitleSpan)
-              gsap.to(currentTitleSpan, {
-                opacity: 1,
-                filter: "grayscale(0%)",
-                duration: 0.3,
-              });
-            if (currentDesc)
-              gsap.to(currentDesc, {
-                color: "var(--color-dark-600)",
-                duration: 0.3,
-              });
-            if (currentBadge)
-              gsap.to(currentBadge, {
-                opacity: 1,
-                filter: "grayscale(0%)",
-                duration: 0.3,
-              });
-
-            // Illustrations Anims
-            illustrations.forEach((illus: any, i) => {
-              if (i === index) {
-                gsap.to(illus, {
-                  opacity: 1,
-                  y: 0,
-                  duration: 0.5,
-                  ease: "power2.out",
-                  zIndex: 10,
-                });
-              } else {
-                gsap.to(illus, {
-                  opacity: 0,
-                  y: i < index ? -20 : 20,
-                  duration: 0.4,
-                  ease: "power2.inOut",
-                  zIndex: i,
-                });
-              }
-            });
-          }
-        },
+        }
       });
 
       // 5. Dark Mode Transition
@@ -505,100 +390,50 @@ export default function WigoExpress() {
         </div>
       </section>
 
-      {/*  NARRATIVE SCROLL : HOW IT WORKS / KYC (Pinned GSAP Section) */}
+      {/*  NARRATIVE SCROLL : HOW IT WORKS (Stacking Cards) */}
       <section
         id="comment-ca-marche"
-        className="steps-container relative w-full bg-white z-20 py-20 lg:py-0 border-t border-black/5"
+        className="steps-container relative w-full bg-light z-20 py-20 lg:py-32 border-t border-black/5"
       >
-        <div className="container mx-auto px-6 pt-10 lg:pt-32 text-center lg:text-left z-20 relative">
+        <div className="container mx-auto px-6 mb-16 lg:mb-24 text-center z-20 relative">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-xs font-black tracking-widest mb-6 uppercase">
+            Simplicité & Sécurité
+          </div>
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-tight text-dark text-center">
             Comment ça marche ?
           </h2>
         </div>
 
-        <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 relative">
-          {/* Left Text / The scrolling steps */}
-          <div className="lg:py-[30vh] flex flex-col gap-16 lg:gap-[15vh] relative z-10 w-full max-w-xl mx-auto lg:mx-0">
-            {/* Step 1 */}
-            <div className="step-item relative min-h-auto lg:min-h-[40vh] flex flex-col justify-center py-6 transition-colors">
-              <div className="absolute top-10 -translate-y-1/2 left-0 text-[180px] lg:text-[250px] font-black text-dark opacity-5 pointer-events-none leading-none z-0 tracking-tighter select-none">
-                01
-              </div>
-              <div className="relative z-10">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-dark">
-                  Le bon départ, <br />
-                  <span className="gradient-text lg:transition-colors lg:duration-300 text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-                    au bon moment.
-                  </span>
-                </h2>
-                <p className="text-lg md:text-xl text-neutral-600 font-medium pt-2 max-w-lg">
-                  Indiquez votre destination et découvrez instantanément les
-                  trajets disponibles. Nous mettons en avant les conducteurs les
-                  mieux notés pour vous garantir un voyage agréable et serein.
-                </p>
-              </div>
+        <div className="container mx-auto px-6 relative pb-20">
+          
+          {/* Card 1 : Le bon départ */}
+          <div className="stack-card sticky top-24 z-10 w-full min-h-[50vh] xl:min-h-[60vh] bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
+            {/* Background absolute text */}
+            <div className="absolute top-4 -mt-10 left-4 text-[150px] lg:text-[250px] font-black text-dark opacity-[0.03] pointer-events-none leading-none z-0 tracking-tighter select-none">
+              01
+            </div>
+            
+            <div className="flex-1 w-full relative z-10">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-dark">
+                Le bon départ, <br />
+                <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
+                  au bon moment.
+                </span>
+              </h2>
+              <p className="text-lg text-neutral-600 font-medium max-w-lg mb-8 leading-relaxed">
+                Indiquez votre destination et découvrez instantanément les
+                trajets disponibles. Nous mettons en avant les conducteurs les
+                mieux notés pour vous garantir un voyage agréable et serein.
+              </p>
+              <button className="btn-primary px-8 py-4 text-sm shadow-xl shadow-primary/20">
+                Chercher un trajet
+              </button>
             </div>
 
-            {/* Step 2 */}
-            <div className="step-item relative min-h-auto lg:min-h-[40vh] flex flex-col justify-center py-6 transition-colors">
-              <div className="absolute top-10 -translate-y-1/2 left-0 text-[180px] lg:text-[250px] font-black text-dark opacity-5 pointer-events-none leading-none z-0 tracking-tighter select-none">
-                02
-              </div>
-              <div className="relative z-10">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-dark">
-                  Une communauté <br />
-                  <span className="gradient-text lg:transition-colors lg:duration-300 text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-                    de confiance.
-                  </span>
-                </h2>
-                <p className="text-lg md:text-xl text-neutral-600 font-medium mb-8 pt-2 max-w-lg">
-                  Pièce d'identité, permis de conduire et historique : chaque
-                  membre est contrôlé avant de pouvoir réserver ou prendre le
-                  volant. Vous voyagez toujours avec des personnes fiables.
-                </p>
-                <div className="step-badge flex items-center gap-4 bg-light p-4 rounded-2xl border border-black/5 w-max">
-                  <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center text-green-600">
-                    <IoShieldCheckmarkOutline className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-sm text-dark">
-                      Identité Contrôlée
-                    </h4>
-                    <p className="text-xs text-neutral-500 font-medium">
-                      Badge de confiance validé
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="step-item relative min-h-auto lg:min-h-[40vh] flex flex-col justify-center py-6 transition-colors">
-              <div className="absolute top-10 -translate-y-1/2 left-0 text-[180px] lg:text-[250px] font-black text-dark opacity-5 pointer-events-none leading-none z-0 tracking-tighter select-none">
-                03
-              </div>
-              <div className="relative z-10">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-tight text-dark">
-                  Réglez sans <br />
-                  <span className="gradient-text lg:transition-colors lg:duration-300 text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-                    y penser.
-                  </span>
-                </h2>
-                <p className="text-lg md:text-xl text-neutral-600 font-medium pt-2 max-w-lg">
-                  Pas besoin de monnaie en voiture. Votre place est payée en
-                  ligne lors de la réservation et transférée automatiquement au
-                  conducteur à l'arrivée. Le paiement est 100% sécurisé.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Illustrations / Pinned during scroll */}
-          <div className="sticky-illustrator hidden lg:flex h-screen items-center justify-center overflow-visible w-full sticky top-0">
-            <div className="w-full aspect-4/3 relative">
+            <div className="flex-1 w-full relative z-10 flex flex-col justify-center">
               {/* Illus 1 : Search Map UI */}
-              <div className="illust-step absolute inset-0 bg-white rounded-[2.5rem] shadow-2xl squircle border border-neutral-100 overflow-hidden flex flex-col">
-                <div className="w-full h-[50%] xl:h-[55%] bg-light relative overflow-hidden shrink-0">
+              <div className="w-full bg-light rounded-4xl shadow-xl border border-black/5 overflow-hidden flex flex-col relative aspect-square lg:aspect-auto lg:h-[450px]">
+                <div className="w-full h-[55%] bg-light relative overflow-hidden shrink-0">
                   <Image
                     src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop"
                     alt="Carte avec des marqueurs"
@@ -606,39 +441,73 @@ export default function WigoExpress() {
                     className="object-cover opacity-80 mix-blend-multiply grayscale-20%"
                   />
                   {/* Decorative map pins */}
-                  <div className="absolute top-1/3 left-1/3 w-8 h-8 xl:w-10 xl:h-10 bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
-                    <div className="w-3 h-3 xl:w-4 xl:h-4 bg-primary rounded-full shadow-lg border-2 border-white"></div>
+                  <div className="absolute top-1/3 left-1/3 w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
+                    <div className="w-4 h-4 bg-primary rounded-full shadow-lg border-2 border-white"></div>
                   </div>
-                  <div className="absolute bottom-1/3 right-1/4 w-8 h-8 xl:w-10 xl:h-10 bg-dark/10 rounded-full flex items-center justify-center">
-                    <div className="w-3 h-3 xl:w-4 xl:h-4 bg-dark rounded-full shadow-lg border-2 border-white"></div>
+                  <div className="absolute bottom-1/3 right-1/4 w-10 h-10 bg-dark/10 rounded-full flex items-center justify-center">
+                    <div className="w-4 h-4 bg-dark rounded-full shadow-lg border-2 border-white"></div>
                   </div>
                 </div>
-                <div className="flex-1 p-6 xl:p-8 flex flex-col justify-center bg-white space-y-3 xl:space-y-4">
-                  <div className="bg-light p-3 xl:p-4 rounded-2xl flex items-center gap-3 xl:gap-4 border border-black/5">
-                    <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center text-primary shrink-0">
-                      <IoLocationOutline className="text-xl xl:text-2xl" />
+                <div className="flex-1 p-6 flex flex-col justify-center bg-white space-y-4">
+                  <div className="bg-light p-4 rounded-2xl flex items-center gap-4 border border-black/5">
+                    <div className="w-12 h-12 bg-white rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center text-primary shrink-0">
+                      <IoLocationOutline className="text-2xl" />
                     </div>
                     <div className="flex-1">
-                      <div className="w-20 xl:w-24 h-2 xl:h-2.5 bg-neutral-200 rounded-full mb-1.5 xl:mb-2"></div>
-                      <div className="w-32 xl:w-40 h-2.5 xl:h-3.5 bg-neutral-800 rounded-full max-w-[80%]"></div>
+                      <div className="w-24 h-2.5 bg-neutral-200 rounded-full mb-2"></div>
+                      <div className="w-40 h-3.5 bg-neutral-800 rounded-full max-w-[80%]"></div>
                     </div>
                   </div>
-                  <div className="bg-light p-3 xl:p-4 rounded-2xl flex items-center gap-3 xl:gap-4 border border-black/5">
-                    <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center text-primary shrink-0">
-                      <IoMapOutline className="text-xl xl:text-2xl" />
+                  <div className="bg-light p-4 rounded-2xl flex items-center gap-4 border border-black/5">
+                    <div className="w-12 h-12 bg-white rounded-xl shadow-[0_5px_15px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center text-primary shrink-0">
+                      <IoMapOutline className="text-2xl" />
                     </div>
                     <div className="flex-1">
-                      <div className="w-20 xl:w-24 h-2 xl:h-2.5 bg-neutral-200 rounded-full mb-1.5 xl:mb-2"></div>
-                      <div className="w-28 xl:w-32 h-2.5 xl:h-3.5 bg-neutral-800 rounded-full max-w-[70%]"></div>
+                      <div className="w-24 h-2.5 bg-neutral-200 rounded-full mb-2"></div>
+                      <div className="w-32 h-3.5 bg-neutral-800 rounded-full max-w-[70%]"></div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* Illus 2 : KYC Trust Badge ID */}
-              <div className="illust-step absolute inset-0 bg-dark-900 rounded-[2.5rem] shadow-2xl squircle border border-neutral-800 p-6 xl:p-10 flex flex-col items-center justify-between text-white origin-bottom pb-8 xl:pb-12 pt-6 xl:pt-10 overflow-visible z-10">
-                {/* 3D Canadian Premium ID Card that overflows top */}
-                <div className="w-[calc(100%-20px)] aspect-4/2 bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-3xl p-2 shadow-[0_30px_60px_rgba(0,0,0,0.6),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-3 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 -mt-16 xl:-mt-20">
+          {/* Card 2 : Communauté de confiance */}
+          <div className="stack-card sticky top-32 z-20 w-full min-h-[50vh] xl:min-h-[60vh] bg-dark-900 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(0,0,0,0.4)] border border-neutral-800 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
+            <div className="absolute top-4 -mt-10 right-4 text-[150px] lg:text-[250px] font-black text-white opacity-[0.02] pointer-events-none leading-none z-0 tracking-tighter select-none">
+              02
+            </div>
+            
+            <div className="flex-1 w-full relative z-10 flex flex-col lg:items-end lg:text-right">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white lg:text-right">
+                Une communauté <br />
+                <span className="text-green-400 drop-shadow-[0_0_15px_rgba(74,222,128,0.2)]">
+                  de confiance.
+                </span>
+              </h2>
+              <p className="text-lg text-neutral-400 font-medium max-w-lg mb-8 leading-relaxed">
+                Pièce d'identité, permis de conduire et historique : chaque
+                membre est contrôlé avant de pouvoir réserver ou prendre le
+                volant. Vous voyagez toujours avec des personnes fiables.
+              </p>
+              <div className="step-badge flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 w-max backdrop-blur-sm">
+                <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center text-green-400">
+                  <IoShieldCheckmarkOutline className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <h4 className="font-bold text-sm text-white">
+                    Identité Contrôlée
+                  </h4>
+                  <p className="text-xs text-neutral-400 font-medium">
+                    Badge de confiance validé
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-1 w-full relative z-10 flex flex-col items-center justify-center mt-10 lg:mt-0">
+               {/* 3D Canadian Premium ID Card */}
+               <div className="w-full max-w-sm aspect-4/2 bg-linear-to-br from-neutral-100 via-white to-gray-200 rounded-3xl p-2 shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_2px_15px_rgba(255,255,255,1)] relative z-20 transform -rotate-2 hover:rotate-0 hover:scale-[1.02] transition-all duration-500 mx-auto">
                   <Image
                     src="/images/canada-flag-icon.png"
                     alt="Canada"
@@ -646,14 +515,11 @@ export default function WigoExpress() {
                     height={300}
                     className="object-contain absolute bottom-0 right-0 w-42 h-42 -rotate-45 opacity-10"
                   />
-                  {/* Inner card with noise/texture feel */}
-                  <div className="border border-neutral-200/60 rounded-2xl p-4 xl:p-6 h-full relative z-10 overflow-hidden">
-                    {/* Subtle Canadian flags/accents holograms */}
+                  <div className="border border-neutral-200/60 rounded-2xl p-6 h-full relative z-10 overflow-hidden text-left shadow-inner">
                     <div className="absolute -top-10 -right-10 w-32 h-32 bg-red-400/20 rounded-full blur-2xl pointer-events-none"></div>
                     <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl pointer-events-none"></div>
 
-                    <div className="flex justify-between items-start">
-                      {/* canada flag */}
+                    <div className="flex justify-between items-start mb-2">
                       <Image
                         src="/images/canada-flag.png"
                         alt="Canada"
@@ -661,11 +527,11 @@ export default function WigoExpress() {
                         height={30}
                         className="object-contain"
                       />
-                      <IoShieldCheckmarkOutline className="w-6 h-6 xl:w-8 xl:h-8 text-green-700 drop-shadow-[0_0_12px_rgba(34,197,94,0.4)]" />
+                      <IoShieldCheckmarkOutline className="w-8 h-8 text-green-700 drop-shadow-[0_0_12px_rgba(34,197,94,0.4)]" />
                     </div>
 
-                    <div className="flex gap-4 xl:gap-5 items-start relative z-10">
-                      <div className="w-46 h-46 aspect-square rounded-xl overflow-hidden relative shadow-lg shrink-0">
+                    <div className="flex gap-5 items-start relative z-10">
+                      <div className="w-46 h-46 aspect-square rounded-xl overflow-hidden relative shadow-lg shrink-0 border border-black/5">
                         <Image
                           src="/images/profile.jpg"
                           alt="Conducteur"
@@ -673,136 +539,142 @@ export default function WigoExpress() {
                           className="object-cover bg-neutral-100 w-full h-full"
                         />
                       </div>
-                      {/* Info conducteur + éléments visuels */}
-                      <div className="space-y-2 xl:space-y-2.5 w-full mt-2">
-                        {/* Nom conducteur */}
+                      <div className="space-y-2.5 w-full mt-2">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-lg xl:text-xl text-neutral-800">
+                          <span className="font-bold text-xl text-neutral-800 tracking-tight">
                             Jean Tremblay
                           </span>
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-500/30 text-green-600 text-xs rounded-full">
-                            <IoShieldCheckmarkOutline className="w-4 h-4" />{" "}
-                            Vérifié
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-500/30 text-green-700 text-[10px] font-bold uppercase rounded-full tracking-widest leading-none">
+                            <IoShieldCheckmarkOutline className="w-3 h-3" /> Vérifié
                           </span>
                         </div>
-                        {/* Icônes étoile & note */}
-                        <div className="flex items-center gap-1 text-yellow-400">
+                        <div className="flex items-center gap-1 text-yellow-500">
                           {[...Array(5)].map((_, i) => (
-                            <IoStar key={i} className="h-4 w-4" />
+                            <IoStar key={i} className="h-4 w-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]" />
                           ))}
-                          <span className="font-semibold text-neutral-700 ml-2">
+                          <span className="font-bold text-neutral-700 ml-2 text-sm">
                             4.8/5
                           </span>
                         </div>
-                        {/* Expérience */}
-                        <div className="flex items-center gap-2 text-sm text-neutral-600">
+                        <div className="flex items-center gap-2 text-xs font-medium text-neutral-600">
                           <span>+150 trajets réalisés</span>
                         </div>
-                        {/* Document validé */}
-                        <div className="flex items-center gap-2 mt-2">
-                          <span className="text-dark font-bold">
-                            Pièce d'identité vérifiée
-                          </span>
-                        </div>
-                        {/* Faux numéro de permis stylisé */}
-                        <div className="mt-2 w-fit px-3 py-1 rounded bg-neutral-200/50 text-xs text-neutral-700 tracking-widest font-mono border border-neutral-400/20">
-                          Permis: QC-928183****
+                        <div className="mt-2 w-fit px-3 py-1.5 rounded-lg bg-white/80 text-[10px] text-neutral-800 tracking-widest font-mono border border-neutral-200 font-bold shadow-sm">
+                          ID: QC-928183****
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="text-center relative z-10 shrink-0 mt-auto">
-                  <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-400 px-3 py-1.5 xl:px-4 xl:py-2 rounded-full text-[10px] xl:text-xs font-black tracking-widest mb-3 xl:mb-4 border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.1)]">
-                    VERIFICATION WIGO
+
+                {/* Steps Visual */}
+                <div className="flex items-center justify-center gap-4 mt-12 w-full max-w-[280px] mx-auto opacity-90">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
+                      <IoPersonOutline className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
+                      Permis
+                    </span>
                   </div>
-                  <h3 className="text-2xl xl:text-3xl font-bold mb-2 xl:mb-3 tracking-tight">
-                    Identité Confirmée
-                  </h3>
-                  {/* Modern Visual ID Verification Steps with Labels */}
-                  <div className="flex items-center justify-center gap-3 xl:gap-4 mt-6 xl:mt-8 w-full max-w-[200px] xl:max-w-[240px] mx-auto opacity-90">
-                    <div className="flex flex-col items-center gap-1.5">
-                      <div className="w-8 h-8 xl:w-12 xl:h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
-                        <IoPersonOutline className="w-4 h-4 xl:w-5 xl:h-5" />
-                      </div>
-                      <span className="text-[9px] xl:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
-                        Permis
-                      </span>
+                  <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
+                      <IoIdCardOutline className="w-5 h-5" />
                     </div>
-                    <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 relative shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
-                    <div className="flex flex-col items-center gap-1.5">
-                      <div className="w-8 h-8 xl:w-12 xl:h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
-                        <IoIdCardOutline className="w-4 h-4 xl:w-5 xl:h-5" />
-                      </div>
-                      <span className="text-[9px] xl:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
-                        Selfie
-                      </span>
+                    <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center mt-1">
+                      Selfie
+                    </span>
+                  </div>
+                  <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
+                      <IoShieldCheckmarkOutline className="w-5 h-5" />
                     </div>
-                    <div className="flex-1 h-px bg-linear-to-r from-green-500/20 via-green-400/50 to-green-500/20 relative shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
-                    <div className="flex flex-col items-center gap-1.5">
-                      <div className="w-8 h-8 xl:w-12 xl:h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
-                        <IoShieldCheckmarkOutline className="w-4 h-4 xl:w-5 xl:h-5" />
-                      </div>
-                      <span className="text-[9px] xl:text-[10px] font-black text-white uppercase tracking-widest text-center mt-1 drop-shadow-[0_0_5px_rgba(255,255,255,0.4)]">
-                        Sécurisé
-                      </span>
-                    </div>
+                    <span className="text-[10px] font-black text-white uppercase tracking-widest text-center mt-1 drop-shadow-[0_0_5px_rgba(255,255,255,0.4)]">
+                      Sécurisé
+                    </span>
                   </div>
                 </div>
+            </div>
+          </div>
+
+          {/* Card 3 : Paiement */}
+          <div className="stack-card sticky top-40 z-30 w-full min-h-[50vh] xl:min-h-[60vh] bg-linear-to-br from-primary to-primary-800 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(37,99,235,0.4)] border border-blue-400/30 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 overflow-hidden">
+            <div className="absolute top-4 -mt-10 left-4 text-[150px] lg:text-[250px] font-black text-white opacity-[0.05] pointer-events-none leading-none z-0 tracking-tighter select-none">
+              03
+            </div>
+            {/* Soft background glow */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+            <div className="flex-1 w-full relative z-10">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white">
+                Réglez sans <br />
+                <span className="text-blue-100 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                  y penser.
+                </span>
+              </h2>
+              <p className="text-lg text-blue-100/80 font-medium max-w-lg mb-8 leading-relaxed">
+                Pas besoin de monnaie en voiture. Votre place est payée en ligne
+                lors de la réservation et transférée automatiquement au
+                conducteur à l'arrivée. Le paiement est 100% sécurisé.
+              </p>
+              <div className="flex items-center gap-3">
+                 <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
+                   <IoWalletOutline className="text-xl"/>
+                 </div>
+                 <span className="text-sm font-bold tracking-widest uppercase text-white">Paiement Wigo Garanti</span>
               </div>
+            </div>
 
-              {/* Illus 3 : Wigo Wallet */}
-              <div className="illust-step absolute inset-0 bg-primary rounded-[2.5rem] shadow-2xl squircle border border-blue-500/30 p-6 xl:p-10 flex flex-col justify-center text-white overflow-hidden origin-bottom">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            <div className="flex-1 w-full relative z-10 flex flex-col justify-center items-center mt-6 lg:mt-0">
+               {/* Illus 3 : Wigo Wallet */}
+               <div className="w-full max-w-md">
+                 <div className="text-center flex flex-col justify-center pb-8 border-b border-white/10 mb-8">
+                   <h3 className="text-xs font-bold opacity-80 mb-2 uppercase tracking-widest text-blue-100">
+                     Solde Disponible
+                   </h3>
+                   <h2 className="text-5xl lg:text-7xl font-black mb-1 tracking-tighter drop-shadow-md text-white">
+                     244.50 $
+                   </h2>
+                   <p className="text-xs font-bold text-blue-200 tracking-wider">
+                     CAD
+                   </p>
+                 </div>
 
-                <div className="relative z-10 text-center flex-1 flex flex-col justify-center pb-4 xl:pb-6">
-                  <div className="w-12 h-12 xl:w-16 xl:h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 xl:mb-6 backdrop-blur-md border border-white/20 shadow-inner">
-                    <IoWalletOutline className="w-6 h-6 xl:w-8 xl:h-8" />
-                  </div>
-                  <h3 className="text-[10px] xl:text-xs font-bold opacity-80 mb-1 xl:mb-2 uppercase tracking-widest">
-                    Solde Disponible
-                  </h3>
-                  <h2 className="text-5xl xl:text-6xl font-black mb-1 tracking-tighter drop-shadow-md">
-                    244.50 $
-                  </h2>
-                  <p className="text-[10px] xl:text-xs font-bold text-blue-200 tracking-wider">
-                    CAD
-                  </p>
-                </div>
-
-                <div className="relative z-10 space-y-3 xl:space-y-4 w-full max-w-sm mx-auto shrink-0">
-                  <div className="bg-white/10 w-full p-4 xl:p-5 rounded-2xl backdrop-blur-md border border-white/20 flex justify-between items-center transform transition-all hover:scale-[1.02] cursor-pointer shadow-lg">
-                    <div className="text-left">
-                      <p className="text-[9px] xl:text-[10px] font-black text-blue-200 uppercase tracking-widest mb-1 xl:mb-1.5">
-                        Reçu hier
-                      </p>
-                      <p className="font-bold text-xs xl:text-sm tracking-tight text-white">
-                        Trajet Montréal - Québec
-                      </p>
-                    </div>
-                    <div className="text-right shrink-0 ml-2">
-                      <p className="font-black text-lg xl:text-xl text-green-300 drop-shadow-[0_0_10px_rgba(134,239,172,0.3)]">
-                        + 45.00 $
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-black/10 w-full p-3 xl:p-4 rounded-xl backdrop-blur-md border border-transparent flex justify-between items-center opacity-70">
-                    <div className="text-left">
-                      <p className="text-[9px] xl:text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1 text-white">
-                        Il y a 3 jours
-                      </p>
-                      <p className="font-semibold text-xs xl:text-sm text-white">
-                        Paiement trajet
-                      </p>
-                    </div>
-                    <div className="text-right shrink-0 ml-2">
-                      <p className="font-bold text-base xl:text-lg text-white">
-                        - 35.00 $
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                 <div className="space-y-4 w-full">
+                   <div className="bg-white/10 w-full p-5 rounded-2xl backdrop-blur-md border border-white/20 flex justify-between items-center transform transition-all hover:scale-[1.02] cursor-pointer shadow-xl">
+                     <div className="text-left">
+                       <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-1.5">
+                         Reçu hier
+                       </p>
+                       <p className="font-bold text-sm tracking-tight text-white">
+                         Trajet Montréal - Québec
+                       </p>
+                     </div>
+                     <div className="text-right shrink-0 ml-2">
+                       <p className="font-black text-xl text-green-300 drop-shadow-[0_0_10px_rgba(134,239,172,0.3)]">
+                         + 45.00 $
+                       </p>
+                     </div>
+                   </div>
+                   <div className="bg-black/10 w-full p-4 rounded-xl backdrop-blur-md border border-transparent flex justify-between items-center opacity-70">
+                     <div className="text-left">
+                       <p className="text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1 text-white">
+                         Il y a 3 jours
+                       </p>
+                       <p className="font-semibold text-sm text-white">
+                         Paiement trajet
+                       </p>
+                     </div>
+                     <div className="text-right shrink-0 ml-2">
+                       <p className="font-bold text-lg text-white">
+                         - 35.00 $
+                       </p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
             </div>
           </div>
         </div>
