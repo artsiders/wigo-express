@@ -882,8 +882,8 @@ export default function WigoExpress() {
         {/* Subtle top glow effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-primary/20 rounded-full blur-[150px] pointer-events-none opacity-50"></div>
 
-        <div className="footer-content container mx-auto px-6 py-20 md:py-28 flex flex-col h-full relative z-10">
-          <div className="flex flex-col xl:flex-row justify-between items-start gap-16 flex-1 border-b border-white/10 pb-20 mb-10">
+        <div className="footer-content container mx-auto px-6 pt-20 md:pt-28 pb-8 flex flex-col h-full relative z-10">
+          <div className="flex flex-col xl:flex-row justify-between items-start gap-16 flex-1 border-b border-white/15 pb-20">
             {/* Brand & Mission */}
             <div className="xl:w-5/12 flex flex-col items-start pr-0 md:pr-10">
               {/* Logo */}
@@ -903,11 +903,11 @@ export default function WigoExpress() {
               </p>
             </div>
 
-            {/* Links Grid */}
-            <div className="xl:w-7/12 w-full grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-8 lg:justify-end text-sm">
-              <div className="flex flex-col gap-4">
+            {/* Liens essentiels seulement + Formulaire de contact */}
+            <div className="xl:w-7/12 w-full flex flex-col md:flex-row gap-12 justify-center">
+              <div className="flex flex-col gap-3 flex-1">
                 <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2">
-                  Roulez
+                  Liens utiles
                 </h4>
                 <Link
                   href="#"
@@ -925,98 +925,107 @@ export default function WigoExpress() {
                   href="#"
                   className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
                 >
-                  Destinations Populaires
-                </Link>
-                <Link
-                  href="#"
-                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
-                >
-                  Montréal - Québec
-                </Link>
-                <Link
-                  href="#"
-                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
-                >
-                  Toronto - Ottawa
-                </Link>
-              </div>
-              <div className="flex flex-col gap-4">
-                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2">
-                  Découvrez
-                </h4>
-                <Link
-                  href="#"
-                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
-                >
-                  La sécurité (KYC)
-                </Link>
-                <Link
-                  href="#"
-                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
-                >
-                  Portefeuille Digital
-                </Link>
-                <Link
-                  href="#"
-                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
-                >
-                  Assurances
-                </Link>
-                <Link
-                  href="#"
-                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
-                >
-                  Engagement carbone
-                </Link>
-              </div>
-              <div className="flex flex-col gap-4">
-                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2">
-                  Société
-                </h4>
-                <Link
-                  href="#"
-                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
-                >
                   À Propos
                 </Link>
                 <Link
                   href="#"
                   className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
                 >
-                  Carrières
+                  CGU
                 </Link>
                 <Link
                   href="#"
                   className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
                 >
-                  Presse
+                  Confidentialité
                 </Link>
-                <Link
-                  href="#"
-                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
+              </div>
+              {/* Formulaire de contact */}
+              <div className="flex-1 min-w-[280px] max-w-md">
+                <h4 className="font-extrabold uppercase tracking-widest text-primary mb-4">
+                  Contactez-nous
+                </h4>
+                <form
+                  className="flex flex-col gap-4"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    // Ici, vous pouvez ajouter un hook d'envoi ou une intégration à un backend
+                    alert("Message envoyé ! Merci pour votre contact.");
+                    (e.target as HTMLFormElement).reset();
+                  }}
                 >
-                  Partenaires
-                </Link>
+                  <div>
+                    <label
+                      className="block text-xs font-bold mb-1 text-neutral-300"
+                      htmlFor="contact-nom"
+                    >
+                      Nom
+                    </label>
+                    <input
+                      id="contact-nom"
+                      name="nom"
+                      type="text"
+                      required
+                      placeholder="Votre nom complet"
+                      className="w-full px-4 py-2 rounded-lg bg-white/6 text-white border border-white/10 focus:outline-none focus:border-primary-500 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className="block text-xs font-bold mb-1 text-neutral-300"
+                      htmlFor="contact-email"
+                    >
+                      Email
+                    </label>
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="exemple@email.com"
+                      className="w-full px-4 py-2 rounded-lg bg-white/6 text-white border border-white/10 focus:outline-none focus:border-primary-500 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className="block text-xs font-bold mb-1 text-neutral-300"
+                      htmlFor="contact-message"
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      name="message"
+                      rows={3}
+                      required
+                      placeholder="Écrivez votre message ici..."
+                      className="w-full px-4 py-2 rounded-lg bg-white/6 text-white border border-white/10 focus:outline-none focus:border-primary-500 transition-all resize-none"
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    className="bg-primary hover:bg-primary-800 text-white font-bold uppercase tracking-widest py-3 px-6 rounded-xl transition-all shadow-lg"
+                  >
+                    Envoyer
+                  </button>
+                </form>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-between items-center text-xs font-bold text-neutral-600 uppercase tracking-widest gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-center text-xs font-bold text-neutral-600 uppercase tracking-widest gap-6 mt-8">
             <span>
               © {new Date().getFullYear()} Wigo Express Inc. Tous droits
               réservés.
             </span>
-            <div className="flex gap-8">
-              <Link href="#" className="hover:text-white transition-colors">
-                CGU
-              </Link>
-              <Link href="#" className="hover:text-white transition-colors">
-                Politique de Confidentialité
-              </Link>
-              <Link href="#" className="hover:text-white transition-colors">
-                Cookies
-              </Link>
-            </div>
+            <a
+              href="https://altplus.dev/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors hidden"
+            >
+              créé par altplus
+            </a>
           </div>
         </div>
       </footer>
