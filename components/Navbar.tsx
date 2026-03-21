@@ -49,30 +49,29 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Center Links */}
-        <div className="hidden lg:flex gap-10 items-center text-sm font-semibold text-current opacity-80">
-          <Link
-            href="#comment-ca-marche"
-            className="hover:text-primary hover:opacity-100 transition-all"
-          >
-            Comment ça marche
-          </Link>
-          <Link
-            href="#voyageur"
-            className="hover:text-primary hover:opacity-100 transition-all"
-          >
-            Côté Voyageur
-          </Link>
-          <Link
-            href="#conducteur"
-            className="hover:text-primary hover:opacity-100 transition-all"
-          >
-            Côté Conducteur
-          </Link>
-        </div>
-
         {/* Right CTAs */}
         <div className="flex gap-4 items-center">
+          {/* Center Links */}
+          <div className="hidden lg:flex gap-10 items-center text-sm font-semibold text-current opacity-80">
+            <Link
+              href="#comment-ca-marche"
+              className="hover:text-primary hover:opacity-100 transition-all"
+            >
+              Comment ça marche
+            </Link>
+            <Link
+              href="#voyageur"
+              className="hover:text-primary hover:opacity-100 transition-all"
+            >
+              Côté Voyageur
+            </Link>
+            <Link
+              href="#conducteur"
+              className="hover:text-primary hover:opacity-100 transition-all"
+            >
+              Côté Conducteur
+            </Link>
+          </div>
           {/* Custom Language Selector */}
           <div className="relative" ref={dropdownRef}>
             <button
