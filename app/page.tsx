@@ -432,10 +432,10 @@ export default function WigoExpress() {
 
             <div className="flex-1 w-full relative z-10 flex flex-col justify-center">
               {/* Illus 1 : Search Map UI */}
-              <div className="w-full bg-light rounded-4xl shadow-xl border border-black/5 overflow-hidden flex flex-col relative aspect-square lg:aspect-auto lg:h-[450px]">
+              <div className="w-full bg-light rounded-4xl shadow-xl border border-black/5 overflow-hidden flex flex-col relative aspect-square lg:aspect-auto lg:h-[650px]">
                 <div className="w-full h-[55%] bg-light relative overflow-hidden shrink-0">
                   <Image
-                    src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop"
+                    src="/images/carte.webp"
                     alt="Carte avec des marqueurs"
                     fill
                     className="object-cover opacity-80 mix-blend-multiply grayscale-20%"
