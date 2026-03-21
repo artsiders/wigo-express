@@ -221,13 +221,15 @@ export default function WigoExpress() {
             Le covoiturage, enfin
             <br />
             <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-              sûr, simple et fiable <br />avec Wigo
+              sûr, simple et fiable <br />
+              avec Wigo
             </span>
           </h1>
 
           <p className="hero-text-elem text-lg md:text-xl opacity-80 font-medium mb-16 max-w-2xl leading-relaxed">
-            Trouvez ou offrez un trajet l'esprit tranquille. Voyagez en toute confiance avec des profils 100% 
-            vérifiés et un paiement garanti. C'est ça, la simplicité Wigo Express.
+            Trouvez ou offrez un trajet l'esprit tranquille. Voyagez en toute
+            confiance avec des profils 100% vérifiés et un paiement garanti.
+            C'est ça, la simplicité Wigo Express.
           </p>
 
           {/* Web Search Widget - The Core Tool */}
@@ -296,7 +298,7 @@ export default function WigoExpress() {
           <div className="relative w-full max-w-7xl mt-18 z-20">
             {/* Main Web Dashboard Visual Preview */}
             <div
-              className="hero-floating-img w-full h-[40vh] md:h-[50vh] bg-white rounded-3xl border-t border-x shadow-[0_0_80px_rgba(0,0,0,0.05)] border-neutral-100 overflow-hidden relative float-parallax z-10"
+              className="hero-floating-img w-full h-[400px] md:h-[680px] bg-white rounded-3xl border-t border-x shadow-[0_0_80px_rgba(0,0,0,0.05)] border-neutral-100 overflow-hidden relative float-parallax z-10"
               data-speed="0.5"
             >
               <div className="relative w-full h-full">
@@ -304,7 +306,7 @@ export default function WigoExpress() {
                   src="/images/hero-image.webp"
                   alt="Capture d'écran conceptuelle (Web UI) d'un tableau de bord de covoiturage premium WIGO EXPRESS, affichant une carte interactive claire, des listes de trajets élégantes et des profils vérifiés, tons blanc et bleu."
                   fill
-                  className="object-cover object-top opacity-90"
+                  className="object-cover object-center opacity-90"
                 />
               </div>
             </div>
@@ -396,9 +398,6 @@ export default function WigoExpress() {
         className="steps-container relative w-full bg-light z-20 py-20 lg:py-32 border-t border-black/5"
       >
         <div className="container mx-auto px-6 mb-16 lg:mb-24 text-center z-20 relative">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-xs font-black tracking-widest mb-6 uppercase">
-            Simplicité & Sécurité
-          </div>
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-tight text-dark text-center">
             Comment ça marche ?
           </h2>
@@ -406,7 +405,7 @@ export default function WigoExpress() {
 
         <div className="container mx-auto px-6 relative pb-20">
           {/* Card 1 : Le bon départ */}
-          <div className="stack-card sticky top-44 z-10 w-full min-h-[50vh] xl:min-h-[60vh] bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
+          <div className="stack-card sticky top-28 md:top-44 z-10 w-full min-h-[50vh] xl:min-h-[60vh] bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
             <div className="absolute inset-0 -z-10 bg-[url('/images/carte-bg.webp')] bg-cover bg-center opacity-15"></div>
             {/* Background absolute text */}
             <div className="absolute top-18 -mt-10 left-18 text-[150px] lg:text-[250px] font-black text-dark opacity-[0.05] pointer-events-none leading-none z-0 tracking-tighter select-none">
@@ -421,9 +420,9 @@ export default function WigoExpress() {
                 </span>
               </h2>
               <p className="text-lg text-neutral-600 font-medium max-w-lg mb-8 leading-relaxed">
-                Indiquez votre destination et trouvez instantanément les
-                trajets disponibles. Sur Wigo Express, nous mettons en avant vos 
-                trajets préférés pour un voyage agréable et serein.
+                Indiquez votre destination et trouvez instantanément les trajets
+                disponibles. Sur Wigo Express, nous mettons en avant vos trajets
+                préférés pour un voyage agréable et serein.
               </p>
               <button className="btn-primary px-8 py-4 text-sm shadow-xl shadow-primary/20">
                 Chercher un trajet
@@ -473,7 +472,7 @@ export default function WigoExpress() {
           </div>
 
           {/* Card 2 : Communauté de confiance */}
-          <div className="stack-card sticky top-44 z-20 w-full min-h-[50vh] xl:min-h-[60vh] bg-dark-900 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(0,0,0,0.4)] border border-neutral-800 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
+          <div className="stack-card sticky top-28 md:top-44 z-20 w-full min-h-[50vh] xl:min-h-[60vh] bg-dark-900 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(0,0,0,0.4)] border border-neutral-800 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
             <div className="absolute top-18 -mt-10 right-18 text-[150px] lg:text-[250px] font-black text-white opacity-[0.06] pointer-events-none leading-none z-0 tracking-tighter select-none">
               02
             </div>
@@ -487,8 +486,8 @@ export default function WigoExpress() {
               </h2>
               <p className="text-lg text-neutral-400 font-medium max-w-lg mb-8 leading-relaxed">
                 Pièce d'identité, permis de conduire et historique : chaque
-                membre Wigo Express est contrôlé avec soin. Nous prenons le temps 
-                de vérifier les profils pour que vous restiez sereins.
+                membre Wigo Express est contrôlé avec soin. Nous prenons le
+                temps de vérifier les profils pour que vous restiez sereins.
               </p>
               <div className="step-badge flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 w-max backdrop-blur-sm">
                 <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center text-green-400">
@@ -616,7 +615,7 @@ export default function WigoExpress() {
           </div>
 
           {/* Card 3 : Paiement */}
-          <div className="stack-card sticky top-44 z-30 w-full min-h-[50vh] xl:min-h-[60vh] bg-linear-to-br from-primary to-primary-800 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(37,99,235,0.4)] border border-blue-400/30 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 overflow-hidden">
+          <div className="stack-card sticky top-28 md:top-44 z-30 w-full min-h-[50vh] xl:min-h-[60vh] bg-linear-to-br from-primary to-primary-800 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(37,99,235,0.4)] border border-blue-400/30 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 overflow-hidden">
             <div className="absolute top-18 -mt-10 left-18 text-[150px] lg:text-[250px] font-black text-white opacity-[0.06] pointer-events-none leading-none z-0 tracking-tighter select-none">
               03
             </div>
@@ -710,9 +709,9 @@ export default function WigoExpress() {
               </span>
             </h2>
             <p className="text-neutral-500 text-lg md:text-xl font-medium max-w-2xl mx-auto reveal-fade">
-              Rejoignez le réseau de conducteurs Wigo. Vous conduisez,
-              nous nous chargeons de remplir votre véhicule avec des passagers
-              fiables et vérifiés.
+              Rejoignez le réseau de conducteurs Wigo. Vous conduisez, nous nous
+              chargeons de remplir votre véhicule avec des passagers fiables et
+              vérifiés.
             </p>
           </div>
 
@@ -810,9 +809,9 @@ export default function WigoExpress() {
               </span>
             </h2>
             <p className="text-neutral-400 text-lg md:text-xl font-light max-w-3xl mx-auto">
-              Voyagez dans de meilleures conditions. Sur Wigo, vous choisissez 
-              le véhicule qui vous convient, et vous savez exactement dans 
-              quel confort vous allez rouler.
+              Voyagez dans de meilleures conditions. Sur Wigo, vous choisissez
+              le véhicule qui vous convient, et vous savez exactement dans quel
+              confort vous allez rouler.
             </p>
           </div>
 
