@@ -76,7 +76,7 @@ export default function Navbar() {
 
         <div className="relative z-10 px-4 py-4 flex justify-between items-center w-full">
           {/* LOGO */}
-          <Link href="/" className="shrink-0 transition-transform">
+          <Link href="/" className="shrink-0 transition-transform ml-1">
             <Image
               src="/images/logo.png"
               alt="Logo"
