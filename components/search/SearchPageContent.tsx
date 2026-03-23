@@ -3,12 +3,8 @@
 import React, { useRef } from "react";
 import RideSearchWidget from "@/components/search/RideSearchWidget";
 import RideCard, { RideData } from "@/components/search/RideCard";
-import {
-  IoFilterOutline,
-  IoCarOutline,
-  IoChevronDown,
-  IoChevronUp,
-} from "react-icons/io5";
+import { IoFilterOutline, IoChevronDown, IoChevronUp } from "react-icons/io5";
+import Alert from "../ui/Alert";
 
 // Extremely premium random mocked data
 const MOCK_RIDES: RideData[] = [
@@ -305,19 +301,19 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
             )}
 
             {!hasResults && (
-              <div className="mt-8 bg-orange-50/80 border border-orange-100 text-orange-700 p-5 rounded-3xl flex flex-col sm:flex-row gap-4 items-start shadow-sm">
-                <div className="bg-white p-3 rounded-2xl shadow-sm shrink-0">
-                  <IoCarOutline size={26} className="text-orange-500" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1">
-                    Aucun trajet ne correspond
-                  </h3>
-                  <p className="text-sm text-orange-600/80">
-                    Nous n&apos;avons pas trouvé de trajet exact. Voici quelques
-                    suggestions populaires que vous pourriez aimer à la place.
-                  </p>
-                </div>
+              <div className="mt-8">
+                <Alert
+                  type="warning"
+                  title="Aucun trajet ne correspond"
+                  description={
+                    <>
+                      Nous n&apos;avons pas trouvé de trajet exact. Voici
+                      quelques suggestions populaires que vous pourriez aimer à
+                      la place.
+                    </>
+                  }
+                  className="w-full"
+                />
               </div>
             )}
           </div>

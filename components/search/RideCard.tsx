@@ -3,7 +3,6 @@ import Image from "next/image";
 import {
   IoStar,
   IoShieldCheckmark,
-  IoTimeOutline,
   IoCashOutline,
   IoFlashOutline,
 } from "react-icons/io5";
