@@ -129,12 +129,12 @@ export default function RideCard({ ride }: RideCardProps) {
       <div className="mt-5 pt-4 border-t border-neutral-100 flex items-center justify-between relative z-10">
         <div className="flex gap-2">
           {ride.features.includes("instant_booking") && (
-            <span className="flex items-center gap-1 text-[11px] font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
+            <span className="flex items-center gap-1 text-xs font-semibold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full tracking-wider">
               <IoFlashOutline size={14} /> Réservation instantanée
             </span>
           )}
           {ride.features.includes("max_2_back") && (
-            <span className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-primary-700 bg-primary-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
+            <span className="hidden sm:flex items-center gap-1 text-xs font-semibold text-primary-700 bg-primary-50 px-2.5 py-1 rounded-full tracking-wider">
               Max. 2 à l'arrière
             </span>
           )}
