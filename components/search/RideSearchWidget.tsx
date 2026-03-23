@@ -339,7 +339,7 @@ export default function RideSearchWidget({
       <button
         type="button"
         onClick={handleSearch}
-        className={`w-full ${!isVert ? "lg:w-[80px]" : ""} h-[80px] ${!isVert ? "mt-2 lg:mt-0" : "mt-2"} btn-primary rounded-3xl flex justify-center items-center hover:scale-[1.02] active:scale-[0.98] transition-transform shrink-0`}
+        className={`w-full ${!isVert ? "lg:w-[80px]" : ""} h-[80px] ${!isVert ? "mt-2 lg:mt-0" : "mt-2"} aspect-square btn-primary rounded-3xl flex justify-center items-center hover:scale-[1.02] active:scale-[0.98] transition-transform shrink-0`}
       >
         <IoSearchOutline size={22} />
         <span className={`ml-2 font-bold ${!isVert ? "lg:hidden" : ""}`}>
