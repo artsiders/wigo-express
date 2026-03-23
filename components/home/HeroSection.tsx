@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
@@ -6,15 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import {
   IoSearchOutline,
-  IoLocationOutline,
-  IoMapOutline,
-  IoCalendarOutline,
-  IoPersonOutline,
-  IoArrowForwardOutline,
   IoShieldCheckmarkOutline,
   IoWalletOutline,
 } from "react-icons/io5";
-import { FaSearch } from "react-icons/fa";
+
 import RideSearchWidget from "../search/RideSearchWidget";
 
 if (typeof window !== "undefined") {
@@ -114,13 +109,7 @@ export default function HeroSection() {
         </p>
 
         {/* Web Search Widget - The Core Tool */}
-        <div className="flex flex-col items-start capitalize text-lg gap-2 mb-10 w-full max-w-5xl relative z-50">
-          <p className="ml-4 bg-white py-1.5 px-5 rounded-full shadow-sm border border-neutral-100 flex items-center justify-center gap-2 text-dark font-bold text-sm">
-            <IoSearchOutline size={16} />
-            trouver un trajet
-          </p>
-          <RideSearchWidget />
-        </div>
+        <RideSearchWidget />
 
         {/* Dashboard Preview & Floating UI Cards Container */}
         <div className="relative w-full max-w-7xl mt-18 z-20">
