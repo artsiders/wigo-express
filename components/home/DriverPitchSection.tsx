@@ -1,17 +1,47 @@
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import {
   IoWalletOutline,
   IoShieldCheckmarkOutline,
   IoCalendarOutline,
 } from "react-icons/io5";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
+
 export default function DriverPitchSection() {
   const t = useTranslations("HomePage");
+  const container = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    // Staggered Simple Reveals
+    gsap.utils.toArray(".reveal-fade").forEach((elem: any) => {
+      gsap.fromTo(
+        elem,
+        { opacity: 0, y: 60 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+    });
+  }, { scope: container });
 
   return (
       <section
+        ref={container as any}
         id="conducteur"
         className="relative w-full bg-light-400 z-20 overflow-hidden py-32 border-t border-black/5"
       >

@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import {
   IoSearchOutline,
   IoLocationOutline,
@@ -14,11 +17,71 @@ import {
 import { FaSearch } from "react-icons/fa";
 import RideSearchWidget from "../search/RideSearchWidget";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
+
 export default function HeroSection() {
   const t = useTranslations("HomePage");
+  const container = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    // 1. Initial Hero Stagger
+    const tl = gsap.timeline();
+    tl.fromTo(
+      ".hero-text-elem",
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1.2, stagger: 0.1, ease: "power3.out", delay: 0.2 }
+    ).fromTo(
+      ".search-widget",
+      { opacity: 0, y: 60, scale: 0.95 },
+      { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "expo.out" },
+      "-=0.8"
+    );
+
+    // 2. Parallax Basics
+    gsap.utils.toArray(".float-parallax").forEach((el: any) => {
+      const speed = el.dataset.speed || 1;
+      gsap.to(el, {
+        yPercent: -20 * speed,
+        ease: "none",
+        scrollTrigger: {
+          trigger: el.closest("section"),
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+    });
+
+    // 2.5. Floating UI Cards Parallax & Entrance
+    gsap.utils.toArray(".floating-card").forEach((card: any, index) => {
+      const yOffset = index === 0 ? 120 : index === 1 ? -100 : 80;
+      const xOffset = index === 0 ? -60 : index === 1 ? 60 : -40;
+      const rotation = index === 0 ? -8 : index === 1 ? 10 : -6;
+
+      gsap.fromTo(
+        card,
+        { y: yOffset, x: xOffset, rotation: rotation * 2, scale: 0.8 },
+        {
+          y: 0,
+          x: 0,
+          rotation: rotation,
+          scale: 1,
+          ease: "back.out(1.5)",
+          scrollTrigger: {
+            trigger: ".hero-floating-img",
+            start: "top 85%",
+            end: "bottom 30%",
+            scrub: 1.5,
+          },
+        }
+      );
+    });
+  }, { scope: container });
 
   return (
-      <section className="relative bg-[url(/images/bg-texture.png)] min-h-screen pt-36 md:pt-40 pb-20 px-6 flex flex-col items-center justify-center">
+      <section ref={container} className="relative bg-[url(/images/bg-texture.png)] min-h-screen pt-36 md:pt-40 pb-20 px-6 flex flex-col items-center justify-center">
         {/* Abstract shapes for premium feel */}
         <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-primary/10 rounded-full blur-[140px] pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
         <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none"></div>

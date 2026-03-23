@@ -1,12 +1,40 @@
+"use client"
+import React, { useRef } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
 
 export default function Footer() {
   const tFooter = useTranslations("Footer");
+  const container = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    // Footer Parallax Reveal
+    gsap.fromTo(
+      ".footer-content",
+      { y: "-30%" },
+      {
+        y: "0%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".footer-wrapper",
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      }
+    );
+  }, { scope: container });
 
   return (
-      <footer className="footer-wrapper relative z-0 bg-dark text-white overflow-hidden rounded-t-[3rem] squircle">
+      <footer ref={container as any} className="footer-wrapper relative z-0 bg-dark text-white overflow-hidden rounded-t-[3rem] squircle">
         {/* Subtle top glow effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-primary/20 rounded-full blur-[150px] pointer-events-none opacity-50"></div>
 

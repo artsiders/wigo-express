@@ -138,7 +138,7 @@ export default async function SearchPage({
             <RideSearchWidget variant="vertical" />
           </div>
 
-          <div className="bg-dark rounded-[2.5rem] p-6 md:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-neutral-800 hidden lg:block text-white">
+          <div className="bg-dark rounded-4xl squircle p-6 md:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-neutral-800 hidden lg:block text-white">
             <div className="flex items-center gap-3 mb-8 font-black text-white text-lg">
               <IoFilterOutline size={24} className="text-primary" />
               Trier & Filtrer

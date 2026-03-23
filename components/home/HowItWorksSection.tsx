@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import {
   IoLocationOutline,
   IoMapOutline,
@@ -11,11 +14,40 @@ import {
   IoWalletOutline,
 } from "react-icons/io5";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
+
 export default function HowItWorksSection() {
   const t = useTranslations("HomePage");
+  const container = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    // 🌟 NARRATIVE SCROLL: STACKING CARDS
+    const stackCards = gsap.utils.toArray(".stack-card") as HTMLElement[];
+    stackCards.forEach((card, i) => {
+      if (i !== stackCards.length - 1) {
+        // Don't scale the last card
+        const nextCard = stackCards[i + 1];
+        gsap.to(card, {
+          scale: 0.92,
+          transformOrigin: "top center",
+          ease: "none",
+          scrollTrigger: {
+            trigger: nextCard,
+            start: () => `top ${96 + i * 32 + card.offsetHeight}`,
+            end: () => `top ${96 + (i + 1) * 32}`,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      }
+    });
+  }, { scope: container });
 
   return (
       <section
+        ref={container as any}
         id="comment-ca-marche"
         className="steps-container relative w-full bg-light z-20 py-20 lg:py-32 border-t border-black/5"
       >

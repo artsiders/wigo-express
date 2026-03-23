@@ -40,7 +40,7 @@ interface RideCardProps {
 
 export default function RideCard({ ride }: RideCardProps) {
   return (
-    <div className="bg-white rounded-[2rem] p-5 shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(37,99,235,0.08)] border border-neutral-100 hover:border-primary/20 transition-all duration-300 block w-full group cursor-pointer relative overflow-hidden">
+    <div className="bg-white rounded-4xl p-5 shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(37,99,235,0.08)] border border-neutral-100 hover:border-primary/20 transition-all duration-300 block w-full group cursor-pointer relative overflow-hidden">
       {/* Premium subtle background glow */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[50px] pointer-events-none group-hover:bg-primary/20 transition-colors"></div>
 
@@ -89,12 +89,12 @@ export default function RideCard({ ride }: RideCardProps) {
 
           {/* Driver Profile */}
           <div className="flex items-center gap-3 bg-light-400 px-3 py-2 rounded-2xl md:ml-auto">
-             <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 shadow-sm border border-neutral-200">
+             <div className="relative w-10 h-10 rounded-full shrink-0 shadow-sm border border-neutral-200">
                <Image 
                  src={ride.driver.photo} 
                  alt={ride.driver.name} 
                  fill 
-                 className="object-cover"
+                 className="object-cover rounded-full"
                />
                {ride.driver.isVerified && (
                  <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5">
@@ -122,7 +122,7 @@ export default function RideCard({ ride }: RideCardProps) {
              </span>
            )}
            {ride.features.includes("max_2_back") && (
-             <span className="hidden sm:flex flex items-center gap-1 text-[11px] font-bold text-primary-700 bg-primary-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
+             <span className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-primary-700 bg-primary-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
                Max. 2 à l'arrière
              </span>
            )}

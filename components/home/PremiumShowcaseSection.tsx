@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
+
 export default function PremiumShowcaseSection() {
+  const container = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    ScrollTrigger.create({
+      trigger: ".dark-mode-section",
+      start: "top 60%",
+      end: "bottom 40%",
+      onEnter: () => gsap.to("body", { backgroundColor: "var(--color-dark)", color: "#ffffff", duration: 0.8 }),
+      onLeaveBack: () => gsap.to("body", { backgroundColor: "var(--color-light)", color: "var(--color-dark)", duration: 0.8 }),
+      onEnterBack: () => gsap.to("body", { backgroundColor: "var(--color-dark)", color: "#ffffff", duration: 0.8 }),
+      onLeave: () => gsap.to("body", { backgroundColor: "var(--color-light)", color: "var(--color-dark)", duration: 0.8 }),
+    });
+  }, { scope: container });
+
   return (
       <section
+        ref={container as any}
         id="voyageur"
         className="dark-mode-section bg-[url(/images/bg-texture.png)] relative py-32 px-6 flex flex-col items-center text-center overflow-hidden border-t border-white/5"
       >
