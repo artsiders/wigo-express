@@ -1,5 +1,11 @@
 "use client";
-import React, { useState, useRef, useEffect, useLayoutEffect, useTransition } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useTransition,
+} from "react";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
@@ -11,6 +17,7 @@ import {
 import gsap from "gsap";
 
 export default function Navbar() {
+  const tCommon = useTranslations("common");
   const t = useTranslations("Navbar");
   const locale = useLocale();
   const router = useRouter();
@@ -77,7 +84,7 @@ export default function Navbar() {
 
   const changeLanguage = (l: string) => {
     startTransition(() => {
-      router.replace(pathname, {locale: l});
+      router.replace(pathname, { locale: l });
     });
     setLangOpen(false);
   };
@@ -107,19 +114,19 @@ export default function Navbar() {
                 href="/#comment-ca-marche"
                 className="hover:text-primary text-dark transition-all flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-sm font-bold hover:shadow-md"
               >
-                {t('howItWorks')}
+                {t("howItWorks")}
               </Link>
               <Link
                 href="/#voyageur"
                 className="hover:text-primary text-dark transition-all flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-sm font-bold hover:shadow-md"
               >
-                {t('searchRide')}
+                {tCommon("searchRide")}
               </Link>
               <Link
                 href="/#conducteur"
                 className="hover:text-primary text-dark transition-all flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-sm font-bold hover:shadow-md"
               >
-                {t('offerRide')}
+                {tCommon("offerRide")}
               </Link>
             </div>
             {/* Langue Desktop Only */}
@@ -154,7 +161,7 @@ export default function Navbar() {
               href="/register"
               className="hidden sm:flex bg-primary text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-dark transition-all shadow-lg shadow-primary/20 items-center gap-2"
             >
-              {t('register')} <IoChevronForward />
+              {tCommon("register")} <IoChevronForward />
             </Link>
 
             {/* BURGER (Visible UNIQUEMENT < lg) */}
@@ -188,7 +195,7 @@ export default function Navbar() {
         {/* Sélecteur de Langue MIS EN AVANT */}
         <div className="animate-item mb-12 w-full max-w-xs">
           <p className="text-center text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
-            {t('chooseLanguage')}
+            {t("chooseLanguage")}
           </p>
           <div className="flex p-1 bg-gray-100 rounded-2xl border border-gray-200">
             {["fr", "en"].map((l) => (
@@ -216,28 +223,28 @@ export default function Navbar() {
             onClick={() => setMenuOpen(false)}
             className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
           >
-            {t('howItWorks')}
+            {t("howItWorks")}
           </Link>
           <Link
             href="/#voyageur"
             onClick={() => setMenuOpen(false)}
             className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
           >
-            {t('searchRide')}
+            {tCommon("searchRide")}
           </Link>
           <Link
             href="/#conducteur"
             onClick={() => setMenuOpen(false)}
             className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
           >
-            {t('offerRide')}
+            {tCommon("offerRide")}
           </Link>
           <Link
             href="/login"
             onClick={() => setMenuOpen(false)}
             className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
           >
-            {t('login')}
+            {tCommon("login")}
           </Link>
 
           <Link
@@ -245,7 +252,7 @@ export default function Navbar() {
             onClick={() => setMenuOpen(false)}
             className="animate-item mt-6 bg-primary text-white text-xl font-bold px-12 py-5 rounded-full shadow-2xl shadow-primary/30"
           >
-            {t('registerMobile')}
+            {tCommon("registerMobile")}
           </Link>
         </div>
       </div>

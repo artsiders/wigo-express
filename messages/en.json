@@ -1,13 +1,15 @@
 {
-  "Navbar": {
-    "howItWorks": "How it works",
-    "passenger": "Passenger",
-    "driver": "Driver",
+  "common": {
     "searchRide": "Find a ride",
     "offerRide": "Publish a ride",
     "login": "Login",
     "register": "Join us",
-    "registerMobile": "Sign up",
+    "registerMobile": "Sign up"
+  },
+  "Navbar": {
+    "howItWorks": "How it works",
+    "passenger": "Passenger",
+    "driver": "Driver",
     "chooseLanguage": "Choose language"
   },
   "HomePage": {

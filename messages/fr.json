@@ -1,13 +1,15 @@
 {
-  "Navbar": {
-    "howItWorks": "Comment ça marche",
-    "passenger": "Voyageur",
-    "driver": "Conducteur",
+  "common": {
     "searchRide": "Trouvez un trajet",
     "offerRide": "Publier un trajet",
     "login": "Connexion",
     "register": "Nous rejoindre",
-    "registerMobile": "S'inscrire",
+    "registerMobile": "S'inscrire"
+  },
+  "Navbar": {
+    "howItWorks": "Comment ça marche",
+    "passenger": "Voyageur",
+    "driver": "Conducteur",
     "chooseLanguage": "Choisir la langue"
   },
   "HomePage": {
