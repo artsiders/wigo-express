@@ -178,9 +178,9 @@ function FiltersDropdown() {
   }
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative mx-2 mb-4" ref={dropdownRef}>
       <button
-        className="w-full flex items-center justify-between p-5 rounded-3xl bg-dark text-white shadow border border-neutral-800 font-bold text-base cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary transition-colors list-none select-none"
+        className="w-full flex items-center justify-between p-5 rounded-full bg-dark-900 text-white shadow border border-neutral-800 font-bold text-base cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary transition-colors list-none select-none"
         type="button"
         aria-expanded={open}
         aria-controls="filters-dropdown-content"
