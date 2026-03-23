@@ -3,6 +3,8 @@
     "howItWorks": "Comment ça marche",
     "passenger": "Voyageur",
     "driver": "Conducteur",
+    "searchRide": "Trouvez un trajet",
+    "offerRide": "Publier un trajet",
     "login": "Connexion",
     "register": "Nous rejoindre",
     "registerMobile": "S'inscrire",
@@ -61,5 +63,28 @@
     "driverCard3Title": "Flexibilité Totale",
     "driverCard3Desc": "C'est votre voiture, ce sont vos règles. Décidez quand vous partez, combien de sièges vous offrez et acceptez ou refusez les demandes librement.",
     "driverBtn": "Devenir Conducteur"
+  },
+  "NotFound": {
+    "title1": "Vous avez fait",
+    "title2": "fausse route.",
+    "desc": "La destination que vous cherchez n'existe pas ou a été déplacée. Pas de panique, le prochain point de départ n'est pas très loin.",
+    "backHome": "Retour à l'accueil",
+    "goBack": "Revenir en arrière"
+  },
+  "Footer": {
+    "mission": "La plateforme de covoiturage nouvelle génération. Trajets sécurisés, profils vérifiés et paiement garanti.",
+    "usefulLinks": "Liens utiles",
+    "searchRide": "Trouvez un trajet",
+    "offerRide": "Publier un trajet",
+    "about": "À Propos",
+    "howItWorks": "Comment ça marche",
+    "terms": "CGU",
+    "privacy": "Confidentialité",
+    "contact": "Contact",
+    "login": "Connexion",
+    "register": "Inscription",
+    "rights": "Tous droits réservés.",
+    "email": "contact@wigo.express",
+    "phone": "+1 800 123 4567"
   }
 }

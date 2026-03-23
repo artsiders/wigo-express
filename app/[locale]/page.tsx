@@ -29,6 +29,7 @@ if (typeof window !== "undefined") {
 export default function WigoExpress() {
   const container = useRef<HTMLDivElement>(null);
   const t = useTranslations("HomePage");
+  const tFooter = useTranslations("Footer");
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -894,125 +895,79 @@ export default function WigoExpress() {
                 />
               </Link>
               <p className="text-neutral-400 text-lg md:text-xl font-light mb-10 max-w-sm leading-relaxed mt-6">
-                La plateforme de covoiturage nouvelle génération. Trajets
-                sécurisés, profils vérifiés et paiement garanti.
+                {tFooter("mission")}
               </p>
             </div>
 
-            {/* Liens essentiels seulement + Formulaire de contact */}
+            {/* Liens essentiels seulement + Contact/Connex */}
             <div className="xl:w-7/12 w-full flex flex-col md:flex-row gap-12 justify-center">
               <div className="flex flex-col gap-3 flex-1">
                 <h4 className="font-extrabold uppercase tracking-widest text-primary mb-2">
-                  Liens utiles
+                  {tFooter("usefulLinks")}
                 </h4>
                 <Link
                   href="#"
                   className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
                 >
-                  Rechercher un trajet
+                  {tFooter("searchRide")}
                 </Link>
                 <Link
                   href="#"
                   className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
                 >
-                  Proposer un départ
+                  {tFooter("offerRide")}
                 </Link>
                 <Link
                   href="#"
                   className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
                 >
-                  À Propos
+                  {tFooter("about")}
                 </Link>
                 <Link
                   href="#"
                   className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
                 >
-                  CGU
+                  {tFooter("terms")}
                 </Link>
                 <Link
                   href="#"
                   className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
                 >
-                  Confidentialité
+                  {tFooter("privacy")}
                 </Link>
               </div>
-              {/* Formulaire de contact */}
+              
               <div className="flex-1 min-w-[280px] max-w-md">
                 <h4 className="font-extrabold uppercase tracking-widest text-primary mb-4">
-                  Contactez-nous
+                  {tFooter("contact")}
                 </h4>
-                <form
-                  className="flex flex-col gap-4"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    // Ici, vous pouvez ajouter un hook d'envoi ou une intégration à un backend
-                    alert("Message envoyé ! Merci pour votre contact.");
-                    (e.target as HTMLFormElement).reset();
-                  }}
-                >
-                  <div>
-                    <label
-                      className="block text-xs font-bold mb-1 text-neutral-300"
-                      htmlFor="contact-nom"
-                    >
-                      Nom
-                    </label>
-                    <input
-                      id="contact-nom"
-                      name="nom"
-                      type="text"
-                      required
-                      placeholder="Votre nom complet"
-                      className="w-full px-4 py-2 rounded-lg bg-white/6 text-white border border-white/10 focus:outline-none focus:border-primary-500 transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block text-xs font-bold mb-1 text-neutral-300"
-                      htmlFor="contact-email"
-                    >
-                      Email
-                    </label>
-                    <input
-                      id="contact-email"
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="exemple@email.com"
-                      className="w-full px-4 py-2 rounded-lg bg-white/6 text-white border border-white/10 focus:outline-none focus:border-primary-500 transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block text-xs font-bold mb-1 text-neutral-300"
-                      htmlFor="contact-message"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="contact-message"
-                      name="message"
-                      rows={3}
-                      required
-                      placeholder="Écrivez votre message ici..."
-                      className="w-full px-4 py-2 rounded-lg bg-white/6 text-white border border-white/10 focus:outline-none focus:border-primary-500 transition-all resize-none"
-                    ></textarea>
-                  </div>
-                  <button
-                    type="submit"
-                    className="bg-primary hover:bg-primary-800 text-white font-bold uppercase tracking-widest py-3 px-6 rounded-xl transition-all shadow-lg"
-                  >
-                    Envoyer
-                  </button>
-                </form>
+                <div className="flex flex-col gap-3">
+                  <a href="mailto:contact@wigo.express" className="text-neutral-400 hover:text-white transition-all">
+                    {tFooter("email")}
+                  </a>
+                  <a href="tel:+18001234567" className="text-neutral-400 hover:text-white transition-all">
+                    {tFooter("phone")}
+                  </a>
+                </div>
+
+                <h4 className="font-extrabold uppercase tracking-widest text-primary mt-8 mb-4">
+                  {tFooter("login")}
+                </h4>
+                <div className="flex flex-col gap-3">
+                  <Link href="/login" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">
+                    {tFooter("login")}
+                  </Link>
+                  <Link href="/register" className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all">
+                    {tFooter("register")}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-center text-xs font-bold text-neutral-600 uppercase tracking-widest gap-6 mt-8">
             <span>
-              © {new Date().getFullYear()} Wigo Express Inc. Tous droits
-              réservés.
+              © {new Date().getFullYear()} Wigo Express Inc. {tFooter("rights")}
             </span>
             <a
               href="https://altplus.dev/"

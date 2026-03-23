@@ -3,6 +3,8 @@
     "howItWorks": "How it works",
     "passenger": "Passenger",
     "driver": "Driver",
+    "searchRide": "Find a ride",
+    "offerRide": "Publish a ride",
     "login": "Login",
     "register": "Join us",
     "registerMobile": "Sign up",
@@ -61,5 +63,28 @@
     "driverCard3Title": "Total Flexibility",
     "driverCard3Desc": "Your car, your rules. Decide when you leave, how many seats you offer, and accept or decline requests freely.",
     "driverBtn": "Become a Driver"
+  },
+  "NotFound": {
+    "title1": "You took a",
+    "title2": "wrong turn.",
+    "desc": "The destination you are looking for does not exist or has been moved. Don't panic, the next starting point is not far.",
+    "backHome": "Back to Home",
+    "goBack": "Go back"
+  },
+  "Footer": {
+    "mission": "The new generation carpooling platform. Secure trips, verified profiles, and guaranteed payment.",
+    "usefulLinks": "Useful links",
+    "searchRide": "Find a ride",
+    "offerRide": "Publish a ride",
+    "about": "About",
+    "howItWorks": "How it works",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "contact": "Contact",
+    "login": "Login",
+    "register": "Sign up",
+    "rights": "All rights reserved.",
+    "email": "contact@wigo.express",
+    "phone": "+1 800 123 4567"
   }
 }
