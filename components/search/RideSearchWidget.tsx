@@ -113,7 +113,7 @@ export default function RideSearchWidget({
   const isVert = variant === "vertical";
 
   return (
-    <div className="flex flex-col items-start capitalize text-lg gap-2 mb-10 w-full max-w-5xl relative z-50">
+    <div className="flex flex-col items-start capitalize text-lg gap-2 md:mb-10 w-full max-w-5xl relative z-50">
       <p className="ml-4 bg-white py-1.5 px-5 rounded-full shadow-sm border border-neutral-100 flex items-center justify-center gap-2 text-dark font-bold text-sm">
         <IoSearchOutline size={16} />
         trouver un trajet
