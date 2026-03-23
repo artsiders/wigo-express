@@ -259,7 +259,7 @@ export default function RideSearchWidget({
             onClick={() =>
               setActiveDropdown(activeDropdown === "date" ? null : "date")
             }
-            className={`flex-1 ${!isVert ? "lg:w-[150px]" : ""} bg-light-400 rounded-3xl min-h-16 h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
+            className={`flex-1 ${!isVert ? "lg:w-[150px]" : ""} bg-light-400 rounded-3xl min-h-16 h-16 md:h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
             ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
           >
             <IoCalendarOutline
@@ -293,7 +293,7 @@ export default function RideSearchWidget({
             onClick={() =>
               setActiveDropdown(activeDropdown === "seats" ? null : "seats")
             }
-            className={`flex-1 ${!isVert ? "lg:w-[110px]" : ""} bg-light-400 rounded-3xl min-h-16 h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
+            className={`flex-1 ${!isVert ? "lg:w-[110px] h-16 lg:h-[80px]" : "h-16 lg:h-16"} bg-light-400 rounded-3xl min-h-16 flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
             ${activeDropdown === "seats" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
           >
             <IoPersonOutline

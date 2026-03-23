@@ -84,7 +84,7 @@ export default function CustomCalendar({
           className="text-center text-[10px] font-bold text-neutral-400 uppercase tracking-wider py-2"
         >
           {format(addMonths(startDate, i), "EEEEEE", { locale: fr })}
-        </div>
+        </div>,
       );
     }
 
@@ -128,21 +128,21 @@ export default function CustomCalendar({
                   isSelected
                     ? "bg-primary text-white font-bold shadow-md"
                     : disabled
-                    ? "text-neutral-300 cursor-not-allowed"
-                    : "text-dark hover:bg-neutral-100 hover:text-primary"
+                      ? "text-neutral-300 cursor-not-allowed"
+                      : "text-dark hover:bg-neutral-100 hover:text-primary"
                 }
               `}
             >
               {formattedDate}
             </button>
-          </div>
+          </div>,
         );
         day = new Date(day.getTime() + 24 * 60 * 60 * 1000);
       }
       rows.push(
         <div className="grid grid-cols-7 gap-1" key={day.toString()}>
           {days}
-        </div>
+        </div>,
       );
       days = [];
     }
@@ -150,7 +150,7 @@ export default function CustomCalendar({
   };
 
   return (
-    <div className="bg-white p-4 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 w-[320px] absolute z-50 top-full mt-4 -left-1/2 md:left-0">
+    <div className="bg-white p-4 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 w-[320px] absolute z-50 top-full mt-4 sleft-0">
       {renderHeader()}
       {renderDays()}
       {renderCells()}
