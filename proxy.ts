@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './i18n/routing';
 import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
@@ -9,25 +11,34 @@ import {
 
 const { auth } = NextAuth(authConfig);
 
+const intlMiddleware = createMiddleware(routing);
+
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPrivateRoute = privateRoutes.includes(nextUrl.pathname) || nextUrl.pathname.startsWith("/my-account");
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  
+  // Extraction du code de langue s'il y en a un pour vérifier les routes indépendamment de la locale
+  const pathnameMatch = nextUrl.pathname.match(/^\/(fr|en)(\/.*)?$/);
+  const pathnameWithoutLocale = pathnameMatch ? (pathnameMatch[2] || '/') : nextUrl.pathname;
+  
+  const currentLocale = pathnameMatch ? pathnameMatch[1] : routing.defaultLocale;
 
-  // Autoriser toutes les routes API internes de l'authentification (callback, session, etc.)
-  if (isApiAuthRoute) {
+  const isPrivateRoute = privateRoutes.includes(pathnameWithoutLocale) || pathnameWithoutLocale.startsWith("/my-account");
+  const isAuthRoute = authRoutes.includes(pathnameWithoutLocale);
+
+  // Autoriser toutes les routes API internes
+  if (isApiAuthRoute || nextUrl.pathname.startsWith('/api')) {
     return;
   }
 
-  // Si on est sur une route liée à l'auth (login, register), et rediriger si déjà connecté
+  // Si on est sur une route liée à l'auth (login, register), rediriger si déjà connecté
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+      return Response.redirect(new URL(`/${currentLocale}${DEFAULT_LOGIN_REDIRECT}`, nextUrl));
     }
-    return;
+    return intlMiddleware(req);
   }
 
   // Si l'utilisateur n'est pas connecté et essaie d'accéder à une page privée
@@ -40,14 +51,14 @@ export default auth((req) => {
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
     
     return Response.redirect(
-      new URL(`/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+      new URL(`/${currentLocale}/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     );
   }
 
-  return;
+  // Pour toutes les autres routes (non-API), applique le proxy de next-intl
+  return intlMiddleware(req);
 });
 
-// Le matcher définit quelles routes déclencheront le middleware
 export const config = {
   matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
 };

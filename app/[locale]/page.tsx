@@ -2,7 +2,8 @@
 
 import React, { useRef, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -27,6 +28,7 @@ if (typeof window !== "undefined") {
 
 export default function WigoExpress() {
   const container = useRef<HTMLDivElement>(null);
+  const t = useTranslations("HomePage");
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -218,18 +220,16 @@ export default function WigoExpress() {
 
         <div className="container mx-auto relative z-10 flex flex-col items-center justify-center text-center">
           <h1 className="hero-text-elem uppercase relative text-center text-4xl font-black sm:text-5xl lg:text-7xl max-w-7xl container mx-auto justify-center leading-tight md:mt-16 mb-8">
-            Le covoiturage, enfin
+            {t("heroTitle1")}
             <br />
             <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-              sûr, simple et fiable <br />
-              avec Wigo
+              {t("heroTitle2")} <br />
+              {t("heroTitle3")}
             </span>
           </h1>
 
           <p className="hero-text-elem text-lg md:text-xl opacity-80 font-medium mb-16 max-w-2xl leading-relaxed">
-            Trouvez ou offrez un trajet l'esprit tranquille. Voyagez en toute
-            confiance avec des profils 100% vérifiés et un paiement garanti.
-            C'est ça, la simplicité Wigo Express.
+            {t("heroSubtitle")}
           </p>
 
           {/* Web Search Widget - The Core Tool */}
@@ -238,11 +238,11 @@ export default function WigoExpress() {
               <IoLocationOutline className="text-2xl text-neutral-400 group-focus-within:text-primary" />
               <div className="ml-4 w-full text-left">
                 <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
-                  Départ
+                  {t("searchDeparture")}
                 </span>
                 <input
                   type="text"
-                  placeholder="D'où partez-vous ?"
+                  placeholder={t("searchDeparturePlaceholder")}
                   className="w-full bg-transparent text-lg font-bold text-dark outline-none placeholder:text-neutral-300"
                 />
               </div>
@@ -256,11 +256,11 @@ export default function WigoExpress() {
               <IoMapOutline className="text-2xl text-neutral-400 group-focus-within:text-primary" />
               <div className="ml-4 w-full text-left">
                 <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
-                  Arrivée
+                  {t("searchArrival")}
                 </span>
                 <input
                   type="text"
-                  placeholder="Où allez-vous ?"
+                  placeholder={t("searchArrivalPlaceholder")}
                   className="w-full bg-transparent text-lg font-bold text-dark outline-none placeholder:text-neutral-300"
                 />
               </div>
@@ -271,10 +271,10 @@ export default function WigoExpress() {
                 <IoCalendarOutline className="text-xl text-neutral-400 group-hover:text-primary" />
                 <div className="ml-3 text-left">
                   <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
-                    Date
+                    {t("searchDate")}
                   </span>
                   <span className="block text-sm font-bold truncate">
-                    Aujourd'hui
+                    {t("searchDateToday")}
                   </span>
                 </div>
               </div>
@@ -282,7 +282,7 @@ export default function WigoExpress() {
                 <IoPersonOutline className="text-xl text-neutral-400 group-hover:text-primary" />
                 <div className="ml-3 text-left">
                   <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
-                    Places
+                    {t("searchSeats")}
                   </span>
                   <span className="block text-sm font-bold">1</span>
                 </div>
@@ -290,7 +290,7 @@ export default function WigoExpress() {
             </div>
 
             <button className="w-full lg:w-auto btn-primary px-10 py-7">
-              <IoSearchOutline /> <span className="lg:hidden">Rechercher</span>
+              <IoSearchOutline /> <span className="lg:hidden">{t("searchButton")}</span>
             </button>
           </div>
 
@@ -324,17 +324,17 @@ export default function WigoExpress() {
                 </div>
                 <div>
                   <h4 className="text-sm md:text-base font-bold text-dark leading-tight mb-1">
-                    Profil Vérifié
+                    {t("verifiedProfile")}
                   </h4>
                   <p className="text-[10px] md:text-xs font-bold flex items-center gap-1 uppercase tracking-wider">
                     <IoShieldCheckmarkOutline className="text-base text-green-600 " />{" "}
-                    Identité Wigo
+                    {t("wigoIdentity")}
                   </p>
                 </div>
               </div>
               <div className="bg-light rounded-xl p-3 flex justify-between items-center border border-black/5 shadow-inner">
                 <span className="text-[10px] md:text-xs text-neutral-500 font-medium">
-                  Note globale
+                  {t("globalRating")}
                 </span>
                 <span className="text-[10px] md:text-xs font-black text-dark flex items-center gap-1">
                   4.9/5 ★
@@ -349,7 +349,7 @@ export default function WigoExpress() {
                   <IoWalletOutline className="text-lg md:text-xl" />
                 </div>
                 <h4 className="text-xs md:text-sm font-bold text-white uppercase tracking-widest">
-                  Paiement Wigo
+                  {t("wigoPayment")}
                 </h4>
               </div>
               <p className="text-3xl md:text-4xl font-black text-white mb-2 leading-none">
@@ -361,7 +361,7 @@ export default function WigoExpress() {
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-white"></div>
                 <p className="text-[10px] md:text-xs text-neutral-400 font-medium">
-                  Reçu à l'instant (CAD)
+                  {t("receivedJustNow")}
                 </p>
               </div>
             </div>
@@ -369,7 +369,7 @@ export default function WigoExpress() {
             {/* Floating UI Card 3: Route Match */}
             <div className="floating-card absolute left-[5%] lg:left-[8%] bottom-[5%] lg:bottom-[8%] z-30 bg-white/90 backdrop-blur-xl p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.12)] border border-white/60 w-56 md:w-64 text-left hidden sm:block">
               <div className="bg-primary-500/10 mb-4 text-primary-500 text-[9px] md:text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">
-                Match Parfait
+                {t("perfectMatch")}
               </div>
 
               <div className="space-y-4 relative ml-1">
@@ -399,7 +399,7 @@ export default function WigoExpress() {
       >
         <div className="container mx-auto px-6 mb-16 lg:mb-24 text-center z-20 relative">
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-tight text-dark text-center">
-            Comment ça marche ?
+            {t("howItWorksTitle")}
           </h2>
         </div>
 
@@ -414,18 +414,16 @@ export default function WigoExpress() {
 
             <div className="flex-1 w-full relative z-10">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-dark">
-                Où et quand <br />
+                {t("step1Title1")} <br />
                 <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-                  vous voulez.
+                  {t("step1Title2")}
                 </span>
               </h2>
               <p className="text-lg text-neutral-600 font-medium max-w-lg mb-8 leading-relaxed">
-                Indiquez votre destination et trouvez instantanément les trajets
-                disponibles. Sur Wigo Express, nous mettons en avant vos trajets
-                préférés pour un voyage agréable et serein.
+                {t("step1Desc")}
               </p>
               <button className="btn-primary px-8 py-4 text-sm shadow-xl shadow-primary/20">
-                Chercher un trajet
+                {t("step1Btn")}
               </button>
             </div>
 
@@ -479,15 +477,13 @@ export default function WigoExpress() {
 
             <div className="flex-1 w-full relative z-10 flex flex-col lg:items-end lg:text-right">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white lg:text-right">
-                Voyagez en toute <br />
+                {t("step2Title1")} <br />
                 <span className="text-green-400 drop-shadow-[0_0_15px_rgba(74,222,128,0.2)]">
-                  confiance.
+                  {t("step2Title2")}
                 </span>
               </h2>
               <p className="text-lg text-neutral-400 font-medium max-w-lg mb-8 leading-relaxed">
-                Pièce d'identité, permis de conduire et historique : chaque
-                membre Wigo Express est contrôlé avec soin. Nous prenons le
-                temps de vérifier les profils pour que vous restiez sereins.
+                {t("step2Desc")}
               </p>
               <div className="step-badge flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 w-max backdrop-blur-sm">
                 <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center text-green-400">
@@ -495,10 +491,10 @@ export default function WigoExpress() {
                 </div>
                 <div className="text-left">
                   <h4 className="font-bold text-sm text-white">
-                    Identité Contrôlée
+                    {t("step2Badge1")}
                   </h4>
                   <p className="text-xs text-neutral-400 font-medium">
-                    Badge de confiance validé
+                    {t("step2Badge2")}
                   </p>
                 </div>
               </div>
@@ -624,19 +620,17 @@ export default function WigoExpress() {
 
             <div className="flex-1 w-full relative z-10">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white">
-                Vos trajets favoris <br />à petits prix.
+                {t("step3Title1")} <br />{t("step3Title2")}
               </h2>
               <p className="text-lg text-blue-100/80 font-medium max-w-lg mb-8 leading-relaxed">
-                Pas besoin de monnaie en voiture. Votre place est payée en ligne
-                lors de la réservation et transférée automatiquement au
-                conducteur. Avec Wigo Express, tout est simple et 100% sécurisé.
+                {t("step3Desc")}
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
                   <IoWalletOutline className="text-xl" />
                 </div>
                 <span className="text-sm font-bold tracking-widest uppercase text-white">
-                  Paiement Wigo Garanti
+                  {t("step3Garanti")}
                 </span>
               </div>
             </div>
@@ -646,7 +640,7 @@ export default function WigoExpress() {
               <div className="w-full max-w-md">
                 <div className="text-center flex flex-col justify-center pb-8 border-b border-white/10 mb-8">
                   <h3 className="text-xs font-bold opacity-80 mb-2 uppercase tracking-widest text-blue-100">
-                    Solde Disponible
+                    {t("step3Available")}
                   </h3>
                   <h2 className="text-5xl lg:text-7xl font-black mb-1 tracking-tighter drop-shadow-md text-white">
                     244.50 $
@@ -660,10 +654,10 @@ export default function WigoExpress() {
                   <div className="bg-white/10 w-full p-5 rounded-2xl backdrop-blur-md border border-white/20 flex justify-between items-center transform transition-all shadow-xl">
                     <div className="text-left">
                       <p className="text-[10px] font-black text-blue-200 uppercase tracking-widest mb-1.5">
-                        Reçu hier
+                        {t("step3ReceivedYesterday")}
                       </p>
                       <p className="font-bold text-sm tracking-tight text-white">
-                        Trajet Montréal - Québec
+                        {t("step3Trip1")}
                       </p>
                     </div>
                     <div className="text-right shrink-0 ml-2">
@@ -675,10 +669,10 @@ export default function WigoExpress() {
                   <div className="bg-black/10 w-full p-4 rounded-xl backdrop-blur-md border border-transparent flex justify-between items-center opacity-70">
                     <div className="text-left">
                       <p className="text-[10px] font-bold opacity-70 uppercase tracking-widest mb-1 text-white">
-                        Il y a 3 jours
+                        {t("step33DaysAgo")}
                       </p>
                       <p className="font-semibold text-sm text-white">
-                        Paiement trajet
+                        {t("step3Trip2")}
                       </p>
                     </div>
                     <div className="text-right shrink-0 ml-2">
@@ -703,15 +697,13 @@ export default function WigoExpress() {
         <div className="container mx-auto px-6 relative z-10 flex flex-col items-center">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-6 text-dark leading-tight reveal-fade">
-              Rentabilisez vos trajets <br />
+              {t("driverTitle1")} <br />
               <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-                sans aucun effort.
+                {t("driverTitle2")}
               </span>
             </h2>
             <p className="text-neutral-500 text-lg md:text-xl font-medium max-w-2xl mx-auto reveal-fade">
-              Rejoignez le réseau de conducteurs Wigo. Vous conduisez, nous nous
-              chargeons de remplir votre véhicule avec des passagers fiables et
-              vérifiés.
+              {t("driverDesc")}
             </p>
           </div>
 
@@ -723,12 +715,10 @@ export default function WigoExpress() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-dark mb-4 tracking-tight">
-                  Paiement Garanti
+                  {t("driverCard1Title")}
                 </h3>
                 <p className="text-neutral-500 font-medium leading-relaxed">
-                  Fini les passagers qui annulent à la dernière minute sans
-                  payer. L'argent est sécurisé lors de la réservation et vous
-                  est reversé automatiquement.
+                  {t("driverCard1Desc")}
                 </p>
               </div>
             </div>
@@ -740,12 +730,10 @@ export default function WigoExpress() {
               </div>
               <div className="relative z-10">
                 <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">
-                  Passagers Vérifiés
+                  {t("driverCard2Title")}
                 </h3>
                 <p className="text-neutral-400 font-medium leading-relaxed mb-6">
-                  Vous ne prenez pas de preneurs au hasard. Chaque identité est
-                  rigoureusement confirmée par notre système avant la
-                  réservation.
+                  {t("driverCard2Desc")}
                 </p>
                 <div className="w-full flex -space-x-3">
                   {[1, 2, 3, 4].map((i) => (
@@ -776,12 +764,10 @@ export default function WigoExpress() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-dark mb-4 tracking-tight">
-                  Flexibilité Totale
+                  {t("driverCard3Title")}
                 </h3>
                 <p className="text-neutral-500 font-medium leading-relaxed">
-                  C'est votre voiture, ce sont vos règles. Décidez quand vous
-                  partez, combien de sièges vous offrez et acceptez ou refusez
-                  les demandes librement.
+                  {t("driverCard3Desc")}
                 </p>
               </div>
             </div>
@@ -789,7 +775,7 @@ export default function WigoExpress() {
 
           <div className="mt-16 text-center reveal-fade">
             <button className="btn-primary uppercase">
-              Devenir Conducteur
+              {t("driverBtn")}
             </button>
           </div>
         </div>

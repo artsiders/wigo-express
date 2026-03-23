@@ -1,6 +1,7 @@
 "use client";
-import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
-import Link from "next/link";
+import React, { useState, useRef, useEffect, useLayoutEffect, useTransition } from "react";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
 import {
   IoChevronForward,
@@ -10,7 +11,12 @@ import {
 import gsap from "gsap";
 
 export default function Navbar() {
-  const [locale, setLocale] = useState<"fr" | "en">("fr");
+  const t = useTranslations("Navbar");
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
+
   const [langOpen, setLangOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -69,6 +75,13 @@ export default function Navbar() {
     return () => window.removeEventListener("mousedown", handleClickOutside);
   }, [langOpen]);
 
+  const changeLanguage = (l: string) => {
+    startTransition(() => {
+      router.replace(pathname, {locale: l});
+    });
+    setLangOpen(false);
+  };
+
   return (
     <>
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] container z-100">
@@ -91,29 +104,30 @@ export default function Navbar() {
             {/* DESKTOP NAV (Cachée sur mobile) */}
             <div className="hidden lg:flex gap-4 items-center text-sm font-bold text-dark-700">
               <Link
-                href="#comment-ca-marche"
+                href="/#comment-ca-marche"
                 className="hover:text-primary text-dark transition-all flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-sm font-bold hover:shadow-md"
               >
-                Comment ça marche
+                {t('howItWorks')}
               </Link>
               <Link
-                href="#voyageur"
+                href="/#voyageur"
                 className="hover:text-primary text-dark transition-all flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-sm font-bold hover:shadow-md"
               >
-                Voyageur
+                {t('passenger')}
               </Link>
               <Link
-                href="#conducteur"
+                href="/#conducteur"
                 className="hover:text-primary text-dark transition-all flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-sm font-bold hover:shadow-md"
               >
-                Conducteur
+                {t('driver')}
               </Link>
             </div>
             {/* Langue Desktop Only */}
             <div className="relative hidden lg:block" ref={dropdownRef}>
               <button
                 onClick={() => setLangOpen(!langOpen)}
-                className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-xs font-bold hover:shadow-md transition-all"
+                disabled={isPending}
+                className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-xs font-bold hover:shadow-md transition-all disabled:opacity-50"
               >
                 <IoGlobeOutline size={18} className="text-primary" />
                 <span>{locale.toUpperCase()}</span>
@@ -126,10 +140,7 @@ export default function Navbar() {
                   {["fr", "en"].map((l) => (
                     <button
                       key={l}
-                      onClick={() => {
-                        setLocale(l as any);
-                        setLangOpen(false);
-                      }}
+                      onClick={() => changeLanguage(l)}
                       className={`w-full text-left px-4 py-2 text-sm rounded-xl transition-colors ${locale === l ? "bg-primary/10 text-primary font-bold" : "hover:bg-gray-50"}`}
                     >
                       {l === "fr" ? "Français" : "English"}
@@ -143,7 +154,7 @@ export default function Navbar() {
               href="/register"
               className="hidden sm:flex bg-primary text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-dark transition-all shadow-lg shadow-primary/20 items-center gap-2"
             >
-              Nous rejoindre <IoChevronForward />
+              {t('register')} <IoChevronForward />
             </Link>
 
             {/* BURGER (Visible UNIQUEMENT < lg) */}
@@ -177,13 +188,15 @@ export default function Navbar() {
         {/* Sélecteur de Langue MIS EN AVANT */}
         <div className="animate-item mb-12 w-full max-w-xs">
           <p className="text-center text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
-            Choisir la langue
+            {t('chooseLanguage')}
           </p>
           <div className="flex p-1 bg-gray-100 rounded-2xl border border-gray-200">
             {["fr", "en"].map((l) => (
               <button
                 key={l}
-                onClick={() => setLocale(l as any)}
+                onClick={() => {
+                  changeLanguage(l);
+                }}
                 className={`flex-1 py-4 rounded-xl text-lg font-black transition-all ${
                   locale === l
                     ? "bg-white text-primary shadow-sm"
@@ -198,25 +211,41 @@ export default function Navbar() {
 
         {/* Liens Mobile */}
         <div className="flex flex-col items-center gap-6">
-          {["Comment ça marche", "Voyageur", "Conducteur", "Connexion"].map(
-            (text, i) => (
-              <Link
-                key={i}
-                href="#"
-                onClick={() => setMenuOpen(false)}
-                className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
-              >
-                {text}
-              </Link>
-            ),
-          )}
+          <Link
+            href="/#comment-ca-marche"
+            onClick={() => setMenuOpen(false)}
+            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
+          >
+            {t('howItWorks')}
+          </Link>
+          <Link
+            href="/#voyageur"
+            onClick={() => setMenuOpen(false)}
+            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
+          >
+            {t('passenger')}
+          </Link>
+          <Link
+            href="/#conducteur"
+            onClick={() => setMenuOpen(false)}
+            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
+          >
+            {t('driver')}
+          </Link>
+          <Link
+            href="/login"
+            onClick={() => setMenuOpen(false)}
+            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
+          >
+            {t('login')}
+          </Link>
 
           <Link
             href="/register"
             onClick={() => setMenuOpen(false)}
             className="animate-item mt-6 bg-primary text-white text-xl font-bold px-12 py-5 rounded-full shadow-2xl shadow-primary/30"
           >
-            S'inscrire
+            {t('registerMobile')}
           </Link>
         </div>
       </div>
