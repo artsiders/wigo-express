@@ -290,7 +290,8 @@ export default function WigoExpress() {
             </div>
 
             <button className="w-full lg:w-auto btn-primary px-10 py-7">
-              <IoSearchOutline /> <span className="lg:hidden">{t("searchButton")}</span>
+              <IoSearchOutline />{" "}
+              <span className="lg:hidden">{t("searchButton")}</span>
             </button>
           </div>
 
@@ -303,7 +304,7 @@ export default function WigoExpress() {
             >
               <div className="relative w-full h-full">
                 <Image
-                  src="/images/hero-image.webp"
+                  src="/images/close-up-group-friends-traveling-car-concept-speed.webp"
                   alt="Capture d'écran conceptuelle (Web UI) d'un tableau de bord de covoiturage premium WIGO EXPRESS, affichant une carte interactive claire, des listes de trajets élégantes et des profils vérifiés, tons blanc et bleu."
                   fill
                   className="object-cover object-center opacity-90"
@@ -620,7 +621,8 @@ export default function WigoExpress() {
 
             <div className="flex-1 w-full relative z-10">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 leading-tight text-white">
-                {t("step3Title1")} <br />{t("step3Title2")}
+                {t("step3Title1")} <br />
+                {t("step3Title2")}
               </h2>
               <p className="text-lg text-blue-100/80 font-medium max-w-lg mb-8 leading-relaxed">
                 {t("step3Desc")}
@@ -774,9 +776,7 @@ export default function WigoExpress() {
           </div>
 
           <div className="mt-16 text-center reveal-fade">
-            <button className="btn-primary uppercase">
-              {t("driverBtn")}
-            </button>
+            <button className="btn-primary uppercase">{t("driverBtn")}</button>
           </div>
         </div>
       </section>
