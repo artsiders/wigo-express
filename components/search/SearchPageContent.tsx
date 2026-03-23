@@ -266,7 +266,7 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
         </div>
       </div>
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 md:py-12 flex flex-col lg:flex-row gap-8 lg:gap-12 pl-4 lg:pl-0">
+      <main className="flex-1 container mx-auto w-full px-4 sm:px-8 py-8 md:py-12 flex flex-col lg:flex-row gap-8 lg:gap-12">
         <aside className="w-full lg:w-80 shrink-0 flex flex-col gap-6 self-start sticky top-28 z-30">
           <div className="hidden lg:block z-40">
             <RideSearchWidget variant="vertical" />
