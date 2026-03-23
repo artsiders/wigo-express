@@ -14,6 +14,7 @@ import {
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import CustomCalendar from "./CustomCalendar";
+import { LuLoaderCircle } from "react-icons/lu";
 
 const MOCK_CITIES = [
   "Montréal, QC",
@@ -55,6 +56,8 @@ export default function RideSearchWidget({
     "depart" | "arrivee" | "date" | "seats" | null
   >(null);
 
+  const [loading, setLoading] = useState(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns on click outside
@@ -73,21 +76,26 @@ export default function RideSearchWidget({
     };
   }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!departure || !arrival) {
       if (!departure) setActiveDropdown("depart");
       else if (!arrival) setActiveDropdown("arrivee");
       return;
     }
+    setLoading(true); // Démarre le loading
     const params = new URLSearchParams();
     params.set("depart", departure);
     params.set("arrivee", arrival);
     if (date) params.set("date", format(date, "yyyy-MM-dd"));
     params.set("passagers", seats.toString());
 
-    router.push(`/fr/search?${params.toString()}`);
-    setActiveDropdown(null);
+    try {
+      router.push(`/fr/search?${params.toString()}`);
+      setActiveDropdown(null);
+    } finally {
+      setTimeout(() => setLoading(false), 1200);
+    }
   };
 
   const filteredCities = (query: string) => {
@@ -342,11 +350,28 @@ export default function RideSearchWidget({
         className={`w-full ${
           !isVert ? "lg:w-[80px] lg:h-[80px]" : ""
         } h-16 ${!isVert ? "mt-2 lg:mt-0" : "mt-2"} btn-primary rounded-3xl flex justify-center items-center active:scale-[0.98] transition-transform shrink-0`}
+        disabled={loading}
       >
-        <IoSearchOutline size={22} />
-        <span className={`ml-2 font-bold ${!isVert ? "lg:hidden" : ""}`}>
-          Rechercher
-        </span>
+        {loading ? (
+          <>
+            <LuLoaderCircle
+              size={22}
+              className="animate-spin"
+              aria-label="Chargement"
+              role="status"
+            />
+            <span className={`ml-2 font-bold ${!isVert ? "lg:hidden" : ""}`}>
+              Chargement
+            </span>
+          </>
+        ) : (
+          <>
+            <IoSearchOutline size={22} />
+            <span className={`ml-2 font-bold ${!isVert ? "lg:hidden" : ""}`}>
+              Rechercher
+            </span>
+          </>
+        )}
       </button>
     </div>
   );
