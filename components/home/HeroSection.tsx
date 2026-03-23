@@ -12,6 +12,7 @@ import {
   IoWalletOutline,
 } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
+import RideSearchWidget from "../search/RideSearchWidget";
 
 export default function HeroSection() {
   const t = useTranslations("HomePage");
@@ -37,68 +38,12 @@ export default function HeroSection() {
           </p>
 
           {/* Web Search Widget - The Core Tool */}
-          <div className="flex flex-col items-start capitalize text-lg gap-2">
-            <p className="ml-4 bg-white py-1 px-4 rounded-full shadow-sm border border-neutral-100 flex items-center justify-center gap-1">
+          <div className="flex flex-col items-start capitalize text-lg gap-2 mb-10 w-full max-w-5xl relative z-50">
+            <p className="ml-4 bg-white py-1.5 px-5 rounded-full shadow-sm border border-neutral-100 flex items-center justify-center gap-2 text-dark font-bold text-sm">
               <IoSearchOutline size={16} />
               trouver un trajet
             </p>
-            <div className="search-widget w-full max-w-5xl bg-white p-3 md:p-4 rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.06)] border border-neutral-100 flex flex-col lg:flex-row items-center gap-3 mb-10">
-              <div className="flex-1 w-full bg-light-400 rounded-3xl flex items-center px-6 py-4 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 transition-colors shadow-inner group">
-                <IoLocationOutline className="text-2xl text-neutral-400 group-focus-within:text-primary" />
-                <div className="ml-4 w-full text-left">
-                  <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
-                    {t("searchDeparture")}
-                  </span>
-                  <input
-                    type="text"
-                    placeholder={t("searchDeparturePlaceholder")}
-                    className="w-full bg-transparent text-lg font-bold text-dark outline-none placeholder:text-neutral-300"
-                  />
-                </div>
-              </div>
-              <div className="hidden lg:flex w-12 h-12 rounded-full bg-white shadow-md border border-neutral-100 items-center justify-center shrink-0 -mx-6 z-10 text-neutral-400 font-black">
-                <IoArrowForwardOutline />
-              </div>
-              <div className="flex-1 w-full bg-light-400 rounded-3xl flex items-center px-6 py-4 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 transition-colors shadow-inner group">
-                <IoMapOutline className="text-2xl text-neutral-400 group-focus-within:text-primary" />
-                <div className="ml-4 w-full text-left">
-                  <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
-                    {t("searchArrival")}
-                  </span>
-                  <input
-                    type="text"
-                    placeholder={t("searchArrivalPlaceholder")}
-                    className="w-full bg-transparent text-lg font-bold text-dark outline-none placeholder:text-neutral-300"
-                  />
-                </div>
-              </div>
-              <div className="w-full lg:w-auto flex gap-3">
-                <div className="flex-1 lg:w-40 bg-light-400 rounded-3xl flex items-center px-6 py-4 hover:bg-neutral-200 transition-colors cursor-pointer group">
-                  <IoCalendarOutline className="text-xl text-neutral-400 group-hover:text-primary" />
-                  <div className="ml-3 text-left">
-                    <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
-                      {t("searchDate")}
-                    </span>
-                    <span className="block text-sm font-bold truncate">
-                      {t("searchDateToday")}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex-1 lg:w-32 bg-light-400 rounded-3xl flex items-center px-6 py-4 hover:bg-neutral-200 transition-colors cursor-pointer group">
-                  <IoPersonOutline className="text-xl text-neutral-400 group-hover:text-primary" />
-                  <div className="ml-3 text-left">
-                    <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
-                      {t("searchSeats")}
-                    </span>
-                    <span className="block text-sm font-bold">1</span>
-                  </div>
-                </div>
-              </div>
-              <button className="w-full lg:w-auto btn-primary px-10 py-6.5">
-                <IoSearchOutline size={18} />{" "}
-                <span className="lg:hidden">{t("searchButton")}</span>
-              </button>
-            </div>
+            <RideSearchWidget />
           </div>
 
           {/* Dashboard Preview & Floating UI Cards Container */}
