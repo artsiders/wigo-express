@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
-import { 
-  IoWarning, 
-  IoInformationCircle, 
-  IoCheckmarkCircle, 
-  IoClose 
-} from 'react-icons/io5';
+import React, { ReactNode } from "react";
+import {
+  IoWarningOutline,
+  IoInformationCircleOutline,
+  IoCheckmarkCircleOutline,
+  IoCloseOutline,
+} from "react-icons/io5";
 
-export type AlertType = 'error' | 'info' | 'success' | 'warning';
+export type AlertType = "error" | "info" | "success" | "warning";
 
 export interface AlertProps {
   type: AlertType;
@@ -16,60 +16,59 @@ export interface AlertProps {
   className?: string;
 }
 
-export default function Alert({ 
-  type, 
-  title, 
-  description, 
-  onClose, 
-  className = '' 
+export default function Alert({
+  type,
+  title,
+  description,
+  onClose,
+  className = "",
 }: AlertProps) {
-
-  // We explicitly use standard RGBA values for gradients and shadows 
-  // to ensure they always render perfectly regardless of the Tailwind theme config.
+  // Utilisation des icônes outlined (Io*Outline)
   const config = {
     error: {
-      icon: IoWarning,
-      iconColor: 'text-red-500',
-      shadow: '0 8px 16px rgba(239, 68, 68, 0.25)',
-      gridColor: 'rgba(239, 68, 68, 0.20)',
-      glowColor: 'rgba(239, 68, 68, 0.15)',
+      icon: IoWarningOutline,
+      iconColor: "text-red-500",
+      shadow: "0 8px 16px rgba(239, 68, 68, 0.25)",
+      gridColor: "rgba(239, 68, 68, 0.20)",
+      glowColor: "rgba(239, 68, 68, 0.15)",
     },
     info: {
-      icon: IoInformationCircle,
-      iconColor: 'text-indigo-500',
-      shadow: '0 8px 16px rgba(99, 102, 241, 0.25)',
-      gridColor: 'rgba(99, 102, 241, 0.20)',
-      glowColor: 'rgba(99, 102, 241, 0.15)',
+      icon: IoInformationCircleOutline,
+      iconColor: "text-indigo-500",
+      shadow: "0 8px 16px rgba(99, 102, 241, 0.25)",
+      gridColor: "rgba(99, 102, 241, 0.20)",
+      glowColor: "rgba(99, 102, 241, 0.15)",
     },
     success: {
-      icon: IoCheckmarkCircle,
-      iconColor: 'text-green-500',
-      shadow: '0 8px 16px rgba(34, 197, 94, 0.25)',
-      gridColor: 'rgba(34, 197, 94, 0.20)',
-      glowColor: 'rgba(34, 197, 94, 0.15)',
+      icon: IoCheckmarkCircleOutline,
+      iconColor: "text-green-500",
+      shadow: "0 8px 16px rgba(34, 197, 94, 0.25)",
+      gridColor: "rgba(34, 197, 94, 0.20)",
+      glowColor: "rgba(34, 197, 94, 0.15)",
     },
     warning: {
-      icon: IoWarning,
-      iconColor: 'text-amber-500',
-      shadow: '0 8px 16px rgba(245, 158, 11, 0.25)',
-      gridColor: 'rgba(245, 158, 11, 0.20)',
-      glowColor: 'rgba(245, 158, 11, 0.15)',
-    }
+      icon: IoWarningOutline,
+      iconColor: "text-amber-500",
+      shadow: "0 8px 16px rgba(245, 158, 11, 0.25)",
+      gridColor: "rgba(245, 158, 11, 0.20)",
+      glowColor: "rgba(245, 158, 11, 0.15)",
+    },
   }[type] || {
-    icon: IoInformationCircle,
-    iconColor: 'text-indigo-500',
-    shadow: '0 8px 16px rgba(99, 102, 241, 0.25)',
-    gridColor: 'rgba(99, 102, 241, 0.20)',
-    glowColor: 'rgba(99, 102, 241, 0.15)',
+    icon: IoInformationCircleOutline,
+    iconColor: "text-indigo-500",
+    shadow: "0 8px 16px rgba(99, 102, 241, 0.25)",
+    gridColor: "rgba(99, 102, 241, 0.20)",
+    glowColor: "rgba(99, 102, 241, 0.15)",
   };
 
   const Icon = config.icon;
 
   return (
-    <div className={`relative bg-white rounded-3xl p-5 md:p-6 pr-14 flex items-start shadow-[0_10px_30px_rgba(0,0,0,0.06)] border border-black/5 overflow-hidden w-full ${className}`}>
-      
-      {/* Decorative Grid & Glow - Implemented purely with CSS to guarantee exact 1:1 render with design */}
-      <div 
+    <div
+      className={`relative bg-white rounded-3xl p-5 md:p-6 pr-14 flex items-start shadow-[0_10px_30px_rgba(0,0,0,0.06)] ring-4 ring-white border border-dark/5 overflow-hidden w-full ${className}`}
+    >
+      {/* Decorative Grid & Glow */}
+      <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
           background: `
@@ -77,16 +76,17 @@ export default function Alert({
             linear-gradient(to right, ${config.gridColor} 1px, transparent 1px),
             linear-gradient(to bottom, ${config.gridColor} 1px, transparent 1px)
           `,
-          backgroundSize: '100% 100%, 20px 20px, 20px 20px',
-          backgroundPosition: '0 0, 0 0, 0 0',
-          maskImage: 'linear-gradient(to right, black 0%, transparent 250px)',
-          WebkitMaskImage: 'linear-gradient(to right, black 0%, transparent 250px)'
+          backgroundSize: "100% 100%, 20px 20px, 20px 20px",
+          backgroundPosition: "0 0, 0 0, 0 0",
+          maskImage: "linear-gradient(to right, black 0%, transparent 250px)",
+          WebkitMaskImage:
+            "linear-gradient(to right, black 0%, transparent 250px)",
         }}
       />
 
       {/* Floating Icon Wrapper */}
-      <div 
-        className="relative z-10 w-12 h-12 rounded-full bg-white flex items-center justify-center shrink-0 mt-0.5"
+      <div
+        className="relative z-10 w-12 h-12 rounded-full bg-white ring-4 ring-white border border-dark/5 flex items-center justify-center shrink-0 mt-0.5"
         style={{ boxShadow: config.shadow }}
       >
         <Icon className={`text-[24px] ${config.iconColor}`} />
@@ -104,12 +104,12 @@ export default function Alert({
 
       {/* Close Button */}
       {onClose && (
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-4 right-4 z-20 text-neutral-400 hover:text-neutral-800 bg-neutral-100/50 hover:bg-neutral-100 w-8 h-8 rounded-full flex items-center justify-center transition-colors cursor-pointer"
           aria-label="Fermer"
         >
-          <IoClose size={18} />
+          <IoCloseOutline size={18} />
         </button>
       )}
     </div>
