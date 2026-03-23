@@ -39,7 +39,7 @@ export default function Footer() {
   return (
     <footer
       ref={container as any}
-      className="footer-wrapper relative z-0 bg-dark text-white overflow-hidden rounded-t-[3rem] squircle"
+      className="footer-wrapper relative z-0 bg-dark-900 text-white overflow-hidden rounded-t-[3rem] squircle"
     >
       {/* Subtle top glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-primary/20 rounded-full blur-[150px] pointer-events-none opacity-50"></div>
