@@ -17,7 +17,7 @@ export default function SearchLayout({
   return (
     <div className="bg-light min-h-screen text-dark flex flex-col pt-24">
       <Navbar />
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 pt-8">{children}</div>
       <Footer />
     </div>
   );
