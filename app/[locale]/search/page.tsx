@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useRef } from "react";
 import RideSearchWidget from "@/components/search/RideSearchWidget";
 import RideCard, { RideData } from "@/components/search/RideCard";
 import {
@@ -145,6 +146,89 @@ function FiltersContent() {
   );
 }
 
+// Custom Dropdown for Filters (with animation)
+function FiltersDropdown() {
+  const [open, setOpen] = React.useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Click outside to close
+  React.useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (
+        open &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
+    if (open) {
+      document.addEventListener("mousedown", handleClick);
+    } else {
+      document.removeEventListener("mousedown", handleClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [open]);
+
+  // Keyboard accessibility for button
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === "Escape") setOpen(false);
+    if (e.key === " " || e.key === "Enter") setOpen((v) => !v);
+  }
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button
+        className="w-full flex items-center justify-between p-5 rounded-3xl bg-dark text-white shadow border border-neutral-800 font-bold text-base cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary transition-colors list-none select-none"
+        type="button"
+        aria-expanded={open}
+        aria-controls="filters-dropdown-content"
+        tabIndex={0}
+        onClick={() => setOpen((v) => !v)}
+        onKeyDown={handleKeyDown}
+      >
+        <span className="flex items-center gap-2">
+          <IoFilterOutline size={22} className="text-primary" />
+          Filtres
+        </span>
+        <span className="flex items-center ml-2">
+          <IoChevronDown
+            size={22}
+            className={`text-white transition-transform duration-300${open ? " rotate-180 opacity-0 pointer-events-none" : ""}`}
+            aria-hidden={open}
+          />
+          <IoChevronUp
+            size={22}
+            className={`text-white transition-transform duration-300 absolute${open ? " opacity-100 static" : " opacity-0 pointer-events-none"}`}
+            style={{
+              marginLeft: open ? 0 : -22,
+              position: open ? "static" : "absolute",
+            }}
+            aria-hidden={!open}
+          />
+        </span>
+      </button>
+      <div
+        id="filters-dropdown-content"
+        aria-hidden={!open}
+        style={{
+          pointerEvents: open ? "auto" : "none",
+          height: open ? "auto" : 0,
+        }}
+        className={`overflow-hidden transition-all duration-400 ease-in-out mt-3 ${
+          open ? "opacity-100 scale-100" : "opacity-0 scale-95"
+        }`}
+      >
+        <div className="bg-dark rounded-4xl squircle p-6 shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-neutral-800 text-white">
+          <FiltersContent />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default async function SearchPage({
   searchParams,
 }: {
@@ -178,33 +262,13 @@ export default async function SearchPage({
     <>
       {/* Search Header Area - Mobile Only */}
       <div className="w-full bg-white border-b border-neutral-100 shadow-sm z-40 pb-6 pt-4 px-4 lg:hidden">
+        {/* Mobile dropdown: Filters always present */}
+        <div className="mt-4">
+          <FiltersDropdown />
+        </div>
         <div className="max-w-6xl mx-auto flex flex-col gap-4">
           {/* Mobile horizontal-ish widget */}
           <RideSearchWidget variant="horizontal" />
-        </div>
-        {/* Mobile accordion: Filters always present, controlled by <details> */}
-        <div className="mt-4">
-          <details className="group" tabIndex={-1}>
-            <summary className="w-full flex items-center justify-between px-5 py-3 rounded-3xl bg-dark text-white shadow border border-neutral-800 font-bold text-base cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary transition-colors list-none">
-              <span className="flex items-center gap-2">
-                <IoFilterOutline size={22} className="text-primary" />
-                Filtres
-              </span>
-              <span className="flex items-center ml-2">
-                <IoChevronDown
-                  size={22}
-                  className="text-white group-open:hidden transition-transform"
-                />
-                <IoChevronUp
-                  size={22}
-                  className="text-white hidden group-open:inline-flex transition-transform"
-                />
-              </span>
-            </summary>
-            <div className="bg-dark rounded-4xl squircle p-6 mt-3 shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-neutral-800 text-white">
-              <FiltersContent />
-            </div>
-          </details>
         </div>
       </div>
 
