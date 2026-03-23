@@ -112,7 +112,7 @@ export default function RideSearchWidget({
       `}
     >
       {/* Departure Input */}
-      <div className="relative flex-1 w-full bg-light-400 rounded-3xl h-[80px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
+      <div className="relative flex-1 w-full bg-light-400 rounded-3xl min-h-16 h-[80px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
         <IoLocationOutline className="text-xl text-neutral-400 group-focus-within:text-primary transition-colors shrink-0" />
         <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
           <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
@@ -134,7 +134,7 @@ export default function RideSearchWidget({
         {/* Autocomplete Dropdown */}
         {activeDropdown === "depart" && (
           <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
-            <div className="p-2 max-h-56 overflow-y-auto">
+            <div className="p-2 max-h-56 overflow-y-hidden">
               <span className="block px-4 py-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
                 Suggestions
               </span>
@@ -183,7 +183,7 @@ export default function RideSearchWidget({
 
       {/* Arrival Input */}
       <div
-        className={`relative flex-1 w-full bg-light-400 rounded-3xl h-[80px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0 ${!isVert ? "mt-2 lg:mt-0" : "mt-0"}`}
+        className={`relative flex-1 w-full bg-light-400 rounded-3xl min-h-16 h-[80px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0 ${!isVert ? "mt-2 lg:mt-0" : "mt-0"}`}
       >
         <IoMapOutline className="text-xl text-neutral-400 group-focus-within:text-primary transition-colors shrink-0" />
         <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
@@ -206,7 +206,7 @@ export default function RideSearchWidget({
         {/* Autocomplete Dropdown */}
         {activeDropdown === "arrivee" && (
           <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
-            <div className="p-2 max-h-56 overflow-y-auto">
+            <div className="p-2 max-h-56 overflow-y-hidden">
               <span className="block px-4 py-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
                 Suggestions
               </span>
@@ -246,7 +246,7 @@ export default function RideSearchWidget({
           onClick={() =>
             setActiveDropdown(activeDropdown === "date" ? null : "date")
           }
-          className={`flex-1 ${!isVert ? "lg:w-[150px]" : ""} bg-light-400 rounded-3xl h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
+          className={`flex-1 ${!isVert ? "lg:w-[150px]" : ""} bg-light-400 rounded-3xl min-h-16 h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
             ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
         >
           <IoCalendarOutline
@@ -278,7 +278,7 @@ export default function RideSearchWidget({
           onClick={() =>
             setActiveDropdown(activeDropdown === "seats" ? null : "seats")
           }
-          className={`flex-1 ${!isVert ? "lg:w-[110px]" : ""} bg-light-400 rounded-3xl h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
+          className={`flex-1 ${!isVert ? "lg:w-[110px]" : ""} bg-light-400 rounded-3xl min-h-16 h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
             ${activeDropdown === "seats" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
         >
           <IoPersonOutline
@@ -339,7 +339,9 @@ export default function RideSearchWidget({
       <button
         type="button"
         onClick={handleSearch}
-        className={`w-full ${!isVert ? "lg:w-[80px]" : ""} h-[80px] ${!isVert ? "mt-2 lg:mt-0" : "mt-2"} aspect-square btn-primary rounded-3xl flex justify-center items-center hover:scale-[1.02] active:scale-[0.98] transition-transform shrink-0`}
+        className={`w-full ${
+          !isVert ? "lg:w-[80px] lg:h-[80px]" : ""
+        } h-16 ${!isVert ? "mt-2 lg:mt-0" : "mt-2"} btn-primary rounded-3xl flex justify-center items-center active:scale-[0.98] transition-transform shrink-0`}
       >
         <IoSearchOutline size={22} />
         <span className={`ml-2 font-bold ${!isVert ? "lg:hidden" : ""}`}>
