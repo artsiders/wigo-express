@@ -1,7 +1,4 @@
 import React from "react";
-import { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import RideSearchWidget from "@/components/search/RideSearchWidget";
 import RideCard, { RideData } from "@/components/search/RideCard";
 import {
@@ -10,13 +7,6 @@ import {
   IoChevronDown,
   IoChevronUp,
 } from "react-icons/io5";
-
-// Added Custom SEO Metadata for the search page
-export const metadata: Metadata = {
-  title: "Trajets Disponibles | WIGO EXPRESS",
-  description:
-    "Trouvez et réservez votre prochain trajet en covoiturage premium au Canada.",
-};
 
 // Extremely premium random mocked data
 const MOCK_RIDES: RideData[] = [
@@ -185,9 +175,7 @@ export default async function SearchPage({
   const displayRides = hasResults ? filteredRides : MOCK_RIDES;
 
   return (
-    <div className="bg-light min-h-screen text-dark flex flex-col pt-24">
-      <Navbar />
-
+    <>
       {/* Search Header Area - Mobile Only */}
       <div className="w-full bg-white border-b border-neutral-100 shadow-sm z-40 pb-6 pt-4 px-4 lg:hidden">
         <div className="max-w-6xl mx-auto flex flex-col gap-4">
@@ -295,8 +283,6 @@ export default async function SearchPage({
           </div>
         </div>
       </main>
-
-      <Footer />
-    </div>
+    </>
   );
 }
