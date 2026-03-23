@@ -31,28 +31,39 @@ interface RideSearchWidgetProps {
   variant?: "horizontal" | "vertical";
 }
 
-export default function RideSearchWidget({ variant = "horizontal" }: RideSearchWidgetProps) {
+export default function RideSearchWidget({
+  variant = "horizontal",
+}: RideSearchWidgetProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   // Initialize state from URL params if available
   const [departure, setDeparture] = useState(searchParams?.get("depart") || "");
   const [arrival, setArrival] = useState(searchParams?.get("arrivee") || "");
-  
-  const initialDate = searchParams?.get("date") ? new Date(searchParams.get("date") as string) : new Date();
+
+  const initialDate = searchParams?.get("date")
+    ? new Date(searchParams.get("date") as string)
+    : new Date();
   const [date, setDate] = useState<Date | null>(initialDate);
-  
-  const [seats, setSeats] = useState(parseInt(searchParams?.get("passagers") || "1", 10));
+
+  const [seats, setSeats] = useState(
+    parseInt(searchParams?.get("passagers") || "1", 10),
+  );
 
   // Dropdown states
-  const [activeDropdown, setActiveDropdown] = useState<"depart" | "arrivee" | "date" | "seats" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<
+    "depart" | "arrivee" | "date" | "seats" | null
+  >(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns on click outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setActiveDropdown(null);
       }
     }
@@ -81,7 +92,7 @@ export default function RideSearchWidget({ variant = "horizontal" }: RideSearchW
 
   const filteredCities = (query: string) => {
     return MOCK_CITIES.filter((city) =>
-      city.toLowerCase().includes(query.toLowerCase())
+      city.toLowerCase().includes(query.toLowerCase()),
     ).slice(0, 4); // Limit to 4 suggestions max to avoid long lists
   };
 
@@ -94,15 +105,14 @@ export default function RideSearchWidget({ variant = "horizontal" }: RideSearchW
   const isVert = variant === "vertical";
 
   return (
-    <div 
-      ref={containerRef} 
+    <div
+      ref={containerRef}
       className={`search-widget w-full bg-white p-3 md:p-3 shadow-[0_30px_80px_rgba(0,0,0,0.08)] border border-neutral-100 relative
-        ${isVert ? "flex flex-col gap-2 rounded-4xl squircle" : "max-w-5xl rounded-full flex flex-col lg:flex-row items-center gap-2"}
+        ${isVert ? "flex flex-col gap-2 rounded-4xl squircle" : "max-w-5xl rounded-4xl flex flex-col lg:flex-row items-center gap-2"}
       `}
     >
-      
       {/* Departure Input */}
-      <div className="relative flex-1 w-full bg-light-400 rounded-full h-[72px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
+      <div className="relative flex-1 w-full bg-light-400 rounded-3xl h-[80px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
         <IoLocationOutline className="text-xl text-neutral-400 group-focus-within:text-primary transition-colors shrink-0" />
         <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
           <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
@@ -120,7 +130,7 @@ export default function RideSearchWidget({ variant = "horizontal" }: RideSearchW
             className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-300 placeholder:font-medium truncate pb-0.5"
           />
         </div>
-        
+
         {/* Autocomplete Dropdown */}
         {activeDropdown === "depart" && (
           <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
@@ -139,14 +149,16 @@ export default function RideSearchWidget({ variant = "horizontal" }: RideSearchW
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-light-400 rounded-2xl flex items-center gap-3 transition-colors text-dark font-medium text-sm"
                   >
-                    <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-3xl bg-neutral-100 flex items-center justify-center shrink-0">
                       <IoLocationOutline className="text-neutral-500" />
                     </div>
                     {city}
                   </button>
                 ))
               ) : (
-                <div className="px-4 py-3 text-sm text-neutral-500 font-medium">Aucun lieu trouvé</div>
+                <div className="px-4 py-3 text-sm text-neutral-500 font-medium">
+                  Aucun lieu trouvé
+                </div>
               )}
             </div>
           </div>
@@ -154,23 +166,25 @@ export default function RideSearchWidget({ variant = "horizontal" }: RideSearchW
       </div>
 
       {/* Swap Button (Mobile) or Divider arrow (Desktop) */}
-      <div 
+      <div
         onClick={swapLocations}
-        className={`${isVert ? 'absolute right-[15%] top-[84px] -translate-y-1/2 z-10 w-9 h-9' : 'lg:hidden absolute left-[15%] top-[84px] -translate-y-1/2 z-10 w-9 h-9'} rounded-full bg-white shadow-md border border-neutral-100 flex items-center justify-center text-primary cursor-pointer hover:bg-neutral-50 transition-colors`}
+        className={`${isVert ? "absolute right-[15%] top-[84px] -translate-y-1/2 z-10 w-9 h-9" : "lg:hidden absolute left-[15%] top-[84px] -translate-y-1/2 z-10 w-9 h-9"} rounded-3xl bg-white shadow-md border border-neutral-100 flex items-center justify-center text-primary cursor-pointer hover:bg-neutral-50 transition-colors`}
       >
-         <IoSwapVerticalOutline size={18} />
+        <IoSwapVerticalOutline size={18} />
       </div>
       {!isVert && (
-        <div 
+        <div
           onClick={swapLocations}
-          className="hidden lg:flex w-10 h-10 rounded-full bg-white shadow-md border border-neutral-100 items-center justify-center shrink-0 -mx-5 z-10 text-neutral-400 hover:text-primary transition-colors cursor-pointer"
+          className="hidden lg:flex w-10 h-10 rounded-3xl bg-white shadow-md border border-neutral-100 items-center justify-center shrink-0 -mx-5 z-10 text-neutral-400 hover:text-primary transition-colors cursor-pointer"
         >
           <IoArrowForwardOutline size={18} />
         </div>
       )}
 
       {/* Arrival Input */}
-      <div className={`relative flex-1 w-full bg-light-400 rounded-full h-[72px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0 ${!isVert ? 'mt-2 lg:mt-0' : 'mt-0'}`}>
+      <div
+        className={`relative flex-1 w-full bg-light-400 rounded-3xl h-[80px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0 ${!isVert ? "mt-2 lg:mt-0" : "mt-0"}`}
+      >
         <IoMapOutline className="text-xl text-neutral-400 group-focus-within:text-primary transition-colors shrink-0" />
         <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
           <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
@@ -207,14 +221,16 @@ export default function RideSearchWidget({ variant = "horizontal" }: RideSearchW
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-light-400 rounded-2xl flex items-center gap-3 transition-colors text-dark font-medium text-sm"
                   >
-                    <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-3xl bg-neutral-100 flex items-center justify-center shrink-0">
                       <IoMapOutline className="text-neutral-500" />
                     </div>
                     {city}
                   </button>
                 ))
               ) : (
-                <div className="px-4 py-3 text-sm text-neutral-500 font-medium">Aucun lieu trouvé</div>
+                <div className="px-4 py-3 text-sm text-neutral-500 font-medium">
+                  Aucun lieu trouvé
+                </div>
               )}
             </div>
           </div>
@@ -222,14 +238,20 @@ export default function RideSearchWidget({ variant = "horizontal" }: RideSearchW
       </div>
 
       {/* Date & Seats */}
-      <div className={`w-full flex ${isVert ? 'flex-col gap-2' : 'flex-row gap-2 mt-2 lg:mt-0 lg:w-auto'} relative shrink-0`}>
+      <div
+        className={`w-full flex ${isVert ? "flex-col gap-2" : "flex-row gap-2 mt-2 lg:mt-0 lg:w-auto"} relative shrink-0`}
+      >
         {/* Date Input */}
-        <div 
-          onClick={() => setActiveDropdown(activeDropdown === "date" ? null : "date")}
-          className={`flex-1 ${!isVert ? 'lg:w-[150px]' : ''} bg-light-400 rounded-full h-[72px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
+        <div
+          onClick={() =>
+            setActiveDropdown(activeDropdown === "date" ? null : "date")
+          }
+          className={`flex-1 ${!isVert ? "lg:w-[150px]" : ""} bg-light-400 rounded-3xl h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
             ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
         >
-          <IoCalendarOutline className={`text-xl shrink-0 ${activeDropdown === "date" ? "text-primary" : "text-neutral-400"}`} />
+          <IoCalendarOutline
+            className={`text-xl shrink-0 ${activeDropdown === "date" ? "text-primary" : "text-neutral-400"}`}
+          />
           <div className="ml-2.5 text-left w-full overflow-hidden flex flex-col justify-center h-full">
             <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
               Quand ?
@@ -242,50 +264,68 @@ export default function RideSearchWidget({ variant = "horizontal" }: RideSearchW
 
         {/* Date Calendar Popover */}
         {activeDropdown === "date" && (
-          <CustomCalendar 
-            selectedDate={date} 
+          <CustomCalendar
+            selectedDate={date}
             onSelectDate={(d) => {
               setDate(d);
               setActiveDropdown("seats");
-            }} 
+            }}
           />
         )}
 
         {/* Seats Input */}
-        <div 
-          onClick={() => setActiveDropdown(activeDropdown === "seats" ? null : "seats")}
-          className={`flex-1 ${!isVert ? 'lg:w-[110px]' : ''} bg-light-400 rounded-full h-[72px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
+        <div
+          onClick={() =>
+            setActiveDropdown(activeDropdown === "seats" ? null : "seats")
+          }
+          className={`flex-1 ${!isVert ? "lg:w-[110px]" : ""} bg-light-400 rounded-3xl h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
             ${activeDropdown === "seats" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
         >
-          <IoPersonOutline className={`text-xl shrink-0 ${activeDropdown === "seats" ? "text-primary" : "text-neutral-400"}`} />
+          <IoPersonOutline
+            className={`text-xl shrink-0 ${activeDropdown === "seats" ? "text-primary" : "text-neutral-400"}`}
+          />
           <div className="ml-2.5 text-left flex flex-col justify-center h-full">
             <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
-              Passagers
+              places
             </span>
-            <span className="block text-[13px] font-bold text-dark pb-0.5">{seats}</span>
+            <span className="block text-[13px] font-bold text-dark pb-0.5">
+              {seats}
+            </span>
           </div>
         </div>
 
         {/* Seats Popover */}
         {activeDropdown === "seats" && (
-          <div className={`absolute top-full border border-neutral-100 ${isVert ? 'left-0' : 'right-0'} mt-4 bg-white p-4 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] outline-none w-[280px] z-50`}>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-dark font-bold text-sm">Passagers</span>
-              <div className="flex items-center gap-4 bg-light-400 rounded-full p-1">
+          <div
+            className={`absolute top-full border border-neutral-100 ${isVert ? "left-0" : "right-0"} mt-4 bg-white p-4 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] outline-none w-[180px] z-50`}
+          >
+            <div className="flex flex-col gap-3 items-start mb-2">
+              <span className="text-dark font-bold text-sm text-left">
+                Nombre de Passagers
+              </span>
+              <div className="flex items-center gap-4 bg-light-400 w-full justify-between rounded-3xl p-1">
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); setSeats(Math.max(1, seats - 1)); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSeats(Math.max(1, seats - 1));
+                  }}
                   disabled={seats <= 1}
-                  className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-lg font-bold text-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed hover:text-primary transition-colors"
+                  className="w-8 h-8 rounded-3xl bg-white shadow-sm flex items-center justify-center text-lg font-bold text-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed hover:text-primary transition-colors"
                 >
                   -
                 </button>
-                <span className="text-lg font-bold w-4 text-center">{seats}</span>
+                <span className="text-lg font-bold w-4 text-center">
+                  {seats}
+                </span>
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); setSeats(Math.min(8, seats + 1)); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSeats(Math.min(8, seats + 1));
+                  }}
                   disabled={seats >= 8}
-                  className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-lg font-bold text-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed hover:text-primary transition-colors"
+                  className="w-8 h-8 rounded-3xl bg-white shadow-sm flex items-center justify-center text-lg font-bold text-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed hover:text-primary transition-colors"
                 >
                   +
                 </button>
@@ -296,15 +336,16 @@ export default function RideSearchWidget({ variant = "horizontal" }: RideSearchW
       </div>
 
       {/* Submit Button */}
-      <button 
+      <button
         type="button"
         onClick={handleSearch}
-        className={`w-full ${!isVert ? 'lg:w-[80px]' : ''} h-[72px] ${!isVert ? 'mt-2 lg:mt-0' : 'mt-2'} btn-primary rounded-full flex justify-center items-center hover:scale-[1.02] active:scale-[0.98] transition-transform shrink-0`}
+        className={`w-full ${!isVert ? "lg:w-[80px]" : ""} h-[80px] ${!isVert ? "mt-2 lg:mt-0" : "mt-2"} btn-primary rounded-3xl flex justify-center items-center hover:scale-[1.02] active:scale-[0.98] transition-transform shrink-0`}
       >
         <IoSearchOutline size={22} />
-        <span className={`ml-2 font-bold ${!isVert ? 'lg:hidden' : ''}`}>Rechercher</span>
+        <span className={`ml-2 font-bold ${!isVert ? "lg:hidden" : ""}`}>
+          Rechercher
+        </span>
       </button>
-
     </div>
   );
 }
