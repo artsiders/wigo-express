@@ -257,7 +257,7 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
   const displayRides = hasResults ? filteredRides : MOCK_RIDES;
   return (
     <>
-      <div className="w-full bg-white border-b border-neutral-100 shadow-sm z-40 pb-6 pt-4 px-4 lg:hidden">
+      <div className="w-full border-b border-neutral-100 z-40 pb-6 pt-4 px-4 lg:hidden">
         <div className="mt-4">
           <FiltersDropdown />
         </div>
