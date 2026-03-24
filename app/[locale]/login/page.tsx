@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { IoMailOutline, IoLockClosedOutline, IoChevronBack } from "react-icons/io5";
 import { signIn } from "next-auth/react";
+import AlertDialog, { AlertType } from "@/components/ui/AlertDialog";
 import gsap from "gsap";
 
 export default function LoginPage() {
@@ -12,6 +13,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [alertInfo, setAlertInfo] = useState<{isOpen: boolean, type: AlertType, title: string, desc: string}>({isOpen: false, type: "error", title: "", desc: ""});
   
   const formRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -42,7 +44,7 @@ export default function LoginPage() {
             redirect: false
         });
         if (res?.error) {
-            alert("Identifiants incorrects");
+            setAlertInfo({ isOpen: true, type: "error", title: "Erreur de connexion", desc: "Les identifiants fournis sont incorrects. Veuillez réessayer." });
         } else {
             window.location.href = "/";
         }
@@ -57,7 +59,15 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-light-300 flex items-center justify-center p-4 sm:p-8">
+    <>
+      <AlertDialog 
+        isOpen={alertInfo.isOpen}
+        type={alertInfo.type}
+        title={alertInfo.title}
+        description={alertInfo.desc}
+        onClose={() => setAlertInfo({ ...alertInfo, isOpen: false })}
+      />
+      <main className="min-h-screen bg-light-300 flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-6xl bg-white rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.06)] flex flex-col lg:flex-row overflow-hidden min-h-[750px]">
         
         {/* Left Column - Image */}
@@ -161,8 +171,8 @@ export default function LoginPage() {
             </p>
           </div>
         </div>
-
       </div>
     </main>
+    </>
   );
 }

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { IoMailOutline, IoLockClosedOutline, IoPersonOutline, IoChevronBack } from "react-icons/io5";
 import { signIn } from "next-auth/react";
+import AlertDialog, { AlertType } from "@/components/ui/AlertDialog";
 import gsap from "gsap";
 
 export default function RegisterPage() {
@@ -13,6 +14,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [alertInfo, setAlertInfo] = useState<{isOpen: boolean, type: AlertType, title: string, desc: string}>({isOpen: false, type: "info", title: "", desc: ""});
   
   const formRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -38,7 +40,12 @@ export default function RegisterPage() {
     setLoading(true);
     // TODO: Implémenter la route API /api/register pour créer l'utilisateur
     // En attendant, on simule pour Wigo Express
-    alert("Veuillez créer l'endpoint d'API /api/register pour gérer la création en base.");
+    setAlertInfo({ 
+        isOpen: true, 
+        type: "info", 
+        title: "Bientôt disponible", 
+        desc: "" 
+    });
     setLoading(false);
   };
 
@@ -48,7 +55,15 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen bg-light-300 flex items-center justify-center p-4 sm:p-8">
+    <>
+      <AlertDialog 
+        isOpen={alertInfo.isOpen}
+        type={alertInfo.type}
+        title={alertInfo.title}
+        description={alertInfo.desc}
+        onClose={() => setAlertInfo({ ...alertInfo, isOpen: false })}
+      />
+      <main className="min-h-screen bg-light-300 flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-6xl bg-white rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.06)] flex flex-col lg:flex-row-reverse overflow-hidden min-h-[750px]">
         
         {/* Right Column - Image (Reversed for variation) */}
@@ -159,8 +174,8 @@ export default function RegisterPage() {
             </p>
           </div>
         </div>
-
       </div>
     </main>
+    </>
   );
 }
