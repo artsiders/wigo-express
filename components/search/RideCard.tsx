@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { Link } from "@/i18n/routing";
 import {
   IoStar,
   IoShieldCheckmark,
@@ -39,7 +40,7 @@ interface RideCardProps {
 
 export default function RideCard({ ride }: RideCardProps) {
   return (
-    <div className="bg-white rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(37,99,235,0.08)] border border-neutral-100 hover:border-primary/20 transition-all duration-300 block w-full group cursor-pointer relative overflow-hidden">
+    <Link href={`/ride/${ride.id}`} className="bg-white rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(37,99,235,0.08)] border border-neutral-100 hover:border-primary/20 transition-all duration-300 block w-full group cursor-pointer relative overflow-hidden">
       {/* Premium subtle background glow */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[50px] pointer-events-none group-hover:bg-primary/20 transition-colors"></div>
 
@@ -143,6 +144,6 @@ export default function RideCard({ ride }: RideCardProps) {
           {ride.seatsAvailable} {ride.seatsAvailable > 1 ? "places" : "place"}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
