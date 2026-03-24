@@ -4,6 +4,7 @@ import { useState } from "react";
 import { LuLoaderCircle } from "react-icons/lu";
 import { useOfferStore } from "@/store/useOfferStore";
 import { Link } from "@/i18n/routing";
+import { IoCheckmarkCircle } from "react-icons/io5";
 
 export default function StepSummary() {
   const { departure, arrival, date, time, seats, price, resetOffer } = useOfferStore();
@@ -23,8 +24,9 @@ export default function StepSummary() {
   if (success) {
     return (
         <div className="flex flex-col items-center justify-center text-center py-12 animate-in fade-in zoom-in duration-500">
-            <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-                <span className="text-5xl">🎉</span>
+            <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mb-6 relative">
+                <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl animate-pulse"></div>
+                <IoCheckmarkCircle className="text-5xl text-primary relative z-10" />
             </div>
             <h2 className="text-3xl font-black text-dark mb-4">Trajet Publié !</h2>
             <p className="text-neutral-500 font-medium mb-8">Votre trajet est maintenant en ligne. Les passagers peuvent commencer à réserver !</p>
