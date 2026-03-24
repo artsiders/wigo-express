@@ -144,7 +144,7 @@
 
 body {
   background: var(--color-light);
-  color: #fff;
+  color: var(--color-dark-800);
   overscroll-behavior: none;
 }
 
