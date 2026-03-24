@@ -22,6 +22,9 @@ export interface DriverInfo {
   reviewsCount: number;
   isVerified: boolean;
   verifiedItems: string[];
+  memberSince?: string;
+  bio?: string;
+  totalRides?: number;
 }
 
 export interface CarInfo {
@@ -31,6 +34,8 @@ export interface CarInfo {
   year: string;
   color: string;
   photo?: string;
+  licensePlate?: string;
+  features?: string[];
 }
 
 export interface MockRideDetails {
@@ -93,6 +98,9 @@ export const mockRidesDetails: Record<string, MockRideDetails> = {
       reviewsCount: 124,
       isVerified: true,
       verifiedItems: ["Permis de conduire vérifié", "Numéro de téléphone", "Email"],
+      memberSince: "Juin 2019",
+      bio: "Bonjour ! Je fais ce trajet toutes les semaines pour mon travail. J'aime discuter de tech et écouter des podcasts. Soyez les bienvenus !",
+      totalRides: 142,
     },
     car: {
       make: "Toyota",
@@ -100,7 +108,9 @@ export const mockRidesDetails: Record<string, MockRideDetails> = {
       type: "Berline",
       year: "2021",
       color: "Gris",
-      photo: "/images/wigo-express-red-card.jpg"
+      photo: "/images/wigo-express-red-card.jpg",
+      licensePlate: "X8Y ***",
+      features: ["Climatisation", "Sièges en cuir", "Bluetooth"],
     },
     policy: {
       description: "Annulation gratuite jusqu'à 24h avant le départ. Passé ce délai, 50% du montant sera retenu en cas d'annulation de dernière minute ou d'absence. Merci de prendre connaissance des conditions d'utilisation."
@@ -141,6 +151,9 @@ export const mockRidesDetails: Record<string, MockRideDetails> = {
       reviewsCount: 89,
       isVerified: true,
       verifiedItems: ["Permis de conduire vérifié", "Pièce d'identité"],
+      memberSince: "Janvier 2023",
+      bio: "Étudiante en médecine, j'aime les trajets calmes pour me reposer ou réviser sans bruit.",
+      totalRides: 28,
     },
     car: {
       make: "Inconnue",
@@ -148,7 +161,9 @@ export const mockRidesDetails: Record<string, MockRideDetails> = {
       type: "Voiture de location",
       year: "Année inconnue",
       color: "Inconnue",
-      photo: "/images/wigo-express-red-card.jpg"
+      photo: "/images/wigo-express-red-card.jpg",
+      licensePlate: "Non requise",
+      features: [],
     },
     policy: {
       description: "Merci de prendre connaissance des conditions d'utilisation."

@@ -113,36 +113,52 @@ export default function RideDetails({ ride }: RideDetailsProps) {
           {/* Details Sections Block */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Driver */}
-            <div className="bg-white rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex items-center gap-5 group cursor-pointer hover:border-primary/20 transition-colors">
-              <div className="relative w-16 h-16 rounded-full shrink-0 shadow-sm border border-neutral-200">
-                <Image
-                  src={ride.driver.photo}
-                  alt={ride.driver.name}
-                  fill
-                  className="object-cover rounded-full transition-transform duration-500"
-                />
-                {ride.driver.isVerified && (
-                  <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm">
-                    <IoShieldCheckmark className="text-green-500 text-base" />
+            <div className="bg-white rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex flex-col gap-5 group cursor-pointer hover:border-primary/20 transition-colors">
+              <div className="flex items-center gap-5">
+                <div className="relative w-16 h-16 rounded-full shrink-0 shadow-sm border border-neutral-200">
+                  <Image
+                    src={ride.driver.photo}
+                    alt={ride.driver.name}
+                    fill
+                    className="object-cover rounded-full transition-transform duration-500"
+                  />
+                  {ride.driver.isVerified && (
+                    <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm">
+                      <IoShieldCheckmark className="text-green-500 text-base" />
+                    </div>
+                  )}
+                </div>
+                <div className="text-left flex-1">
+                  <h4 className="text-base font-bold text-dark">
+                    {ride.driver.name}
+                  </h4>
+                  <div className="flex items-center gap-1 text-sm font-bold text-neutral-500 mt-1">
+                    <IoStar className="text-yellow-400" />
+                    <span className="text-dark">{ride.driver.rating}</span>
+                    <span className="text-neutral-400 hidden sm:inline">
+                      ({ride.driver.reviewsCount} avis)
+                    </span>
                   </div>
-                )}
-              </div>
-              <div className="text-left flex-1">
-                <h4 className="text-base font-bold text-dark">
-                  {ride.driver.name}
-                </h4>
-                <div className="flex items-center gap-1 text-sm font-bold text-neutral-500 mt-1">
-                  <IoStar className="text-yellow-400" />
-                  <span className="text-dark">{ride.driver.rating}</span>
-                  <span className="text-neutral-400 hidden sm:inline">
-                    ({ride.driver.reviewsCount} avis)
-                  </span>
                 </div>
               </div>
+              
+              {/* Additional Driver Info */}
+              {(ride.driver.bio || ride.driver.memberSince) && (
+                <div className="pt-4 border-t border-neutral-100 flex flex-col gap-3">
+                  {ride.driver.bio && (
+                    <p className="text-sm font-medium text-neutral-500 italic leading-relaxed">"{ride.driver.bio}"</p>
+                  )}
+                  <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold text-neutral-400 uppercase tracking-widest mt-1">
+                    {ride.driver.memberSince && <span>Membre depuis {ride.driver.memberSince}</span>}
+                    {ride.driver.memberSince && ride.driver.totalRides && <span className="w-1 h-1 rounded-full bg-neutral-300"></span>}
+                    {ride.driver.totalRides && <span>{ride.driver.totalRides} trajets publiés</span>}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Car */}
-            <div className="bg-white rounded-3xl p-0 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex flex-col sm:flex-row relative overflow-hidden group min-h-[140px]">
+            <div className="bg-white rounded-3xl p-0 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex flex-col sm:flex-row relative overflow-hidden group min-h-[160px]">
               <div className="p-6 sm:w-1/2 flex flex-col justify-center relative z-10">
                 <h4 className="text-sm font-bold text-neutral-400 uppercase tracking-widest mb-1">
                   Véhicule
@@ -150,17 +166,29 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                 <p className="text-lg font-bold text-dark">
                   {ride.car.make} {ride.car.model}
                 </p>
-                <p className="text-sm font-medium text-neutral-500">
+                <p className="text-sm font-medium text-neutral-500 mb-2">
                   {ride.car.color} • Année {ride.car.year}
                 </p>
+                
+                {/* Additional Car Info */}
+                {(ride.car.licensePlate || (ride.car.features && ride.car.features.length > 0)) && (
+                   <div className="mt-auto pt-2 flex flex-col gap-2">
+                     {ride.car.licensePlate && (
+                       <p className="text-[11px] font-bold text-primary bg-primary/10 w-fit px-2 py-0.5 rounded-md border border-primary/20 uppercase tracking-widest flex items-center gap-1.5"><IoCarOutline size={12}/> {ride.car.licensePlate}</p>
+                     )}
+                     {ride.car.features && ride.car.features.length > 0 && (
+                       <p className="text-xs font-medium text-neutral-500 leading-snug">{ride.car.features.join(" • ")}</p>
+                     )}
+                   </div>
+                )}
               </div>
               {ride.car.photo ? (
-                <div className="relative h-60 sm:h-auto sm:w-1/2 bg-neutral-100">
+                <div className="relative h-60 sm:h-auto sm:w-1/2 bg-neutral-100 group-hover:bg-neutral-200 transition-colors">
                   <Image
                     src={ride.car.photo}
                     alt={ride.car.make}
                     fill
-                    className="object-cover transition-transform duration-700"
+                    className="object-cover transition-transform duration-700 pointer-events-none"
                   />
                 </div>
               ) : (
