@@ -67,20 +67,14 @@ export default function Alert({
     <div
       className={`relative bg-white rounded-3xl p-5 md:p-6 pr-14 flex items-start shadow-[0_10px_30px_rgba(0,0,0,0.06)] ring-4 ring-white border border-dark/5 overflow-hidden w-full ${className}`}
     >
-      {/* Decorative Grid & Glow */}
+      {/* Decorative Glow Only */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          background: `
-            radial-gradient(circle at top left, ${config.glowColor} 0%, transparent 200px),
-            linear-gradient(to right, ${config.gridColor} 1px, transparent 1px),
-            linear-gradient(to bottom, ${config.gridColor} 1px, transparent 1px)
-          `,
-          backgroundSize: "100% 100%, 20px 20px, 20px 20px",
-          backgroundPosition: "0 0, 0 0, 0 0",
-          maskImage: "linear-gradient(to right, black 0%, transparent 250px)",
+          background: `radial-gradient(circle at top left, ${config.glowColor} 0%, transparent 400px)`,
+          maskImage: "linear-gradient(to right, black 0%, transparent 450px)",
           WebkitMaskImage:
-            "linear-gradient(to right, black 0%, transparent 250px)",
+            "linear-gradient(to right, black 0%, transparent 450px)",
         }}
       />
 
