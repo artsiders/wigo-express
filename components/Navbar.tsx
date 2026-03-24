@@ -117,7 +117,7 @@ export default function Navbar() {
                 {t("howItWorks")}
               </Link>
               <Link
-                href="/#voyageur"
+                href="/search?searchOpen=true"
                 className="hover:text-primary text-dark transition-all flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white text-sm font-bold hover:shadow-md"
               >
                 {tCommon("searchRide")}
@@ -226,7 +226,7 @@ export default function Navbar() {
             {t("howItWorks")}
           </Link>
           <Link
-            href="/#voyageur"
+            href="/search?searchOpen=true"
             onClick={() => setMenuOpen(false)}
             className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
           >

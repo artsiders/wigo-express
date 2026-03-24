@@ -30,10 +30,12 @@ const MOCK_CITIES = [
 
 interface RideSearchWidgetProps {
   variant?: "horizontal" | "vertical";
+  onSearchSubmit?: () => void;
 }
 
 export default function RideSearchWidget({
   variant = "horizontal",
+  onSearchSubmit,
 }: RideSearchWidgetProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -91,6 +93,7 @@ export default function RideSearchWidget({
     params.set("passagers", seats.toString());
 
     try {
+      onSearchSubmit?.();
       router.push(`/fr/search?${params.toString()}`);
       setActiveDropdown(null);
     } finally {

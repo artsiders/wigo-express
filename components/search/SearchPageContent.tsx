@@ -5,6 +5,7 @@ import RideSearchWidget from "@/components/search/RideSearchWidget";
 import RideCard, { RideData } from "@/components/search/RideCard";
 import { IoFilterOutline, IoChevronDown, IoChevronUp } from "react-icons/io5";
 import Alert from "../ui/Alert";
+import RideSearchPopup from "@/components/search/RideSearchPopup";
 
 // Extremely premium random mocked data
 const MOCK_RIDES: RideData[] = [
@@ -233,6 +234,8 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
   const arrivee = typeof params.arrivee === "string" ? params.arrivee : "";
   const dateStr = typeof params.date === "string" ? params.date : "";
 
+  const initialSearchOpen = params.searchOpen === "true";
+
   // Filter mocked rides (naive implementation for demo)
   let filteredRides = MOCK_RIDES;
 
@@ -253,6 +256,7 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
   const displayRides = hasResults ? filteredRides : MOCK_RIDES;
   return (
     <>
+      <RideSearchPopup initialOpen={initialSearchOpen} />
       <div className="w-full border-b border-neutral-100 z-40 pb-6 pt-4 px-4 lg:hidden">
         <div className="mt-4">
           <FiltersDropdown />
