@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
+import AuthProvider from "@/components/providers/AuthProvider";
+
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
@@ -39,7 +41,9 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <NextTopLoader showSpinner={false} color="#4D80C4" />
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -13,8 +13,12 @@ import {
   IoChevronForward,
   IoGlobeOutline,
   IoChevronDownOutline,
+  IoPersonOutline,
+  IoLogOutOutline,
+  IoListOutline,
 } from "react-icons/io5";
 import gsap from "gsap";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Navbar() {
   const tCommon = useTranslations("common");
@@ -23,11 +27,14 @@ export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
+  const { data: session, status } = useSession();
 
   const [langOpen, setLangOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const userMenuRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef(null);
 
   // --- ANIMATION GSAP ---
@@ -68,7 +75,7 @@ export default function Navbar() {
     return () => ctx.revert();
   }, [menuOpen]);
 
-  // Fermeture du dropdown au clic extérieur
+  // Fermeture des dropdowns au clic extérieur
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -77,10 +84,16 @@ export default function Navbar() {
       ) {
         setLangOpen(false);
       }
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(e.target as Node)
+      ) {
+        setUserMenuOpen(false);
+      }
     };
-    if (langOpen) window.addEventListener("mousedown", handleClickOutside);
+    if (langOpen || userMenuOpen) window.addEventListener("mousedown", handleClickOutside);
     return () => window.removeEventListener("mousedown", handleClickOutside);
-  }, [langOpen]);
+  }, [langOpen, userMenuOpen]);
 
   const changeLanguage = (l: string) => {
     startTransition(() => {
@@ -157,12 +170,53 @@ export default function Navbar() {
               )}
             </div>
 
-            <Link
-              href="/register"
-              className="hidden sm:flex bg-primary text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-dark transition-all shadow-lg shadow-primary/20 items-center gap-2"
-            >
-              {tCommon("register")} <IoChevronForward />
-            </Link>
+            {/* Espace Utilisateur (Auth) */}
+            {status === "loading" ? (
+               <div className="w-10 h-10 rounded-full bg-gray-100 animate-pulse hidden sm:block"></div>
+            ) : status === "authenticated" && session.user ? (
+               <div className="relative hidden lg:block" ref={userMenuRef}>
+                 <button 
+                   onClick={() => setUserMenuOpen(!userMenuOpen)}
+                   className="flex items-center gap-2 bg-light-300 p-1.5 pr-4 rounded-full border border-gray-100 font-bold text-sm hover:shadow-md transition-all"
+                 >
+                   <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center overflow-hidden">
+                     {session.user.image ? (
+                       <Image src={session.user.image} alt="Profile" width={32} height={32} />
+                     ) : (
+                       <span>{session.user.name?.[0]?.toUpperCase() || <IoPersonOutline />}</span>
+                     )}
+                   </div>
+                   <span className="max-w-[100px] truncate">{session.user.name?.split(" ")[0]}</span>
+                   <IoChevronDownOutline className={`transition-transform text-neutral-400 ${userMenuOpen ? "rotate-180" : ""}`} />
+                 </button>
+                 
+                 {userMenuOpen && (
+                   <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-50 rounded-2xl shadow-xl p-2 flex flex-col z-50">
+                      <Link href="/my-trajets" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-dark hover:bg-gray-50 rounded-xl transition-colors">
+                         <IoListOutline size={18} className="text-primary" />
+                         Mes trajets
+                      </Link>
+                      <div className="h-px bg-gray-100 my-1 mx-2"></div>
+                      <button onClick={() => signOut()} className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl transition-colors text-left">
+                         <IoLogOutOutline size={18} />
+                         Déconnexion
+                      </button>
+                   </div>
+                 )}
+               </div>
+            ) : (
+               <div className="hidden lg:flex items-center gap-2">
+                 <Link href="/login" className="text-dark font-bold text-sm px-4 py-2 hover:text-primary transition-all">
+                   {tCommon("login")}
+                 </Link>
+                 <Link
+                   href="/register"
+                   className="bg-primary text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-dark transition-all shadow-lg shadow-primary/20 flex items-center gap-2"
+                 >
+                   {tCommon("register")} <IoChevronForward />
+                 </Link>
+               </div>
+            )}
 
             {/* BURGER (Visible UNIQUEMENT < lg) */}
             <button
@@ -239,21 +293,41 @@ export default function Navbar() {
           >
             {tCommon("offerRide")}
           </Link>
-          <Link
-            href="/login"
-            onClick={() => setMenuOpen(false)}
-            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
-          >
-            {tCommon("login")}
-          </Link>
+          {status === "authenticated" && session?.user ? (
+            <>
+              <Link
+                href="/my-trajets"
+                onClick={() => setMenuOpen(false)}
+                className="animate-item text-xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-6 py-3 rounded-full border border-gray-100 bg-white hover:shadow-md"
+              >
+                <IoListOutline /> Mes trajets
+              </Link>
+              <button
+                onClick={() => signOut()}
+                className="animate-item mt-6 bg-red-500 text-white text-lg font-bold px-12 py-4 rounded-full shadow-2xl shadow-red-500/30 flex items-center gap-2"
+              >
+                <IoLogOutOutline /> Déconnexion
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                onClick={() => setMenuOpen(false)}
+                className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-full border border-gray-100 bg-white hover:shadow-md"
+              >
+                {tCommon("login")}
+              </Link>
 
-          <Link
-            href="/register"
-            onClick={() => setMenuOpen(false)}
-            className="animate-item mt-6 bg-primary text-white text-xl font-bold px-12 py-5 rounded-full shadow-2xl shadow-primary/30"
-          >
-            {tCommon("registerMobile")}
-          </Link>
+              <Link
+                href="/register"
+                onClick={() => setMenuOpen(false)}
+                className="animate-item mt-6 bg-primary text-white text-xl font-bold px-12 py-5 rounded-full shadow-2xl shadow-primary/30"
+              >
+                {tCommon("registerMobile")}
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </>

@@ -6,27 +6,21 @@ import OfferWizardLayout from "@/components/offer/OfferWizardLayout";
 import { LuLoaderCircle } from "react-icons/lu";
 import Image from "next/image";
 import gsap from "gsap";
+import { useSession } from "next-auth/react";
 
 export default function OfferRidePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const { status } = useSession();
   const leftColRef = useRef<HTMLDivElement>(null);
 
-  // Vérification basique de l'authentification
   useEffect(() => {
-    const checkAuth = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      const isAuthenticated = localStorage.getItem("auth_token") !== null;
+    if (status === "unauthenticated") {
+      router.push("/login?callbackUrl=/offer");
+    }
+  }, [status, router]);
 
-      if (!isAuthenticated) {
-        setIsCheckingAuth(false);
-      } else {
-        setIsCheckingAuth(false);
-      }
-    };
-    checkAuth();
-  }, [router]);
+  const isCheckingAuth = status === "loading";
 
   const stepParam = searchParams?.get("step");
   const currentStep = stepParam ? parseInt(stepParam, 10) : 1;
