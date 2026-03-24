@@ -116,11 +116,11 @@ export default function RideSearchWidget({
   const isVert = variant === "vertical";
 
   return (
-    <div className="flex flex-col items-start capitalize text-lg gap-2 md:mb-10 w-full max-w-5xl relative z-50">
-      <p className="ml-4 bg-white py-1.5 px-5 rounded-full shadow-sm border border-neutral-100 flex items-center justify-center gap-2 text-dark font-bold text-sm">
+    <div className="flex flex-col items-start capitalize text-lg w-full max-w-5xl relative z-50">
+      <div className="ml-8 bg-white py-2.5 px-5 rounded-t-2xl shadow-[0_-5px_15px_rgba(0,0,0,0.03)] flex items-center justify-center gap-2 text-dark font-bold text-sm relative z-10 translate-y-1">
         <IoSearchOutline size={16} />
         trouver un trajet
-      </p>
+      </div>
       <div
         ref={containerRef}
         className={`search-widget w-full bg-white p-3 md:p-3 shadow-[0_30px_80px_rgba(0,0,0,0.08)] border border-neutral-100 relative
@@ -143,7 +143,7 @@ export default function RideSearchWidget({
                 setActiveDropdown("depart");
               }}
               onFocus={() => setActiveDropdown("depart")}
-              className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-300 placeholder:font-medium truncate pb-0.5"
+              className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-400 placeholder:font-semibold truncate pb-0.5"
             />
           </div>
 
@@ -215,7 +215,7 @@ export default function RideSearchWidget({
                 setActiveDropdown("arrivee");
               }}
               onFocus={() => setActiveDropdown("arrivee")}
-              className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-300 placeholder:font-medium truncate pb-0.5"
+              className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-400 placeholder:font-semibold truncate pb-0.5"
             />
           </div>
 

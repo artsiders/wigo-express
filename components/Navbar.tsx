@@ -107,7 +107,7 @@ export default function Navbar() {
     <>
       <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[96%] container px-4 z-100 flex justify-between items-start pointer-events-none">
         {/* LEFT PILL */}
-        <div className="pointer-events-auto relative z-10 px-4 sm:px-6 py-3 flex items-center justify-between lg:justify-start gap-8 bg-white/90 backdrop-blur-xl rounded-2xl md:rounded-3xl border border-black/5 shadow-xl transition-all">
+        <div className="pointer-events-auto relative z-10 px-4 sm:px-6 h-16 flex items-center justify-between lg:justify-start gap-8 bg-white/90 backdrop-blur-xl rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
           {/* LOGO */}
           <Link href="/" className="shrink-0 transition-transform flex items-center">
             <Image
@@ -121,22 +121,22 @@ export default function Navbar() {
           </Link>
 
           {/* DESKTOP NAV (Cachée sur mobile) */}
-          <div className="hidden lg:flex gap-2 items-center text-sm font-semibold text-dark-700">
+          <div className="hidden lg:flex gap-2 items-center text-sm font-bold text-dark-800">
             <Link
               href="/#comment-ca-marche"
-              className="hover:text-primary text-dark transition-all px-3 py-2 rounded-xl hover:bg-primary/5 text-sm font-semibold"
+              className="hover:text-primary text-dark transition-all px-3 py-2 rounded-xl hover:bg-primary/5 text-sm font-bold"
             >
               {t("howItWorks")}
             </Link>
             <Link
               href="/search?searchOpen=true"
-              className="hover:text-primary text-dark transition-all px-3 py-2 rounded-xl hover:bg-primary/5 text-sm font-semibold"
+              className="hover:text-primary text-dark transition-all px-3 py-2 rounded-xl hover:bg-primary/5 text-sm font-bold"
             >
               {tCommon("searchRide")}
             </Link>
             <Link
               href="/offer"
-              className="hover:text-primary text-dark transition-all px-3 py-2 rounded-xl hover:bg-primary/5 text-sm font-semibold"
+              className="hover:text-primary text-dark transition-all px-3 py-2 rounded-xl hover:bg-primary/5 text-sm font-bold"
             >
               {tCommon("offerRide")}
             </Link>
@@ -172,8 +172,8 @@ export default function Navbar() {
         </div>
 
         {/* RIGHT PILL */}
-        <div className="pointer-events-auto relative z-10 px-2 py-2 flex gap-3 items-center bg-white/90 backdrop-blur-xl rounded-2xl md:rounded-3xl border border-black/5 shadow-xl transition-all">
-          <div className="flex items-center">
+        <div className="pointer-events-auto relative z-10 px-2 h-16 flex gap-3 items-center bg-white/90 backdrop-blur-xl rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
+          <div className="flex items-center h-full">
             {status === "loading" ? (
               <div className="w-10 h-10 rounded-full bg-gray-100 animate-pulse hidden sm:block mx-2"></div>
             ) : status === "authenticated" && session.user ? (

@@ -88,7 +88,7 @@ export default function HeroSection() {
       <div className="relative w-full container mx-auto min-h-[85vh] md:min-h-[80vh] flex flex-col p-6 md:p-12 lg:p-20 hero-floating-img group z-20">
         
         {/* Inner Wrapper for the background to be clipped but allow floating cards to break out */}
-        <div className="absolute inset-0 rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-black/5 z-0">
+        <div className="absolute inset-0 rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-black/5 z-0">
           {/* Abstract shapes behind container if needed */}
           <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[140px] pointer-events-none -translate-y-1/2 translate-x-1/4 z-0"></div>
           <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/20 rounded-full blur-[100px] pointer-events-none z-0"></div>
@@ -112,8 +112,8 @@ export default function HeroSection() {
         <div className="relative z-10 w-full flex flex-col h-full justify-between flex-1">
           <div className="max-w-xl lg:max-w-2xl mt-16 md:mt-24 lg:mt-32 text-left">
             {/* Tag */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest mb-6 shadow-xl hero-text-elem text-left">
-              <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse"></span>
+            <div className="max-w-lg p-3 md:p-4 rounded-xl bg-dark-900/60 backdrop-blur-md border border-white/10 text-white/90 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-6 md:mb-8 shadow-xl hero-text-elem text-left leading-relaxed">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse mr-2 align-middle"></span>
               {t("heroSubtitle")}
             </div>
 
@@ -136,9 +136,9 @@ export default function HeroSection() {
         {/* Floating cards repositioned */}
 
         {/* Floating UI Card 1: Verified Profile */}
-        <div className="floating-card absolute right-6 md:right-12 lg:right-20 top-20 z-20 bg-white/90 backdrop-blur-xl p-4 md:p-5 rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.12)] border border-white/60 w-56 md:w-64 text-left hidden lg:block">
+        <div className="floating-card absolute right-4 md:right-10 lg:right-12 top-16 z-20 bg-white/95 backdrop-blur-xl p-4 md:p-5 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.15)] border border-white/60 w-[240px] md:w-[260px] text-left hidden lg:flex flex-col">
           <div className="flex items-center gap-3 mb-3">
-            <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shadow-md shrink-0">
+            <div className="relative w-10 h-10 md:w-11 md:h-11 rounded-full overflow-hidden shadow-md shrink-0 border border-black/5">
               <Image
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
                 fill
@@ -147,17 +147,17 @@ export default function HeroSection() {
               />
             </div>
             <div>
-              <h4 className="text-sm md:text-base font-bold text-dark leading-tight mb-1">
+              <h4 className="text-sm md:text-base font-bold text-dark leading-tight mb-0.5">
                 {t("verifiedProfile")}
               </h4>
-              <p className="text-xs font-bold flex items-center gap-1 uppercase tracking-wider text-dark-600">
-                <IoShieldCheckmarkOutline className="text-base text-green-600 " />{" "}
+              <p className="text-[10px] md:text-xs font-bold flex items-center gap-1 uppercase tracking-widest text-dark-600">
+                <IoShieldCheckmarkOutline className="text-sm text-green-600 " />
                 {t("wigoIdentity")}
               </p>
             </div>
           </div>
-          <div className="bg-light rounded-xl p-3 flex justify-between items-center border border-black/5 shadow-inner">
-            <span className="text-xs text-neutral-600 font-medium">
+          <div className="bg-light rounded-xl p-3 flex justify-between items-center border border-black/5 shadow-inner mt-auto">
+            <span className="text-[10px] md:text-xs text-neutral-600 font-medium tracking-wide">
               {t("globalRating")}
             </span>
             <span className="text-xs font-bold text-dark flex items-center gap-1">
@@ -167,46 +167,46 @@ export default function HeroSection() {
         </div>
 
         {/* Floating UI Card 2: Instant Payment */}
-        <div className="floating-card absolute -right-4 md:right-0 lg:-right-4 top-[50%] z-30 bg-dark/95 backdrop-blur-xl p-5 md:p-6 rounded-xl shadow-[0_30px_60px_rgba(37,99,235,0.15)] border border-neutral-800/80 w-48 text-left hidden xl:block">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
+        <div className="floating-card absolute right-4 md:right-10 lg:right-12 top-[45%] z-30 bg-dark/95 backdrop-blur-xl p-5 md:p-5 rounded-2xl shadow-[0_30px_60px_rgba(37,99,235,0.15)] border border-neutral-800/80 w-[240px] md:w-[260px] text-left hidden xl:flex flex-col">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 md:w-11 md:h-11 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
               <IoWalletOutline className="text-lg md:text-xl" />
             </div>
-            <h4 className="text-xs md:text-sm font-bold text-white uppercase tracking-widest">
+            <h4 className="text-[10px] md:text-xs font-bold text-white uppercase tracking-widest leading-tight">
               {t("wigoPayment")}
             </h4>
           </div>
-          <p className="text-3xl md:text-4xl font-black text-white mb-2 leading-none">
+          <p className="text-3xl md:text-4xl font-black text-white mb-2 flex items-baseline leading-none">
             45
-            <span className="text-xl md:text-2xl text-neutral-500">
+            <span className="text-xl md:text-2xl text-neutral-500 ml-1">
               .00 $
             </span>
           </p>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-white"></div>
-            <p className="text-xs text-neutral-300 font-medium">
+          <div className="flex items-center gap-2 mt-auto pt-3 border-t border-neutral-800">
+            <div className="w-1.5 h-1.5 rounded-full bg-white opacity-80"></div>
+            <p className="text-[10px] md:text-xs text-neutral-300 font-medium tracking-wide">
               {t("receivedJustNow")}
             </p>
           </div>
         </div>
 
         {/* Floating UI Card 3: Route Match */}
-        <div className="floating-card absolute right-10 bottom-32 md:bottom-28 lg:bottom-40 z-30 bg-white/90 backdrop-blur-xl p-4 md:p-5 rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.12)] border border-white/60 w-56 md:w-64 text-left hidden lg:block">
-          <div className="bg-primary-500/10 mb-4 text-primary-600 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl uppercase tracking-widest w-max">
+        <div className="floating-card absolute right-4 md:right-10 lg:right-12 bottom-20 lg:bottom-40 z-30 bg-white/95 backdrop-blur-xl p-4 md:p-5 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.15)] border border-white/60 w-[240px] md:w-[260px] text-left hidden lg:flex flex-col">
+          <div className="bg-primary-500/10 mb-3 text-primary-700 text-[10px] font-bold px-3 py-1.5 rounded-lg uppercase tracking-widest w-max">
             {t("perfectMatch")}
           </div>
 
-          <div className="space-y-4 relative ml-1">
+          <div className="space-y-3 relative ml-1 mt-auto">
             <div className="absolute left-[7px] md:left-[9px] top-2 bottom-2 w-0.5 bg-neutral-200"></div>
             <div className="flex items-center gap-4 relative z-10">
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-primary ring-4 ring-white shadow-sm shrink-0"></div>
-              <p className="text-sm md:text-base font-bold text-dark">
+              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-primary ring-4 ring-white shadow-sm shrink-0 mt-0.5"></div>
+              <p className="text-xs md:text-sm font-bold text-dark">
                 Montréal, QC
               </p>
             </div>
             <div className="flex items-center gap-4 relative z-10">
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-dark ring-4 ring-white shadow-sm shrink-0"></div>
-              <p className="text-sm md:text-base font-bold text-dark">
+              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-dark ring-4 ring-white shadow-sm shrink-0 mt-0.5"></div>
+              <p className="text-xs md:text-sm font-bold text-dark">
                 Québec, QC
               </p>
             </div>
