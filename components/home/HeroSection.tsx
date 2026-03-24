@@ -73,7 +73,7 @@ export default function HeroSection() {
             duration: 1,
             ease: "back.out(1.2)",
           },
-          index === 0 ? "-=0.5" : "-=0.8"
+          index === 0 ? "-=0.5" : "-=0.8",
         );
       });
     },
@@ -86,7 +86,6 @@ export default function HeroSection() {
       className="relative w-full pt-2 pb-10 px-4 md:px-6 lg:px-8 flex flex-col items-center justify-center bg-[url(/images/bg-texture.png)]"
     >
       <div className="relative w-full container mx-auto min-h-[85vh] md:min-h-[80vh] flex flex-col p-6 md:p-12 lg:p-20 hero-floating-img group z-20">
-        
         {/* Inner Wrapper for the background to be clipped but allow floating cards to break out */}
         <div className="absolute inset-0 rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-black/5 z-0">
           {/* Abstract shapes behind container if needed */}
@@ -94,7 +93,10 @@ export default function HeroSection() {
           <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/20 rounded-full blur-[100px] pointer-events-none z-0"></div>
 
           {/* Background Image */}
-          <div className="absolute inset-0 z-0 float-parallax" data-speed="0.15">
+          <div
+            className="absolute inset-0 z-0 float-parallax"
+            data-speed="0.15"
+          >
             <Image
               src="/images/close-up-group-friends-traveling-car-concept-speed.webp"
               alt="Hero Background"
@@ -103,7 +105,7 @@ export default function HeroSection() {
               priority
             />
           </div>
-          
+
           {/* Dark gradient overlay for readability */}
           <div className="absolute inset-0 bg-linear-to-r from-dark-900/95 via-dark-900/60 to-black/20 z-0 pointer-events-none"></div>
         </div>
@@ -111,20 +113,18 @@ export default function HeroSection() {
         {/* Content Container */}
         <div className="relative z-10 w-full flex flex-col h-full justify-between flex-1">
           <div className="max-w-xl lg:max-w-2xl mt-16 md:mt-24 lg:mt-32 text-left">
-            {/* Tag */}
-            <div className="max-w-lg p-3 md:p-4 rounded-xl bg-dark-900/60 backdrop-blur-md border border-white/10 text-white/90 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-6 md:mb-8 shadow-xl hero-text-elem text-left leading-relaxed">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse mr-2 align-middle"></span>
-              {t("heroSubtitle")}
-            </div>
-
             {/* Headline */}
-            <h1 className="hero-text-elem text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black text-white leading-[1.1] mb-6 drop-shadow-lg text-left">
-              {t("heroTitle1")} <br />
+            <h1 className="hero-text-elem text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-6 text-white leading-tight reveal-fade text-left">
+              {t("heroTitle1")}{" "}
               <span className="text-primary-400 block lg:inline">
                 {t("heroTitle2")} <br className="lg:hidden" />
                 {t("heroTitle3")}
               </span>
             </h1>
+            {/* Tag */}
+            <div className="max-w-lg py-3 md:py-4 px-4 md:px-5 rounded-xl border border-white/10 bg-white text-base font-semibold tracking-widest shadow-xl hero-text-elem text-left">
+              {t("heroSubtitle")}
+            </div>
           </div>
 
           {/* Search Widget Container */}
@@ -212,7 +212,6 @@ export default function HeroSection() {
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

@@ -107,9 +107,12 @@ export default function Navbar() {
     <>
       <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[96%] container px-4 z-100 flex justify-between items-start pointer-events-none">
         {/* LEFT PILL */}
-        <div className="pointer-events-auto relative z-10 px-4 sm:px-6 h-16 flex items-center justify-between lg:justify-start gap-8 bg-white/90 backdrop-blur-xl rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
+        <div className="pointer-events-auto relative z-10 px-4 sm:px-6 h-16 flex items-center justify-between lg:justify-start gap-8 bg-white rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
           {/* LOGO */}
-          <Link href="/" className="shrink-0 transition-transform flex items-center">
+          <Link
+            href="/"
+            className="shrink-0 transition-transform flex items-center"
+          >
             <Image
               src="/images/logo.webp"
               alt="Logo"
@@ -141,7 +144,7 @@ export default function Navbar() {
               {tCommon("offerRide")}
             </Link>
           </div>
-            
+
           {/* Langue Desktop Only */}
           <div className="relative hidden lg:block" ref={dropdownRef}>
             <button
@@ -172,7 +175,7 @@ export default function Navbar() {
         </div>
 
         {/* RIGHT PILL */}
-        <div className="pointer-events-auto relative z-10 px-2 h-16 flex gap-3 items-center bg-white/90 backdrop-blur-xl rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
+        <div className="pointer-events-auto relative z-10 px-2 h-16 flex gap-3 items-center bg-white rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
           <div className="flex items-center h-full">
             {status === "loading" ? (
               <div className="w-10 h-10 rounded-full bg-gray-100 animate-pulse hidden sm:block mx-2"></div>
@@ -235,7 +238,10 @@ export default function Navbar() {
                 >
                   {tCommon("login")}
                 </Link>
-                <Link href="/register" className="btn-secondary flex items-center justify-center gap-1 py-2 rounded-xl! text-sm shadow-md">
+                <Link
+                  href="/register"
+                  className="btn-secondary flex items-center justify-center gap-1 py-2 rounded-xl! text-sm shadow-md"
+                >
                   {tCommon("register")} <IoChevronForward />
                 </Link>
               </div>
