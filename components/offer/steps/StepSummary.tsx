@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { LuLoaderCircle } from "react-icons/lu";
 import { useOfferStore } from "@/store/useOfferStore";
+import { Link } from "@/i18n/routing";
 
-export default function StepSummary({ onBack }: { onBack: () => void }) {
+export default function StepSummary() {
   const { departure, arrival, date, time, seats, price, resetOffer } = useOfferStore();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -27,12 +28,12 @@ export default function StepSummary({ onBack }: { onBack: () => void }) {
             </div>
             <h2 className="text-3xl font-black text-dark mb-4">Trajet Publié !</h2>
             <p className="text-neutral-500 font-medium mb-8">Votre trajet est maintenant en ligne. Les passagers peuvent commencer à réserver !</p>
-            <button 
-                onClick={() => window.location.href = "/"}
+            <Link
+                href={"/my-trajets"}
                 className="px-8 py-4 bg-dark text-white rounded-full font-bold hover:bg-primary transition-all"
             >
-                Retour à l'accueil
-            </button>
+                Voir mes trajets
+            </Link>
         </div>
     )
   }

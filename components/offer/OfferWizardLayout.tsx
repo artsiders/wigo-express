@@ -13,7 +13,9 @@ interface OfferWizardLayoutProps {
   currentStep: number;
 }
 
-export default function OfferWizardLayout({ currentStep }: OfferWizardLayoutProps) {
+export default function OfferWizardLayout({
+  currentStep,
+}: OfferWizardLayoutProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -27,11 +29,11 @@ export default function OfferWizardLayout({ currentStep }: OfferWizardLayoutProp
       // Petite animation de slide/fade à chaque changement d'étape
       if (currentStep !== prevStep && containerRef.current) {
         const direction = currentStep > prevStep ? 30 : -30;
-        
+
         gsap.fromTo(
           containerRef.current,
           { opacity: 0, x: direction },
-          { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }
+          { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" },
         );
         setPrevStep(currentStep);
       }
@@ -46,7 +48,7 @@ export default function OfferWizardLayout({ currentStep }: OfferWizardLayoutProp
       gsap.fromTo(
         ".wizard-header",
         { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
       );
     });
     return () => ctx.revert();
@@ -79,16 +81,16 @@ export default function OfferWizardLayout({ currentStep }: OfferWizardLayoutProp
       case 2:
         return <StepOptionsAndPrice onNext={handleNext} />;
       case 3:
-        return <StepSummary onBack={handleBack} />;
+        return <StepSummary />;
       default:
         return <StepRouteAndDate onNext={handleNext} />;
     }
   };
 
   return (
-    <div className="w-full bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 overflow-hidden relative">
+    <div className="w-full bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 flex flex-col relative min-h-[600px]">
       {/* Header & Progression */}
-      <div className="wizard-header px-8 lg:px-14 pt-8 lg:pt-10 pb-6 border-b border-light-400 bg-white z-10 sticky top-0">
+      <div className="wizard-header px-8 lg:px-14 pt-8 lg:pt-10 pb-6 border-b border-light-400 z-10 sticky top-0">
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={handleBack}
@@ -117,10 +119,7 @@ export default function OfferWizardLayout({ currentStep }: OfferWizardLayoutProp
       </div>
 
       {/* Contenu de l'étape */}
-      <div 
-        ref={containerRef} 
-        className="p-8 lg:p-14 min-h-[50vh]"
-      >
+      <div ref={containerRef} className="p-8 lg:p-14 flex-1 flex flex-col">
         {renderStep()}
       </div>
     </div>
