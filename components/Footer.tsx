@@ -45,7 +45,7 @@ export default function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-primary/20 rounded-full blur-[150px] pointer-events-none opacity-50"></div>
 
       <div className="footer-content container mx-auto px-6 pt-20 md:pt-28 pb-8 flex flex-col h-full relative z-10">
-        <div className="flex flex-col xl:flex-row justify-between items-start gap-16 flex-1 border-b border-white/15 pb-20">
+        <div className="flex flex-col xl:flex-row justify-between items-start gap-4 md:gap-16 flex-1 border-b border-white/15 pb-6 md:pb-20">
           {/* Brand & Mission */}
           <div className="xl:w-5/12 flex flex-col items-start pr-0 md:pr-10">
             {/* Logo */}
@@ -59,7 +59,7 @@ export default function Footer() {
                 priority
               />
             </Link>
-            <p className="text-neutral-300 text-lg md:text-xl font-light mb-10 max-w-sm leading-relaxed mt-6">
+            <p className="text-neutral-300 text-lg md:text-xl font-light m:mb-10 max-w-sm leading-relaxed mt-2 md:mt-6">
               {tFooter("mission")}
             </p>
           </div>

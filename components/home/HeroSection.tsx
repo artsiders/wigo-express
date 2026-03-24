@@ -210,7 +210,7 @@ export default function HeroSection() {
           </div>
 
           {/* Search Widget Container */}
-          <div className="w-full mt-auto mb-4  md:pt-12 relative z-30 search-widget container mx-auto flex flex-col items-center lg:px-6">
+          <div className="w-full mt-auto mb-0  md:pt-12 relative z-30 search-widget container mx-auto flex flex-col items-center lg:px-6">
             <RideSearchWidget variant="horizontal" />
           </div>
         </div>

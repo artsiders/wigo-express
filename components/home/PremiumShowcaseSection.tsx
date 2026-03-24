@@ -61,7 +61,7 @@ export default function PremiumShowcaseSection() {
               Wigo Express...
             </span>
           </h2>
-          <p className="text-neutral-300 text-lg md:text-xl font-normal max-w-3xl mx-auto">
+          <p className="text-neutral-600 text-lg md:text-xl font-normal max-w-3xl mx-auto">
             Voyagez dans de meilleures conditions. Sur Wigo, vous choisissez le
             véhicule qui vous convient, et vous savez exactement dans quel
             confort vous allez rouler.
@@ -69,10 +69,10 @@ export default function PremiumShowcaseSection() {
         </div>
 
         {/* Web Data Grid / Showcase */}
-        <div className="w-full max-w-6xl mx-auto bg-dark rounded-3xl squircle border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-center">
+        <div className="w-full max-w-6xl mx-auto bg-dark rounded-2xl squircle border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-center">
           {/* Text / Data part */}
           <div className="w-full lg:w-1/2">
-            <div className="bg-white/10 border border-white/10 rounded-2xl p-6 mb-6">
+            <div className="bg-white/10 border border-white/10 rounded-lg p-6 mb-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-white font-bold text-xl">
                   Trajet : Montréal → Québec
@@ -131,7 +131,7 @@ export default function PremiumShowcaseSection() {
               src="/images/wigo-express-red-card.jpg"
               alt="Vue d'une Tesla Model 3 noire, style studio premium sombre. Véhicule typique du covoiturage haut de gamme proposé sur la plateforme."
               fill
-              className="object-cover transition-transform duration-1000 ease-out rounded-2xl"
+              className="object-cover transition-transform duration-1000 ease-out rounded-lg"
             />
           </div>
         </div>
