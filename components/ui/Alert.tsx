@@ -83,7 +83,7 @@ export default function Alert({
         className="relative z-10 w-12 h-12 rounded-full bg-white ring-4 ring-white border border-dark/5 flex items-center justify-center shrink-0 mt-0.5"
         style={{ boxShadow: config.shadow }}
       >
-        <Icon className={`text-[24px] ${config.iconColor}`} />
+        <Icon className={`text-xl ${config.iconColor}`} />
       </div>
 
       {/* Content */}
