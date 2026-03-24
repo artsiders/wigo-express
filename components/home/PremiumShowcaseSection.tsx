@@ -61,7 +61,7 @@ export default function PremiumShowcaseSection() {
               Wigo Express...
             </span>
           </h2>
-          <p className="text-neutral-400 text-lg md:text-xl font-light max-w-3xl mx-auto">
+          <p className="text-neutral-300 text-lg md:text-xl font-normal max-w-3xl mx-auto">
             Voyagez dans de meilleures conditions. Sur Wigo, vous choisissez le
             véhicule qui vous convient, et vous savez exactement dans quel
             confort vous allez rouler.
@@ -69,7 +69,7 @@ export default function PremiumShowcaseSection() {
         </div>
 
         {/* Web Data Grid / Showcase */}
-        <div className="w-full max-w-6xl mx-auto bg-dark rounded-[2.5rem] squircle border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-center">
+        <div className="w-full max-w-6xl mx-auto bg-dark rounded-3xl squircle border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-center">
           {/* Text / Data part */}
           <div className="w-full lg:w-1/2">
             <div className="bg-white/10 border border-white/10 rounded-2xl p-6 mb-6">
@@ -94,7 +94,7 @@ export default function PremiumShowcaseSection() {
                 <div>
                   <p className="text-white font-bold text-sm">
                     Marc D.{" "}
-                    <span className="text-neutral-400 font-normal">★ 4.9</span>
+                    <span className="text-neutral-300 font-normal">★ 4.9</span>
                   </p>
                   <p className="text-primary text-xs font-bold uppercase tracking-widest mt-1">
                     <IoShieldCheckmarkOutline className="inline mr-1" />
@@ -105,7 +105,7 @@ export default function PremiumShowcaseSection() {
 
               <div className="border-t border-white/10 pt-4 flex justify-between items-end">
                 <div>
-                  <p className="text-neutral-400 text-xs mb-1">Véhicule</p>
+                  <p className="text-neutral-300 text-xs mb-1">Véhicule</p>
                   <p className="text-white font-bold px-3 py-1 bg-white/10 rounded-lg inline-block text-sm">
                     Tesla Model 3 • Noire
                   </p>
@@ -114,7 +114,7 @@ export default function PremiumShowcaseSection() {
                   <strong className="text-3xl font-black text-white">
                     45 $
                   </strong>
-                  <p className="text-neutral-500 text-xs">/ passager</p>
+                  <p className="text-neutral-400 text-xs">/ passager</p>
                 </div>
               </div>
             </div>

@@ -57,37 +57,37 @@ export default function DriverPitchSection() {
             {t("driverTitle1")} <br />
             <span className="text-primary-gradient">{t("driverTitle2")}</span>
           </h2>
-          <p className="text-neutral-500 text-lg md:text-xl font-medium max-w-2xl mx-auto reveal-fade">
+          <p className="text-neutral-600 text-lg md:text-xl font-semibold max-w-2xl mx-auto reveal-fade">
             {t("driverDesc")}
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10 w-full max-w-7xl">
           {/* Card 1 */}
-          <div className="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-500 reveal-fade relative overflow-hidden group">
-            <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10 border border-primary/40">
+          <div className="glass-panel rounded-2xl p-8 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-500 reveal-fade relative overflow-hidden group">
+            <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-10 border border-primary/40">
               <IoWalletOutline className="w-7 h-7" />
             </div>
             <div>
               <h3 className="text-2xl font-bold text-dark mb-4 tracking-tight">
                 {t("driverCard1Title")}
               </h3>
-              <p className="text-neutral-500 font-medium leading-relaxed">
+              <p className="text-neutral-600 font-medium leading-relaxed">
                 {t("driverCard1Desc")}
               </p>
             </div>
           </div>
 
           {/* Card 2 : Highlighted Digital Experience */}
-          <div className="bg-dark-900 text-white rounded-[2.5rem] squircle p-8 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.2)] md:-translate-y-6 hover:-translate-y-8 transition-transform duration-500 reveal-fade relative overflow-hidden border border-white/10">
-            <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-10 border border-white/20 relative z-10">
+          <div className="bg-dark-900 text-white rounded-3xl squircle p-8 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.2)] md:-translate-y-6 hover:-translate-y-8 transition-transform duration-500 reveal-fade relative overflow-hidden border border-white/10">
+            <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center text-white mb-10 border border-white/20 relative z-10">
               <IoShieldCheckmarkOutline className="w-7 h-7" />
             </div>
             <div className="relative z-10">
               <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">
                 {t("driverCard2Title")}
               </h3>
-              <p className="text-neutral-400 font-medium leading-relaxed mb-6">
+              <p className="text-neutral-300 font-medium leading-relaxed mb-6">
                 {t("driverCard2Desc")}
               </p>
               <div className="w-full flex -space-x-3">
@@ -113,15 +113,15 @@ export default function DriverPitchSection() {
           </div>
 
           {/* Card 3 */}
-          <div className="glass-panel rounded-3xl p-8 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-500 reveal-fade relative overflow-hidden group">
-            <div className="w-14 h-14 bg-yellow-400/10 rounded-2xl flex items-center justify-center text-yellow-600 mb-10 border border-yellow-700/40">
+          <div className="glass-panel rounded-2xl p-8 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-500 reveal-fade relative overflow-hidden group">
+            <div className="w-14 h-14 bg-yellow-400/10 rounded-xl flex items-center justify-center text-yellow-600 mb-10 border border-yellow-700/40">
               <IoCalendarOutline className="w-7 h-7" />
             </div>
             <div>
               <h3 className="text-2xl font-bold text-dark mb-4 tracking-tight">
                 {t("driverCard3Title")}
               </h3>
-              <p className="text-neutral-500 font-medium leading-relaxed">
+              <p className="text-neutral-600 font-medium leading-relaxed">
                 {t("driverCard3Desc")}
               </p>
             </div>

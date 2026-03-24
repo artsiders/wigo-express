@@ -40,7 +40,7 @@ interface RideCardProps {
 
 export default function RideCard({ ride }: RideCardProps) {
   return (
-    <Link href={`/ride/${ride.id}`} className="bg-white rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(37,99,235,0.08)] border border-neutral-100 hover:border-primary/20 transition-all duration-300 block w-full group cursor-pointer relative overflow-hidden">
+    <Link href={`/ride/${ride.id}`} className="bg-white rounded-2xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(37,99,235,0.08)] border border-neutral-100 hover:border-primary/20 transition-all duration-300 block w-full group cursor-pointer relative overflow-hidden">
       {/* Premium subtle background glow */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[50px] pointer-events-none group-hover:bg-primary/20 transition-colors"></div>
 
@@ -53,7 +53,7 @@ export default function RideCard({ ride }: RideCardProps) {
               {ride.departure.time}
             </span>
             <div className="flex-1 w-0.5 bg-neutral-200 my-2 relative">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-neutral-400 font-bold bg-white py-1">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs text-neutral-500 font-bold bg-white py-1">
                 {ride.duration}
               </div>
             </div>
@@ -68,7 +68,7 @@ export default function RideCard({ ride }: RideCardProps) {
               <h3 className="text-lg font-bold text-dark leading-none">
                 {ride.departure.city}
               </h3>
-              <p className="text-sm text-neutral-500 font-medium">
+              <p className="text-sm text-neutral-600 font-medium">
                 {ride.departure.place}
               </p>
             </div>
@@ -76,7 +76,7 @@ export default function RideCard({ ride }: RideCardProps) {
               <h3 className="text-lg font-bold text-dark leading-none">
                 {ride.arrival.city}
               </h3>
-              <p className="text-sm text-neutral-500 font-medium">
+              <p className="text-sm text-neutral-600 font-medium">
                 {ride.arrival.place}
               </p>
             </div>
@@ -93,7 +93,7 @@ export default function RideCard({ ride }: RideCardProps) {
             <p className="text-3xl font-black text-primary leading-none group-hover:scale-105 transition-transform origin-right">
               {ride.price} <span className="text-lg">{ride.currency}</span>
             </p>
-            <p className="text-xs font-bold text-neutral-400 mt-1 uppercase tracking-wider flex justify-start gap-2 items-center">
+            <p className="text-xs font-bold text-neutral-500 mt-1 uppercase tracking-wider flex justify-start gap-2 items-center">
               <IoCashOutline size={14} /> par place
             </p>
           </div>
@@ -140,7 +140,7 @@ export default function RideCard({ ride }: RideCardProps) {
             </span>
           )}
         </div>
-        <p className="text-xs font-bold text-neutral-500">
+        <p className="text-xs font-bold text-neutral-600">
           {ride.seatsAvailable} {ride.seatsAvailable > 1 ? "places" : "place"}
         </p>
       </div>

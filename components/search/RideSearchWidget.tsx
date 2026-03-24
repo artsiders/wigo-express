@@ -124,14 +124,14 @@ export default function RideSearchWidget({
       <div
         ref={containerRef}
         className={`search-widget w-full bg-white p-3 md:p-3 shadow-[0_30px_80px_rgba(0,0,0,0.08)] border border-neutral-100 relative
-        ${isVert ? "flex flex-col gap-2 rounded-4xl squircle" : "max-w-5xl rounded-4xl flex flex-col lg:flex-row items-center gap-2"}
+        ${isVert ? "flex flex-col gap-2 rounded-2xl squircle" : "max-w-5xl rounded-2xl flex flex-col lg:flex-row items-center gap-2"}
       `}
       >
         {/* Departure Input */}
-        <div className="relative flex-1 w-full bg-light-400 rounded-3xl min-h-16 h-[80px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
-          <IoLocationOutline className="text-xl text-neutral-400 group-focus-within:text-primary transition-colors shrink-0" />
+        <div className="relative flex-1 w-full bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
+          <IoLocationOutline className="text-xl text-neutral-500 group-focus-within:text-primary transition-colors shrink-0" />
           <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-            <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
+            <span className="block text-xs font-bold text-neutral-500 uppercase tracking-widest mt-0.5">
               Départ
             </span>
             <input
@@ -149,7 +149,7 @@ export default function RideSearchWidget({
 
           {/* Autocomplete Dropdown */}
           {activeDropdown === "depart" && (
-            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
+            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
               <div className="p-2 max-h-56 overflow-y-hidden">
                 <span className="block px-4 py-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
                   Suggestions
@@ -199,11 +199,11 @@ export default function RideSearchWidget({
 
         {/* Arrival Input */}
         <div
-          className={`relative flex-1 w-full bg-light-400 rounded-3xl min-h-16 h-[80px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0 ${!isVert ? "mt-2 lg:mt-0" : "mt-0"}`}
+          className={`relative flex-1 w-full bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0 ${!isVert ? "mt-2 lg:mt-0" : "mt-0"}`}
         >
-          <IoMapOutline className="text-xl text-neutral-400 group-focus-within:text-primary transition-colors shrink-0" />
+          <IoMapOutline className="text-xl text-neutral-500 group-focus-within:text-primary transition-colors shrink-0" />
           <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-            <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
+            <span className="block text-xs font-bold text-neutral-500 uppercase tracking-widest mt-0.5">
               Arrivée
             </span>
             <input
@@ -221,7 +221,7 @@ export default function RideSearchWidget({
 
           {/* Autocomplete Dropdown */}
           {activeDropdown === "arrivee" && (
-            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
+            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
               <div className="p-2 max-h-56 overflow-y-hidden">
                 <span className="block px-4 py-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
                   Suggestions
@@ -262,14 +262,14 @@ export default function RideSearchWidget({
             onClick={() =>
               setActiveDropdown(activeDropdown === "date" ? null : "date")
             }
-            className={`flex-1 ${!isVert ? "lg:w-[150px]" : ""} bg-light-400 rounded-3xl min-h-16 h-16 md:h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
+            className={`flex-1 ${!isVert ? "lg:w-[150px]" : ""} bg-light-400 rounded-xl min-h-16 h-16 md:h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
             ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
           >
             <IoCalendarOutline
-              className={`text-xl shrink-0 ${activeDropdown === "date" ? "text-primary" : "text-neutral-400"}`}
+              className={`text-xl shrink-0 ${activeDropdown === "date" ? "text-primary" : "text-neutral-500"}`}
             />
             <div className="ml-2.5 text-left w-full overflow-hidden flex flex-col justify-center h-full">
-              <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
+              <span className="block text-[10px] md:text-xs font-bold text-neutral-500 uppercase tracking-widest mt-0.5">
                 Quand ?
               </span>
               <span className="block text-[13px] font-bold truncate text-dark pb-0.5">
@@ -296,14 +296,14 @@ export default function RideSearchWidget({
             onClick={() =>
               setActiveDropdown(activeDropdown === "seats" ? null : "seats")
             }
-            className={`flex-1 ${!isVert ? "lg:w-[110px] h-16 lg:h-[80px]" : "h-16 lg:h-16"} bg-light-400 rounded-3xl min-h-16 flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
+            className={`flex-1 ${!isVert ? "lg:w-[110px] h-16 lg:h-[80px]" : "h-16 lg:h-16"} bg-light-400 rounded-xl min-h-16 flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-transparent shrink-0
             ${activeDropdown === "seats" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
           >
             <IoPersonOutline
-              className={`text-xl shrink-0 ${activeDropdown === "seats" ? "text-primary" : "text-neutral-400"}`}
+              className={`text-xl shrink-0 ${activeDropdown === "seats" ? "text-primary" : "text-neutral-500"}`}
             />
             <div className="ml-2.5 text-left flex flex-col justify-center h-full">
-              <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
+              <span className="block text-[10px] md:text-xs font-bold text-neutral-500 uppercase tracking-widest mt-0.5">
                 places
               </span>
               <span className="block text-[13px] font-bold text-dark pb-0.5">
@@ -315,7 +315,7 @@ export default function RideSearchWidget({
           {/* Seats Popover */}
           {activeDropdown === "seats" && (
             <div
-              className={`absolute top-full border border-neutral-100 ${isVert ? "left-0" : "right-0"} mt-4 bg-white p-4 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] outline-none w-[180px] z-50`}
+              className={`absolute top-full border border-neutral-100 ${isVert ? "left-0" : "right-0"} mt-4 bg-white p-4 rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] outline-none w-[180px] z-50`}
             >
               <div className="flex flex-col gap-3 items-start mb-2">
                 <span className="text-dark font-bold text-sm text-left">
@@ -359,7 +359,7 @@ export default function RideSearchWidget({
           onClick={handleSearch}
           className={`w-full ${
             !isVert ? "lg:w-[80px] lg:h-[80px]" : ""
-          } h-16 ${!isVert ? "mt-2 lg:mt-0" : "mt-2"} btn-secondary rounded-3xl flex justify-center items-center active:scale-[0.98] transition-transform shrink-0`}
+          } h-16 ${!isVert ? "mt-2 lg:mt-0" : "mt-2"} btn-secondary rounded-xl flex justify-center items-center active:scale-[0.98] transition-transform shrink-0`}
           disabled={loading}
         >
           {loading ? (

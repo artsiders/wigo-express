@@ -39,7 +39,7 @@ export default function Footer() {
   return (
     <footer
       ref={container as any}
-      className="footer-wrapper relative z-0 bg-dark-900 text-white overflow-hidden rounded-t-[3rem] squircle"
+      className="footer-wrapper relative z-0 bg-dark-900 text-white overflow-hidden rounded-t-3xl squircle"
     >
       {/* Subtle top glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-primary/20 rounded-full blur-[150px] pointer-events-none opacity-50"></div>
@@ -59,7 +59,7 @@ export default function Footer() {
                 priority
               />
             </Link>
-            <p className="text-neutral-400 text-lg md:text-xl font-light mb-10 max-w-sm leading-relaxed mt-6">
+            <p className="text-neutral-300 text-lg md:text-xl font-light mb-10 max-w-sm leading-relaxed mt-6">
               {tFooter("mission")}
             </p>
           </div>
@@ -72,31 +72,31 @@ export default function Footer() {
               </h4>
               <Link
                 href="#"
-                className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
+                className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
               >
                 {tFooter("searchRide")}
               </Link>
               <Link
                 href="#"
-                className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
+                className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
               >
                 {tFooter("offerRide")}
               </Link>
               <Link
                 href="#"
-                className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
+                className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
               >
                 {tFooter("about")}
               </Link>
               <Link
                 href="#"
-                className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
+                className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
               >
                 {tFooter("terms")}
               </Link>
               <Link
                 href="#"
-                className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
+                className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
               >
                 {tFooter("privacy")}
               </Link>
@@ -109,7 +109,7 @@ export default function Footer() {
               <div className="flex flex-col gap-3">
                 <a
                   href="tel:+18001234567"
-                  className="text-neutral-400 hover:text-white transition-all"
+                  className="text-neutral-300 hover:text-white transition-all"
                 >
                   {tFooter("phone")}
                 </a>
@@ -121,13 +121,13 @@ export default function Footer() {
               <div className="flex flex-col gap-3">
                 <Link
                   href="/login"
-                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
+                  className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
                 >
                   {tFooter("login")}
                 </Link>
                 <Link
                   href="/register"
-                  className="text-neutral-400 hover:text-white hover:translate-x-1 transition-all"
+                  className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
                 >
                   {tFooter("register")}
                 </Link>

@@ -62,7 +62,7 @@ export default function HowItWorksSection() {
 
       <div className="container mx-auto px-6 relative pb-20">
         {/* Card 1 : Le bon départ */}
-        <div className="stack-card sticky top-28 md:top-44 z-10 w-full min-h-[50vh] xl:min-h-[60vh] bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
+        <div className="stack-card sticky top-28 md:top-44 z-10 w-full min-h-[50vh] xl:min-h-[60vh] bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
           <div className="absolute inset-0 -z-10 bg-[url('/images/carte-bg.webp')] bg-cover bg-center opacity-15"></div>
           {/* Background absolute text */}
           <div className="absolute top-18 -mt-10 left-18 text-[150px] lg:text-[250px] font-black text-dark opacity-[0.05] pointer-events-none leading-none z-0 tracking-tighter select-none">
@@ -123,7 +123,7 @@ export default function HowItWorksSection() {
         </div>
 
         {/* Card 2 : Communauté de confiance */}
-        <div className="stack-card sticky top-28 md:top-44 z-20 w-full min-h-[50vh] xl:min-h-[60vh] bg-dark-900 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(0,0,0,0.4)] border border-neutral-800 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
+        <div className="stack-card sticky top-28 md:top-44 z-20 w-full min-h-[50vh] xl:min-h-[60vh] bg-dark-900 text-white rounded-3xl shadow-[0_30px_80px_rgba(0,0,0,0.4)] border border-neutral-800 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16 mb-[8vh] overflow-hidden">
           <div className="absolute top-18 -mt-10 right-18 text-[150px] lg:text-[250px] font-black text-white opacity-[0.06] pointer-events-none leading-none z-0 tracking-tighter select-none">
             02
           </div>
@@ -135,7 +135,7 @@ export default function HowItWorksSection() {
                 {t("step2Title2")}
               </span>
             </h2>
-            <p className="text-lg text-neutral-400 font-medium max-w-lg mb-8 leading-relaxed">
+            <p className="text-lg text-neutral-300 font-medium max-w-lg mb-8 leading-relaxed">
               {t("step2Desc")}
             </p>
             <div className="step-badge flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 w-max backdrop-blur-sm">
@@ -146,7 +146,7 @@ export default function HowItWorksSection() {
                 <h4 className="font-bold text-sm text-white">
                   {t("step2Badge1")}
                 </h4>
-                <p className="text-xs text-neutral-400 font-medium">
+                <p className="text-xs text-neutral-300 font-medium">
                   {t("step2Badge2")}
                 </p>
               </div>
@@ -264,7 +264,7 @@ export default function HowItWorksSection() {
         </div>
 
         {/* Card 3 : Paiement */}
-        <div className="stack-card sticky top-28 md:top-44 z-30 w-full min-h-[50vh] xl:min-h-[60vh] bg-linear-to-br from-primary to-primary-800 text-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_80px_rgba(37,99,235,0.4)] border border-blue-400/30 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 overflow-hidden">
+        <div className="stack-card sticky top-28 md:top-44 z-30 w-full min-h-[50vh] xl:min-h-[60vh] bg-linear-to-br from-primary to-primary-800 text-white rounded-3xl shadow-[0_30px_80px_rgba(37,99,235,0.4)] border border-blue-400/30 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 overflow-hidden">
           <div className="absolute top-18 -mt-10 left-18 text-[150px] lg:text-[250px] font-black text-white opacity-[0.06] pointer-events-none leading-none z-0 tracking-tighter select-none">
             03
           </div>
@@ -276,7 +276,7 @@ export default function HowItWorksSection() {
               {t("step3Title1")} <br />
               {t("step3Title2")}
             </h2>
-            <p className="text-lg text-blue-100/80 font-medium max-w-lg mb-8 leading-relaxed">
+            <p className="text-lg text-white/90 font-medium max-w-lg mb-8 leading-relaxed">
               {t("step3Desc")}
             </p>
             <div className="flex items-center gap-3">
@@ -293,13 +293,13 @@ export default function HowItWorksSection() {
             {/* Illus 3 : Wigo Wallet */}
             <div className="w-full max-w-md">
               <div className="text-center flex flex-col justify-center pb-8 border-b border-white/10 mb-8">
-                <h3 className="text-xs font-bold opacity-80 mb-2 uppercase tracking-widest text-blue-100">
+                <h3 className="text-xs font-bold opacity-100 mb-2 uppercase tracking-widest text-white/90">
                   {t("step3Available")}
                 </h3>
                 <h2 className="text-5xl lg:text-7xl font-black mb-1 tracking-tighter drop-shadow-md text-white">
                   244.50 $
                 </h2>
-                <p className="text-xs font-bold text-blue-200 tracking-wider">
+                <p className="text-sm font-bold text-white/90 tracking-wider">
                   CAD
                 </p>
               </div>
