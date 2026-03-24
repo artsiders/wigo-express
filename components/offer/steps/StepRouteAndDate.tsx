@@ -234,7 +234,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
       <div className="mt-10 lg:mt-auto pt-6">
         <button 
           onClick={handleNext}
-          className="w-full h-14 bg-primary text-white rounded-2xl font-bold text-lg hover:bg-dark transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-primary/20"
+          className="w-full h-14 bg-primary text-white rounded-2xl font-bold text-lg hover:bg-dark transition-all active:scale-[0.98] shadow-xl shadow-primary/20"
         >
           Continuer
         </button>
