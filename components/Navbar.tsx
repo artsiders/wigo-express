@@ -91,7 +91,8 @@ export default function Navbar() {
         setUserMenuOpen(false);
       }
     };
-    if (langOpen || userMenuOpen) window.addEventListener("mousedown", handleClickOutside);
+    if (langOpen || userMenuOpen)
+      window.addEventListener("mousedown", handleClickOutside);
     return () => window.removeEventListener("mousedown", handleClickOutside);
   }, [langOpen, userMenuOpen]);
 
@@ -109,11 +110,11 @@ export default function Navbar() {
 
         <div className="relative z-10 px-4 py-4 flex justify-between items-center w-full">
           {/* LOGO */}
-          <Link href="/" className="shrink-0 transition-transform ml-1">
+          <Link href="/" className="shrink-0 transition-transform ml-3">
             <Image
-              src="/images/logo.png"
+              src="/images/logo.webp"
               alt="Logo"
-              width={70}
+              width={160}
               height={70}
               priority
             />
@@ -172,50 +173,70 @@ export default function Navbar() {
 
             {/* Espace Utilisateur (Auth) */}
             {status === "loading" ? (
-               <div className="w-10 h-10 rounded-full bg-gray-100 animate-pulse hidden sm:block"></div>
+              <div className="w-10 h-10 rounded-full bg-gray-100 animate-pulse hidden sm:block"></div>
             ) : status === "authenticated" && session.user ? (
-               <div className="relative hidden lg:block" ref={userMenuRef}>
-                 <button 
-                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                   className="flex items-center gap-2 bg-light-300 p-1.5 pr-4 rounded-full border border-gray-100 font-bold text-sm hover:shadow-md transition-all"
-                 >
-                   <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center overflow-hidden">
-                     {session.user.image ? (
-                       <Image src={session.user.image} alt="Profile" width={32} height={32} />
-                     ) : (
-                       <span>{session.user.name?.[0]?.toUpperCase() || <IoPersonOutline />}</span>
-                     )}
-                   </div>
-                   <span className="max-w-[100px] truncate">{session.user.name?.split(" ")[0]}</span>
-                   <IoChevronDownOutline className={`transition-transform text-neutral-400 ${userMenuOpen ? "rotate-180" : ""}`} />
-                 </button>
-                 
-                 {userMenuOpen && (
-                   <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-50 rounded-2xl shadow-xl p-2 flex flex-col z-50">
-                      <Link href="/my-trajets" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-dark hover:bg-gray-50 rounded-xl transition-colors">
-                         <IoListOutline size={18} className="text-primary" />
-                         Mes trajets
-                      </Link>
-                      <div className="h-px bg-gray-100 my-1 mx-2"></div>
-                      <button onClick={() => signOut()} className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl transition-colors text-left">
-                         <IoLogOutOutline size={18} />
-                         Déconnexion
-                      </button>
-                   </div>
-                 )}
-               </div>
+              <div className="relative hidden lg:block" ref={userMenuRef}>
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center gap-2 bg-light-300 p-1.5 pr-4 rounded-full border border-gray-100 font-bold text-sm hover:shadow-md transition-all"
+                >
+                  <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center overflow-hidden">
+                    {session.user.image ? (
+                      <Image
+                        src={session.user.image}
+                        alt="Profile"
+                        width={32}
+                        height={32}
+                      />
+                    ) : (
+                      <span>
+                        {session.user.name?.[0]?.toUpperCase() || (
+                          <IoPersonOutline />
+                        )}
+                      </span>
+                    )}
+                  </div>
+                  <span className="max-w-[100px] truncate">
+                    {session.user.name?.split(" ")[0]}
+                  </span>
+                  <IoChevronDownOutline
+                    className={`transition-transform text-neutral-400 ${userMenuOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {userMenuOpen && (
+                  <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-50 rounded-2xl shadow-xl p-2 flex flex-col z-50">
+                    <Link
+                      href="/my-trajets"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-dark hover:bg-gray-50 rounded-xl transition-colors"
+                    >
+                      <IoListOutline size={18} className="text-primary" />
+                      Mes trajets
+                    </Link>
+                    <div className="h-px bg-gray-100 my-1 mx-2"></div>
+                    <button
+                      onClick={() => signOut()}
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl transition-colors text-left"
+                    >
+                      <IoLogOutOutline size={18} />
+                      Déconnexion
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
-               <div className="hidden lg:flex items-center gap-2">
-                 <Link href="/login" className="text-dark font-bold text-sm px-4 py-2 hover:text-primary transition-all">
-                   {tCommon("login")}
-                 </Link>
-                 <Link
-                   href="/register"
-                   className="bg-primary text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-dark transition-all shadow-lg shadow-primary/20 flex items-center gap-2"
-                 >
-                   {tCommon("register")} <IoChevronForward />
-                 </Link>
-               </div>
+              <div className="hidden lg:flex items-center gap-2">
+                <Link
+                  href="/login"
+                  className="text-dark font-bold text-sm px-4 py-2 hover:text-primary transition-all"
+                >
+                  {tCommon("login")}
+                </Link>
+                <Link href="/register" className="btn-secondary">
+                  {tCommon("register")} <IoChevronForward />
+                </Link>
+              </div>
             )}
 
             {/* BURGER (Visible UNIQUEMENT < lg) */}

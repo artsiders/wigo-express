@@ -1,74 +1,171 @@
 @import "tailwindcss";
 
-@theme inline {
-  /* Design System Variables */
+/* Déclaration des variables globales dans :root */
+:root {
+  /* Palette Primaire (Bleu Foncé - Nouveau Primary: #2965b7) */
+  --primary-50: #eaf1fa;
+  --primary-100: #d7e4f5;
+  --primary-200: #a9c5ea;
+  --primary-300: #7ba7df;
+  --primary-400: #4b86d0;
+  --primary-500: #2965b7; /* Nouvelle couleur principale */
+  --primary-600: #20549b;
+  --primary-700: #184076;
+  --primary-800: #13315a;
+  --primary-900: #0d2035;
+  --primary-950: #071425;
 
-  /* Palette Primaire (Bleu) */
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #4d80c4; /* Origine */
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
-  --color-primary-950: #172554;
-
-  /* Palette Secondaire (Or/Jaune) */
-  --color-secondary-50: #fefce8;
-  --color-secondary-100: #fef9c3;
-  --color-secondary-200: #fef08a;
-  --color-secondary-300: #fde047;
-  --color-secondary-400: #facc15;
-  --color-secondary-500: #eab308;
-  --color-secondary-600: #ca8a04;
-  --color-secondary-700: #a16207;
-  --color-secondary-800: #854d0e;
-  --color-secondary-900: #713f12;
-  --color-secondary-950: #422006;
+  /* Palette Secondaire (Green - anciennement primaire) */
+  --secondary-50: #f2f9f5;
+  --secondary-100: #e0f2e6;
+  --secondary-200: #b7e0c7;
+  --secondary-300: #97d4b0;
+  --secondary-400: #7cc89c;
+  --secondary-500: #69b380; /* Ancienne couleur principale */
+  --secondary-600: #52a06b;
+  --secondary-700: #408758;
+  --secondary-800: #306946;
+  --secondary-900: #214a32;
+  --secondary-950: #143f25;
 
   /* Palette Dark */
-  --color-dark-50: #f6f6f6;
-  --color-dark-100: #e7e7e7;
-  --color-dark-200: #d1d1d1;
-  --color-dark-300: #b0b0b0;
-  --color-dark-400: #888888;
-  --color-dark-500: #6d6d6d;
-  --color-dark-600: #5d5d5d;
-  --color-dark-700: #4f4f4f;
-  --color-dark-800: #454545;
-  --color-dark-900: #151515; /* Section bg */
-  --color-dark-950: #050505; /* Origine */
+  --dark-50: #f6f6f6;
+  --dark-100: #e7e7e7;
+  --dark-200: #d1d1d1;
+  --dark-300: #b0b0b0;
+  --dark-400: #888888;
+  --dark-500: #6d6d6d;
+  --dark-600: #5d5d5d;
+  --dark-700: #4f4f4f;
+  --dark-800: #454545;
+  --dark-900: #151515; /* Section bg */
+  --dark-950: #050505; /* Origine */
 
   /* Palette Light */
-  --color-light-50: #ffffff;
-  --color-light-100: #fcfcfc;
-  --color-light-200: #fafafa;
-  --color-light-300: #f8f9fa; /* Origine */
-  --color-light-400: #f4f5f7; /* Background element */
-  --color-light-500: #eeeeee;
+  --light-50: #ffffff;
+  --light-100: #fcfcfc;
+  --light-200: #fafafa;
+  --light-300: #f8f9fa; /* Origine */
+  --light-400: #f4f5f7; /* Background element */
+  --light-500: #eeeeee;
 
   /* Semantic Colors */
-  --color-success-50: #f0fdf4;
-  --color-success-100: #dcfce7;
-  --color-success-500: #22c55e;
-  --color-success-600: #16a34a;
+  --success-50: #f0fdf4;
+  --success-100: #dcfce7;
+  --success-500: #22c55e;
+  --success-600: #16a34a;
 
   /* Alias pour la rétrocompatibilité ou usage simplifié */
-  --color-primary: var(--color-primary-500);
-  --color-dark: var(--color-dark-950);
-  --color-light: var(--color-light-300);
+  --primary: var(--primary-500);
+  --dark: var(--dark-950);
+  --light: var(--light-300);
 
   /* Police globale */
   --font-sans: var(--font-outfit), Arial, Helvetica, sans-serif;
 }
 
+/* Réutilisation des variables depuis :root dans @theme */
+@theme inline {
+  /* Design System Variables */
+
+  /* Palette Primaire (Green) */
+  --color-primary-50: var(--primary-50);
+  --color-primary-100: var(--primary-100);
+  --color-primary-200: var(--primary-200);
+  --color-primary-300: var(--primary-300);
+  --color-primary-400: var(--primary-400);
+  --color-primary-500: var(--primary-500);
+  --color-primary-600: var(--primary-600);
+  --color-primary-700: var(--primary-700);
+  --color-primary-800: var(--primary-800);
+  --color-primary-900: var(--primary-900);
+  --color-primary-950: var(--primary-950);
+
+  /* Palette Secondaire (Bleu Foncé) */
+  --color-secondary-50: var(--secondary-50);
+  --color-secondary-100: var(--secondary-100);
+  --color-secondary-200: var(--secondary-200);
+  --color-secondary-300: var(--secondary-300);
+  --color-secondary-400: var(--secondary-400);
+  --color-secondary-500: var(--secondary-500);
+  --color-secondary-600: var(--secondary-600);
+  --color-secondary-700: var(--secondary-700);
+  --color-secondary-800: var(--secondary-800);
+  --color-secondary-900: var(--secondary-900);
+  --color-secondary-950: var(--secondary-950);
+
+  /* Palette Dark */
+  --color-dark-50: var(--dark-50);
+  --color-dark-100: var(--dark-100);
+  --color-dark-200: var(--dark-200);
+  --color-dark-300: var(--dark-300);
+  --color-dark-400: var(--dark-400);
+  --color-dark-500: var(--dark-500);
+  --color-dark-600: var(--dark-600);
+  --color-dark-700: var(--dark-700);
+  --color-dark-800: var(--dark-800);
+  --color-dark-900: var(--dark-900); /* Section bg */
+  --color-dark-950: var(--dark-950); /* Origine */
+
+  /* Palette Light */
+  --color-light-50: var(--light-50);
+  --color-light-100: var(--light-100);
+  --color-light-200: var(--light-200);
+  --color-light-300: var(--light-300); /* Origine */
+  --color-light-400: var(--light-400); /* Background element */
+  --color-light-500: var(--light-500);
+
+  /* Semantic Colors */
+  --color-success-50: var(--success-50);
+  --color-success-100: var(--success-100);
+  --color-success-500: var(--success-500);
+  --color-success-600: var(--success-600);
+
+  /* Alias pour la rétrocompatibilité ou usage simplifié */
+  --color-primary: var(--primary-500);
+  --color-secondary: var(--secondary-500);
+  --color-dark: var(--dark-950);
+  --color-light: var(--light-300);
+
+  /* Police globale */
+  --font-sans: var(--font-sans);
+}
+
 @layer components {
-  /* Bouton Principal */
+  /* Composant text-primary-gradient */
+  .text-primary-gradient {
+    @apply text-transparent bg-clip-text bg-gradient-to-br from-primary-500 to-primary-600;
+  }
+  /* Boutons typés */
+
+  /* Bouton Principal (Vert) */
   .btn-primary {
-    @apply bg-primary-500 text-white font-extrabold text-base px-6 py-3 rounded-3xl hover:bg-dark-950 transition-colors shadow-xl shadow-primary-500/20 flex justify-center items-center gap-2;
+    @apply bg-primary-500 text-white font-extrabold text-base px-6 py-3 rounded-3xl hover:bg-primary-600 transition-colors shadow-xl shadow-primary-500/20 flex justify-center items-center gap-2;
+  }
+
+  /* Bouton Secondaire (Bleu foncé) */
+  .btn-secondary {
+    @apply bg-secondary-600 text-white font-bold text-base px-6 py-3 rounded-3xl hover:bg-dark transition-colors shadow-lg flex justify-center items-center gap-2;
+  }
+
+  /* Bouton Noir */
+  .btn-dark {
+    @apply bg-dark-950 text-white font-bold text-base px-6 py-3 rounded-3xl hover:bg-dark-800 transition-colors shadow-lg shadow-black/20 flex justify-center items-center gap-2;
+  }
+
+  /* Bouton Blanc */
+  .btn-white {
+    @apply bg-white text-dark-900 font-bold text-base px-6 py-3 rounded-3xl border border-neutral-200 hover:bg-light-400 hover:border-neutral-300 transition-colors shadow flex justify-center items-center gap-2;
+  }
+
+  /* Bouton Outline (bordure sur primaire) */
+  .btn-outline-primary {
+    @apply bg-transparent text-primary-600 font-bold text-base px-6 py-3 rounded-3xl border-2 border-primary-500 hover:bg-primary-50 transition-colors flex justify-center items-center gap-2;
+  }
+
+  /* Bouton Désactivé (pour exemple) */
+  .btn-disabled {
+    @apply opacity-60 cursor-not-allowed bg-neutral-200 text-neutral-500;
   }
 
   .glass-panel {
@@ -104,10 +201,10 @@
 @keyframes pulseGlow {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 0 20px rgba(105, 179, 128, 0.2);
   }
   50% {
-    box-shadow: 0 0 50px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 0 50px rgba(105, 179, 128, 0.5);
   }
 }
 
@@ -127,12 +224,12 @@
   background-image:
     radial-gradient(
       circle at 10% 20%,
-      rgba(37, 99, 235, 0.08) 0%,
+      rgba(105, 179, 128, 0.08) 0%,
       transparent 40%
     ),
     radial-gradient(
       circle at 90% 80%,
-      rgba(234, 179, 8, 0.05) 0%,
+      rgba(22, 72, 121, 0.05) 0%,
       transparent 40%
     ),
     radial-gradient(
@@ -143,8 +240,8 @@
 }
 
 body {
-  background: var(--color-light);
-  color: var(--color-dark-800);
+  background: var(--light);
+  color: var(--dark-800);
   overscroll-behavior: none;
 }
 
@@ -154,7 +251,7 @@ body {
 
 /* Animations globales */
 ::selection {
-  background: var(--color-primary);
+  background: var(--primary);
   color: #fff;
 }
 

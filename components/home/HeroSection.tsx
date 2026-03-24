@@ -98,7 +98,7 @@ export default function HeroSection() {
         <h1 className="hero-text-elem uppercase relative text-center text-4xl font-black sm:text-5xl lg:text-7xl max-w-7xl container mx-auto justify-center leading-tight md:mt-16 mb-8">
           {t("heroTitle1")}
           <br />
-          <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
+          <span className="text-primary-gradient">
             {t("heroTitle2")} <br />
             {t("heroTitle3")}
           </span>

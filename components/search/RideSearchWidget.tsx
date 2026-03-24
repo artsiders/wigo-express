@@ -359,7 +359,7 @@ export default function RideSearchWidget({
           onClick={handleSearch}
           className={`w-full ${
             !isVert ? "lg:w-[80px] lg:h-[80px]" : ""
-          } h-16 ${!isVert ? "mt-2 lg:mt-0" : "mt-2"} btn-primary rounded-3xl flex justify-center items-center active:scale-[0.98] transition-transform shrink-0`}
+          } h-16 ${!isVert ? "mt-2 lg:mt-0" : "mt-2"} btn-secondary rounded-3xl flex justify-center items-center active:scale-[0.98] transition-transform shrink-0`}
           disabled={loading}
         >
           {loading ? (

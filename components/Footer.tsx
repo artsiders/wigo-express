@@ -51,8 +51,8 @@ export default function Footer() {
             {/* Logo */}
             <Link href="/">
               <Image
-                src="/images/logo.png"
-                alt="Wigo Express Logo"
+                src="/images/logo.webp"
+                alt="Wigo Express Inc Logo"
                 width={200}
                 height={200}
                 className="object-contain transition-transform"

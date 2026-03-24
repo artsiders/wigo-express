@@ -59,15 +59,13 @@ export default function NotFound() {
       <div className="absolute bottom-1/4 left-1/4 w-[30vw] h-[30vw] bg-yellow-400/10 rounded-full blur-[100px] pointer-events-none translate-y-1/2"></div>
 
       <div className="relative z-10 flex flex-col items-center text-center max-w-2xl mx-auto">
-        <h1 className="not-found-text text-[140px] md:text-[200px] font-black tracking-tighter leading-none text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900 select-none drop-shadow-xs mb-2 -mt-12 sm:-mt-16">
+        <h1 className="not-found-text text-[140px] md:text-[200px] font-black tracking-tighter leading-none text-primary-gradient select-none drop-shadow-xs mb-2 -mt-12 sm:-mt-16">
           404
         </h1>
 
         <h2 className="not-found-text text-3xl md:text-5xl font-bold tracking-tighter mb-4 sm:mb-6 text-dark leading-tight">
           {t("title1")} <br className="sm:hidden" />
-          <span className="text-transparent bg-clip-text bg-linear-to-br from-primary to-primary-900">
-            {t("title2")}
-          </span>
+          <span className="text-primary-gradient">{t("title2")}</span>
         </h2>
 
         <p className="not-found-text text-base md:text-xl text-neutral-500 font-medium mb-10 sm:mb-12 leading-relaxed max-w-lg mx-auto">
