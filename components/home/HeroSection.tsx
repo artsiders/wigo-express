@@ -79,7 +79,7 @@ export default function HeroSection() {
   return (
     <section
       ref={container}
-      className="relative w-full p-4 md:p-6 flex flex-col items-center justify-center bg-[url(/images/bg-texture.png)]"
+      className="relative w-full p-4 md:p-6 flex flex-col items-center justify-center"
     >
       <div className="relative w-full flex flex-col p-4 md:p-12 lg:p-20 hero-floating-img group z-20">
         {/* Inner Wrapper for the background */}
