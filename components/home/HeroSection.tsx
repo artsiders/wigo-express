@@ -121,8 +121,10 @@ export default function HeroSection() {
                 </span>
               </h1>
               {/* Tag */}
-              <div className="max-w-lg py-1 md:py-4 px-3 md:px-5 rounded-xl border border-white/10 bg-white text-base font-semibold tracking-widest shadow-xl hero-text-elem text-left">
-                {t("heroSubtitle")}
+              <div className="max-w-lg py-1 md:py-4 px-3 md:px-5 rounded-xl border border-white/10 bg-dark/20 text-white backdrop-blur-2xl text-base font-semibold tracking-widest shadow-xl hero-text-elem text-left">
+                {t.rich("heroSubtitle", {
+                  br: () => <br />,
+                })}
               </div>
             </div>
 
