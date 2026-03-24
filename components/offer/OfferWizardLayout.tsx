@@ -88,7 +88,7 @@ export default function OfferWizardLayout({
   };
 
   return (
-    <div className="w-full bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 flex flex-col relative min-h-[600px]">
+    <div className="w-full h-full bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border border-neutral-100 flex flex-col relative min-h-[600px]">
       {/* Header & Progression */}
       <div className="wizard-header px-8 lg:px-14 pt-8 lg:pt-10 pb-6 border-b border-light-400 z-10 sticky top-0">
         <div className="flex items-center justify-between mb-6">
