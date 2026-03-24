@@ -105,7 +105,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[96%] container px-4 z-100 flex justify-between items-start pointer-events-none">
+      <nav className="fixed top-6 md:top-12 left-1/2 -translate-x-1/2 w-[96%] px-4 z-100 flex justify-between items-start pointer-events-none">
         {/* LEFT PILL */}
         <div className="pointer-events-auto relative z-10 px-4 sm:px-6 h-16 flex items-center justify-between lg:justify-start gap-8 bg-white rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
           {/* LOGO */}

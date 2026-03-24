@@ -83,11 +83,11 @@ export default function HeroSection() {
   return (
     <section
       ref={container}
-      className="relative w-full pt-2 pb-10 px-4 md:px-6 lg:px-8 flex flex-col items-center justify-center bg-[url(/images/bg-texture.png)]"
+      className="relative w-full p-4 md:p-6 flex flex-col items-center justify-center bg-[url(/images/bg-texture.png)]"
     >
-      <div className="relative w-full container mx-auto min-h-[85vh] md:min-h-[80vh] flex flex-col p-6 md:p-12 lg:p-20 hero-floating-img group z-20">
+      <div className="relative w-full flex flex-col p-6 md:p-12 lg:p-20 hero-floating-img group z-20">
         {/* Inner Wrapper for the background to be clipped but allow floating cards to break out */}
-        <div className="absolute inset-0 rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-black/5 z-0">
+        <div className="absolute inset-0 rounded-xl md:rounded-2xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-black/5 z-0">
           {/* Abstract shapes behind container if needed */}
           <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[140px] pointer-events-none -translate-y-1/2 translate-x-1/4 z-0"></div>
           <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/20 rounded-full blur-[100px] pointer-events-none z-0"></div>
@@ -132,8 +132,6 @@ export default function HeroSection() {
             <RideSearchWidget variant="horizontal" />
           </div>
         </div>
-
-        {/* Floating cards repositioned */}
 
         {/* Floating UI Card 1: Verified Profile */}
         <div className="floating-card absolute right-4 md:right-10 lg:right-12 top-16 z-20 bg-white/95 backdrop-blur-xl p-4 md:p-5 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.15)] border border-white/60 w-[240px] md:w-[260px] text-left hidden lg:flex flex-col">
