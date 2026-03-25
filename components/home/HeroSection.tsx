@@ -87,7 +87,7 @@ export default function HeroSection() {
       ref={container}
       className="relative w-full flex flex-col items-center justify-center z-50"
     >
-      <div className="relative w-full flex flex-col pb-10 md:pb-12 p-4 md:p-12 lg:p-20 hero-floating-img group z-20">
+      <div className="relative w-full min-h-screen flex flex-col pb-10 md:pb-12 p-4 md:p-12 lg:p-20 hero-floating-img group z-20">
         {/* Inner Wrapper for the background */}
         <div className="absolute inset-0 z-0">
           {/* Abstract shapes behind container if needed */}
@@ -113,9 +113,9 @@ export default function HeroSection() {
         </div>
 
         {/* Content Container */}
-        <div className="relative container mx-auto z-10 w-full flex flex-col h-full justify-between flex-1">
+        <div className="relative container mx-auto z-10 w-full flex flex-col h-full justify-center flex-1 pt-20 md:pt-24 lg:pt-32">
           {/* Headline, subtitle, and floating cards in flex on large screens */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full mt-22 md:mt-14 lg:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full lg:px-6">
             {/* Headline + Tag */}
             <div className="max-w-xl lg:max-w-2xl shrink-0 text-left">
               {/* Tag */}
@@ -222,7 +222,7 @@ export default function HeroSection() {
           </div>
 
           {/* Search Widget Container */}
-          <div className="w-full mt-auto mb-0  md:pt-12 relative z-30 search-widget flex flex-col items- lg:px-6">
+          <div className="w-full mt-12 md:mt-20 relative z-30 search-widget flex flex-col items- lg:px-6">
             <RideSearchWidget variant="horizontal" />
           </div>
         </div>
