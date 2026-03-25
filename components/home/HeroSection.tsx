@@ -43,21 +43,6 @@ export default function HeroSection() {
         { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "expo.out" },
         "-=0.8",
       );
-
-      // 2. Parallax Basics
-      gsap.utils.toArray(".float-parallax").forEach((el: any) => {
-        const speed = el.dataset.speed || 1;
-        gsap.to(el, {
-          yPercent: -20 * speed,
-          ease: "none",
-          scrollTrigger: {
-            trigger: el.closest("section"),
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-      });
     },
     { scope: container },
   );
@@ -71,10 +56,7 @@ export default function HeroSection() {
         {/* Inner Wrapper for the background */}
         <div className="absolute inset-0 z-0">
           {/* Background Image */}
-          <div
-            className="absolute inset-0 z-0 float-parallax"
-            data-speed="0.15"
-          >
+          <div className="absolute inset-0 z-0" data-speed="0.15">
             <Image
               src="/images/close-up-group-friends-traveling-car-concept-speed.webp"
               alt="Hero Background"
