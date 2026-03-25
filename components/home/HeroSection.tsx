@@ -58,26 +58,6 @@ export default function HeroSection() {
           },
         });
       });
-
-      // 2.5. Floating UI Cards Entrance Timeline
-      gsap.utils.toArray(".floating-card").forEach((card: any, index) => {
-        const yOffset = index === 0 ? 80 : index === 1 ? -60 : 40;
-        const xOffset = index === 0 ? -40 : index === 1 ? 40 : -20;
-
-        tl.fromTo(
-          card,
-          { opacity: 0, y: yOffset, x: xOffset, scale: 0.8 },
-          {
-            opacity: 1,
-            y: 0,
-            x: 0,
-            scale: 1,
-            duration: 1,
-            ease: "back.out(1.2)",
-          },
-          index === 0 ? "-=0.5" : "-=0.8",
-        );
-      });
     },
     { scope: container },
   );

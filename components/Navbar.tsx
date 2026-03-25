@@ -126,33 +126,36 @@ export default function Navbar() {
             </Link>
 
             {/* DESKTOP NAV */}
-            <div className="hidden lg:flex gap-1 xl:gap-2 items-center text-sm font-bold text-dark-800">
+            <div className="hidden lg:flex gap-2 xl:gap-3 items-center text-sm font-bold text-dark-800">
               <Link
                 href="/#comment-ca-marche"
-                className="hover:text-primary text-dark font-bold transition-all px-3 py-2 rounded-xl hover:bg-primary/5"
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50"
               >
                 {t("howItWorks")}
               </Link>
               <Link
                 href="/search?searchOpen=true"
-                className="hover:text-primary text-dark font-bold transition-all px-3 py-2 rounded-xl hover:bg-primary/5"
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50"
               >
                 {tCommon("searchRide")}
               </Link>
               <Link
                 href="/offer"
-                className="hover:text-primary text-dark font-bold transition-all px-3 py-2 rounded-xl hover:bg-primary/5"
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50"
               >
                 {tCommon("offerRide")}
               </Link>
             </div>
+          </div>
 
+          {/* RIGHT SECTION (Auth/Profile + Burger) */}
+          <div className="flex items-center h-full gap-2 md:gap-3">
             {/* LANGUE */}
             <div className="relative hidden lg:block" ref={dropdownRef}>
               <button
                 onClick={() => setLangOpen(!langOpen)}
                 disabled={isPending}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl hover:bg-primary/5 text-dark text-xs font-bold uppercase transition-all disabled:opacity-50"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-md border border-gray-300 hover:border-primary/50 hover:bg-primary/5 text-dark text-xs font-bold uppercase transition-all disabled:opacity-50 bg-white/50"
               >
                 <IoGlobeOutline size={18} className="text-primary" />
                 <span>{locale}</span>
@@ -161,12 +164,12 @@ export default function Navbar() {
                 />
               </button>
               {langOpen && (
-                <div className="absolute left-0 mt-3 min-w-[120px] bg-white border border-gray-50 rounded-2xl shadow-xl p-2 z-50">
+                <div className="absolute right-0 mt-3 min-w-[120px] bg-white border border-neutral-200 rounded-lg shadow-xl p-2 z-50">
                   {["fr", "en"].map((l) => (
                     <button
                       key={l}
                       onClick={() => changeLanguage(l)}
-                      className={`w-full text-left px-4 py-2 text-sm rounded-xl transition-colors ${locale === l ? "bg-primary/10 text-primary font-bold" : "hover:bg-gray-50"}`}
+                      className={`w-full text-left px-4 py-2 text-sm rounded-md transition-colors ${locale === l ? "bg-primary/10 text-primary font-bold" : "hover:bg-gray-50"}`}
                     >
                       {l === "fr" ? "Français" : "English"}
                     </button>
@@ -174,17 +177,14 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-          </div>
 
-          {/* RIGHT SECTION (Auth/Profile + Burger) */}
-          <div className="flex items-center h-full gap-2 md:gap-3">
             {status === "loading" ? (
               <div className="w-10 h-10 rounded-full bg-gray-100 animate-pulse hidden sm:block mx-2"></div>
             ) : status === "authenticated" && session.user ? (
               <div className="relative hidden lg:block" ref={userMenuRef}>
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 bg-transparent p-1 px-3 rounded-2xl hover:bg-primary/5 font-semibold text-sm transition-all"
+                  className="flex items-center gap-2 bg-gray-100 py-1.5 pl-2 pr-3 rounded-lg hover:border-primary/50 hover:bg-primary/20 font-semibold text-sm transition-all"
                 >
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-primary text-white flex items-center justify-center overflow-hidden shadow-sm">
                     {session.user.image ? (
@@ -211,11 +211,11 @@ export default function Navbar() {
                 </button>
 
                 {userMenuOpen && (
-                  <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-50 rounded-2xl shadow-xl p-2 flex flex-col z-50">
+                  <div className="absolute right-0 mt-3 w-48 bg-white border border-neutral-200 rounded-lg shadow-xl p-2 flex flex-col z-50">
                     <Link
                       href="/my-trajets"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-dark hover:bg-gray-50 rounded-xl transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-dark hover:bg-gray-50 rounded-md transition-colors"
                     >
                       <IoListOutline size={18} className="text-primary" />
                       Mes trajets
@@ -223,7 +223,7 @@ export default function Navbar() {
                     <div className="h-px bg-gray-100 my-1 mx-2"></div>
                     <button
                       onClick={() => signOut()}
-                      className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl transition-colors text-left"
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-md transition-colors text-left"
                     >
                       <IoLogOutOutline size={18} />
                       Déconnexion
@@ -235,7 +235,7 @@ export default function Navbar() {
               <div className="hidden lg:flex items-center gap-1.5 px-1.5">
                 <Link
                   href="/login"
-                  className="text-dark font-bold text-sm px-4 py-2 rounded-xl hover:bg-primary/5 transition-all"
+                  className="text-dark font-bold text-sm px-4 py-2 rounded-lg hover:border-primary/50 hover:bg-primary/5 transition-all"
                 >
                   {tCommon("login")}
                 </Link>
@@ -278,7 +278,7 @@ export default function Navbar() {
           <p className="text-center text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
             {t("chooseLanguage")}
           </p>
-          <div className="flex p-1 bg-gray-100 rounded-2xl border border-gray-200">
+          <div className="flex p-1 bg-gray-100 rounded-2xl border border-gray-300">
             {["fr", "en"].map((l) => (
               <button
                 key={l}
