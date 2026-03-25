@@ -125,7 +125,7 @@ export default function HeroSection() {
                 })}
               </div>
               {/* Headline */}
-              <h1 className="hero-text-elem text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 text-white leading-tight reveal-fade text-left">
+              <h1 className="hero-text-elem text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-6 text-white leading-tight reveal-fade text-left">
                 {t("heroTitle1")}{" "}
                 <span className="text-primary-400 block lg:inline">
                   {t("heroTitle2")} <br className="lg:hidden" />
