@@ -1,7 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { IoMapOutline, IoLocationOutline, IoCalendarOutline, IoTimeOutline } from "react-icons/io5";
+import {
+  IoMapOutline,
+  IoLocationOutline,
+  IoCalendarOutline,
+  IoTimeOutline,
+} from "react-icons/io5";
 import { useOfferStore } from "@/store/useOfferStore";
 import Alert from "@/components/ui/Alert";
 import { format } from "date-fns";
@@ -21,9 +26,12 @@ const MOCK_CITIES = [
 ];
 
 export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
-  const { departure, arrival, date, time, setRoute, setDateTime } = useOfferStore();
+  const { departure, arrival, date, time, setRoute, setDateTime } =
+    useOfferStore();
   const [error, setError] = useState("");
-  const [activeDropdown, setActiveDropdown] = useState<"depart" | "arrivee" | "date" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<
+    "depart" | "arrivee" | "date" | null
+  >(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -62,30 +70,31 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
     <div className="flex flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="mb-8 text-center sm:text-left">
         <h2 className="text-3xl font-black text-dark mb-2">Où allez-vous ?</h2>
-        <p className="text-neutral-500 font-medium">Définissez l'itinéraire et l'horaire de votre trajet.</p>
+        <p className="text-neutral-500 font-medium">
+          Définissez l'itinéraire et l'horaire de votre trajet.
+        </p>
       </div>
 
       {error && (
-        <Alert 
-          type="error" 
-          title="Information manquante" 
-          description={error} 
+        <Alert
+          type="error"
+          title="Information manquante"
+          description={error}
           onClose={() => setError("")}
           className="mb-8"
         />
       )}
 
       <div ref={containerRef} className="flex-1 flex flex-col gap-6 relative">
-        
         <div className="flex flex-col gap-4">
           <div className="relative w-full bg-light-400 rounded-3xl min-h-[76px] h-[76px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group">
-            <IoLocationOutline className="text-xl text-neutral-400 group-focus-within:text-primary transition-colors shrink-0" />
+            <IoLocationOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
             <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-              <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
+              <span className="block text-xs font-bold text-neutral-700 tracking-widest mt-0.5 mb-1">
                 Ville de départ
               </span>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="Ex. Montréal, QC"
                 value={departure}
                 onChange={(e) => {
@@ -93,7 +102,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                   setActiveDropdown("depart");
                 }}
                 onFocus={() => setActiveDropdown("depart")}
-                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-300 placeholder:font-medium truncate pb-0.5"
+                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-400 placeholder:font-medium truncate pb-0.5"
               />
             </div>
 
@@ -132,13 +141,13 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
           </div>
 
           <div className="relative w-full bg-light-400 rounded-3xl min-h-[76px] h-[76px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group">
-            <IoMapOutline className="text-xl text-neutral-400 group-focus-within:text-primary transition-colors shrink-0" />
+            <IoMapOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
             <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-              <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
+              <span className="block text-xs font-bold text-neutral-700 tracking-widest mt-0.5 mb-1">
                 Ville d'arrivée
               </span>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="Ex. Québec, QC"
                 value={arrival}
                 onChange={(e) => {
@@ -146,7 +155,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                   setActiveDropdown("arrivee");
                 }}
                 onFocus={() => setActiveDropdown("arrivee")}
-                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-300 placeholder:font-medium truncate pb-0.5"
+                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-400 placeholder:font-medium truncate pb-0.5"
               />
             </div>
 
@@ -186,23 +195,32 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 mt-2">
-          <div 
-            onClick={() => setActiveDropdown(activeDropdown === "date" ? null : "date")}
+          <div
+            onClick={() =>
+              setActiveDropdown(activeDropdown === "date" ? null : "date")
+            }
             className={`relative flex-1 bg-light-400 rounded-3xl min-h-[76px] h-[76px] flex items-center px-6 border border-transparent transition-all shadow-inner group cursor-pointer ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
           >
-            <IoCalendarOutline className={`text-xl shrink-0 ${activeDropdown === "date" ? "text-primary" : "text-neutral-400 group-focus-within:text-primary"}`} />
+            <IoCalendarOutline
+              className={`text-xl shrink-0 ${activeDropdown === "date" ? "text-primary" : "text-neutral-700 group-focus-within:text-primary"}`}
+            />
             <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-              <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
+              <span className="block text-xs font-bold text-neutral-700 tracking-widest mt-0.5 mb-1">
                 Date
               </span>
               <span className="block text-sm md:text-base font-bold text-dark truncate pb-0.5">
-                {date ? format(new Date(date), "EEE d MMM yyyy", { locale: fr }) : "Sélectionner une date"}
+                {date
+                  ? format(new Date(date), "EEE d MMM yyyy", { locale: fr })
+                  : "Sélectionner une date"}
               </span>
             </div>
 
             {/* Date Calendar Popover */}
             {activeDropdown === "date" && (
-              <div onClick={(e) => e.stopPropagation()} className="absolute top-full left-0 mt-3 z-50">
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="absolute top-full left-0 mt-3 z-50"
+              >
                 <CustomCalendar
                   selectedDate={date ? new Date(date) : null}
                   onSelectDate={(d) => {
@@ -213,18 +231,18 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
               </div>
             )}
           </div>
-          
+
           <div className="relative flex-1 bg-light-400 rounded-3xl min-h-[76px] h-[76px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group">
-            <IoTimeOutline className="text-xl text-neutral-400 group-focus-within:text-primary transition-colors shrink-0" />
+            <IoTimeOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
             <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-              <span className="block text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-0.5">
+              <span className="block text-xs font-bold text-neutral-700 tracking-widest mt-0.5 mb-1">
                 Heure
               </span>
-              <input 
-                type="time" 
+              <input
+                type="time"
                 value={time}
                 onChange={(e) => setDateTime(date, e.target.value)}
-                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-300 placeholder:font-medium truncate pb-0.5"
+                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-400 placeholder:font-medium truncate pb-0.5"
               />
             </div>
           </div>
@@ -232,7 +250,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
       </div>
 
       <div className="mt-10 lg:mt-auto pt-6">
-        <button 
+        <button
           onClick={handleNext}
           className="w-full h-14 bg-primary text-white rounded-2xl font-bold text-lg hover:bg-dark transition-all active:scale-[0.98] shadow-xl shadow-primary/20"
         >
