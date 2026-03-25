@@ -264,7 +264,7 @@ export default function HowItWorksSection() {
         </div>
 
         {/* Card 3 : Paiement */}
-        <div className="stack-card sticky top-28 md:top-44 z-30 w-full min-h-[50vh] xl:min-h-[60vh] bg-linear-to-br from-primary to-primary-800 text-white rounded-2xl shadow-[0_30px_80px_rgba(37,99,235,0.4)] border border-blue-400/30 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 overflow-hidden">
+        <div className="stack-card sticky top-28 md:top-44 z-30 w-full min-h-[50vh] xl:min-h-[60vh] bg-linear-to-br from-primary-700 to-primary text-white rounded-2xl shadow-[0_30px_80px_rgba(37,99,235,0.4)] border border-blue-400/30 p-8 lg:p-14 xl:p-20 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 overflow-hidden">
           <div className="absolute top-18 -mt-10 left-18 text-[150px] lg:text-[250px] font-black text-white opacity-[0.06] pointer-events-none leading-none z-0 tracking-tighter select-none">
             03
           </div>
@@ -315,9 +315,7 @@ export default function HowItWorksSection() {
                     </p>
                   </div>
                   <div className="text-right shrink-0 ml-2">
-                    <p className="font-black text-xl text-green-400">
-                      + 45.00 $
-                    </p>
+                    <p className="font-black text-xl">+ 45.00 $</p>
                   </div>
                 </div>
                 <div className="bg-black/10 w-full p-4 rounded-xl backdrop-blur-md border border-transparent flex justify-between items-center opacity-70">

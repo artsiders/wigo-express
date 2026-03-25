@@ -69,11 +69,11 @@ export default function PremiumShowcaseSection() {
         </div>
 
         {/* Web Data Grid / Showcase */}
-        <div className="w-full max-w-6xl mx-auto bg-dark rounded-2xl squircle border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-center">
+        <div className="w-full container mx-auto bg-dark rounded-2xl squircle border border-white/10 p-6 md:p-10 shadow-2xl relative text-left flex flex-col lg:flex-row gap-10 items-start">
           {/* Text / Data part */}
           <div className="w-full lg:w-1/2">
-            <div className="bg-white/10 border border-white/10 rounded-lg p-6 mb-6">
-              <div className="flex justify-between items-center mb-4">
+            <div className="bg-white/10 border border-white/10 rounded-lg p-6 mb-8">
+              <div className="flex justify-between items-center mb-8">
                 <h3 className="text-white font-bold text-xl">
                   Trajet : Montréal → Québec
                 </h3>
@@ -82,7 +82,7 @@ export default function PremiumShowcaseSection() {
                 </span>
               </div>
 
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-4 mb-18">
                 <div className="w-12 h-12 bg-neutral-800 rounded-full overflow-hidden relative border-2 border-neutral-700">
                   <Image
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
@@ -125,7 +125,7 @@ export default function PremiumShowcaseSection() {
           </div>
 
           {/* IMAGE PLACEHOLDER: Premium Car Profile aligned with Web content */}
-          <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-full min-h-[300px] overflow-hidden group">
+          <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-full min-h-[520px] overflow-hidden group">
             <div className="absolute inset-0 bg-linear-to-b lg:bg-linear-to-r from-dark/95 via-dark/20 to-transparent z-10 pointer-events-none"></div>
             <Image
               src="/images/wigo-express-red-card.jpg"
