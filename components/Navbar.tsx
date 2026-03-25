@@ -105,78 +105,80 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-6 md:top-12 left-1/2 -translate-x-1/2 w-[96%] container mx-auto px-4 z-100 flex justify-between items-start pointer-events-none">
-        {/* LEFT PILL */}
-        <div className="pointer-events-auto relative z-10 px-4 sm:px-6 h-16 flex items-center justify-between lg:justify-start gap-8 bg-white rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
-          {/* LOGO */}
-          <Link
-            href="/"
-            className="shrink-0 transition-transform flex items-center"
-          >
-            <Image
-              src="/images/logo.webp"
-              alt="Logo"
-              width={140}
-              height={50}
-              priority
-              className="lg:w-[160px] w-[120px] h-auto object-contain"
-            />
-          </Link>
-
-          {/* DESKTOP NAV (Cachée sur mobile) */}
-          <div className="hidden lg:flex gap-2 items-center text-sm font-bold text-dark-800">
+      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[96%] container mx-auto z-100 flex items-center pointer-events-none">
+        {/* UNIFIED NAVBAR */}
+        <div className="pointer-events-auto relative w-full z-10 px-3  h-20 flex items-center justify-between bg-white rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
+          
+          {/* LEFT SECTION (Logo + Nav + Lang) */}
+          <div className="flex items-center gap-6 lg:gap-8 h-full">
+            {/* LOGO */}
             <Link
-              href="/#comment-ca-marche"
-              className="hover:text-primary text-dark transition-all px-3 py-2 rounded-xl hover:bg-primary/5 text-sm font-bold"
+              href="/"
+              className="shrink-0 transition-transform flex items-center"
             >
-              {t("howItWorks")}
-            </Link>
-            <Link
-              href="/search?searchOpen=true"
-              className="hover:text-primary text-dark transition-all px-3 py-2 rounded-xl hover:bg-primary/5 text-sm font-bold"
-            >
-              {tCommon("searchRide")}
-            </Link>
-            <Link
-              href="/offer"
-              className="hover:text-primary text-dark transition-all px-3 py-2 rounded-xl hover:bg-primary/5 text-sm font-bold"
-            >
-              {tCommon("offerRide")}
-            </Link>
-          </div>
-
-          {/* Langue Desktop Only */}
-          <div className="relative hidden lg:block" ref={dropdownRef}>
-            <button
-              onClick={() => setLangOpen(!langOpen)}
-              disabled={isPending}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl hover:bg-primary/5 text-dark text-xs font-bold uppercase transition-all disabled:opacity-50"
-            >
-              <IoGlobeOutline size={18} className="text-primary" />
-              <span>{locale}</span>
-              <IoChevronDownOutline
-                className={`transition-transform opacity-50 ${langOpen ? "rotate-180" : ""}`}
+              <Image
+                src="/images/logo.webp"
+                alt="Logo"
+                width={140}
+                height={50}
+                priority
+                className="lg:w-[160px] w-[130px] h-auto object-contain md:ml-2"
               />
-            </button>
-            {langOpen && (
-              <div className="absolute left-0 mt-3 min-w-[120px] bg-white border border-gray-50 rounded-2xl shadow-xl p-2 z-50">
-                {["fr", "en"].map((l) => (
-                  <button
-                    key={l}
-                    onClick={() => changeLanguage(l)}
-                    className={`w-full text-left px-4 py-2 text-sm rounded-xl transition-colors ${locale === l ? "bg-primary/10 text-primary font-bold" : "hover:bg-gray-50"}`}
-                  >
-                    {l === "fr" ? "Français" : "English"}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
+            </Link>
 
-        {/* RIGHT PILL */}
-        <div className="pointer-events-auto relative z-10 px-2 h-16 flex gap-3 items-center bg-white rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
-          <div className="flex items-center h-full">
+            {/* DESKTOP NAV */}
+            <div className="hidden lg:flex gap-1 xl:gap-2 items-center text-sm font-bold text-dark-800">
+              <Link
+                href="/#comment-ca-marche"
+                className="hover:text-primary text-dark font-bold transition-all px-3 py-2 rounded-xl hover:bg-primary/5"
+              >
+                {t("howItWorks")}
+              </Link>
+              <Link
+                href="/search?searchOpen=true"
+                className="hover:text-primary text-dark font-bold transition-all px-3 py-2 rounded-xl hover:bg-primary/5"
+              >
+                {tCommon("searchRide")}
+              </Link>
+              <Link
+                href="/offer"
+                className="hover:text-primary text-dark font-bold transition-all px-3 py-2 rounded-xl hover:bg-primary/5"
+              >
+                {tCommon("offerRide")}
+              </Link>
+            </div>
+
+            {/* LANGUE */}
+            <div className="relative hidden lg:block" ref={dropdownRef}>
+              <button
+                onClick={() => setLangOpen(!langOpen)}
+                disabled={isPending}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl hover:bg-primary/5 text-dark text-xs font-bold uppercase transition-all disabled:opacity-50"
+              >
+                <IoGlobeOutline size={18} className="text-primary" />
+                <span>{locale}</span>
+                <IoChevronDownOutline
+                  className={`transition-transform opacity-50 ${langOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+              {langOpen && (
+                <div className="absolute left-0 mt-3 min-w-[120px] bg-white border border-gray-50 rounded-2xl shadow-xl p-2 z-50">
+                  {["fr", "en"].map((l) => (
+                    <button
+                      key={l}
+                      onClick={() => changeLanguage(l)}
+                      className={`w-full text-left px-4 py-2 text-sm rounded-xl transition-colors ${locale === l ? "bg-primary/10 text-primary font-bold" : "hover:bg-gray-50"}`}
+                    >
+                      {l === "fr" ? "Français" : "English"}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* RIGHT SECTION (Auth/Profile + Burger) */}
+          <div className="flex items-center h-full gap-2 md:gap-3">
             {status === "loading" ? (
               <div className="w-10 h-10 rounded-full bg-gray-100 animate-pulse hidden sm:block mx-2"></div>
             ) : status === "authenticated" && session.user ? (
@@ -185,13 +187,13 @@ export default function Navbar() {
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="flex items-center gap-2 bg-transparent p-1 px-3 rounded-2xl hover:bg-primary/5 font-semibold text-sm transition-all"
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center overflow-hidden">
+                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-primary text-white flex items-center justify-center overflow-hidden shadow-sm">
                     {session.user.image ? (
                       <Image
                         src={session.user.image}
                         alt="Profile"
-                        width={32}
-                        height={32}
+                        width={40}
+                        height={40}
                       />
                     ) : (
                       <span>
@@ -234,13 +236,13 @@ export default function Navbar() {
               <div className="hidden lg:flex items-center gap-1.5 px-1.5">
                 <Link
                   href="/login"
-                  className="text-dark font-semibold text-sm px-4 py-2 rounded-xl hover:bg-primary/5 transition-all"
+                  className="text-dark font-bold text-sm px-4 py-2 rounded-xl hover:bg-primary/5 transition-all"
                 >
                   {tCommon("login")}
                 </Link>
                 <Link
                   href="/register"
-                  className="btn-secondary flex items-center justify-center gap-1 py-2 rounded-xl! text-sm shadow-md"
+                  className="btn-secondary"
                 >
                   {tCommon("register")} <IoChevronForward />
                 </Link>

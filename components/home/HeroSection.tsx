@@ -4,9 +4,10 @@ import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { IoShieldCheckmarkOutline, IoWalletOutline } from "react-icons/io5";
+import { IoChevronForward, IoShieldCheckmarkOutline, IoWalletOutline } from "react-icons/io5";
 
 import RideSearchWidget from "../search/RideSearchWidget";
+import { Link } from "@/i18n/routing";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -14,6 +15,7 @@ if (typeof window !== "undefined") {
 
 export default function HeroSection() {
   const t = useTranslations("HomePage");
+  const tCommon = useTranslations("common");
   const container = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -109,9 +111,15 @@ export default function HeroSection() {
         {/* Content Container */}
         <div className="relative container mx-auto z-10 w-full flex flex-col h-full justify-between flex-1">
           {/* Headline, subtitle, and floating cards in flex on large screens */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full mt-18 md:mt-14 lg:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full mt-22 md:mt-14 lg:px-6">
             {/* Headline + Tag */}
             <div className="max-w-xl lg:max-w-2xl shrink-0 text-left">
+              {/* Tag */}
+              <div className="max-w-lg py-1 md:py-4 px-3 md:px-5 rounded-xl border border-white/10 bg-dark/20 text-white backdrop-blur-2xl text-base font-semibold tracking-widest shadow-xl hero-text-elem text-left">
+                {t.rich("heroSubtitle", {
+                  br: () => <br />,
+                })}
+              </div>
               {/* Headline */}
               <h1 className="hero-text-elem text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-6 text-white leading-tight reveal-fade text-left">
                 {t("heroTitle1")}{" "}
@@ -120,16 +128,25 @@ export default function HeroSection() {
                   {t("heroTitle3")}
                 </span>
               </h1>
-              {/* Tag */}
-              <div className="max-w-lg py-1 md:py-4 px-3 md:px-5 rounded-xl border border-white/10 bg-dark/20 text-white backdrop-blur-2xl text-base font-semibold tracking-widest shadow-xl hero-text-elem text-left">
-                {t.rich("heroSubtitle", {
-                  br: () => <br />,
-                })}
+              {/* CTA */}
+              <div className="flex items-center gap-4 mt-6">
+                <Link
+                  href="/search?searchOpen=true"
+                  className="btn-primary"
+                >
+                  {tCommon("searchRide")} <IoChevronForward />
+                </Link>
+                <Link
+                  href="/offer"
+                  className="btn-secondary"
+                >
+                  {tCommon("offerRide")} <IoChevronForward />
+                </Link>
               </div>
             </div>
 
             {/* Floating Cards */}
-            <div className="flex flex-col gap-4 flex-1 items-stretch lg:mt-4 lg:ml-auto">
+            <div className="flex flex-col gap-4 flex-1 items-stretch lg:ml-auto">
               {/* Floating UI Card 1: Verified Profile */}
               <div className="floating-card bg-white/95 backdrop-blur-xl p-4 md:p-5 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.15)] border border-white/60 w-full max-w-xs text-left hidden xl:flex flex-col mx-auto lg:mx-0">
                 <div className="flex items-center gap-3 mb-3">
@@ -210,7 +227,7 @@ export default function HeroSection() {
           </div>
 
           {/* Search Widget Container */}
-          <div className="w-full mt-auto mb-0  md:pt-12 relative z-30 search-widget container mx-auto flex flex-col items-center lg:px-6">
+          <div className="w-full mt-auto mb-0  md:pt-12 relative z-30 search-widget flex flex-col items- lg:px-6">
             <RideSearchWidget variant="horizontal" />
           </div>
         </div>
