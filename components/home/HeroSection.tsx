@@ -90,10 +90,6 @@ export default function HeroSection() {
       <div className="relative w-full min-h-screen flex flex-col pb-10 md:pb-12 p-4 md:p-12 lg:p-20 hero-floating-img group z-20">
         {/* Inner Wrapper for the background */}
         <div className="absolute inset-0 z-0">
-          {/* Abstract shapes behind container if needed */}
-          <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[140px] pointer-events-none -translate-y-1/2 translate-x-1/4 z-0"></div>
-          <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/20 rounded-full blur-[100px] pointer-events-none z-0"></div>
-
           {/* Background Image */}
           <div
             className="absolute inset-0 z-0 float-parallax"
@@ -103,7 +99,7 @@ export default function HeroSection() {
               src="/images/close-up-group-friends-traveling-car-concept-speed.webp"
               alt="Hero Background"
               fill
-              className="object-cover object-center scale-105"
+              className="object-cover object-center"
               priority
             />
           </div>
