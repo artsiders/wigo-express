@@ -58,7 +58,7 @@ export default function MyTrajetsPage() {
           className="object-cover opacity-30 mix-blend-overlay"
           priority
         />
-        <div className="absolute inset-0 bg-linear-to-r from-primary via-primary/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-r from-primary via-primary/70 to-transparent"></div>
 
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 max-w-3xl">
           <div>
@@ -101,7 +101,7 @@ export default function MyTrajetsPage() {
               mockRides.length > 0 ? (
                 mockRides.map((ride) => <RideCard key={ride.id} ride={ride} />)
               ) : (
-                <div className="text-center py-20 bg-white rounded-[3rem] border border-neutral-100 shadow-[0_20px_40px_rgba(0,0,0,0.03)] flex flex-col items-center justify-center">
+                <div className="text-center py-20 bg-white rounded-xl border border-neutral-100 shadow-[0_20px_40px_rgba(0,0,0,0.03)] flex flex-col items-center justify-center">
                   <div className="w-24 h-24 bg-light-400 flex items-center justify-center rounded-3xl mb-6">
                     <IoCarSportOutline className="text-5xl text-neutral-400" />
                   </div>
@@ -114,7 +114,7 @@ export default function MyTrajetsPage() {
                 </div>
               )
             ) : (
-              <div className="text-center py-20 bg-white rounded-[3rem] border border-neutral-100 shadow-[0_20px_40px_rgba(0,0,0,0.03)] flex flex-col items-center justify-center">
+              <div className="text-center py-20 bg-white rounded-xl border border-neutral-100 shadow-[0_20px_40px_rgba(0,0,0,0.03)] flex flex-col items-center justify-center">
                 <div className="w-24 h-24 bg-light-400 flex items-center justify-center rounded-3xl mb-6">
                   <IoTicketOutline className="text-5xl text-neutral-400" />
                 </div>
