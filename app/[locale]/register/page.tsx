@@ -83,7 +83,7 @@ export default function RegisterPage() {
         });
         setLoading(false);
       } else {
-        window.location.href = "/";
+        window.location.href = "/profile";
       }
     } catch (error) {
       setAlertInfo({
@@ -98,7 +98,7 @@ export default function RegisterPage() {
 
   const handleGoogleLogin = () => {
     setIsGoogleLoading(true);
-    signIn("google", { callbackUrl: "/" });
+    signIn("google", { callbackUrl: "/profile" });
   };
 
   return (

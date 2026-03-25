@@ -53,12 +53,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
+        (session.user as any).isDriver = token.isDriver;
+        (session.user as any).idVerified = token.idVerified;
       }
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.sub = user.id;
+        token.isDriver = (user as any).isDriver;
+        token.idVerified = (user as any).idVerified;
+      }
+      if (trigger === "update" && session) {
+        if (session.isDriver !== undefined) token.isDriver = session.isDriver;
+        if (session.idVerified !== undefined) token.idVerified = session.idVerified;
       }
       return token;
     }

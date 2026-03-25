@@ -20,9 +20,15 @@ model User {
   updatedAt    DateTime @updatedAt
   
   // Wigo Express Relations
-  vehicles     Vehicle[]
-  tripsAsDriver Trip[]    @relation("DriverTrips")
-  bookings     Booking[]
+  vehicles         Vehicle[]
+  tripsAsDriver    Trip[]            @relation("DriverTrips")
+  bookings         Booking[]
+
+  // KYC and Driver Profiles
+  isDriver         Boolean           @default(false)
+  idVerified       Boolean           @default(false)
+  license          License?
+  kycVerifications KycVerification[]
 }
 
 model Account {
@@ -110,4 +116,31 @@ model Booking {
   trip          Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
   passenger     User     @relation(fields: [passengerId], references: [id], onDelete: Cascade)
 
+}
+
+model License {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  number        String   @unique
+  expiryDate    DateTime
+  country       String
+  documentUrl   String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model KycVerification {
+  id            String   @id @default(cuid())
+  userId        String
+  type          String   // "ID" | "LICENSE"
+  status        String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  documentUrl   String
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -60,7 +60,7 @@ export default function LoginPage() {
           desc: "Les identifiants fournis sont incorrects. Veuillez réessayer.",
         });
       } else {
-        window.location.href = "/";
+        window.location.href = "/profile";
       }
     } finally {
       setLoading(false);
@@ -69,7 +69,7 @@ export default function LoginPage() {
 
   const handleGoogleLogin = () => {
     setIsGoogleLoading(true);
-    signIn("google", { callbackUrl: "/" });
+    signIn("google", { callbackUrl: "/profile" });
   };
 
   return (

@@ -16,6 +16,7 @@ const intlMiddleware = createMiddleware(routing);
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
+  const isDriver = (req.auth?.user as any)?.isDriver === true;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   
@@ -25,7 +26,7 @@ export default auth((req) => {
   
   const currentLocale = pathnameMatch ? pathnameMatch[1] : routing.defaultLocale;
 
-  const isPrivateRoute = privateRoutes.includes(pathnameWithoutLocale) || pathnameWithoutLocale.startsWith("/my-account");
+  const isPrivateRoute = privateRoutes.includes(pathnameWithoutLocale) || pathnameWithoutLocale.startsWith("/my-account") || pathnameWithoutLocale.startsWith("/profile");
   const isAuthRoute = authRoutes.includes(pathnameWithoutLocale);
 
   // Autoriser toutes les routes API internes
@@ -53,6 +54,11 @@ export default auth((req) => {
     return Response.redirect(
       new URL(`/${currentLocale}/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     );
+  }
+
+  // Intercepter les non-conducteurs qui tentent d'accéder à /offer
+  if (isLoggedIn && pathnameWithoutLocale.startsWith("/offer") && !isDriver) {
+    return Response.redirect(new URL(`/${currentLocale}/profile`, nextUrl));
   }
 
   // Pour toutes les autres routes (non-API), applique le proxy de next-intl
