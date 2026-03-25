@@ -48,15 +48,52 @@ export default function RegisterPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // TODO: Implémenter la route API /api/register pour créer l'utilisateur
-    // En attendant, on simule pour Wigo Express
-    setAlertInfo({
-      isOpen: true,
-      type: "info",
-      title: "Bientôt disponible",
-      desc: "",
-    });
-    setLoading(false);
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        setAlertInfo({
+          isOpen: true,
+          type: "error",
+          title: "Erreur d'inscription",
+          desc: errorData.message || "Une erreur est survenue.",
+        });
+        setLoading(false);
+        return;
+      }
+
+      // Inscription réussie : on connecte l'utilisateur automatiquement
+      const signInRes = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (signInRes?.error) {
+        setAlertInfo({
+          isOpen: true,
+          type: "error",
+          title: "Erreur de connexion",
+          desc: "L'inscription a réussi, mais la connexion a échoué.",
+        });
+        setLoading(false);
+      } else {
+        window.location.href = "/";
+      }
+    } catch (error) {
+      setAlertInfo({
+        isOpen: true,
+        type: "error",
+        title: "Erreur",
+        desc: "Impossible de joindre le serveur.",
+      });
+      setLoading(false);
+    }
   };
 
   const handleGoogleLogin = () => {
