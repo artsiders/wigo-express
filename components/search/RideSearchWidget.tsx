@@ -58,6 +58,27 @@ export default function RideSearchWidget({
     "depart" | "arrivee" | "date" | "seats" | null
   >(null);
 
+  const [dropdownPos, setDropdownPos] = useState<"top" | "bottom">("bottom");
+
+  const openDropdown = (
+    type: "depart" | "arrivee" | "date" | "seats",
+    e?: React.MouseEvent | React.FocusEvent | React.ChangeEvent,
+  ) => {
+    if (e && e.currentTarget) {
+      const target = (e.currentTarget as HTMLElement).closest(".group") || (e.currentTarget as HTMLElement);
+      const rect = target.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      if (spaceBelow < 360 && rect.top > spaceBelow) {
+        setDropdownPos("top");
+      } else {
+        setDropdownPos("bottom");
+      }
+    } else {
+      setDropdownPos("bottom");
+    }
+    setActiveDropdown(type);
+  };
+
   const [loading, setLoading] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -140,18 +161,18 @@ export default function RideSearchWidget({
               value={departure}
               onChange={(e) => {
                 setDeparture(e.target.value);
-                setActiveDropdown("depart");
+                openDropdown("depart", e);
               }}
-              onFocus={() => setActiveDropdown("depart")}
+              onFocus={(e) => openDropdown("depart", e)}
               className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-500 placeholder:font-semibold truncate pb-0.5"
             />
           </div>
 
           {/* Autocomplete Dropdown */}
           {activeDropdown === "depart" && (
-            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
-              <div className="p-2 max-h-56 overflow-y-hidden">
-                <span className="block px-4 py-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
+            <div className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.15)] border border-neutral-200 overflow-hidden z-60`}>
+              <div className="p-1 max-h-56 overflow-y-auto hide-scrollbar">
+                <span className="block px-3 py-1.5 text-[10px] font-black text-neutral-500 uppercase tracking-widest">
                   Suggestions
                 </span>
                 {filteredCities(departure).length > 0 ? (
@@ -159,20 +180,20 @@ export default function RideSearchWidget({
                     <button
                       key={city}
                       type="button"
-                      onClick={() => {
+                      onClick={(e) => {
                         setDeparture(city);
-                        setActiveDropdown("arrivee");
+                        openDropdown("arrivee", e);
                       }}
-                      className="w-full text-left px-4 py-3 hover:bg-light-400 rounded-2xl flex items-center gap-3 transition-colors text-dark font-medium text-sm"
+                      className="w-full text-left px-3 py-2 hover:bg-neutral-100 rounded-xl flex items-center gap-3 transition-colors text-dark-800 font-bold text-sm"
                     >
-                      <div className="w-8 h-8 rounded-3xl bg-neutral-100 flex items-center justify-center shrink-0">
-                        <IoLocationOutline className="text-neutral-500" />
+                      <div className="w-8 h-8 rounded-full bg-neutral-200 border border-neutral-300/50 flex items-center justify-center shrink-0">
+                        <IoLocationOutline className="text-neutral-700" size={16} />
                       </div>
                       {city}
                     </button>
                   ))
                 ) : (
-                  <div className="px-4 py-3 text-sm text-neutral-500 font-medium">
+                  <div className="px-3 py-2 text-sm text-neutral-600 font-bold">
                     Aucun lieu trouvé
                   </div>
                 )}
@@ -212,18 +233,18 @@ export default function RideSearchWidget({
               value={arrival}
               onChange={(e) => {
                 setArrival(e.target.value);
-                setActiveDropdown("arrivee");
+                openDropdown("arrivee", e);
               }}
-              onFocus={() => setActiveDropdown("arrivee")}
+              onFocus={(e) => openDropdown("arrivee", e)}
               className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-500 placeholder:font-semibold truncate pb-0.5"
             />
           </div>
 
           {/* Autocomplete Dropdown */}
           {activeDropdown === "arrivee" && (
-            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
-              <div className="p-2 max-h-56 overflow-y-hidden">
-                <span className="block px-4 py-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
+            <div className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.15)] border border-neutral-200 overflow-hidden z-60`}>
+              <div className="p-1 max-h-56 overflow-y-auto hide-scrollbar">
+                <span className="block px-3 py-1.5 text-[10px] font-black text-neutral-500 uppercase tracking-widest">
                   Suggestions
                 </span>
                 {filteredCities(arrival).length > 0 ? (
@@ -231,20 +252,20 @@ export default function RideSearchWidget({
                     <button
                       key={city}
                       type="button"
-                      onClick={() => {
+                      onClick={(e) => {
                         setArrival(city);
-                        setActiveDropdown("date");
+                        openDropdown("date", e);
                       }}
-                      className="w-full text-left px-4 py-3 hover:bg-light-400 rounded-2xl flex items-center gap-3 transition-colors text-dark font-medium text-sm"
+                      className="w-full text-left px-3 py-2 hover:bg-neutral-100 rounded-xl flex items-center gap-3 transition-colors text-dark-800 font-bold text-sm"
                     >
-                      <div className="w-8 h-8 rounded-3xl bg-neutral-100 flex items-center justify-center shrink-0">
-                        <IoMapOutline className="text-neutral-500" />
+                      <div className="w-8 h-8 rounded-full bg-neutral-200 border border-neutral-300/50 flex items-center justify-center shrink-0">
+                        <IoMapOutline className="text-neutral-700" size={16} />
                       </div>
                       {city}
                     </button>
                   ))
                 ) : (
-                  <div className="px-4 py-3 text-sm text-neutral-500 font-medium">
+                  <div className="px-3 py-2 text-sm text-neutral-600 font-bold">
                     Aucun lieu trouvé
                   </div>
                 )}
@@ -259,9 +280,10 @@ export default function RideSearchWidget({
         >
           {/* Date Input */}
           <div
-            onClick={() =>
-              setActiveDropdown(activeDropdown === "date" ? null : "date")
-            }
+            onClick={(e) => {
+              if (activeDropdown === "date") setActiveDropdown(null);
+              else openDropdown("date", e);
+            }}
             className={`flex-1 ${!isVert ? "lg:w-[150px]" : ""} bg-light-400 rounded-xl min-h-16 h-16 md:h-[80px] flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-neutral-300 shrink-0
             ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
           >
@@ -286,16 +308,18 @@ export default function RideSearchWidget({
               selectedDate={date}
               onSelectDate={(d) => {
                 setDate(d);
-                setActiveDropdown("seats");
+                setActiveDropdown("seats"); // keep previous position transition
               }}
+              position={dropdownPos}
             />
           )}
 
           {/* Seats Input */}
           <div
-            onClick={() =>
-              setActiveDropdown(activeDropdown === "seats" ? null : "seats")
-            }
+            onClick={(e) => {
+              if (activeDropdown === "seats") setActiveDropdown(null);
+              else openDropdown("seats", e);
+            }}
             className={`flex-1 ${!isVert ? "h-16 lg:h-[80px]" : "h-16 lg:h-16"} bg-light-400 rounded-xl min-h-16 flex items-center px-5 cursor-pointer transition-all shadow-inner group border border-neutral-300 shrink-0
             ${activeDropdown === "seats" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
           >
@@ -315,13 +339,13 @@ export default function RideSearchWidget({
           {/* Seats Popover */}
           {activeDropdown === "seats" && (
             <div
-              className={`absolute top-full border border-neutral-100 ${isVert ? "left-0" : "right-0"} mt-4 bg-white p-4 rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] outline-none w-[180px] z-50`}
+              className={`absolute border border-neutral-200 ${isVert ? "left-0" : "right-0"} ${dropdownPos === "top" ? "bottom-full mb-3" : "top-full mt-3"} bg-white p-3 rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.15)] outline-none w-[170px] z-60`}
             >
-              <div className="flex flex-col gap-3 items-start mb-2">
-                <span className="text-dark font-bold text-sm text-left">
-                  Nombre de Passagers
+              <div className="flex flex-col gap-3 items-start mb-1">
+                <span className="text-dark-900 font-bold text-sm text-left px-1">
+                  Passagers
                 </span>
-                <div className="flex items-center gap-4 bg-light-400 w-full justify-between rounded-3xl p-1">
+                <div className="flex items-center gap-2 bg-light-400 w-full justify-between rounded-xl p-1 border border-neutral-200/60 shadow-inner">
                   <button
                     type="button"
                     onClick={(e) => {
@@ -329,11 +353,11 @@ export default function RideSearchWidget({
                       setSeats(Math.max(1, seats - 1));
                     }}
                     disabled={seats <= 1}
-                    className="w-8 h-8 rounded-3xl bg-white shadow-sm flex items-center justify-center text-lg font-bold text-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed hover:text-primary transition-colors"
+                    className="w-8 h-8 rounded-lg bg-white shadow-sm border border-neutral-200 flex items-center justify-center text-lg font-black text-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed hover:text-primary hover:border-primary-200 transition-colors"
                   >
                     -
                   </button>
-                  <span className="text-lg font-bold w-4 text-center">
+                  <span className="text-base font-black w-4 text-center text-dark">
                     {seats}
                   </span>
                   <button
@@ -343,7 +367,7 @@ export default function RideSearchWidget({
                       setSeats(Math.min(8, seats + 1));
                     }}
                     disabled={seats >= 8}
-                    className="w-8 h-8 rounded-3xl bg-white shadow-sm flex items-center justify-center text-lg font-bold text-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed hover:text-primary transition-colors"
+                    className="w-8 h-8 rounded-lg bg-white shadow-sm border border-neutral-200 flex items-center justify-center text-lg font-black text-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed hover:text-primary hover:border-primary-200 transition-colors"
                   >
                     +
                   </button>

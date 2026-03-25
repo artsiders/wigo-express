@@ -21,11 +21,13 @@ import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 interface CustomCalendarProps {
   selectedDate: Date | null;
   onSelectDate: (date: Date) => void;
+  position?: "top" | "bottom";
 }
 
 export default function CustomCalendar({
   selectedDate,
   onSelectDate,
+  position = "bottom",
 }: CustomCalendarProps) {
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
   const today = startOfDay(new Date());
@@ -51,20 +53,20 @@ export default function CustomCalendar({
 
   const renderHeader = () => {
     return (
-      <div className="flex justify-between items-center mb-4 px-2">
+      <div className="flex justify-between items-center mb-3 px-1">
         <button
           onClick={handlePrevMonth}
-          className="p-2 rounded-full hover:bg-neutral-100 transition text-neutral-600"
+          className="p-1.5 rounded-full hover:bg-neutral-200 transition text-neutral-800"
           type="button"
         >
           <IoChevronBack size={18} />
         </button>
-        <span className="text-sm font-bold capitalize text-dark">
+        <span className="text-sm font-black capitalize text-dark">
           {format(currentMonth, "MMMM yyyy", { locale: fr })}
         </span>
         <button
           onClick={handleNextMonth}
-          className="p-2 rounded-full hover:bg-neutral-100 transition text-neutral-600"
+          className="p-1.5 rounded-full hover:bg-neutral-200 transition text-neutral-800"
           type="button"
         >
           <IoChevronForward size={18} />
@@ -81,14 +83,14 @@ export default function CustomCalendar({
       days.push(
         <div
           key={i}
-          className="text-center text-[10px] font-bold text-neutral-400 uppercase tracking-wider py-2"
+          className="text-center text-[10px] font-black text-neutral-500 uppercase tracking-widest py-1.5"
         >
           {format(addMonths(startDate, i), "EEEEEE", { locale: fr })}
         </div>,
       );
     }
 
-    return <div className="grid grid-cols-7 mb-2">{days}</div>;
+    return <div className="grid grid-cols-7 mb-1">{days}</div>;
   };
 
   const renderCells = () => {
@@ -113,7 +115,7 @@ export default function CustomCalendar({
 
         days.push(
           <div
-            className={`flex justify-center items-center p-1 ${
+            className={`flex justify-center items-center p-0.5 ${
               !isCurrentMonth ? "invisible" : ""
             }`}
             key={day.toString()}
@@ -123,13 +125,13 @@ export default function CustomCalendar({
               onClick={(e) => onDateClick(cloneDay, e)}
               disabled={disabled}
               className={`
-                w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all
+                w-9 h-9 rounded-full flex items-center justify-center text-[13px] font-bold transition-all
                 ${
                   isSelected
-                    ? "bg-primary text-white font-bold shadow-md"
+                    ? "bg-primary text-white shadow-md border-transparent"
                     : disabled
                       ? "text-neutral-300 cursor-not-allowed"
-                      : "text-dark hover:bg-neutral-100 hover:text-primary"
+                      : "text-dark-900 border border-transparent hover:border-neutral-200 hover:bg-neutral-100 hover:text-primary"
                 }
               `}
             >
@@ -140,7 +142,7 @@ export default function CustomCalendar({
         day = new Date(day.getTime() + 24 * 60 * 60 * 1000);
       }
       rows.push(
-        <div className="grid grid-cols-7 gap-1" key={day.toString()}>
+        <div className="grid grid-cols-7 gap-0.5" key={day.toString()}>
           {days}
         </div>,
       );
@@ -150,7 +152,7 @@ export default function CustomCalendar({
   };
 
   return (
-    <div className="bg-white p-4 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 w-[320px] absolute z-50 top-full mt-4 sleft-0">
+    <div className={`bg-white p-3 rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.15)] border border-neutral-200 w-[290px] absolute z-60 left-0 ${position === "top" ? "bottom-full mb-3" : "top-full mt-3"}`}>
       {renderHeader()}
       {renderDays()}
       {renderCells()}
