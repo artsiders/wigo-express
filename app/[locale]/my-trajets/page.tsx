@@ -49,7 +49,7 @@ export default function MyTrajetsPage() {
   return (
     <main className="container mx-auto mt-8 md:mt-12 px-4 md:px-8 lg:px-12 pb-24">
       {/* Header Premium */}
-      <div className="bg-primary text-white rounded-3xl p-6 lg:p-8 mb-12 relative overflow-hidden shadow-2xl">
+      <div className="bg-primary text-white rounded-xl p-6 lg:p-8 mb-12 relative overflow-hidden shadow-2xl">
         {/* Background Image Plaçée avec précaution pour un effet glass premium */}
         <Image
           src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=2000"
@@ -132,7 +132,7 @@ export default function MyTrajetsPage() {
         {/* Colonne Droite: Statistiques & Actions (Sticky) */}
         <div className="w-full lg:w-4/12 flex flex-col gap-6 sticky top-28">
           {/* Widget Action */}
-          <div className="bg-white rounded-[2.5rem] p-8 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex flex-col items-center text-center">
+          <div className="bg-white rounded-xl p-8 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex flex-col items-center text-center">
             <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-6">
               <IoCarSportOutline className="text-3xl text-primary" />
             </div>
