@@ -79,11 +79,11 @@ export default function HeroSection() {
   return (
     <section
       ref={container}
-      className="relative w-full p-4 md:p-6 flex flex-col items-center justify-center"
+      className="relative w-full flex flex-col items-center justify-center"
     >
       <div className="relative w-full flex flex-col p-4 md:p-12 lg:p-20 hero-floating-img group z-20">
         {/* Inner Wrapper for the background */}
-        <div className="absolute inset-0 rounded-xl md:rounded-2xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-black/5 z-0">
+        <div className="absolute inset-0 z-0">
           {/* Abstract shapes behind container if needed */}
           <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[140px] pointer-events-none -translate-y-1/2 translate-x-1/4 z-0"></div>
           <div className="absolute bottom-10 left-10 w-[30vw] h-[30vw] bg-yellow-400/20 rounded-full blur-[100px] pointer-events-none z-0"></div>
