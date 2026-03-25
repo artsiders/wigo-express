@@ -71,31 +71,31 @@ export default function Footer() {
                 {tFooter("usefulLinks")}
               </h4>
               <Link
-                href="#"
+                href="/search?searchOpen=true"
                 className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
               >
                 {tFooter("searchRide")}
               </Link>
               <Link
-                href="#"
+                href="/offer"
                 className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
               >
                 {tFooter("offerRide")}
               </Link>
               <Link
-                href="#"
+                href="/about"
                 className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
               >
                 {tFooter("about")}
               </Link>
               <Link
-                href="#"
+                href="/terms"
                 className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
               >
                 {tFooter("terms")}
               </Link>
               <Link
-                href="#"
+                href="/privacy"
                 className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
               >
                 {tFooter("privacy")}
