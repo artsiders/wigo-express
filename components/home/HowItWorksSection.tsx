@@ -52,10 +52,10 @@ export default function HowItWorksSection() {
     <section
       ref={container as any}
       id="comment-ca-marche"
-      className="steps-container relative w-full bg-light z-20 py-20 lg:py-32 border-t border-black/5 bg-[url(/images/bg-texture.png)]"
+      className="steps-container relative w-full bg-light z-20 py-16 border-t border-black/5 bg-[url(/images/bg-texture.png)]"
     >
-      <div className="container mx-auto px-6 mb-16 lg:mb-24 text-center z-20 relative">
-        <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-tight text-dark text-center">
+      <div className="container mx-auto px-6 mb-10 text-center z-20 relative">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter leading-tight text-dark text-center">
           {t("howItWorksTitle")}
         </h2>
       </div>

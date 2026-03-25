@@ -55,7 +55,7 @@ export default function PremiumShowcaseSection() {
     >
       <div className="container mx-auto z-10">
         <div className="mb-16">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6">
             Ça n'arrive qu'en <br />
             <span className="gradient-text lg:transition-colors lg:duration-300 text-primary-gradient">
               Wigo Express...

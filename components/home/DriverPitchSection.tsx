@@ -46,14 +46,14 @@ export default function DriverPitchSection() {
     <section
       ref={container as any}
       id="conducteur"
-      className="relative w-full bg-light-400 z-20 overflow-hidden py-32 border-t border-black/5"
+      className="relative w-full bg-light-400 z-20 overflow-hidden py-16 border-t border-black/5"
     >
       <div className="absolute top-0 right-1/4 w-[40vw] h-[40vw] bg-primary/10 rounded-full blur-[140px] pointer-events-none -translate-y-1/2"></div>
       <div className="absolute bottom-0 left-0 w-[50vw] h-[20vw] bg-yellow-400/5 rounded-full blur-[100px] pointer-events-none translate-y-1/2"></div>
 
       <div className="container mx-auto px-6 relative z-10 flex flex-col items-center">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-6 text-dark leading-tight reveal-fade">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter mb-6 text-dark leading-tight reveal-fade">
             {t("driverTitle1")} <br />
             <span className="text-primary-gradient">{t("driverTitle2")}</span>
           </h2>
@@ -128,7 +128,7 @@ export default function DriverPitchSection() {
           </div>
         </div>
 
-        <div className="mt-16 text-center reveal-fade">
+        <div className="mt-16 text-center">
           <button className="btn-primary uppercase">{t("driverBtn")}</button>
         </div>
       </div>
