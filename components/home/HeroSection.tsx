@@ -83,7 +83,7 @@ export default function HeroSection() {
       ref={container}
       className="relative w-full flex flex-col items-center justify-center"
     >
-      <div className="relative w-full flex flex-col p-4 md:p-12 lg:p-20 hero-floating-img group z-20">
+      <div className="relative w-full flex flex-col pb-10 md:pb-12 p-4 md:p-12 lg:p-20 hero-floating-img group z-20">
         {/* Inner Wrapper for the background */}
         <div className="absolute inset-0 z-0">
           {/* Abstract shapes behind container if needed */}
@@ -115,7 +115,7 @@ export default function HeroSection() {
             {/* Headline + Tag */}
             <div className="max-w-xl lg:max-w-2xl shrink-0 text-left">
               {/* Tag */}
-              <div className="max-w-lg py-1 md:py-4 px-3 md:px-5 rounded-xl border border-white/10 bg-dark/20 text-white backdrop-blur-2xl text-base font-semibold tracking-widest shadow-xl hero-text-elem text-left">
+              <div className="max-w-lg mt-4 py-4 px-3 md:px-5 rounded-xl border border-white/10 bg-dark/20 text-white backdrop-blur-2xl text-base font-semibold tracking-widest shadow-xl hero-text-elem text-left">
                 {t.rich("heroSubtitle", {
                   br: () => <br />,
                 })}
@@ -131,14 +131,8 @@ export default function HeroSection() {
               {/* CTA */}
               <div className="flex items-center gap-4 mt-6">
                 <Link
-                  href="/search?searchOpen=true"
-                  className="btn-primary"
-                >
-                  {tCommon("searchRide")} <IoChevronForward />
-                </Link>
-                <Link
                   href="/offer"
-                  className="btn-secondary"
+                  className="btn-primary"
                 >
                   {tCommon("offerRide")} <IoChevronForward />
                 </Link>

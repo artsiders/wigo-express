@@ -116,14 +116,14 @@ export default function RideSearchWidget({
   const isVert = variant === "vertical";
 
   return (
-    <div className="flex flex-col items-start capitalize text-lg w-full max-w-6xl relative z-50">
-      <div className="ml-8 bg-white py-2.5 px-5 rounded-t-2xl shadow-[0_-5px_15px_rgba(0,0,0,0.03)] flex items-center justify-center gap-2 text-dark font-bold text-sm relative z-10 translate-y-1">
+    <div className="flex flex-col items-start capitalize text-lg w-full max-w-6xl relative z-50 search-widget">
+      <div className="ml-6 bg-white py-2 px-5 rounded-t-xl shadow-[0_-5px_15px_rgba(0,0,0,0.03)] flex items-center justify-center gap-2 text-dark font-bold text-sm relative z-10 translate-y-1">
         <IoSearchOutline size={16} />
         trouver un trajet
       </div>
       <div
         ref={containerRef}
-        className={`search-widget w-full bg-white p-3 md:p-3 shadow-[0_30px_80px_rgba(0,0,0,0.08)] border border-neutral-100 relative
+        className={`w-full bg-white p-3 md:p-3 shadow-[0_30px_80px_rgba(0,0,0,0.08)] border border-neutral-100 relative
         ${isVert ? "flex flex-col gap-2 rounded-2xl squircle" : "rounded-2xl flex flex-col lg:flex-row items-center gap-2"}
       `}
       >
