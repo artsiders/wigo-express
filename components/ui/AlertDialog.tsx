@@ -25,7 +25,7 @@ export default function AlertDialog({
   description,
   onClose,
   confirmText = "Fermer",
-  onConfirm
+  onConfirm,
 }: AlertDialogProps) {
   useEffect(() => {
     if (isOpen) {
@@ -33,7 +33,9 @@ export default function AlertDialog({
     } else {
       document.body.style.overflow = "";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -44,28 +46,30 @@ export default function AlertDialog({
       iconColor: "text-red-500",
       shadow: "0 8px 16px rgba(239, 68, 68, 0.25)",
       glowColor: "rgba(239, 68, 68, 0.15)",
-      btnClass: "bg-red-500 hover:bg-red-600 text-white shadow-red-500/20"
+      btnClass: "bg-red-500 hover:bg-red-600 text-white shadow-red-500/20",
     },
     info: {
       icon: IoInformationCircleOutline,
       iconColor: "text-indigo-500",
       shadow: "0 8px 16px rgba(99, 102, 241, 0.25)",
       glowColor: "rgba(99, 102, 241, 0.15)",
-      btnClass: "bg-primary hover:bg-dark text-white shadow-primary/20"
+      btnClass: "bg-primary hover:bg-dark text-white shadow-primary/20",
     },
     success: {
       icon: IoCheckmarkCircleOutline,
       iconColor: "text-green-500",
       shadow: "0 8px 16px rgba(34, 197, 94, 0.25)",
       glowColor: "rgba(34, 197, 94, 0.15)",
-      btnClass: "bg-green-500 hover:bg-green-600 text-white shadow-green-500/20"
+      btnClass:
+        "bg-green-500 hover:bg-green-600 text-white shadow-green-500/20",
     },
     warning: {
       icon: IoWarningOutline,
       iconColor: "text-amber-500",
       shadow: "0 8px 16px rgba(245, 158, 11, 0.25)",
       glowColor: "rgba(245, 158, 11, 0.15)",
-      btnClass: "bg-amber-500 hover:bg-amber-600 text-white shadow-amber-500/20"
+      btnClass:
+        "bg-amber-500 hover:bg-amber-600 text-white shadow-amber-500/20",
     },
   }[type];
 
@@ -73,13 +77,18 @@ export default function AlertDialog({
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
-      <div className="absolute inset-0 bg-dark-900/40 backdrop-blur-sm" onClick={onClose}></div>
-      
-      <div className="relative bg-white rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl ring-4 ring-white border border-dark/5 overflow-hidden animate-in zoom-in-95 duration-300">
+      <div
+        className="absolute inset-0 bg-dark-900/40 backdrop-blur-sm"
+        onClick={onClose}
+      ></div>
+
+      <div className="relative bg-white rounded-xl p-6 sm:p-8 w-full max-w-md shadow-2xl ring-4 ring-white border border-dark/5 overflow-hidden animate-in zoom-in-95 duration-300">
         {/* Glow */}
         <div
           className="absolute inset-0 pointer-events-none z-0"
-          style={{ background: `radial-gradient(circle at top, ${config.glowColor} 0%, transparent 400px)` }}
+          style={{
+            background: `radial-gradient(circle at top, ${config.glowColor} 0%, transparent 400px)`,
+          }}
         />
 
         <div className="relative z-10 flex flex-col items-center text-center">
@@ -94,9 +103,7 @@ export default function AlertDialog({
           <h4 className="text-2xl font-black text-dark mb-3 leading-tight tracking-tight">
             {title}
           </h4>
-          <p className="text-neutral-500 font-medium mb-8">
-            {description}
-          </p>
+          <p className="text-neutral-500 font-medium mb-8">{description}</p>
 
           <button
             onClick={onConfirm || onClose}

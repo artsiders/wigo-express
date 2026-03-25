@@ -65,7 +65,7 @@ export default function Alert({
 
   return (
     <div
-      className={`relative bg-white rounded-3xl p-5 md:p-6 pr-14 flex items-start shadow-[0_10px_30px_rgba(0,0,0,0.06)] ring-4 ring-white border border-dark/5 overflow-hidden w-full ${className}`}
+      className={`relative bg-white rounded-xl p-5 md:p-6 pr-14 flex items-start shadow-[0_10px_30px_rgba(0,0,0,0.06)] ring-4 ring-white border border-dark/5 overflow-hidden w-full ${className}`}
     >
       {/* Decorative Glow Only */}
       <div
