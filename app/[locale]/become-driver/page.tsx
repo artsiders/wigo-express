@@ -118,17 +118,17 @@ export default function BecomeDriverPage() {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">Prénom</label>
-                      <input type="text" placeholder="Alex" className="w-full bg-light-300 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold placeholder:text-neutral-300" />
+                      <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">Prénom</label>
+                      <input type="text" placeholder="Ex: Alex" className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark placeholder:text-neutral-400" />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">Nom</label>
-                      <input type="text" placeholder="Conducteur" className="w-full bg-light-300 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold placeholder:text-neutral-300" />
+                      <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">Nom</label>
+                      <input type="text" placeholder="Ex: Conducteur" className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark placeholder:text-neutral-400" />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">Email de contact</label>
-                    <input type="email" placeholder="driver@wigo.com" className="w-full bg-light-300 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold placeholder:text-neutral-300" />
+                    <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">Email de contact</label>
+                    <input type="email" placeholder="driver@wigo.com" className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark placeholder:text-neutral-400" />
                   </div>
                 </div>
               )}
@@ -141,27 +141,27 @@ export default function BecomeDriverPage() {
                   </div>
                   <div className="space-y-6">
                     <div className="space-y-2">
-                      <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">Numéro du permis</label>
-                      <input type="text" placeholder="ABC-123456" className="w-full bg-light-300 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold" />
+                      <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">Numéro du permis</label>
+                      <input type="text" placeholder="Ex: ABC-123456" className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark placeholder:text-neutral-400" />
                     </div>
                     <div className="grid grid-cols-2 gap-6">
                        <div className="space-y-2">
-                        <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">Date d'expiration</label>
-                        <input type="date" className="w-full bg-light-300 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold" />
+                        <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">Expiration</label>
+                        <input type="date" className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark" />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">Pays d'émission</label>
-                        <select className="w-full bg-light-300 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold appearance-none">
+                        <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">Pays d'émission</label>
+                        <select className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark appearance-none">
                           <option>France</option>
                           <option>Belgique</option>
                           <option>Suisse</option>
                         </select>
                       </div>
                     </div>
-                    <div className="p-10 border-2 border-dashed border-neutral-200 rounded-3xl flex flex-col items-center justify-center text-center group hover:border-primary transition-all cursor-pointer">
-                      <LuUpload size={32} className="text-neutral-300 group-hover:text-primary transition-all mb-4" />
-                      <p className="text-sm font-bold text-neutral-500">Cliquez pour uploader une photo du permis</p>
-                      <p className="text-xs text-neutral-400 mt-1">Formats acceptés : JPG, PNG (Max 5Mo)</p>
+                    <div className="p-10 border-2 border-dashed border-neutral-200 rounded-2xl flex flex-col items-center justify-center text-center group hover:border-primary transition-all cursor-pointer bg-neutral-50/50">
+                      <LuUpload size={32} className="text-neutral-400 group-hover:text-primary transition-all mb-4" />
+                      <p className="text-[15px] font-bold text-neutral-600">Cliquez pour uploader une photo du permis</p>
+                      <p className="text-xs text-neutral-500 mt-1 font-medium">Formats acceptés : JPG, PNG (Max 5Mo)</p>
                     </div>
                   </div>
                 </div>
@@ -173,22 +173,22 @@ export default function BecomeDriverPage() {
                     <h2 className="text-3xl font-black text-dark">Votre Véhicule</h2>
                     <p className="text-neutral-500 font-medium">Pour que vos passagers puissent vous reconnaître.</p>
                   </div>
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2 text-left">
-                      <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">Marque</label>
-                      <input type="text" placeholder="Tesla" className="w-full bg-light-300 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold" />
+                      <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">Marque</label>
+                      <input type="text" placeholder="Ex: Tesla" className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark placeholder:text-neutral-400" />
                     </div>
                     <div className="space-y-2 text-left">
-                      <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">Modèle</label>
-                      <input type="text" placeholder="Model 3" className="w-full bg-light-300 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold" />
+                      <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">Modèle</label>
+                      <input type="text" placeholder="Ex: Model 3" className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark placeholder:text-neutral-400" />
                     </div>
                      <div className="space-y-2 text-left">
-                      <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">Plaque d'immatriculation</label>
-                      <input type="text" placeholder="AA-123-BB" className="w-full bg-light-300 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold" />
+                      <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">Plaque d'immatriculation</label>
+                      <input type="text" placeholder="Ex: AA-123-BB" className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark placeholder:text-neutral-400" />
                     </div>
                     <div className="space-y-2 text-left">
-                      <label className="text-xs font-black text-neutral-400 uppercase tracking-widest">Places disponibles</label>
-                      <select className="w-full bg-light-300 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold appearance-none">
+                      <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">Places disponibles</label>
+                      <select className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlPSIjOTA5MDkwIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE5IDlsLTcgNy03LTciLz48L3N2Zz4=')] bg-no-repeat bg-position-[right_1.5rem_center] bg-size-[1.2rem]">
                         <option>1 place</option>
                         <option>2 places</option>
                         <option selected>3 places</option>

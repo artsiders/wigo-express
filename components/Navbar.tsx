@@ -140,6 +140,12 @@ export default function Navbar() {
                 {tCommon("searchRide")}
               </Link>
               <Link
+                href="/profile"
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50"
+              >
+                Mon Profil
+              </Link>
+              <Link
                 href={(session?.user as any)?.isDriver ? "/offer" : (pathname === "/become-driver" ? "#" : "/become-driver?mode=become-driver")}
                 className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50 flex items-center gap-2 group"
               >
@@ -219,6 +225,14 @@ export default function Navbar() {
                     >
                       <IoListOutline size={18} className="text-primary" />
                       Mes trajets
+                    </Link>
+                    <Link
+                      href="/profile"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-dark hover:bg-gray-50 rounded-md transition-colors"
+                    >
+                      <IoPersonOutline size={18} className="text-primary" />
+                      Mon compte
                     </Link>
                     <div className="h-px bg-gray-100 my-1 mx-2"></div>
                     <button
@@ -312,6 +326,13 @@ export default function Navbar() {
             className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-100 bg-white hover:shadow-md"
           >
             {tCommon("searchRide")}
+          </Link>
+          <Link
+            href="/profile"
+            onClick={() => setMenuOpen(false)}
+            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-100 bg-white hover:shadow-md"
+          >
+            Mon Profil
           </Link>
           <Link
             href={(session?.user as any)?.isDriver ? "/offer" : "/become-driver?mode=become-driver"}

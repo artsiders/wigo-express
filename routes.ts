@@ -7,6 +7,7 @@ export const privateRoutes = [
   "/my-account",
   "/profile",
   "/offer",
+  "/become-driver",
 ];
 
 /**
