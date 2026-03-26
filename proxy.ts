@@ -9,62 +9,94 @@ import {
   privateRoutes,
 } from "@/routes";
 
+// 1. Initialisation de NextAuth
 const { auth } = NextAuth(authConfig);
-
 const intlMiddleware = createMiddleware(routing);
 
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  const isDriver = (req.auth?.user as any)?.isDriver === true;
-
-  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   
-  // Extraction du code de langue s'il y en a un pour vérifier les routes indépendamment de la locale
-  const pathnameMatch = nextUrl.pathname.match(/^\/(fr|en)(\/.*)?$/);
-  const pathnameWithoutLocale = pathnameMatch ? (pathnameMatch[2] || '/') : nextUrl.pathname;
-  
-  const currentLocale = pathnameMatch ? pathnameMatch[1] : routing.defaultLocale;
+  // Extension de type pour la clarté (idéalement à mettre dans un fichier dts)
+  const user = req.auth?.user as { isDriver?: boolean } | undefined;
+  const isDriver = user?.isDriver === true;
 
-  const isPrivateRoute = privateRoutes.includes(pathnameWithoutLocale) || pathnameWithoutLocale.startsWith("/my-account") || pathnameWithoutLocale.startsWith("/profile");
+  /**
+   * 2. GESTION DES CHEMINS ET LOCALES
+   */
+  const pathname = nextUrl.pathname;
+  
+  // Détecter si le chemin commence par une locale supportée (ex: /fr/...)
+  const hasLocale = routing.locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  );
+
+  const currentLocale = hasLocale 
+    ? pathname.split('/')[1] 
+    : routing.defaultLocale;
+
+  // Chemin sans la locale (ex: /fr/profile -> /profile)
+  const pathnameWithoutLocale = hasLocale
+    ? `/${pathname.split('/').slice(2).join('/')}`
+    : pathname;
+
+  /**
+   * 3. FILTRES DE SÉCURITÉ IMMÉDIATS
+   */
+  const isApiRoute = pathname.startsWith(apiAuthPrefix) || pathname.startsWith('/api');
+  if (isApiRoute) return;
+
   const isAuthRoute = authRoutes.includes(pathnameWithoutLocale);
+  const isPrivateRoute = privateRoutes.some(route => 
+    pathnameWithoutLocale === route || pathnameWithoutLocale.startsWith(`${route}/`)
+  );
 
-  // Autoriser toutes les routes API internes
-  if (isApiAuthRoute || nextUrl.pathname.startsWith('/api')) {
-    return;
-  }
+  // Helper pour rediriger proprement avec la locale
+  const createRedirect = (path: string) => {
+    return Response.redirect(new URL(`/${currentLocale}${path}`, nextUrl));
+  };
 
-  // Si on est sur une route liée à l'auth (login, register), rediriger si déjà connecté
+  /**
+   * 4. LOGIQUE DE REDIRECTION (ROBUSTESSE)
+   */
+
+  // Règle 1 : Rediriger l'utilisateur connecté s'il tente d'aller sur Login/Register
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(`/${currentLocale}${DEFAULT_LOGIN_REDIRECT}`, nextUrl));
+      return createRedirect(DEFAULT_LOGIN_REDIRECT);
     }
     return intlMiddleware(req);
   }
 
-  // Si l'utilisateur n'est pas connecté et essaie d'accéder à une page privée
+  // Règle 2 : Protéger les routes privées
   if (!isLoggedIn && isPrivateRoute) {
-    let callbackUrl = nextUrl.pathname;
-    if (nextUrl.search) {
-      callbackUrl += nextUrl.search;
-    }
-
-    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+    let callbackUrl = pathname;
+    if (nextUrl.search) callbackUrl += nextUrl.search;
     
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
     return Response.redirect(
       new URL(`/${currentLocale}/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     );
   }
 
-  // Intercepter les non-conducteurs qui tentent d'accéder à /offer
-  if (isLoggedIn && pathnameWithoutLocale.startsWith("/offer") && !isDriver) {
-    return Response.redirect(new URL(`/${currentLocale}/become-driver?mode=become-driver`, nextUrl));
+  // Règle 3 : Le Driver ne peut PAS aller sur "devenir driver"
+  if (isLoggedIn && isDriver && pathnameWithoutLocale.startsWith("/become-driver")) {
+    // On le renvoie vers son dashboard ou l'accueil
+    return createRedirect(DEFAULT_LOGIN_REDIRECT);
   }
 
-  // Pour toutes les autres routes (non-API), applique le proxy de next-intl
+  // Règle 4 : Seuls les drivers accèdent à /offer
+  if (isLoggedIn && pathnameWithoutLocale.startsWith("/offer") && !isDriver) {
+    return createRedirect("/become-driver?mode=become-driver");
+  }
+
+  /**
+   * 5. FINALISATION
+   */
   return intlMiddleware(req);
 });
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  // Matcher optimisé pour exclure les assets statiques et images
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)', '/', '/(api|trpc)(.*)'],
 };
