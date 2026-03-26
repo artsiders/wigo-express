@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useBecomeDriver, KycVerification, License } from "@/hooks/useProfile";
+import { useSession } from "next-auth/react";
 
 interface Props {
   kycVerifications: KycVerification[];
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export function DriverRegistrationForm({ kycVerifications, license }: Props) {
+  const { update } = useSession();
   const { mutate: becomeDriver, isPending } = useBecomeDriver();
   const [formData, setFormData] = useState({
     number: "",
@@ -33,7 +35,11 @@ export function DriverRegistrationForm({ kycVerifications, license }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    becomeDriver(formData);
+    becomeDriver(formData, {
+      onSuccess: () => {
+        update({ isDriver: true });
+      }
+    });
   };
 
   return (

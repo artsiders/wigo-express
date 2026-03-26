@@ -140,8 +140,8 @@ export default function Navbar() {
                 {tCommon("searchRide")}
               </Link>
               <Link
-                href="/offer"
-                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50"
+                href={(session?.user as any)?.isDriver ? "/offer" : (pathname === "/profile" ? "#become-driver" : "/profile?mode=become-driver")}
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50 flex items-center gap-2 group"
               >
                 {tCommon("offerRide")}
               </Link>
@@ -314,11 +314,16 @@ export default function Navbar() {
             {tCommon("searchRide")}
           </Link>
           <Link
-            href="/offer"
+            href={(session?.user as any)?.isDriver ? "/offer" : "/profile?mode=become-driver"}
             onClick={() => setMenuOpen(false)}
-            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-100 bg-white hover:shadow-md"
+            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center justify-between gap-4 px-6 py-3 rounded-xl border border-gray-100 bg-white hover:shadow-md w-full"
           >
-            {tCommon("offerRide")}
+            <span>{tCommon("offerRide")}</span>
+            {!(session?.user as any)?.isDriver && status === "authenticated" && (
+              <span className="text-[10px] font-black uppercase tracking-tighter bg-amber-100 text-amber-700 px-2 py-1 rounded-lg border border-amber-200">
+                Action requise
+              </span>
+            )}
           </Link>
           {status === "authenticated" && session?.user ? (
             <>
