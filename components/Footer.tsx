@@ -17,7 +17,7 @@ export default function Footer() {
 
   useGSAP(
     () => {
-      // Footer Parallax Reveal
+      // Footer Parallax Reveal (light version)
       gsap.fromTo(
         ".footer-content",
         { y: "-30%" },
@@ -39,13 +39,13 @@ export default function Footer() {
   return (
     <footer
       ref={container as any}
-      className="footer-wrapper relative z-0 bg-dark-900 text-white overflow-hidden rounded-t-3xl squircle"
+      className="footer-wrapper relative z-0 bg-white text-dark-900 overflow-hidden border-t border-neutral-300"
     >
       {/* Subtle top glow effect */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-primary/20 rounded-full blur-[150px] pointer-events-none opacity-50"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-primary/10 rounded-full blur-[120px] pointer-events-none opacity-70"></div>
 
       <div className="footer-content container mx-auto px-6 pt-20 md:pt-28 pb-8 flex flex-col h-full relative z-10">
-        <div className="flex flex-col xl:flex-row justify-between items-start gap-4 md:gap-16 flex-1 border-b border-white/15 pb-6 md:pb-20">
+        <div className="flex flex-col xl:flex-row justify-between items-start gap-4 md:gap-16 flex-1 border-b border-neutral-200 pb-6 md:pb-20">
           {/* Brand & Mission */}
           <div className="xl:w-5/12 flex flex-col items-start pr-0 md:pr-10">
             {/* Logo */}
@@ -59,7 +59,7 @@ export default function Footer() {
                 priority
               />
             </Link>
-            <p className="text-neutral-300 text-lg md:text-xl font-light m:mb-10 max-w-sm leading-relaxed mt-2 md:mt-6">
+            <p className="text-neutral-700 text-lg md:text-xl font-light m:mb-10 max-w-sm leading-relaxed mt-2 md:mt-6">
               {tFooter("mission")}
             </p>
           </div>
@@ -72,31 +72,31 @@ export default function Footer() {
               </h4>
               <Link
                 href="/search?searchOpen=true"
-                className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
+                className="text-neutral-700 hover:text-primary hover:translate-x-1 transition-all"
               >
                 {tFooter("searchRide")}
               </Link>
               <Link
                 href="/offer"
-                className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
+                className="text-neutral-700 hover:text-primary hover:translate-x-1 transition-all"
               >
                 {tFooter("offerRide")}
               </Link>
               <Link
                 href="/about"
-                className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
+                className="text-neutral-700 hover:text-primary hover:translate-x-1 transition-all"
               >
                 {tFooter("about")}
               </Link>
               <Link
                 href="/terms"
-                className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
+                className="text-neutral-700 hover:text-primary hover:translate-x-1 transition-all"
               >
                 {tFooter("terms")}
               </Link>
               <Link
                 href="/privacy"
-                className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
+                className="text-neutral-700 hover:text-primary hover:translate-x-1 transition-all"
               >
                 {tFooter("privacy")}
               </Link>
@@ -109,7 +109,7 @@ export default function Footer() {
               <div className="flex flex-col gap-3">
                 <a
                   href="tel:+18001234567"
-                  className="text-neutral-300 hover:text-white transition-all"
+                  className="text-neutral-700 hover:text-primary transition-all"
                 >
                   {tFooter("phone")}
                 </a>
@@ -121,13 +121,13 @@ export default function Footer() {
               <div className="flex flex-col gap-3">
                 <Link
                   href="/login"
-                  className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
+                  className="text-neutral-700 hover:text-primary hover:translate-x-1 transition-all"
                 >
                   {tFooter("login")}
                 </Link>
                 <Link
                   href="/register"
-                  className="text-neutral-300 hover:text-white hover:translate-x-1 transition-all"
+                  className="text-neutral-700 hover:text-primary hover:translate-x-1 transition-all"
                 >
                   {tFooter("register")}
                 </Link>
@@ -136,7 +136,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center text-xs font-bold text-neutral-600 uppercase tracking-widest gap-6 mt-8">
+        <div className="flex flex-col md:flex-row justify-between items-center text-xs font-bold text-neutral-400 uppercase tracking-widest gap-6 mt-8">
           <span>
             © {new Date().getFullYear()} Wigo Express Inc. {tFooter("rights")}
           </span>
