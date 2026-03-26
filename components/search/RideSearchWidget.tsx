@@ -13,6 +13,7 @@ import {
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import CustomCalendar from "./CustomCalendar";
+import { LargeInput, LargeClickableInput } from "@/components/ui/LargeInput";
 import { LuLoaderCircle } from "react-icons/lu";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -247,26 +248,18 @@ export default function RideSearchWidget({
       `}
       >
         {/* Departure */}
-        <div className="large-input">
-          <IoLocationOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
-          <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-            <span className="block text-sm font-bold text-neutral-700 uppercase tracking-widest mt-0.5">
-              Départ
-            </span>
-            <input
-              type="text"
-              placeholder="Saisissez un lieu"
-              value={departure}
-              onChange={(e) => {
-                setDeparture(e.target.value);
-                setDepartCoords(null);
-                openDropdown("depart", e);
-              }}
-              onFocus={(e) => openDropdown("depart", e)}
-              className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-500 truncate pb-0.5"
-            />
-          </div>
-
+        <LargeInput
+          label="Départ"
+          icon={<IoLocationOutline />}
+          placeholder="Saisissez un lieu"
+          value={departure}
+          onChange={(e) => {
+            setDeparture(e.target.value);
+            setDepartCoords(null);
+            openDropdown("depart", e);
+          }}
+          onFocus={(e) => openDropdown("depart", e)}
+        >
           {activeDropdown === "depart" && (
             <div
               className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden z-60`}
@@ -293,7 +286,7 @@ export default function RideSearchWidget({
               </div>
             </div>
           )}
-        </div>
+        </LargeInput>
 
         <div
           onClick={swapLocations}
@@ -311,28 +304,19 @@ export default function RideSearchWidget({
         )}
 
         {/* Arrival */}
-        <div
-          className={`large-input ${!isVert ? "mt-2 lg:mt-0" : ""}`}
+        <LargeInput
+          label="Arrivée"
+          icon={<IoMapOutline />}
+          containerClassName={!isVert ? "mt-2 lg:mt-0" : ""}
+          placeholder="Saisissez un lieu"
+          value={arrival}
+          onChange={(e) => {
+            setArrival(e.target.value);
+            setArriveeCoords(null);
+            openDropdown("arrivee", e);
+          }}
+          onFocus={(e) => openDropdown("arrivee", e)}
         >
-          <IoMapOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
-          <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-            <span className="block text-sm font-bold text-neutral-700 uppercase tracking-widest mt-0.5">
-              Arrivée
-            </span>
-            <input
-              type="text"
-              placeholder="Saisissez un lieu"
-              value={arrival}
-              onChange={(e) => {
-                setArrival(e.target.value);
-                setArriveeCoords(null);
-                openDropdown("arrivee", e);
-              }}
-              onFocus={(e) => openDropdown("arrivee", e)}
-              className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-500 truncate pb-0.5"
-            />
-          </div>
-
           {activeDropdown === "arrivee" && (
             <div
               className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden z-60`}
@@ -359,33 +343,26 @@ export default function RideSearchWidget({
               </div>
             </div>
           )}
-        </div>
+        </LargeInput>
 
         {/* Date Input */}
         <div
           className={`w-full ${isVert ? "flex-col" : "lg:w-[180px]"} relative shrink-0`}
         >
-          <div
+          <LargeClickableInput
+            label="Quand ?"
+            icon={<IoCalendarOutline />}
+            valueDisplay={
+              date
+                ? format(date, "EEE d MMM", { locale: fr })
+                : "Aujourd'hui"
+            }
+            isActive={activeDropdown === "date"}
             onClick={(e) => {
               if (activeDropdown === "date") setActiveDropdown(null);
-              else openDropdown("date", e, 420);
+              else openDropdown("date", e as any, 420);
             }}
-            className={`large-input ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
-          >
-            <IoCalendarOutline
-              className={`text-xl shrink-0 ${activeDropdown === "date" ? "text-primary" : "text-neutral-700"}`}
-            />
-            <div className="ml-2.5 text-left w-full flex flex-col justify-center h-full">
-              <span className="block text-xs font-bold text-neutral-600 uppercase tracking-widest">
-                Quand ?
-              </span>
-              <span className="block text-[13px] font-bold truncate text-dark">
-                {date
-                  ? format(date, "EEE d MMM", { locale: fr })
-                  : "Aujourd'hui"}
-              </span>
-            </div>
-          </div>
+          />
 
           {/* Date Calendar Popover */}
           {activeDropdown === "date" && (

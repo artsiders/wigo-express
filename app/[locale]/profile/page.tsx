@@ -12,6 +12,7 @@ import {
 import { Link } from "@/i18n/routing";
 import { IoCameraOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
 import Image from "next/image";
+import Footer from "@/components/Footer";
 
 // Helper pour extraire les initiales du nom
 function getInitials(name?: string | null): string {
@@ -242,6 +243,7 @@ export default function ProfilePage() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

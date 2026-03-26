@@ -166,10 +166,7 @@
     @apply appearance-none pr-10;
   }
 
-  /* large input */
-  .large-input {
-    @apply relative flex-1 w-full bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-neutral-300 focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner shrink-0;
-  }
+
 
   /* Boutons typés */
 
