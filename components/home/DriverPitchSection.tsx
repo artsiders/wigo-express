@@ -9,6 +9,7 @@ import {
   IoShieldCheckmarkOutline,
   IoCalendarOutline,
 } from "react-icons/io5";
+import { Link } from "@/i18n/routing";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -126,7 +127,9 @@ export default function DriverPitchSection() {
         </div>
 
         <div className="mt-16 text-center">
-          <button className="btn-primary uppercase">{t("driverBtn")}</button>
+          <Link href="/become-driver" className="btn-primary uppercase">
+            {t("driverBtn")}
+          </Link>
         </div>
       </div>
     </section>
