@@ -163,7 +163,7 @@ export default function ProfilePage() {
             {/* Action Card: Become Driver (if not) */}
             {!profile.isDriver && (
               <Link href="/become-driver" className="group block">
-                <div className="bg-primary rounded-2xl p-8 relative overflow-hidden transition-all hover:bg-black">
+                <div className="bg-primary rounded-2xl p-8 relative overflow-hidden transition-all hover:bg-primary-600">
                   <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
                       <h3 className="text-2xl font-bold text-white mb-2">
