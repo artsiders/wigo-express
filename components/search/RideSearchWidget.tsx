@@ -247,7 +247,7 @@ export default function RideSearchWidget({
       `}
       >
         {/* Departure */}
-        <div className="relative flex-1 w-full bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-neutral-300 focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
+        <div className="large-input">
           <IoLocationOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
           <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
             <span className="block text-sm font-bold text-neutral-700 uppercase tracking-widest mt-0.5">
@@ -312,7 +312,7 @@ export default function RideSearchWidget({
 
         {/* Arrival */}
         <div
-          className={`relative flex-1 w-full bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-neutral-300 focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0 ${!isVert ? "mt-2 lg:mt-0" : ""}`}
+          className={`large-input ${!isVert ? "mt-2 lg:mt-0" : ""}`}
         >
           <IoMapOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
           <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
@@ -370,8 +370,7 @@ export default function RideSearchWidget({
               if (activeDropdown === "date") setActiveDropdown(null);
               else openDropdown("date", e, 420);
             }}
-            className={`flex-1 bg-light-400 rounded-xl min-h-16 h-16 md:h-[80px] flex items-center px-5 cursor-pointer transition-all border border-neutral-300 shrink-0
-    ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
+            className={`large-input ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
           >
             <IoCalendarOutline
               className={`text-xl shrink-0 ${activeDropdown === "date" ? "text-primary" : "text-neutral-700"}`}

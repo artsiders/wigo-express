@@ -168,7 +168,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
       <div ref={containerRef} className="flex-1 flex flex-col gap-6 relative">
         <div className="flex flex-col gap-4">
           {/* Departure */}
-          <div className="relative flex-1 w-full bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-neutral-300 focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
+          <div className="large-input">
             <IoLocationOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
             <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
               <span className="block text-sm font-bold text-neutral-700 uppercase tracking-widest mt-0.5">
@@ -216,7 +216,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
             )}
           </div>
 
-          <div className="relative flex-1 w-full bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-neutral-300 focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
+          <div className="large-input">
             <IoMapOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
             <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
               <span className="block text-sm font-bold text-neutral-700 uppercase tracking-widest mt-0.5">
