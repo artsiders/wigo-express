@@ -218,23 +218,19 @@ export default function BecomeDriverPage() {
                         <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
                           Expiration
                         </label>
-                        <input
-                          type="date"
-                          className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark"
-                        />
+                        <input type="date" className="input" />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
                           Pays d'émission
                         </label>
-                        <select className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark appearance-none">
-                          <option>France</option>
-                          <option>Belgique</option>
-                          <option>Suisse</option>
+                        <select className="input appearance-none">
+                          <option>États-Unis</option>
+                          <option>Canada</option>
                         </select>
                       </div>
                     </div>
-                    <div className="p-10 border-2 border-dashed border-neutral-200 rounded-2xl flex flex-col items-center justify-center text-center group hover:border-primary transition-all cursor-pointer bg-neutral-50/50">
+                    <div className="p-10 border-2 border-dashed border-neutral-400 rounded-2xl flex flex-col items-center justify-center text-center group hover:border-primary transition-all cursor-pointer bg-neutral-50/50">
                       <LuUpload
                         size={32}
                         className="text-neutral-400 group-hover:text-primary transition-all mb-4"
@@ -295,7 +291,7 @@ export default function BecomeDriverPage() {
                       <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
                         Places disponibles
                       </label>
-                      <select className="w-full bg-light-300 border-none rounded-xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all font-bold text-dark appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlPSIjOTA5MDkwIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE5IDlsLTcgNy03LTciLz48L3N2Zz4=')] bg-no-repeat bg-position-[right_1.5rem_center] bg-size-[1.2rem]">
+                      <select className="input appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlPSIjOTA5MDkwIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE5IDlsLTcgNy03LTciLz48L3N2Zz4=')] bg-no-repeat bg-position-[right_1.5rem_center] bg-size-[1.2rem]">
                         <option>1 place</option>
                         <option>2 places</option>
                         <option selected>3 places</option>
@@ -322,7 +318,6 @@ export default function BecomeDriverPage() {
                   </div>
                   <div className="w-full p-6 bg-neutral-50 rounded-3xl border border-neutral-100 space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-blue-500"></div>
                       <p className="text-sm font-bold text-neutral-700 underline decoration-blue-500 decoration-2 cursor-pointer">
                         Consulter les règles de sécurité
                       </p>
@@ -332,7 +327,7 @@ export default function BecomeDriverPage() {
                         type="checkbox"
                         className="mt-1 rounded border-neutral-300 text-primary focus:ring-primary"
                       />
-                      <p className="text-xs text-neutral-500 font-medium italic">
+                      <p className="text-sm text-neutral-500 font-medium italic">
                         Je certifie que toutes les informations fournies sont
                         exactes et que mon véhicule est assuré.
                       </p>
@@ -365,7 +360,7 @@ export default function BecomeDriverPage() {
                   />
                 </button>
               ) : (
-                <button className="flex items-center gap-3 px-10 py-5 bg-primary text-white rounded-2xl font-black shadow-2xl shadow-primary/30 hover:shadow-primary/40 transition-all active:scale-95 animate-pulse">
+                <button className="flex items-center gap-3 px-10 py-5 bg-primary text-white rounded-2xl font-black shadow-2xl shadow-primary/30 hover:shadow-primary/40 transition-all active:scale-95">
                   Soumettre mon profil
                   <IoCheckmarkCircle size={20} />
                 </button>
