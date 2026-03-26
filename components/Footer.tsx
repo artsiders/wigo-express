@@ -51,7 +51,7 @@ export default function Footer() {
             {/* Logo */}
             <Link href="/">
               <Image
-                src="/images/logo.webp"
+                src="/images/logo.png"
                 alt="Wigo Express Inc Logo"
                 width={200}
                 height={200}
