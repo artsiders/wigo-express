@@ -165,8 +165,8 @@ export default function RideSearchWidget({
 
   const openDropdown = (
     type: "depart" | "arrivee" | "date",
-    // On ajoute React.ChangeEvent à l'union des types
     e?: React.MouseEvent | React.FocusEvent | React.ChangeEvent,
+    customHeight?: number,
   ) => {
     if (e?.currentTarget) {
       const target =
@@ -174,12 +174,17 @@ export default function RideSearchWidget({
         (e.currentTarget as HTMLElement);
       const rect = target.getBoundingClientRect();
 
-      // Logique de positionnement (top/bottom)
-      setDropdownPos(
-        window.innerHeight - rect.bottom < 360 && rect.top > 360
-          ? "top"
-          : "bottom",
-      );
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+
+      // Le calendrier fait environ 420px, les suggestions 320px
+      const estimatedHeight = customHeight || 320;
+
+      if (spaceBelow < estimatedHeight && spaceAbove > spaceBelow) {
+        setDropdownPos("top");
+      } else {
+        setDropdownPos("bottom");
+      }
     }
     setActiveDropdown(type);
   };
@@ -361,13 +366,12 @@ export default function RideSearchWidget({
           className={`w-full ${isVert ? "flex-col" : "lg:w-[180px]"} relative shrink-0`}
         >
           <div
-            onClick={(e) =>
-              activeDropdown === "date"
-                ? setActiveDropdown(null)
-                : openDropdown("date", e)
-            }
+            onClick={(e) => {
+              if (activeDropdown === "date") setActiveDropdown(null);
+              else openDropdown("date", e, 420);
+            }}
             className={`flex-1 bg-light-400 rounded-xl min-h-16 h-16 md:h-[80px] flex items-center px-5 cursor-pointer transition-all border border-neutral-300 shrink-0
-            ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
+    ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
           >
             <IoCalendarOutline
               className={`text-xl shrink-0 ${activeDropdown === "date" ? "text-primary" : "text-neutral-700"}`}
@@ -384,6 +388,7 @@ export default function RideSearchWidget({
             </div>
           </div>
 
+          {/* Date Calendar Popover */}
           {activeDropdown === "date" && (
             <CustomCalendar
               selectedDate={date}
@@ -391,7 +396,7 @@ export default function RideSearchWidget({
                 setDate(d);
                 setActiveDropdown(null);
               }}
-              position={dropdownPos}
+              position={dropdownPos} // Assure-toi que CustomCalendar utilise bien ce prop
             />
           )}
         </div>
