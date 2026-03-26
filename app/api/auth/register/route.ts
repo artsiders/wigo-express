@@ -20,7 +20,7 @@ export async function POST(req: Request) {
 
     if (existingUser) {
       return NextResponse.json(
-        { message: "Un utilisateur avec cet email existe déjà." },
+        { message: "Cet e-mail est déjà utilisé par un autre compte." },
         { status: 409 }
       );
     }

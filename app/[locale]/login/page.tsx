@@ -7,6 +7,8 @@ import {
   IoMailOutline,
   IoLockClosedOutline,
   IoChevronBack,
+  IoEyeOutline,
+  IoEyeOffOutline,
 } from "react-icons/io5";
 import { signIn } from "next-auth/react";
 import AlertDialog, { AlertType } from "@/components/ui/AlertDialog";
@@ -15,6 +17,7 @@ import gsap from "gsap";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [alertInfo, setAlertInfo] = useState<{
@@ -57,7 +60,7 @@ export default function LoginPage() {
           isOpen: true,
           type: "error",
           title: "Erreur de connexion",
-          desc: "Les identifiants fournis sont incorrects. Veuillez réessayer.",
+          desc: "Identifiants invalides. Veuillez vérifier votre e-mail et votre mot de passe.",
         });
       } else {
         window.location.href = "/profile";
@@ -82,7 +85,7 @@ export default function LoginPage() {
         onClose={() => setAlertInfo({ ...alertInfo, isOpen: false })}
       />
       <main className="min-h-screen bg-light-300 flex items-center justify-center p-4 sm:p-8">
-        <div className="w-full max-w-6xl bg-white rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.06)] flex flex-col lg:flex-row overflow-hidden min-h-[750px]">
+        <div className="w-full max-w-6xl bg-white rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.06)] flex flex-col lg:flex-row overflow-hidden min-h-[750px]">
           {/* Left Column - Image */}
           <div
             ref={imageRef}
@@ -140,7 +143,7 @@ export default function LoginPage() {
               <button
                 onClick={handleGoogleLogin}
                 disabled={isGoogleLoading || loading}
-                className="w-full bg-white border border-neutral-200 text-dark font-bold rounded-2xl py-4 px-6 flex items-center justify-center gap-3 hover:shadow-md hover:border-gray-300 transition-all active:scale-[0.98] disabled:opacity-70 h-14"
+                className="w-full bg-white border border-neutral-200 text-dark font-bold rounded-lg py-4 px-6 flex items-center justify-center gap-3 hover:shadow-md hover:border-gray-300 transition-all active:scale-[0.98] disabled:opacity-70 h-14"
               >
                 {isGoogleLoading ? (
                   <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
@@ -157,7 +160,7 @@ export default function LoginPage() {
 
               <div className="flex items-center gap-4 my-8">
                 <div className="flex-1 h-px bg-neutral-100"></div>
-                <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">
+                <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">
                   ou avec votre e-mail
                 </span>
                 <div className="flex-1 h-px bg-neutral-100"></div>
@@ -169,7 +172,7 @@ export default function LoginPage() {
               >
                 <div className="relative group">
                   <IoMailOutline
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 group-focus-within:text-primary transition-colors"
                     size={22}
                   />
                   <input
@@ -178,22 +181,34 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Adresse e-mail"
-                    className="w-full bg-light-300 border-none rounded-2xl py-4 pl-12 pr-4 font-bold text-dark focus:ring-2 focus:ring-primary outline-hidden transition-all placeholder:text-neutral-400 placeholder:font-medium"
+                    className="w-full bg-light-300 border border-neutral-300 focus:border-primary rounded-lg py-4 pl-12 pr-4 font-bold text-dark focus:ring-2 focus:ring-primary/30 outline-hidden transition-all placeholder:text-neutral-500 placeholder:font-medium"
                   />
                 </div>
                 <div className="relative group">
                   <IoLockClosedOutline
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 group-focus-within:text-primary transition-colors"
                     size={22}
                   />
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Mot de passe"
-                    className="w-full bg-light-300 border-none rounded-2xl py-4 pl-12 pr-4 font-bold text-dark focus:ring-2 focus:ring-primary outline-hidden transition-all placeholder:text-neutral-400 placeholder:font-medium"
+                    className="w-full bg-light-300 border border-neutral-300 focus:border-primary rounded-lg py-4 pl-12 pr-12 font-bold text-dark focus:ring-2 focus:ring-primary/30 outline-hidden transition-all placeholder:text-neutral-500 placeholder:font-medium"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-primary transition-colors focus:outline-hidden"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? (
+                      <IoEyeOffOutline size={22} />
+                    ) : (
+                      <IoEyeOutline size={22} />
+                    )}
+                  </button>
                 </div>
 
                 <div className="flex justify-end text-sm">
@@ -208,7 +223,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-dark text-white rounded-2xl py-4 font-bold mt-4 shadow-xl shadow-dark/20 hover:bg-primary hover:shadow-primary/30 transition-all active:scale-[0.98] disabled:opacity-70 flex justify-center items-center h-14"
+                  className="w-full bg-dark text-white rounded-lg py-4 font-bold mt-4 shadow-xl shadow-dark/20 hover:bg-primary hover:shadow-primary/30 transition-all active:scale-[0.98] disabled:opacity-70 flex justify-center items-center h-14"
                 >
                   {loading ? (
                     <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
