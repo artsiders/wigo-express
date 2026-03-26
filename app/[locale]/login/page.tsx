@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useLayoutEffect, useRef } from "react";
+import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
 import {
   IoMailOutline,
   IoLockClosedOutline,
@@ -12,6 +13,7 @@ import {
 } from "react-icons/io5";
 import { signIn } from "next-auth/react";
 import AlertDialog, { AlertType } from "@/components/ui/AlertDialog";
+import Alert from "@/components/ui/Alert";
 import gsap from "gsap";
 
 export default function LoginPage() {
@@ -26,6 +28,26 @@ export default function LoginPage() {
     title: string;
     desc: string;
   }>({ isOpen: false, type: "error", title: "", desc: "" });
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+    if (error === "OAuthAccountNotLinked") {
+      setAlertInfo({
+        isOpen: true,
+        type: "warning",
+        title: "Compte déjà existant",
+        desc: "Un compte avec cet e-mail existe déjà via un autre mode de connexion (e-mail ou autre réseau). Veuillez vous connecter avec vos identifiants habituels.",
+      });
+    } else if (error) {
+      setAlertInfo({
+        isOpen: true,
+        type: "error",
+        title: "Erreur de connexion",
+        desc: "Une erreur est survenue lors de la connexion. Veuillez réessayer.",
+      });
+    }
+  }, [searchParams]);
 
   const formRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -165,6 +187,17 @@ export default function LoginPage() {
                 </span>
                 <div className="flex-1 h-px bg-neutral-100"></div>
               </div>
+
+              {alertInfo.isOpen && (
+                <div className="mb-6 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <Alert
+                    type={alertInfo.type}
+                    title={alertInfo.title}
+                    description={alertInfo.desc}
+                    onClose={() => setAlertInfo({ ...alertInfo, isOpen: false })}
+                  />
+                </div>
+              )}
 
               <form
                 onSubmit={handleCredentialsLogin}

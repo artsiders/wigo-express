@@ -13,6 +13,7 @@ import {
 } from "react-icons/io5";
 import { signIn } from "next-auth/react";
 import AlertDialog, { AlertType } from "@/components/ui/AlertDialog";
+import Alert from "@/components/ui/Alert";
 import gsap from "gsap";
 
 export default function RegisterPage() {
@@ -205,6 +206,17 @@ export default function RegisterPage() {
                 </span>
                 <div className="flex-1 h-px bg-neutral-100"></div>
               </div>
+
+              {alertInfo.isOpen && (
+                <div className="mb-6 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <Alert
+                    type={alertInfo.type}
+                    title={alertInfo.title}
+                    description={alertInfo.desc}
+                    onClose={() => setAlertInfo({ ...alertInfo, isOpen: false })}
+                  />
+                </div>
+              )}
 
               <form onSubmit={handleRegister} className="flex flex-col gap-4">
                 <div className="relative group">
