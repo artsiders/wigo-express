@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import gsap from "gsap";
 import { IoCloseOutline } from "react-icons/io5";
@@ -102,13 +102,13 @@ export default function RideSearchPopup({ initialOpen }: RideSearchPopupProps) {
       >
         <button
           onClick={closePopup}
-          className="absolute -top-12 right-0 md:-right-4 md:-top-14 w-11 h-11 bg-white/10 hover:bg-white/20 hover:scale-110 border border-white/20 backdrop-blur-xl text-white rounded-full flex items-center justify-center transition-all cursor-pointer shadow-lg z-50"
+          className="absolute -top-12 right-0 w-11 h-11 bg-white/10 hover:bg-white/20 hover:scale-110 border border-white/20 backdrop-blur-xl text-white rounded-full flex items-center justify-center transition-all cursor-pointer shadow-lg z-50"
         >
           <IoCloseOutline size={26} />
         </button>
 
         {/* The Search Widget */}
-        <div className="overflow-visible">
+        <div className="overflow-visible relative z-20">
           <RideSearchWidget variant="horizontal" onSearchSubmit={closePopup} />
         </div>
       </div>

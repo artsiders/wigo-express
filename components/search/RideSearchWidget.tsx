@@ -16,17 +16,14 @@ import { fr } from "date-fns/locale";
 import CustomCalendar from "./CustomCalendar";
 import { LuLoaderCircle } from "react-icons/lu";
 
-const MOCK_CITIES = [
-  "Montréal, QC",
-  "Québec, QC",
-  "Toronto, ON",
-  "Ottawa, ON",
-  "Laval, QC",
-  "Gatineau, QC",
-  "Sherbrooke, QC",
-  "Trois-Rivières, QC",
-  "Chicoutimi, QC",
-];
+interface LocationSuggestion {
+    name: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    lat: number;
+    lon: number;
+}
 
 interface RideSearchWidgetProps {
   variant?: "horizontal" | "vertical";
@@ -53,12 +50,85 @@ export default function RideSearchWidget({
     parseInt(searchParams?.get("passagers") || "1", 10),
   );
 
-  // Dropdown states
+  // Dropos states
   const [activeDropdown, setActiveDropdown] = useState<
     "depart" | "arrivee" | "date" | "seats" | null
   >(null);
 
   const [dropdownPos, setDropdownPos] = useState<"top" | "bottom">("bottom");
+
+  const defaultSuggestions: LocationSuggestion[] = [
+    { name: "Montréal", state: "Québec", country: "Canada", lat: 45.5017, lon: -73.5673 },
+    { name: "Québec", state: "Québec", country: "Canada", lat: 46.8139, lon: -71.2082 },
+    { name: "Toronto", state: "Ontario", country: "Canada", lat: 43.6532, lon: -79.3832 },
+    { name: "Gatineau", state: "Québec", country: "Canada", lat: 45.4765, lon: -75.7013 },
+    { name: "Sherbrooke", state: "Québec", country: "Canada", lat: 45.4010, lon: -71.8991 },
+  ];
+
+  // Autocomplete states
+  const [departSuggestions, setDepartSuggestions] = useState<LocationSuggestion[]>([]);
+  const [arriveeSuggestions, setArriveeSuggestions] = useState<LocationSuggestion[]>([]);
+  const [departCoords, setDepartCoords] = useState<{lat: number, lon: number} | null>(null);
+  const [arriveeCoords, setArriveeCoords] = useState<{lat: number, lon: number} | null>(null);
+
+  // Fetch suggestions
+  useEffect(() => {
+    if (!departure || departure.length < 2) {
+      setDepartSuggestions(defaultSuggestions);
+      return;
+    }
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(departure)}&lat=45.5017&lon=-73.5673&limit=20`);
+        const data = await res.json();
+        const allowedCountries = ["Canada", "United States", "États-Unis", "USA"];
+        const suggestions = data.features
+          .filter((f: any) => allowedCountries.includes(f.properties.country))
+          .map((f: any) => ({
+            name: f.properties.name,
+            city: f.properties.city,
+            state: f.properties.state,
+            country: f.properties.country,
+            lat: f.geometry.coordinates[1],
+            lon: f.geometry.coordinates[0],
+          }))
+          .slice(0, 5);
+        setDepartSuggestions(suggestions);
+      } catch (e) {
+        console.error("Photon API error", e);
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [departure]);
+
+  useEffect(() => {
+    if (!arrival || arrival.length < 2) {
+      setArriveeSuggestions(defaultSuggestions);
+      return;
+    }
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(arrival)}&lat=45.5017&lon=-73.5673&limit=20`);
+        const data = await res.json();
+        const allowedCountries = ["Canada", "United States", "États-Unis", "USA"];
+        const suggestions = data.features
+          .filter((f: any) => allowedCountries.includes(f.properties.country))
+          .map((f: any) => ({
+            name: f.properties.name,
+            city: f.properties.city,
+            state: f.properties.state,
+            country: f.properties.country,
+            lat: f.geometry.coordinates[1],
+            lon: f.geometry.coordinates[0],
+          }))
+          .slice(0, 5);
+        setArriveeSuggestions(suggestions);
+      } catch (e) {
+        console.error("Photon API error", e);
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [arrival]);
 
   const openDropdown = (
     type: "depart" | "arrivee" | "date" | "seats",
@@ -112,6 +182,14 @@ export default function RideSearchWidget({
     params.set("arrivee", arrival);
     if (date) params.set("date", format(date, "yyyy-MM-dd"));
     params.set("passagers", seats.toString());
+    if (departCoords) {
+      params.set("dLat", departCoords.lat.toString());
+      params.set("dLon", departCoords.lon.toString());
+    }
+    if (arriveeCoords) {
+      params.set("aLat", arriveeCoords.lat.toString());
+      params.set("aLon", arriveeCoords.lon.toString());
+    }
 
     try {
       onSearchSubmit?.();
@@ -122,16 +200,23 @@ export default function RideSearchWidget({
     }
   };
 
-  const filteredCities = (query: string) => {
-    return MOCK_CITIES.filter((city) =>
-      city.toLowerCase().includes(query.toLowerCase()),
-    ).slice(0, 4); // Limit to 4 suggestions max to avoid long lists
+  const formatSuggestion = (s: LocationSuggestion) => {
+    const parts = [s.name];
+    if (s.city && s.city !== s.name) parts.push(s.city);
+    else if (s.state && s.state !== s.name) parts.push(s.state);
+    if (s.country) parts.push(s.country);
+    return parts.join(", ");
   };
 
   const swapLocations = () => {
-    const temp = departure;
-    setDeparture(arrival);
-    setArrival(temp);
+    const tempDep = departure;
+    const tempArr = arrival;
+    const tempDepCoords = departCoords;
+    const tempArrCoords = arriveeCoords;
+    setDeparture(tempArr);
+    setArrival(tempDep);
+    setDepartCoords(tempArrCoords);
+    setArriveeCoords(tempDepCoords);
   };
 
   const isVert = variant === "vertical";
@@ -161,6 +246,7 @@ export default function RideSearchWidget({
               value={departure}
               onChange={(e) => {
                 setDeparture(e.target.value);
+                setDepartCoords(null);
                 openDropdown("depart", e);
               }}
               onFocus={(e) => openDropdown("depart", e)}
@@ -175,13 +261,14 @@ export default function RideSearchWidget({
                 <span className="block px-3 py-1.5 text-[10px] font-black text-neutral-500 uppercase tracking-widest">
                   Suggestions
                 </span>
-                {filteredCities(departure).length > 0 ? (
-                  filteredCities(departure).map((city) => (
+                {departSuggestions.length > 0 ? (
+                  departSuggestions.map((suggestion, idx) => (
                     <button
-                      key={city}
+                      key={idx}
                       type="button"
                       onClick={(e) => {
-                        setDeparture(city);
+                        setDeparture(formatSuggestion(suggestion));
+                        setDepartCoords({ lat: suggestion.lat, lon: suggestion.lon });
                         openDropdown("arrivee", e);
                       }}
                       className="w-full text-left px-3 py-2 hover:bg-neutral-100 rounded-xl flex items-center gap-3 transition-colors text-dark-800 font-bold text-sm"
@@ -189,9 +276,13 @@ export default function RideSearchWidget({
                       <div className="w-8 h-8 rounded-full bg-neutral-200 border border-neutral-300/50 flex items-center justify-center shrink-0">
                         <IoLocationOutline className="text-neutral-700" size={16} />
                       </div>
-                      {city}
+                      <span className="truncate">{formatSuggestion(suggestion)}</span>
                     </button>
                   ))
+                ) : departure.length >= 2 ? (
+                  <div className="px-3 py-2 text-sm text-neutral-600 font-medium">
+                    Recherche en cours...
+                  </div>
                 ) : (
                   <div className="px-3 py-2 text-sm text-neutral-600 font-bold">
                     Aucun lieu trouvé
@@ -233,6 +324,7 @@ export default function RideSearchWidget({
               value={arrival}
               onChange={(e) => {
                 setArrival(e.target.value);
+                setArriveeCoords(null);
                 openDropdown("arrivee", e);
               }}
               onFocus={(e) => openDropdown("arrivee", e)}
@@ -247,13 +339,14 @@ export default function RideSearchWidget({
                 <span className="block px-3 py-1.5 text-[10px] font-black text-neutral-500 uppercase tracking-widest">
                   Suggestions
                 </span>
-                {filteredCities(arrival).length > 0 ? (
-                  filteredCities(arrival).map((city) => (
+                {arriveeSuggestions.length > 0 ? (
+                  arriveeSuggestions.map((suggestion, idx) => (
                     <button
-                      key={city}
+                      key={idx}
                       type="button"
                       onClick={(e) => {
-                        setArrival(city);
+                        setArrival(formatSuggestion(suggestion));
+                        setArriveeCoords({ lat: suggestion.lat, lon: suggestion.lon });
                         openDropdown("date", e);
                       }}
                       className="w-full text-left px-3 py-2 hover:bg-neutral-100 rounded-xl flex items-center gap-3 transition-colors text-dark-800 font-bold text-sm"
@@ -261,9 +354,13 @@ export default function RideSearchWidget({
                       <div className="w-8 h-8 rounded-full bg-neutral-200 border border-neutral-300/50 flex items-center justify-center shrink-0">
                         <IoMapOutline className="text-neutral-700" size={16} />
                       </div>
-                      {city}
+                      <span className="truncate">{formatSuggestion(suggestion)}</span>
                     </button>
                   ))
+                ) : arrival.length >= 2 ? (
+                  <div className="px-3 py-2 text-sm text-neutral-600 font-medium">
+                    Recherche en cours...
+                  </div>
                 ) : (
                   <div className="px-3 py-2 text-sm text-neutral-600 font-bold">
                     Aucun lieu trouvé
