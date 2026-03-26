@@ -15,6 +15,7 @@ import { signIn } from "next-auth/react";
 import AlertDialog, { AlertType } from "@/components/ui/AlertDialog";
 import Alert from "@/components/ui/Alert";
 import gsap from "gsap";
+import GoogleLoginButton from "@/components/auth/GoogleLoginButton";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -22,7 +23,6 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [alertInfo, setAlertInfo] = useState<{
     isOpen: boolean;
     type: AlertType;
@@ -111,11 +111,6 @@ export default function RegisterPage() {
     }
   };
 
-  const handleGoogleLogin = () => {
-    setIsGoogleLoading(true);
-    signIn("google", { callbackUrl: "/profile" });
-  };
-
   return (
     <>
       <AlertDialog
@@ -181,23 +176,7 @@ export default function RegisterPage() {
                 Rejoignez la communauté Wigo Express en quelques clics.
               </p>
 
-              <button
-                onClick={handleGoogleLogin}
-                disabled={isGoogleLoading || loading}
-                className="w-full bg-white border border-neutral-200 text-dark font-bold rounded-lg py-4 px-6 flex items-center justify-center gap-3 hover:shadow-md hover:border-gray-300 transition-all active:scale-[0.98] disabled:opacity-70 h-14"
-              >
-                {isGoogleLoading ? (
-                  <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-                ) : (
-                  <Image
-                    src="/images/google-icon-logo.svg"
-                    alt="Google"
-                    width={24}
-                    height={24}
-                  />
-                )}
-                S'inscrire avec Google
-              </button>
+              <GoogleLoginButton text="S'inscrire avec Google" disabled={loading} />
 
               <div className="flex items-center gap-4 my-8">
                 <div className="flex-1 h-px bg-neutral-100"></div>
