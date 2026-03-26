@@ -6,11 +6,20 @@ import {
   LuShieldCheck,
   LuCar,
   LuMapPin,
-  LuStar,
   LuSettings,
   LuChevronRight,
 } from "react-icons/lu";
 import { Link } from "@/i18n/routing";
+import { IoCameraOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
+import Image from "next/image";
+
+// Helper pour extraire les initiales du nom
+function getInitials(name?: string | null): string {
+  if (!name) return "";
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 1) return words[0][0]?.toUpperCase() ?? "";
+  return (words[0][0] ?? "").toUpperCase() + (words[1][0] ?? "").toUpperCase();
+}
 
 export default function ProfilePage() {
   const { data: profile, isLoading, error } = useProfile();
@@ -66,48 +75,53 @@ export default function ProfilePage() {
         <div className="grid lg:grid-cols-12 gap-8">
           {/* Left Sidebar: User Quick Info */}
           <aside className="lg:col-span-4 space-y-6">
-            <section className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
-              <div className="p-6 text-center border-b border-zinc-100">
-                <div className="w-24 h-24 mx-auto mb-4 rounded-xl bg-zinc-100 border border-zinc-200 overflow-hidden ring-4 ring-zinc-50">
+            <div className="bg-dark rounded-2xl p-8 shadow-2xl border border-neutral-800 text-white relative overflow-hidden">
+              {/* Décoration en arrière-plan */}
+              <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+
+              <div className="relative z-10 flex flex-col items-center text-center">
+                <div className="relative group cursor-pointer w-32 h-32">
+                  {/* Affichage de l'image si dispo, sinon initiales */}
                   {profile.image ? (
-                    <img
+                    <Image
                       src={profile.image}
                       alt="Avatar"
-                      className="w-full h-full object-cover"
+                      className="w-32 h-32 rounded-full object-cover border-4 border-neutral-800 group-hover:opacity-80 transition-opacity"
+                      width={128}
+                      height={128}
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-zinc-400">
-                      {profile.name?.charAt(0)}
+                    <div className="flex items-center justify-center w-32 h-32 rounded-full bg-neutral-700 border-4 border-neutral-800 text-5xl font-bold text-white select-none">
+                      {getInitials(profile.name)}
                     </div>
                   )}
+                  <div className="absolute bottom-0 right-0 bg-primary p-2 rounded-full border-4 border-dark text-white">
+                    <IoCameraOutline size={20} />
+                  </div>
                 </div>
-                <h2 className="text-xl font-bold text-zinc-900">
-                  {profile.name}
-                </h2>
-                <p className="text-sm text-zinc-500">{profile.email}</p>
-              </div>
 
-              <div className="p-4 grid grid-cols-2 gap-4 text-center bg-zinc-50/50">
-                <div>
-                  <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-                    Note
-                  </p>
-                  <p className="text-lg font-bold text-zinc-900 flex items-center justify-center gap-1">
-                    4.8{" "}
-                    <LuStar
-                      size={14}
-                      className="text-amber-500 fill-amber-500"
-                    />
-                  </p>
+                <h2 className="mt-6 text-2xl font-black">{profile.name}</h2>
+                <div className="flex items-center gap-2 mt-2 py-1 px-4 bg-green-400/30 rounded-full text-green-400 text-sm font-bold">
+                  <IoShieldCheckmarkOutline />
+                  Profil Vérifié
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-                    Trajets
-                  </p>
-                  <p className="text-lg font-bold text-zinc-900">24</p>
+
+                <div className="grid grid-cols-2 gap-4 w-full mt-10">
+                  <div className="bg-neutral-800/50 p-4 rounded-xl border border-neutral-700/50">
+                    <p className="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">
+                      Trajets
+                    </p>
+                    <p className="text-xl font-black">48</p>
+                  </div>
+                  <div className="bg-neutral-800/50 p-4 rounded-xl border border-neutral-700/50">
+                    <p className="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">
+                      Note
+                    </p>
+                    <p className="text-xl font-black">4.9/5</p>
+                  </div>
                 </div>
               </div>
-            </section>
+            </div>
 
             {/* Verification Status */}
             <section className="bg-white border border-zinc-200 rounded-xl p-5">
@@ -149,13 +163,13 @@ export default function ProfilePage() {
             {/* Action Card: Become Driver (if not) */}
             {!profile.isDriver && (
               <Link href="/become-driver" className="group block">
-                <div className="bg-zinc-900 rounded-xl p-8 relative overflow-hidden transition-all hover:bg-black">
+                <div className="bg-primary rounded-2xl p-8 relative overflow-hidden transition-all hover:bg-black">
                   <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
                       <h3 className="text-2xl font-bold text-white mb-2">
                         Rentabilisez vos trajets quotidiens
                       </h3>
-                      <p className="text-zinc-400 max-w-md">
+                      <p className="text-neutral-100 max-w-md">
                         Devenez conducteur sur la plateforme et partagez vos
                         frais de route en toute sécurité.
                       </p>
@@ -164,7 +178,7 @@ export default function ProfilePage() {
                       Commencer <LuChevronRight size={18} />
                     </div>
                   </div>
-                  <div className="absolute top-0 right-0 w-64 h-full bg-gradient-to-l from-blue-500/10 to-transparent pointer-events-none"></div>
+                  <div className="absolute top-0 right-0 w-64 h-full bg-linear-to-l from-blue-500/10 to-transparent pointer-events-none"></div>
                 </div>
               </Link>
             )}
