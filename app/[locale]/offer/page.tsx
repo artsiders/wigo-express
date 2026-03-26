@@ -150,33 +150,36 @@ export default function OfferRidePage() {
         {/* Creative Left Column - Dynamic based on step */}
         <div
           ref={leftColRef}
-          className="w-full lg:w-5/12 hidden lg:flex flex-col relative rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl border border-white border-opacity-50"
+          className="w-full lg:w-5/12 hidden lg:flex flex-col relative rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl border border-neutral-100 bg-white"
         >
-          {currentStep === 3 ? (
-            <div className="absolute inset-0 z-0 h-full w-full">
+          {/* Top section: Media (Map or Image) */}
+          <div className="relative w-full flex-1 min-h-[50%]">
+            {currentStep === 3 ? (
               <RouteMap 
                 dLat={departCoords?.lat} dLon={departCoords?.lon} 
                 aLat={arriveeCoords?.lat} aLon={arriveeCoords?.lon} 
               />
-            </div>
-          ) : (
-            <Image
-              key={content.image} // Force re-render on change
-              src={content.image}
-              alt="Illustration de trajet"
-              fill
-              className="dynamic-image object-cover"
-              priority
-            />
-          )}
-          <div className="absolute inset-0 bg-linear-to-t from-dark-900 via-dark-900/40 to-transparent pointer-events-none z-10"></div>
+            ) : (
+              <Image
+                key={content.image}
+                src={content.image}
+                alt="Illustration de trajet"
+                fill
+                className="dynamic-image object-cover"
+                priority
+              />
+            )}
+            {/* Subtle gradient to transition into the white card smoothly */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-linear-to-t from-white to-transparent pointer-events-none z-10"></div>
+          </div>
 
-          <div className="relative z-20 mt-auto p-12 text-white pointer-events-none">
+          {/* Bottom section: Text card */}
+          <div className="relative z-20 p-10 xl:p-12 bg-white flex flex-col shrink-0">
             <div className="dynamic-content w-12 h-1 bg-primary mb-6 rounded-full"></div>
-            <h1 className="dynamic-content text-4xl xl:text-5xl font-black mb-4 leading-tight tracking-tight">
+            <h1 className="dynamic-content text-3xl xl:text-4xl font-black mb-4 leading-tight tracking-tight text-dark">
               {content.title}
             </h1>
-            <p className="dynamic-content text-lg text-white/80 font-medium leading-relaxed max-w-sm">
+            <p className="dynamic-content text-base xl:text-lg text-neutral-500 font-medium leading-relaxed max-w-sm">
               {content.subtitle}
             </p>
           </div>
