@@ -67,7 +67,7 @@ export default function HeroSection() {
           </div>
 
           {/* Dark gradient overlay for readability */}
-          <div className="absolute inset-0 bg-linear-to-r from-dark-900/95 via-dark-900/60 to-black/20 z-0 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-primary-800/95 via-primary-800/60 to-primary/20 z-0 pointer-events-none"></div>
         </div>
 
         {/* Content Container */}
