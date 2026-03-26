@@ -16,6 +16,7 @@ export async function GET() {
         where: { id: userId },
         include: {
           license: true,
+          vehicles: true,
           kycVerifications: {
             orderBy: { createdAt: "desc" },
             take: 1
