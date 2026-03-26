@@ -230,7 +230,7 @@ export default function RegisterPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Nom complet"
-                    className="w-full bg-light-300 border border-neutral-300 focus:border-primary rounded-lg py-4 pl-12 pr-4 font-bold text-dark focus:ring-2 focus:ring-primary/30 outline-hidden transition-all placeholder:text-neutral-500 placeholder:font-medium"
+                    className="input pl-12"
                   />
                 </div>
                 <div className="relative group">
@@ -244,7 +244,7 @@ export default function RegisterPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Adresse e-mail"
-                    className="w-full bg-light-300 border border-neutral-300 focus:border-primary rounded-lg py-4 pl-12 pr-4 font-bold text-dark focus:ring-2 focus:ring-primary/30 outline-hidden transition-all placeholder:text-neutral-500 placeholder:font-medium"
+                    className="input pl-12"
                   />
                 </div>
                 <div className="relative group">
@@ -258,7 +258,7 @@ export default function RegisterPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Mot de passe"
-                    className="w-full bg-light-300 border border-neutral-300 focus:border-primary rounded-lg py-4 pl-12 pr-12 font-bold text-dark focus:ring-2 focus:ring-primary/30 outline-hidden transition-all placeholder:text-neutral-500 placeholder:font-medium"
+                    className="input pl-12"
                   />
                   <button
                     type="button"
