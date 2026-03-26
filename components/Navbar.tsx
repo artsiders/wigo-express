@@ -140,7 +140,7 @@ export default function Navbar() {
                 {tCommon("searchRide")}
               </Link>
               <Link
-                href={(session?.user as any)?.isDriver ? "/offer" : (pathname === "/profile" ? "#become-driver" : "/profile?mode=become-driver")}
+                href={(session?.user as any)?.isDriver ? "/offer" : (pathname === "/become-driver" ? "#" : "/become-driver?mode=become-driver")}
                 className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50 flex items-center gap-2 group"
               >
                 {tCommon("offerRide")}
@@ -314,7 +314,7 @@ export default function Navbar() {
             {tCommon("searchRide")}
           </Link>
           <Link
-            href={(session?.user as any)?.isDriver ? "/offer" : "/profile?mode=become-driver"}
+            href={(session?.user as any)?.isDriver ? "/offer" : "/become-driver?mode=become-driver"}
             onClick={() => setMenuOpen(false)}
             className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center justify-between gap-4 px-6 py-3 rounded-xl border border-gray-100 bg-white hover:shadow-md w-full"
           >

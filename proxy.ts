@@ -58,7 +58,7 @@ export default auth((req) => {
 
   // Intercepter les non-conducteurs qui tentent d'accéder à /offer
   if (isLoggedIn && pathnameWithoutLocale.startsWith("/offer") && !isDriver) {
-    return Response.redirect(new URL(`/${currentLocale}/profile?mode=become-driver`, nextUrl));
+    return Response.redirect(new URL(`/${currentLocale}/become-driver?mode=become-driver`, nextUrl));
   }
 
   // Pour toutes les autres routes (non-API), applique le proxy de next-intl
