@@ -55,7 +55,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
           </div>
 
           {/* Premium Journey Timeline */}
-          <div className="bg-white rounded-3xl p-6 md:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 mt-2 relative overflow-hidden">
+          <div className="bg-white rounded-xl p-6 md:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 mt-2 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-[60px] pointer-events-none"></div>
             <h2 className="text-2xl font-black text-dark mb-8">Itinéraire</h2>
 
@@ -113,7 +113,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
           {/* Details Sections Block */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Driver */}
-            <div className="bg-white rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex flex-col gap-5 group cursor-pointer hover:border-primary/20 transition-colors">
+            <div className="bg-white rounded-xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex flex-col gap-5 group cursor-pointer hover:border-primary/20 transition-colors">
               <div className="flex items-center gap-5">
                 <div className="relative w-16 h-16 rounded-full shrink-0 shadow-sm border border-neutral-200">
                   <Image
@@ -141,24 +141,32 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                   </div>
                 </div>
               </div>
-              
+
               {/* Additional Driver Info */}
               {(ride.driver.bio || ride.driver.memberSince) && (
                 <div className="pt-4 border-t border-neutral-100 flex flex-col gap-3">
                   {ride.driver.bio && (
-                    <p className="text-sm font-medium text-neutral-500 italic leading-relaxed">"{ride.driver.bio}"</p>
+                    <p className="text-sm font-medium text-neutral-500 italic leading-relaxed">
+                      "{ride.driver.bio}"
+                    </p>
                   )}
                   <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold text-neutral-400 uppercase tracking-widest mt-1">
-                    {ride.driver.memberSince && <span>Membre depuis {ride.driver.memberSince}</span>}
-                    {ride.driver.memberSince && ride.driver.totalRides && <span className="w-1 h-1 rounded-full bg-neutral-300"></span>}
-                    {ride.driver.totalRides && <span>{ride.driver.totalRides} trajets publiés</span>}
+                    {ride.driver.memberSince && (
+                      <span>Membre depuis {ride.driver.memberSince}</span>
+                    )}
+                    {ride.driver.memberSince && ride.driver.totalRides && (
+                      <span className="w-1 h-1 rounded-full bg-neutral-300"></span>
+                    )}
+                    {ride.driver.totalRides && (
+                      <span>{ride.driver.totalRides} trajets publiés</span>
+                    )}
                   </div>
                 </div>
               )}
             </div>
 
             {/* Car */}
-            <div className="bg-white rounded-3xl p-0 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex flex-col sm:flex-row relative overflow-hidden group min-h-[160px]">
+            <div className="bg-white rounded-xl p-0 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex flex-col sm:flex-row relative overflow-hidden group min-h-[160px]">
               <div className="p-6 sm:w-1/2 flex flex-col justify-center relative z-10">
                 <h4 className="text-sm font-bold text-neutral-400 uppercase tracking-widest mb-1">
                   Véhicule
@@ -169,17 +177,22 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                 <p className="text-sm font-medium text-neutral-500 mb-2">
                   {ride.car.color} • Année {ride.car.year}
                 </p>
-                
+
                 {/* Additional Car Info */}
-                {(ride.car.licensePlate || (ride.car.features && ride.car.features.length > 0)) && (
-                   <div className="mt-auto pt-2 flex flex-col gap-2">
-                     {ride.car.licensePlate && (
-                       <p className="text-[11px] font-bold text-primary bg-primary/10 w-fit px-2 py-0.5 rounded-md border border-primary/20 uppercase tracking-widest flex items-center gap-1.5"><IoCarOutline size={12}/> {ride.car.licensePlate}</p>
-                     )}
-                     {ride.car.features && ride.car.features.length > 0 && (
-                       <p className="text-xs font-medium text-neutral-500 leading-snug">{ride.car.features.join(" • ")}</p>
-                     )}
-                   </div>
+                {(ride.car.licensePlate ||
+                  (ride.car.features && ride.car.features.length > 0)) && (
+                  <div className="mt-auto pt-2 flex flex-col gap-2">
+                    {ride.car.licensePlate && (
+                      <p className="text-[11px] font-bold text-primary bg-primary/10 w-fit px-2 py-0.5 rounded-md border border-primary/20 uppercase tracking-widest flex items-center gap-1.5">
+                        <IoCarOutline size={12} /> {ride.car.licensePlate}
+                      </p>
+                    )}
+                    {ride.car.features && ride.car.features.length > 0 && (
+                      <p className="text-xs font-medium text-neutral-500 leading-snug">
+                        {ride.car.features.join(" • ")}
+                      </p>
+                    )}
+                  </div>
                 )}
               </div>
               {ride.car.photo ? (
@@ -201,7 +214,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
             </div>
 
             {/* Stops */}
-            <div className="bg-white rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex items-center gap-4">
+            <div className="bg-white rounded-xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
                 <IoMapOutline size={24} className="text-primary" />
               </div>
@@ -217,7 +230,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
             </div>
 
             {/* Cancellation Policy */}
-            <div className="bg-white rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex items-center gap-4">
+            <div className="bg-white rounded-xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-neutral-50 flex items-center justify-center shrink-0">
                 <IoCloseCircleOutline size={24} className="text-neutral-400" />
               </div>
@@ -238,7 +251,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
 
         {/* Right Column - Booking Sticky Widget */}
         <aside className="w-full lg:w-96 shrink-0 flex flex-col gap-6 self-start sticky top-28 z-30">
-          <div className="bg-dark rounded-4xl squircle p-8 shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-neutral-800 text-white relative overflow-hidden">
+          <div className="bg-dark rounded-2xl squircle p-8 shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-neutral-800 text-white relative overflow-hidden">
             {/* Background Glow */}
             <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none"></div>
 
@@ -282,7 +295,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
 
               <div className="flex flex-wrap gap-2">
                 {ride.amenities.luggage && (
-                  <div className="px-3 py-2 bg-neutral-800/50 rounded-xl border border-neutral-700/50 flex items-center gap-2">
+                  <div className="px-3 py-2 bg-neutral-800/50 rounded-lg border border-neutral-700/50 flex items-center gap-2">
                     <svg
                       width="18"
                       height="18"
@@ -305,7 +318,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                 )}
                 {/* Visual indicator for non-included if we want, or just omit them. Keeping it clean. */}
                 {!ride.amenities.smoking && (
-                  <div className="px-3 py-2 bg-neutral-800/50 rounded-xl border border-neutral-700/50 flex items-center gap-2">
+                  <div className="px-3 py-2 bg-neutral-800/50 rounded-lg border border-neutral-700/50 flex items-center gap-2">
                     <div className="relative">
                       <svg
                         width="18"
@@ -329,7 +342,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                   </div>
                 )}
                 {!ride.amenities.pet && (
-                  <div className="px-3 py-2 bg-neutral-800/50 rounded-xl border border-neutral-700/50 flex items-center gap-2">
+                  <div className="px-3 py-2 bg-neutral-800/50 rounded-lg border border-neutral-700/50 flex items-center gap-2">
                     <div className="relative">
                       <svg
                         width="18"
