@@ -8,11 +8,23 @@ import gsap from "gsap";
 import { useSession } from "next-auth/react";
 import { Link } from "@/i18n/routing";
 import { LuCar, LuShieldCheck, LuArrowRight } from "react-icons/lu";
+import { useOfferStore } from "@/store/useOfferStore";
+import dynamic from "next/dynamic";
+
+const RouteMap = dynamic(() => import("@/components/search/RouteMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full bg-light-400 flex items-center justify-center animate-pulse text-neutral-400 font-bold">
+      Chargement de la carte...
+    </div>
+  ),
+});
 
 export default function OfferRidePage() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const leftColRef = useRef<HTMLDivElement>(null);
+  const { departCoords, arriveeCoords } = useOfferStore();
 
   const stepParam = searchParams?.get("step");
   const currentStep = stepParam ? parseInt(stepParam, 10) : 1;
@@ -140,17 +152,26 @@ export default function OfferRidePage() {
           ref={leftColRef}
           className="w-full lg:w-5/12 hidden lg:flex flex-col relative rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl border border-white border-opacity-50"
         >
-          <Image
-            key={content.image} // Force re-render on change
-            src={content.image}
-            alt="Illustration de trajet"
-            fill
-            className="dynamic-image object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-dark-900 via-dark-900/40 to-transparent"></div>
+          {currentStep === 3 ? (
+            <div className="absolute inset-0 z-0 h-full w-full">
+              <RouteMap 
+                dLat={departCoords?.lat} dLon={departCoords?.lon} 
+                aLat={arriveeCoords?.lat} aLon={arriveeCoords?.lon} 
+              />
+            </div>
+          ) : (
+            <Image
+              key={content.image} // Force re-render on change
+              src={content.image}
+              alt="Illustration de trajet"
+              fill
+              className="dynamic-image object-cover"
+              priority
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent pointer-events-none z-10"></div>
 
-          <div className="relative z-10 mt-auto p-12 text-white">
+          <div className="relative z-20 mt-auto p-12 text-white pointer-events-none">
             <div className="dynamic-content w-12 h-1 bg-primary mb-6 rounded-full"></div>
             <h1 className="dynamic-content text-4xl xl:text-5xl font-black mb-4 leading-tight tracking-tight">
               {content.title}

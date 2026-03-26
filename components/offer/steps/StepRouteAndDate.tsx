@@ -12,21 +12,66 @@ import Alert from "@/components/ui/Alert";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import CustomCalendar from "@/components/search/CustomCalendar";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
-const MOCK_CITIES = [
-  "Montréal, QC",
-  "Québec, QC",
-  "Toronto, ON",
-  "Ottawa, ON",
-  "Laval, QC",
-  "Gatineau, QC",
-  "Sherbrooke, QC",
-  "Trois-Rivières, QC",
-  "Chicoutimi, QC",
+interface LocationSuggestion {
+  name: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  lat: number;
+  lon: number;
+}
+
+const defaultSuggestions: LocationSuggestion[] = [
+  { name: "Montréal", state: "Québec", country: "Canada", lat: 45.5017, lon: -73.5673 },
+  { name: "Québec", state: "Québec", country: "Canada", lat: 46.8139, lon: -71.2082 },
+  { name: "Toronto", state: "Ontario", country: "Canada", lat: 43.6532, lon: -79.3832 },
+  { name: "Gatineau", state: "Québec", country: "Canada", lat: 45.4765, lon: -75.7013 },
+  { name: "Sherbrooke", state: "Québec", country: "Canada", lat: 45.401, lon: -71.8991 },
 ];
 
+const fetchLocations = async (query: string): Promise<LocationSuggestion[]> => {
+  if (!query || query.length < 2) return defaultSuggestions;
+
+  const { data } = await axios.get(`https://photon.komoot.io/api/`, {
+    params: { q: query, lat: 45.5017, lon: -73.5673, limit: 20 },
+  });
+
+  const allowedCountries = ["Canada", "United States", "États-Unis", "USA"];
+  return data.features
+    .filter((f: any) => allowedCountries.includes(f.properties.country))
+    .map((f: any) => ({
+      name: f.properties.name,
+      city: f.properties.city,
+      state: f.properties.state,
+      country: f.properties.country,
+      lat: f.geometry.coordinates[1],
+      lon: f.geometry.coordinates[0],
+    }))
+    .slice(0, 5);
+};
+
+function useDebounce(value: string, delay: number) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  return debouncedValue;
+}
+
+const formatSuggestion = (s: LocationSuggestion) => {
+  const parts = [s.name];
+  if (s.city && s.city !== s.name) parts.push(s.city);
+  else if (s.state && s.state !== s.name) parts.push(s.state);
+  if (s.country) parts.push(s.country);
+  return parts.join(", ");
+};
+
 export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
-  const { departure, arrival, date, time, setRoute, setDateTime } =
+  const { departure, arrival, departCoords, arriveeCoords, date, time, setRoute, setDateTime } =
     useOfferStore();
   const [error, setError] = useState("");
   const [activeDropdown, setActiveDropdown] = useState<
@@ -47,15 +92,24 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredCities = (query: string) => {
-    return MOCK_CITIES.filter((city) =>
-      city.toLowerCase().includes(query.toLowerCase()),
-    ).slice(0, 4);
-  };
+  const debouncedDepart = useDebounce(departure, 300);
+  const debouncedArrivee = useDebounce(arrival, 300);
+
+  const { data: departSuggestions = [] } = useQuery({
+    queryKey: ["locations", debouncedDepart],
+    queryFn: () => fetchLocations(debouncedDepart),
+    enabled: activeDropdown === "depart",
+  });
+
+  const { data: arriveeSuggestions = [] } = useQuery({
+    queryKey: ["locations", debouncedArrivee],
+    queryFn: () => fetchLocations(debouncedArrivee),
+    enabled: activeDropdown === "arrivee",
+  });
 
   const handleNext = () => {
-    if (!departure || !arrival) {
-      setError("Veuillez renseigner votre ville de départ et d'arrivée.");
+    if (!departure || !arrival || !departCoords || !arriveeCoords) {
+      setError("Veuillez choisir votre ville de départ et d'arrivée via les suggestions.");
       return;
     }
     if (!date || !time) {
@@ -98,7 +152,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                 placeholder="Ex. Montréal, QC"
                 value={departure}
                 onChange={(e) => {
-                  setRoute(e.target.value, arrival);
+                  setRoute(e.target.value, arrival, null, arriveeCoords);
                   setActiveDropdown("depart");
                 }}
                 onFocus={() => setActiveDropdown("depart")}
@@ -113,13 +167,13 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                   <span className="block px-4 py-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
                     Suggestions
                   </span>
-                  {filteredCities(departure).length > 0 ? (
-                    filteredCities(departure).map((city) => (
+                  {departSuggestions.length > 0 ? (
+                    departSuggestions.map((city, idx) => (
                       <button
-                        key={city}
+                        key={idx}
                         type="button"
                         onClick={() => {
-                          setRoute(city, arrival);
+                          setRoute(formatSuggestion(city), arrival, { lat: city.lat, lon: city.lon }, arriveeCoords);
                           setActiveDropdown("arrivee");
                         }}
                         className="w-full text-left px-4 py-3 hover:bg-light-400 rounded-2xl flex items-center gap-3 transition-colors text-dark font-medium text-sm"
@@ -127,12 +181,12 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                         <div className="w-8 h-8 rounded-3xl bg-neutral-100 flex items-center justify-center shrink-0">
                           <IoLocationOutline className="text-neutral-500" />
                         </div>
-                        {city}
+                        <span className="truncate">{formatSuggestion(city)}</span>
                       </button>
                     ))
                   ) : (
                     <div className="px-4 py-3 text-sm text-neutral-500 font-medium">
-                      Aucun lieu trouvé
+                      Recherche en cours...
                     </div>
                   )}
                 </div>
@@ -151,7 +205,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                 placeholder="Ex. Québec, QC"
                 value={arrival}
                 onChange={(e) => {
-                  setRoute(departure, e.target.value);
+                  setRoute(departure, e.target.value, departCoords, null);
                   setActiveDropdown("arrivee");
                 }}
                 onFocus={() => setActiveDropdown("arrivee")}
@@ -166,13 +220,13 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                   <span className="block px-4 py-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
                     Suggestions
                   </span>
-                  {filteredCities(arrival).length > 0 ? (
-                    filteredCities(arrival).map((city) => (
+                  {arriveeSuggestions.length > 0 ? (
+                    arriveeSuggestions.map((city, idx) => (
                       <button
-                        key={city}
+                        key={idx}
                         type="button"
                         onClick={() => {
-                          setRoute(departure, city);
+                          setRoute(departure, formatSuggestion(city), departCoords, { lat: city.lat, lon: city.lon });
                           setActiveDropdown("date");
                         }}
                         className="w-full text-left px-4 py-3 hover:bg-light-400 rounded-2xl flex items-center gap-3 transition-colors text-dark font-medium text-sm"
@@ -180,12 +234,12 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                         <div className="w-8 h-8 rounded-3xl bg-neutral-100 flex items-center justify-center shrink-0">
                           <IoMapOutline className="text-neutral-500" />
                         </div>
-                        {city}
+                        <span className="truncate">{formatSuggestion(city)}</span>
                       </button>
                     ))
                   ) : (
                     <div className="px-4 py-3 text-sm text-neutral-500 font-medium">
-                      Aucun lieu trouvé
+                      Recherche en cours...
                     </div>
                   )}
                 </div>
