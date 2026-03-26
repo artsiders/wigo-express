@@ -169,7 +169,7 @@ export default function OfferRidePage() {
               priority
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent pointer-events-none z-10"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-dark-900 via-dark-900/40 to-transparent pointer-events-none z-10"></div>
 
           <div className="relative z-20 mt-auto p-12 text-white pointer-events-none">
             <div className="dynamic-content w-12 h-1 bg-primary mb-6 rounded-full"></div>

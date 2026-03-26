@@ -51,6 +51,11 @@ function MapController({ dLat, dLon, aLat, aLon, routeCoords }: any) {
 
 export default function RouteMap({ dLat, dLon, aLat, aLon }: RouteMapProps) {
   const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (dLat && dLon && aLat && aLon) {
@@ -78,6 +83,14 @@ export default function RouteMap({ dLat, dLon, aLat, aLon }: RouteMapProps) {
 
   const defaultCenter = [45.5017, -73.5673] as [number, number]; // Montreal
   const center = dLat && dLon ? [dLat, dLon] : defaultCenter;
+
+  if (!mounted) {
+    return (
+      <div className="w-full h-full bg-light-400 rounded-xl overflow-hidden shadow-inner border border-neutral-200 flex items-center justify-center animate-pulse text-neutral-400 font-bold z-0">
+        Chargement de la carte...
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-full rounded-xl overflow-hidden shadow-inner border border-neutral-200 z-0">

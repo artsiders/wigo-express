@@ -77,6 +77,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
   const [activeDropdown, setActiveDropdown] = useState<
     "depart" | "arrivee" | "date" | null
   >(null);
+  const [dropdownPos, setDropdownPos] = useState<"top" | "bottom">("bottom");
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -91,6 +92,31 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const openDropdown = (
+    type: "depart" | "arrivee" | "date",
+    e?: React.MouseEvent | React.FocusEvent | React.ChangeEvent,
+    customHeight?: number,
+  ) => {
+    if (e?.currentTarget) {
+      const target =
+        (e.currentTarget as HTMLElement).closest(".group") ||
+        (e.currentTarget as HTMLElement);
+      const rect = target.getBoundingClientRect();
+
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+
+      const estimatedHeight = customHeight || 320;
+
+      if (spaceBelow < estimatedHeight && spaceAbove > spaceBelow) {
+        setDropdownPos("top");
+      } else {
+        setDropdownPos("bottom");
+      }
+    }
+    setActiveDropdown(type);
+  };
 
   const debouncedDepart = useDebounce(departure, 300);
   const debouncedArrivee = useDebounce(arrival, 300);
@@ -141,32 +167,30 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
 
       <div ref={containerRef} className="flex-1 flex flex-col gap-6 relative">
         <div className="flex flex-col gap-4">
-          <div className="relative w-full bg-light-400 rounded-3xl min-h-[76px] h-[76px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group">
+          {/* Departure */}
+          <div className="relative flex-1 w-full bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-neutral-300 focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
             <IoLocationOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
             <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-              <span className="block text-xs font-bold text-neutral-700 tracking-widest mt-0.5 mb-1">
-                Ville de départ
+              <span className="block text-sm font-bold text-neutral-700 uppercase tracking-widest mt-0.5">
+                Départ
               </span>
               <input
                 type="text"
-                placeholder="Ex. Montréal, QC"
+                placeholder="Saisissez un lieu"
                 value={departure}
                 onChange={(e) => {
                   setRoute(e.target.value, arrival, null, arriveeCoords);
-                  setActiveDropdown("depart");
+                  openDropdown("depart", e);
                 }}
-                onFocus={() => setActiveDropdown("depart")}
-                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-400 placeholder:font-medium truncate pb-0.5"
+                onFocus={(e) => openDropdown("depart", e)}
+                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-500 truncate pb-0.5"
               />
             </div>
 
             {/* Depart Dropdown */}
             {activeDropdown === "depart" && (
-              <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
-                <div className="p-2 max-h-56 overflow-y-hidden">
-                  <span className="block px-4 py-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
-                    Suggestions
-                  </span>
+              <div className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden z-60`}>
+                <div className="p-1 max-h-56 overflow-y-auto">
                   {departSuggestions.length > 0 ? (
                     departSuggestions.map((city, idx) => (
                       <button
@@ -176,16 +200,14 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                           setRoute(formatSuggestion(city), arrival, { lat: city.lat, lon: city.lon }, arriveeCoords);
                           setActiveDropdown("arrivee");
                         }}
-                        className="w-full text-left px-4 py-3 hover:bg-light-400 rounded-2xl flex items-center gap-3 transition-colors text-dark font-medium text-sm"
+                        className="w-full text-left px-3 py-2 hover:bg-neutral-100 rounded-xl flex items-center gap-3 text-dark font-bold text-sm"
                       >
-                        <div className="w-8 h-8 rounded-3xl bg-neutral-100 flex items-center justify-center shrink-0">
-                          <IoLocationOutline className="text-neutral-500" />
-                        </div>
+                        <IoLocationOutline className="text-neutral-700 shrink-0" size={16} />
                         <span className="truncate">{formatSuggestion(city)}</span>
                       </button>
                     ))
                   ) : (
-                    <div className="px-4 py-3 text-sm text-neutral-500 font-medium">
+                    <div className="px-3 py-2 text-sm text-neutral-500 font-medium">
                       Recherche en cours...
                     </div>
                   )}
@@ -194,32 +216,29 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
             )}
           </div>
 
-          <div className="relative w-full bg-light-400 rounded-3xl min-h-[76px] h-[76px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group">
+          <div className="relative flex-1 w-full bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-neutral-300 focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group shrink-0">
             <IoMapOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
             <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-              <span className="block text-xs font-bold text-neutral-700 tracking-widest mt-0.5 mb-1">
-                Ville d'arrivée
+              <span className="block text-sm font-bold text-neutral-700 uppercase tracking-widest mt-0.5">
+                Arrivée
               </span>
               <input
                 type="text"
-                placeholder="Ex. Québec, QC"
+                placeholder="Saisissez un lieu"
                 value={arrival}
                 onChange={(e) => {
                   setRoute(departure, e.target.value, departCoords, null);
-                  setActiveDropdown("arrivee");
+                  openDropdown("arrivee", e);
                 }}
-                onFocus={() => setActiveDropdown("arrivee")}
-                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-400 placeholder:font-medium truncate pb-0.5"
+                onFocus={(e) => openDropdown("arrivee", e)}
+                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-500 truncate pb-0.5"
               />
             </div>
 
             {/* Arrival Dropdown */}
             {activeDropdown === "arrivee" && (
-              <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.12)] border border-neutral-100 overflow-hidden z-50">
-                <div className="p-2 max-h-56 overflow-y-hidden">
-                  <span className="block px-4 py-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
-                    Suggestions
-                  </span>
+              <div className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden z-60`}>
+                <div className="p-1 max-h-56 overflow-y-auto">
                   {arriveeSuggestions.length > 0 ? (
                     arriveeSuggestions.map((city, idx) => (
                       <button
@@ -229,16 +248,14 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                           setRoute(departure, formatSuggestion(city), departCoords, { lat: city.lat, lon: city.lon });
                           setActiveDropdown("date");
                         }}
-                        className="w-full text-left px-4 py-3 hover:bg-light-400 rounded-2xl flex items-center gap-3 transition-colors text-dark font-medium text-sm"
+                        className="w-full text-left px-3 py-2 hover:bg-neutral-100 rounded-xl flex items-center gap-3 text-dark font-bold text-sm"
                       >
-                        <div className="w-8 h-8 rounded-3xl bg-neutral-100 flex items-center justify-center shrink-0">
-                          <IoMapOutline className="text-neutral-500" />
-                        </div>
+                        <IoMapOutline className="text-neutral-700 shrink-0" size={16} />
                         <span className="truncate">{formatSuggestion(city)}</span>
                       </button>
                     ))
                   ) : (
-                    <div className="px-4 py-3 text-sm text-neutral-500 font-medium">
+                    <div className="px-3 py-2 text-sm text-neutral-500 font-medium">
                       Recherche en cours...
                     </div>
                   )}
@@ -250,16 +267,17 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
 
         <div className="flex flex-col sm:flex-row gap-4 mt-2">
           <div
-            onClick={() =>
-              setActiveDropdown(activeDropdown === "date" ? null : "date")
-            }
-            className={`relative flex-1 bg-light-400 rounded-3xl min-h-[76px] h-[76px] flex items-center px-6 border border-transparent transition-all shadow-inner group cursor-pointer ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
+            onClick={(e) => {
+              if (activeDropdown === "date") setActiveDropdown(null);
+              else openDropdown("date", e, 420);
+            }}
+            className={`relative flex-1 bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-neutral-300 transition-all shadow-inner group cursor-pointer ${activeDropdown === "date" ? "bg-white border-primary-500/40 ring-4 ring-primary-500/10" : "hover:bg-neutral-200"}`}
           >
             <IoCalendarOutline
               className={`text-xl shrink-0 ${activeDropdown === "date" ? "text-primary" : "text-neutral-700 group-focus-within:text-primary"}`}
             />
             <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-              <span className="block text-xs font-bold text-neutral-700 tracking-widest mt-0.5 mb-1">
+              <span className="block text-sm font-bold text-neutral-700 uppercase tracking-widest mt-0.5">
                 Date
               </span>
               <span className="block text-sm md:text-base font-bold text-dark truncate pb-0.5">
@@ -273,30 +291,33 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
             {activeDropdown === "date" && (
               <div
                 onClick={(e) => e.stopPropagation()}
-                className="absolute top-full left-0 mt-3 z-50"
+                className={`absolute left-0 right-0 z-60 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"}`}
               >
-                <CustomCalendar
-                  selectedDate={date ? new Date(date) : null}
-                  onSelectDate={(d) => {
-                    setDateTime(format(d, "yyyy-MM-dd"), time);
-                    setActiveDropdown(null);
-                  }}
-                />
+                <div className="bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden w-full max-w-[320px]">
+                   <CustomCalendar
+                     selectedDate={date ? new Date(date) : null}
+                     onSelectDate={(d) => {
+                       setDateTime(format(d, "yyyy-MM-dd"), time);
+                       setActiveDropdown(null);
+                     }}
+                     position={dropdownPos}
+                   />
+                </div>
               </div>
             )}
           </div>
 
-          <div className="relative flex-1 bg-light-400 rounded-3xl min-h-[76px] h-[76px] flex items-center px-6 border border-transparent focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group">
+          <div className="relative flex-1 bg-light-400 rounded-xl min-h-16 h-[80px] flex items-center px-6 border border-neutral-300 focus-within:bg-white focus-within:border-primary-500/40 focus-within:ring-4 focus-within:ring-primary-500/10 transition-all shadow-inner group">
             <IoTimeOutline className="text-xl text-neutral-700 group-focus-within:text-primary transition-colors shrink-0" />
             <div className="ml-3 w-full text-left flex flex-col justify-center h-full">
-              <span className="block text-xs font-bold text-neutral-700 tracking-widest mt-0.5 mb-1">
+              <span className="block text-sm font-bold text-neutral-700 uppercase tracking-widest mt-0.5">
                 Heure
               </span>
               <input
                 type="time"
                 value={time}
                 onChange={(e) => setDateTime(date, e.target.value)}
-                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-400 placeholder:font-medium truncate pb-0.5"
+                className="w-full bg-transparent text-sm md:text-base font-bold text-dark outline-none placeholder:text-neutral-400 truncate pb-0.5"
               />
             </div>
           </div>
