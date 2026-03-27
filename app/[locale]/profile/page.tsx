@@ -102,10 +102,17 @@ export default function ProfilePage() {
                 </div>
 
                 <h2 className="mt-6 text-2xl font-black">{profile.name}</h2>
-                <div className="flex items-center gap-2 mt-2 py-1 px-4 bg-green-400/30 rounded-full text-green-400 text-sm font-bold">
-                  <IoShieldCheckmarkOutline />
-                  Profil Vérifié
-                </div>
+                {profile.idVerified ? (
+                  <div className="flex items-center gap-2 mt-2 py-1 px-4 bg-green-400/30 rounded-full text-green-400 text-sm font-bold">
+                    <IoShieldCheckmarkOutline />
+                    Profil Vérifié
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 mt-2 py-1 px-4 bg-zinc-300/30 rounded-full text-zinc-500 text-sm font-bold">
+                    <IoShieldCheckmarkOutline />
+                    Profil non vérifié
+                  </div>
+                )}
 
                 <div className="grid grid-cols-2 gap-4 w-full mt-10">
                   <div className="bg-neutral-800/50 p-4 rounded-xl border border-neutral-700/50">
