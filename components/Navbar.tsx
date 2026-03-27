@@ -16,6 +16,8 @@ import {
   IoPersonOutline,
   IoLogOutOutline,
   IoListOutline,
+  IoSearchOutline,
+  IoAddOutline,
 } from "react-icons/io5";
 import gsap from "gsap";
 import { useSession, signOut } from "next-auth/react";
@@ -51,11 +53,12 @@ export default function Navbar() {
         });
 
         // Animation des éléments du menu (Liens + Sélecteur de langue)
+        // Ajustement : animation depuis la droite (x) et alignement à droite
         gsap.fromTo(
           ".animate-item",
-          { y: 30, opacity: 0 },
+          { x: 30, opacity: 0 },
           {
-            y: 0,
+            x: 0,
             opacity: 1,
             stagger: 0.1,
             duration: 0.8,
@@ -108,7 +111,7 @@ export default function Navbar() {
       <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[96%] container mx-auto z-100 flex items-center pointer-events-none">
         {/* UNIFIED NAVBAR */}
         <div className="pointer-events-auto relative w-full z-10 px-3  h-20 flex items-center justify-between bg-white rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
-          {/* LEFT SECTION (Logo + Nav + Lang) */}
+          {/* LEFT SECTION (Logo + Nav) */}
           <div className="flex items-center gap-6 lg:gap-8 h-full">
             {/* LOGO */}
             <Link
@@ -125,17 +128,11 @@ export default function Navbar() {
               />
             </Link>
 
-            {/* DESKTOP NAV */}
+            {/* DESKTOP NAV - PARTIE GAUCHE (Rechercher, Publier) */}
             <div className="hidden lg:flex gap-2 xl:gap-3 items-center text-sm font-bold text-dark-800">
               <Link
-                href="/#comment-ca-marche"
-                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50"
-              >
-                {t("howItWorks")}
-              </Link>
-              <Link
                 href="/search?searchOpen=true"
-                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50"
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-300 hover:border-primary/50 hover:bg-primary/5 bg-white/50"
               >
                 {tCommon("searchRide")}
               </Link>
@@ -147,15 +144,47 @@ export default function Navbar() {
                       ? "#"
                       : "/become-driver?mode=become-driver"
                 }
-                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-xl hover:border-primary/50 hover:bg-primary/5 bg-white/50 flex items-center gap-2 group"
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-300 hover:border-primary/50 hover:bg-primary/5 bg-white/50 flex items-center gap-2 group"
               >
                 {tCommon("offerRide")}
               </Link>
             </div>
           </div>
 
-          {/* RIGHT SECTION (Auth/Profile + Burger) */}
+          {/* RIGHT SECTION (Auth/Profile + Lang + Burger + Mobile Icons) */}
           <div className="flex items-center h-full gap-2 md:gap-3">
+            {/* DESKTOP NAV - PARTIE DROITE (Comment ça marche) */}
+            <div className="hidden lg:block text-sm font-bold text-dark-800">
+              <Link
+                href="/#comment-ca-marche"
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-300 hover:border-primary/50 hover:bg-primary/5 bg-white/50"
+              >
+                {t("howItWorks")}
+              </Link>
+            </div>
+
+            {/* MOBILE PERSISTENT ICONS (Rechercher, Publier) - Visible UNIQUEMENT < lg */}
+            <div className="flex lg:hidden items-center gap-1.5">
+              <Link
+                href="/search?searchOpen=true"
+                className="p-3 border border-neutral-200 rounded-lg hover:bg-gray-100"
+              >
+                <IoSearchOutline size={22} />
+              </Link>
+              <Link
+                href={
+                  (session?.user as any)?.isDriver
+                    ? "/offer"
+                    : pathname === "/become-driver"
+                      ? "#"
+                      : "/become-driver?mode=become-driver"
+                }
+                className="p-3 border border-neutral-200 rounded-lg hover:bg-primary/10"
+              >
+                <IoAddOutline size={22} />
+              </Link>
+            </div>
+
             {/* LANGUE */}
             <div className="relative hidden lg:block" ref={dropdownRef}>
               <button
@@ -190,7 +219,7 @@ export default function Navbar() {
               <div className="relative hidden lg:block" ref={userMenuRef}>
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 bg-primary/10 py-1.5 pl-2 pr-3 rounded-lg hover:border-primary/50 hover:bg-primary/20 font-semibold text-sm transition-all"
+                  className="flex items-center gap-2 py-1.5 pl-2 pr-3 border border-neutral-300 rounded-lg hover:border-primary/50 hover:bg-primary/20 font-semibold text-sm transition-all"
                 >
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-primary text-white flex items-center justify-center overflow-hidden shadow-sm">
                     {session.user.image ? (
@@ -246,10 +275,10 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <div className="hidden lg:flex items-center gap-1.5 px-1.5">
+              <div className="hidden lg:flex items-center gap-3 pr-1.5">
                 <Link
                   href="/login"
-                  className="text-dark font-bold text-sm px-4 py-2 rounded-lg hover:border-primary/50 hover:bg-primary/5 transition-all"
+                  className="text-dark font-bold text-sm px-4 py-2 rounded-md border border-neutral-300 hover:border-primary/50 hover:bg-primary/5 transition-all"
                 >
                   {tCommon("login")}
                 </Link>
@@ -260,9 +289,10 @@ export default function Navbar() {
             )}
 
             {/* BURGER (Visible UNIQUEMENT < lg) */}
+            {/* DESIGN CONSERVÉ */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden flex flex-col items-center justify-center gap-1.5 p-2 px-3 focus:outline-none w-12 h-10"
+              className="lg:hidden flex flex-col items-center justify-center gap-1.5 p-2 px-3 focus:outline-none aspect-square border border-neutral-200 rounded-md"
             >
               <span
                 className={`h-0.5 w-6 bg-black rounded-full transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2 bg-primary" : ""}`}
@@ -278,108 +308,113 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* MOBILE OVERLAY */}
+      {/* MOBILE OVERLAY - MODIFIÉ POUR ALIGNEMENT À DROITE ET LARGEUR ÉGALE */}
       <div
         ref={overlayRef}
-        className="fixed inset-0 bg-white z-90 flex flex-col items-center justify-center p-8 pointer-events-none"
+        className="fixed inset-0 bg-white z-90 flex flex-col items-center justify-start pt-28 pb-8 px-6 pointer-events-none"
         style={{
           clipPath: "circle(0% at 90% 5%)",
           pointerEvents: menuOpen ? "all" : "none",
         }}
       >
-        {/* Sélecteur de Langue MIS EN AVANT */}
-        <div className="animate-item mb-12 w-full max-w-xs">
-          <p className="text-center text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
-            {t("chooseLanguage")}
-          </p>
-          <div className="flex p-1 bg-gray-100 rounded-2xl border border-gray-300">
-            {["fr", "en"].map((l) => (
-              <button
-                key={l}
-                onClick={() => {
-                  changeLanguage(l);
-                }}
-                className={`flex-1 py-4 rounded-xl text-lg font-black transition-all ${
-                  locale === l
-                    ? "bg-white text-primary shadow-sm"
-                    : "text-gray-400"
-                }`}
-              >
-                {l === "fr" ? "Français" : "English"}
-              </button>
-            ))}
+        {/* Conteneur principal pour largeur égale des liens et alignement droite */}
+        <div className="w-full max-w-sm flex flex-col items-center gap-6">
+          {/* Sélecteur de Langue MIS EN AVANT - Largeur égale via flex */}
+          <div className="animate-item mt-2 mb-4 w-full">
+            <p className="text-right text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
+              {t("chooseLanguage")}
+            </p>
+            <div className="flex p-1 bg-gray-100 rounded-2xl border border-gray-300">
+              {["fr", "en"].map((l) => (
+                <button
+                  key={l}
+                  onClick={() => {
+                    changeLanguage(l);
+                  }}
+                  className={`flex-1 py-4 rounded-xl text-lg font-semibold transition-all ${
+                    locale === l
+                      ? "bg-white text-primary shadow-sm"
+                      : "text-gray-400"
+                  }`}
+                >
+                  {l === "fr" ? "Français" : "English"}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Liens Mobile */}
-        <div className="flex flex-col items-center gap-6">
-          <Link
-            href="/#comment-ca-marche"
-            onClick={() => setMenuOpen(false)}
-            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-100 bg-white hover:shadow-md"
-          >
-            {t("howItWorks")}
-          </Link>
-          <Link
-            href="/search?searchOpen=true"
-            onClick={() => setMenuOpen(false)}
-            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-100 bg-white hover:shadow-md"
-          >
-            {tCommon("searchRide")}
-          </Link>
-          <Link
-            href="/profile"
-            onClick={() => setMenuOpen(false)}
-            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-100 bg-white hover:shadow-md"
-          >
-            Mon Profil
-          </Link>
-          <Link
-            href={
-              (session?.user as any)?.isDriver
-                ? "/offer"
-                : "/become-driver?mode=become-driver"
-            }
-            onClick={() => setMenuOpen(false)}
-            className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center justify-between gap-4 px-6 py-3 rounded-xl border border-gray-100 bg-white hover:shadow-md w-full"
-          >
-            <span>{tCommon("offerRide")}</span>
-          </Link>
-          {status === "authenticated" && session?.user ? (
-            <>
-              <Link
-                href="/my-trajets"
-                onClick={() => setMenuOpen(false)}
-                className="animate-item text-xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-6 py-3 rounded-xl border border-gray-100 bg-white hover:shadow-md"
-              >
-                <IoListOutline /> Mes trajets
-              </Link>
-              <button
-                onClick={() => signOut()}
-                className="animate-item mt-6 bg-rose-600 text-white text-lg font-bold px-12 py-4 rounded-xl shadow-2xl shadow-red-500/30 flex items-center gap-2"
-              >
-                <IoLogOutOutline /> Déconnexion
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                onClick={() => setMenuOpen(false)}
-                className="animate-item text-2xl font-bold text-gray-900 hover:text-primary transition-colors flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-100 bg-white hover:shadow-md"
-              >
-                {tCommon("login")}
-              </Link>
+          {/* Liens Mobile - Largeur égale (w-full) et alignés à droite */}
+          <div className="w-full">
+            <Link
+              href="/#comment-ca-marche"
+              onClick={() => setMenuOpen(false)}
+              className="animate-item w-full text-xl font-semibold text-gray-900 hover:text-primary transition-colors flex items-center justify-start gap-2 p-4 rounded-t-xl border border-gray-300 bg-white hover:shadow-md"
+            >
+              {t("howItWorks")}
+            </Link>
+            <Link
+              href="/search?searchOpen=true"
+              onClick={() => setMenuOpen(false)}
+              className="animate-item w-full text-xl font-semibold text-gray-900 hover:text-primary transition-colors flex items-center justify-start gap-2 p-4 border border-gray-300 bg-white hover:shadow-md"
+            >
+              {tCommon("searchRide")}
+            </Link>
+            <Link
+              href="/profile"
+              onClick={() => setMenuOpen(false)}
+              className="animate-item w-full text-xl font-semibold text-gray-900 hover:text-primary transition-colors flex items-center justify-start gap-2 p-4 border border-gray-300 bg-white hover:shadow-md"
+            >
+              Mon Profil
+            </Link>
+            <Link
+              href={
+                (session?.user as any)?.isDriver
+                  ? "/offer"
+                  : "/become-driver?mode=become-driver"
+              }
+              onClick={() => setMenuOpen(false)}
+              className="animate-item w-full text-xl font-semibold text-gray-900 hover:text-primary transition-colors flex items-center justify-start gap-2 p-4 border border-gray-300 bg-white hover:shadow-md"
+            >
+              <span>{tCommon("offerRide")}</span>
+            </Link>
+            {status === "authenticated" && session?.user ? (
+              <>
+                <Link
+                  href="/my-trajets"
+                  onClick={() => setMenuOpen(false)}
+                  className="animate-item w-full text-xl font-semibold text-gray-900 hover:text-primary transition-colors flex items-center justify-start gap-2 p-4 rounded-b-2xl border border-gray-300 bg-white hover:shadow-md"
+                >
+                  Mes trajets
+                </Link>
+                {/* Bouton déconnexion - Garde son design mais s'aligne à droite */}
+                <button
+                  onClick={() => signOut()}
+                  className="animate-item mt-6 bg-rose-600 text-white text-lg font-bold px-12 py-4 rounded-xl shadow-2xl shadow-red-500/30 flex items-center justify-start gap-2"
+                >
+                  <IoLogOutOutline /> Déconnexion
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className="animate-item w-full text-xl font-semibold text-gray-900 hover:text-primary transition-colors flex items-center justify-start gap-2 p-4 rounded-b-2xl border border-gray-300 bg-white hover:shadow-md"
+                >
+                  {tCommon("login")}
+                </Link>
 
-              <Link
-                href="/register"
-                onClick={() => setMenuOpen(false)}
-                className="animate-item mt-6 bg-primary text-white text-xl font-bold px-12 py-5 rounded-xl shadow-2xl shadow-primary/30"
-              >
-                {tCommon("registerMobile")}
-              </Link>
-            </>
-          )}
+                {/* Bouton inscription */}
+                <Link
+                  href="/register"
+                  onClick={() => setMenuOpen(false)}
+                  className="animate-item mt-6 btn-secondary text-lg font-semibold flex items-center"
+                >
+                  {tCommon("registerMobile")}
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>
