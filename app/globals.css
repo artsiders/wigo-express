@@ -166,8 +166,6 @@
     @apply appearance-none pr-10;
   }
 
-
-
   /* Boutons typés */
 
   /* Bouton Principal (Vert) */
@@ -191,7 +189,7 @@
   }
 
   /* Bouton Outline (bordure sur primaire) */
-  .btn-outline-primary {
+  .btn-outlined {
     @apply bg-transparent text-primary-600 font-bold text-base px-6 py-3 rounded-xl border-2 border-primary-500 hover:bg-primary-50 transition-colors flex justify-center items-center gap-2;
   }
 
