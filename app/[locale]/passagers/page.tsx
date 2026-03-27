@@ -221,8 +221,8 @@ export default function PassagersPage() {
               </Link>
             </div>
             <div className="flex-1 w-full flex justify-center lg:justify-end order-1 lg:order-2 relative z-10">
-              <div className="bg-dark text-white rounded-2xl p-10 shadow-2xl w-full max-w-md transform rotate-1 hover:rotate-0 transition-transform duration-500 relative overflow-hidden">
-                <div className="absolute -top-4 -right-4 bg-green-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-dark z-20">
+              <div className="bg-dark text-white rounded-2xl p-10 shadow-2xl w-full max-w-md transform rotate-1 hover:rotate-0 transition-transform duration-500 relative">
+                <div className="absolute -top-2 right-0 bg-green-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border-4 border-dark z-20">
                   <IoCheckmarkCircle className="inline mr-1" size={14} />{" "}
                   PAIEMENT GARANTI
                 </div>
