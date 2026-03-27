@@ -132,7 +132,7 @@ export default function Navbar() {
             <div className="hidden lg:flex gap-2 xl:gap-3 items-center text-sm font-bold text-dark-800">
               <Link
                 href="/search?searchOpen=true"
-                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-300 hover:border-primary/50 hover:bg-primary/5 bg-white/50"
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50"
               >
                 {tCommon("searchRide")}
               </Link>
@@ -144,7 +144,7 @@ export default function Navbar() {
                       ? "#"
                       : "/become-driver?mode=become-driver"
                 }
-                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-300 hover:border-primary/50 hover:bg-primary/5 bg-white/50 flex items-center gap-2 group"
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50 flex items-center gap-2 group"
               >
                 {tCommon("offerRide")}
               </Link>
@@ -157,7 +157,7 @@ export default function Navbar() {
             <div className="hidden lg:block text-sm font-bold text-dark-800">
               <Link
                 href="/#comment-ca-marche"
-                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-300 hover:border-primary/50 hover:bg-primary/5 bg-white/50"
+                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50"
               >
                 {t("howItWorks")}
               </Link>
@@ -219,7 +219,7 @@ export default function Navbar() {
               <div className="relative hidden lg:block" ref={userMenuRef}>
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 py-1.5 pl-2 pr-3 border border-neutral-300 rounded-lg hover:border-primary/50 hover:bg-primary/20 font-semibold text-sm transition-all"
+                  className="flex items-center gap-2 py-1.5 pl-2 pr-3 border border-neutral-200 rounded-lg hover:border-primary/50 hover:bg-primary/20 font-semibold text-sm transition-all"
                 >
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-primary text-white flex items-center justify-center overflow-hidden shadow-sm">
                     {session.user.image ? (
@@ -278,7 +278,7 @@ export default function Navbar() {
               <div className="hidden lg:flex items-center gap-3 pr-1.5">
                 <Link
                   href="/login"
-                  className="text-dark font-bold text-sm px-4 py-2 rounded-md border border-neutral-300 hover:border-primary/50 hover:bg-primary/5 transition-all"
+                  className="text-dark font-bold text-sm px-4 py-2 rounded-md border border-neutral-200 hover:border-primary/50 hover:bg-primary/5 transition-all"
                 >
                   {tCommon("login")}
                 </Link>

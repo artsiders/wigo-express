@@ -290,7 +290,7 @@ export default function RideSearchWidget({
 
         <div
           onClick={swapLocations}
-          className={`${isVert ? "absolute right-[15%] top-[84px] -translate-y-1/2 z-10 w-9 h-9" : "lg:hidden absolute left-[15%] top-[84px] -translate-y-1/2 z-10 w-9 h-9"} rounded-3xl bg-white shadow-md border border-neutral-300 flex items-center justify-center text-primary cursor-pointer hover:bg-neutral-50 transition-colors`}
+          className={`${isVert ? "absolute right-[15%] top-[100px] -translate-y-1/2 z-10 w-9 h-9" : "lg:hidden absolute left-[15%] top-[100px] -translate-y-1/2 z-10 w-9 h-9"} rounded-3xl bg-white shadow-md border border-neutral-300 flex items-center justify-center text-primary cursor-pointer hover:bg-neutral-50 transition-colors`}
         >
           <IoSwapVerticalOutline size={18} />
         </div>
@@ -353,9 +353,7 @@ export default function RideSearchWidget({
             label="Quand ?"
             icon={<IoCalendarOutline />}
             valueDisplay={
-              date
-                ? format(date, "EEE d MMM", { locale: fr })
-                : "Aujourd'hui"
+              date ? format(date, "EEE d MMM", { locale: fr }) : "Aujourd'hui"
             }
             isActive={activeDropdown === "date"}
             onClick={(e) => {
