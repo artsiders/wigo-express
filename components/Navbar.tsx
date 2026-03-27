@@ -108,7 +108,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[96%] container mx-auto z-100 flex items-center pointer-events-none">
+      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[96%] container mx-auto px-2 md:px-4 z-100 flex items-center pointer-events-none">
         {/* UNIFIED NAVBAR */}
         <div className="pointer-events-auto relative w-full z-10 px-3  h-20 flex items-center justify-between bg-white rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
           {/* LEFT SECTION (Logo + Nav) */}

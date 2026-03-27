@@ -50,9 +50,9 @@ export default function HeroSection() {
   return (
     <section
       ref={container}
-      className="relative w-full flex flex-col items-center justify-center z-50"
+      className="relative w-full flex flex-col items-center justify-center z-50 bg-[url(/images/bg-texture.png)] p-2 pt-0"
     >
-      <div className="relative w-full min-h-screen flex flex-col pb-10 md:pb-12 p-4 md:p-12 lg:p-20 hero-floating-img group z-20">
+      <div className="relative w-full container flex flex-col pb-0! md:pb-0! p-4 mt-2 md:p-12 lg:p-20 hero-floating-img group z-20">
         {/* Inner Wrapper for the background */}
         <div className="absolute inset-0 z-0">
           {/* Background Image */}
@@ -61,17 +61,17 @@ export default function HeroSection() {
               src="/images/close-up-group-friends-traveling-car-concept-speed.webp"
               alt="Hero Background"
               fill
-              className="object-cover object-center"
+              className="object-cover object-center rounded-2xl md:rounded-3xl"
               priority
             />
           </div>
 
           {/* Dark gradient overlay for readability */}
-          <div className="absolute inset-0 bg-linear-to-r from-primary-800/95 via-primary-800/60 to-primary/20 z-0 pointer-events-none"></div>
+          <div className="absolute inset-0 rounded-2xl md:rounded-3xl bg-linear-to-r from-primary-800/95 via-primary-800/60 to-primary/20 z-0 pointer-events-none"></div>
         </div>
 
         {/* Content Container */}
-        <div className="relative container mx-auto z-10 w-full flex flex-col h-full justify-center flex-1 pt-20 md:pt-24 lg:pt-32">
+        <div className="relative container mx-auto z-10 w-full flex flex-col h-full justify-center flex-1 pt-20 md:pt-24 lg:pt-20">
           {/* Headline, subtitle, and floating cards in flex on large screens */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full lg:px-6">
             {/* Headline + Tag */}
@@ -83,7 +83,7 @@ export default function HeroSection() {
                 })}
               </div>
               {/* Headline */}
-              <h1 className="hero-text-elem text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-6 text-white leading-tight reveal-fade text-left">
+              <h1 className="hero-text-elem text-3xl md:text-4xl lg:text-6xl font-black tracking-tighter mb-6 text-white leading-tight reveal-fade text-left">
                 {t("heroTitle1")}{" "}
                 <span className="text-primary-400 block lg:inline">
                   {t("heroTitle2")} <br className="lg:hidden" />
@@ -180,7 +180,7 @@ export default function HeroSection() {
           </div>
 
           {/* Search Widget Container */}
-          <div className="w-full mt-12 md:mt-20 relative z-30 search-widget flex flex-col items- lg:px-6">
+          <div className="w-full mt-2 md:mt-20 relative z-30 search-widget flex flex-col -mb-22 md:-mb-14 items- lg:px-6">
             <RideSearchWidget variant="horizontal" />
           </div>
         </div>

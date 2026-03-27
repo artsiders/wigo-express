@@ -243,8 +243,8 @@ export default function RideSearchWidget({
       </div>
       <div
         ref={containerRef}
-        className={`w-full bg-white p-3 md:p-3 shadow-[0_30px_80px_rgba(0,0,0,0.08)] border border-neutral-100 relative
-        ${isVert ? "flex flex-col gap-2 rounded-2xl" : "rounded-2xl flex flex-col lg:flex-row items-center gap-2"}
+        className={`w-full bg-white p-3 md:p-3 shadow-2xl border border-neutral-100 relative
+        ${isVert ? "flex flex-col gap-2 rounded-3xl" : "rounded-3xl flex flex-col lg:flex-row items-center gap-2"}
       `}
       >
         {/* Departure */}
