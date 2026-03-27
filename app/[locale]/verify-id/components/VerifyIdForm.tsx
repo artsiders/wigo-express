@@ -11,10 +11,11 @@ import {
   LuShieldCheck,
   LuFileText,
   LuUser,
+  LuX,
 } from "react-icons/lu";
 
 import { KycIdentitySchema, type KycIdentityFormData } from "@/schemas/driver";
-import { useSubmitKycIdentity } from "@/hooks/useDriver";
+import { useSubmitKycIdentity, useUploadDocument } from "@/hooks/useDriver";
 import { StepIdentityRecto } from "./StepIdentityRecto";
 import { StepIdentityVerso } from "./StepIdentityVerso";
 import { StepIdentitySelfie } from "./StepIdentitySelfie";
@@ -37,7 +38,12 @@ export function VerifyIdForm() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Progress for global upload
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+
   const submitMutation = useSubmitKycIdentity();
+  const uploadMutation = useUploadDocument();
 
   const methods = useForm<KycIdentityFormData>({
     resolver: zodResolver(KycIdentitySchema),
@@ -49,13 +55,13 @@ export function VerifyIdForm() {
     },
   });
 
-  const { trigger, watch } = methods;
-  const formData = watch();
+  const { trigger, handleSubmit } = methods;
 
   const handleNext = async () => {
     let fieldsToValidate: Array<keyof KycIdentityFormData> = [];
     if (currentStep === 1) fieldsToValidate = ["rectoUrl"];
     if (currentStep === 2) fieldsToValidate = ["versoUrl"];
+    if (currentStep === 3) fieldsToValidate = ["selfieUrl"];
 
     const isValid = await trigger(fieldsToValidate);
     if (isValid) {
@@ -69,35 +75,69 @@ export function VerifyIdForm() {
 
   const onSubmit = async (data: KycIdentityFormData) => {
     setError(null);
+    setIsUploading(true);
+    setUploadProgress(0);
+
     try {
-      await submitMutation.mutateAsync(data);
+      const urls: Record<string, string> = {
+        rectoUrl: "",
+        versoUrl: "",
+        selfieUrl: "",
+      };
+
+      const keys = ["rectoUrl", "versoUrl", "selfieUrl"] as const;
+
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const val = data[key];
+
+        if (val instanceof File) {
+          // Upload to Cloudinary
+          const result = await uploadMutation.mutateAsync(val);
+          urls[key] = result.url;
+        } else if (typeof val === "string") {
+          urls[key] = val;
+        }
+
+        setUploadProgress(((i + 1) / keys.length) * 100);
+      }
+
+      // Final submission to our API
+      await submitMutation.mutateAsync({
+        rectoUrl: urls.rectoUrl,
+        versoUrl: urls.versoUrl,
+        selfieUrl: urls.selfieUrl,
+      });
+
       setIsSuccess(true);
     } catch (err: any) {
       setError(
         err?.response?.data?.error ||
-          "Une erreur est survenue lors de la soumission.",
+          "Une erreur est survenue lors de la soumission. Veuillez réessayer.",
       );
+    } finally {
+      setIsUploading(false);
     }
   };
 
   if (isSuccess) {
     return (
-      <div className="w-full bg-white rounded-xl p-12 md:p-16 shadow-[0_40px_100px_rgba(0,0,0,0.08)] border border-neutral-100 text-center space-y-8 animate-in zoom-in-95 duration-500">
-        <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-200">
-          <IoCheckmarkCircle size={48} className="text-white" />
+      <div className="w-full bg-white rounded-xl p-12 md:p-20 shadow-[0_40px_100px_rgba(0,0,0,0.08)] border border-neutral-100 text-center space-y-8 animate-in zoom-in-95 duration-500">
+        <div className="w-24 h-24 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-200">
+          <IoCheckmarkCircle size={64} />
         </div>
         <div className="space-y-3">
           <h2 className="text-4xl font-black text-dark tracking-tight">
             Documents envoyés !
           </h2>
           <p className="text-neutral-500 font-medium max-w-sm mx-auto text-lg leading-relaxed">
-            Votre identité est en cours de vérification. Cela prend généralement
-            moins de 24h.
+            Votre identité est en cours de vérification. Vous recevrez une
+            notification sous 24h.
           </p>
         </div>
         <button
           onClick={() => router.push("/profile")}
-          className="px-12 py-5 bg-dark text-white rounded-xl font-black shadow-2xl hover:scale-105 transition-all active:scale-95"
+          className="btn-dark px-12 py-5"
         >
           Retour au profil
         </button>
@@ -105,12 +145,18 @@ export function VerifyIdForm() {
     );
   }
 
-  const progress = (currentStep / STEPS.length) * 100;
-
   return (
-    <div className="max-w-3xl mx-auto w-full space-y-10">
-      {/* Header with Navigation Steps */}
-      <div className="flex justify-between items-center px-4">
+    <div className="container mx-auto w-full space-y-12">
+      {/* Step Progress Header */}
+      <div className="relative flex justify-between items-center px-8 md:px-20">
+        {/* Progress Line Background */}
+        <div className="absolute top-[28px] left-[15%] right-[15%] h-1 bg-neutral-100 z-0 rounded-full" />
+        {/* Progress Line Active */}
+        <div
+          className="absolute top-[28px] left-[15%] h-1 bg-primary z-0 rounded-full transition-all duration-700 ease-out"
+          style={{ width: `${((currentStep - 1) / (STEPS.length - 1)) * 70}%` }}
+        />
+
         {STEPS.map((step) => {
           const isActive = currentStep === step.id;
           const isCompleted = currentStep > step.id;
@@ -120,7 +166,7 @@ export function VerifyIdForm() {
               className="flex flex-col items-center gap-3 relative z-10"
             >
               <div
-                className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-500 shadow-lg ${
+                className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-500 shadow-xl ${
                   isActive
                     ? "bg-primary text-white scale-110 shadow-primary/30"
                     : isCompleted
@@ -135,26 +181,51 @@ export function VerifyIdForm() {
                 )}
               </div>
               <span
-                className={`text-[11px] font-black uppercase tracking-widest ${isActive ? "text-primary" : "text-neutral-400"}`}
+                className={`text-[11px] font-black uppercase tracking-widest hidden md:block ${isActive ? "text-primary" : "text-neutral-400"}`}
               >
                 {step.label}
               </span>
             </div>
           );
         })}
-        {/* Progress Line */}
-        <div className="absolute top-[48px] left-[15%] right-[15%] h-0.5 bg-neutral-100 z-0">
-          <div
-            className="h-full bg-primary transition-all duration-700 ease-in-out shadow-[0_0_15px_rgba(255,107,0,0.5)]"
-            style={{
-              width: `${((currentStep - 1) / (STEPS.length - 1)) * 100}%`,
-            }}
-          />
-        </div>
       </div>
 
       <FormProvider {...methods}>
-        <div className="w-full bg-white rounded-xl p-8 md:p-14 shadow-[0_40px_100px_rgba(0,0,0,0.06)] border border-neutral-100 flex flex-col min-h-[500px]">
+        <div className="w-full bg-white rounded-xl p-8 md:p-14 shadow-[0_40px_100px_rgba(0,0,0,0.06)] border border-neutral-100 flex flex-col min-h-[500px] relative overflow-hidden">
+          {/* Global Upload Overlay */}
+          {isUploading && (
+            <div className="absolute inset-0 bg-white/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-10 text-center animate-in fade-in duration-300">
+              <div className="w-full max-w-md space-y-8">
+                <div className="relative w-32 h-32 mx-auto">
+                  <LuLoader
+                    size={128}
+                    className="text-primary/20 animate-spin"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-2xl font-black text-primary">
+                      {Math.round(uploadProgress)}%
+                    </span>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-black text-dark tracking-tight">
+                    Sécurisation de vos documents
+                  </h3>
+                  <p className="text-neutral-500 font-medium italic">
+                    Traitement chiffré et transfert vers nos serveurs
+                    sécurisés...
+                  </p>
+                </div>
+                <div className="w-full bg-neutral-100 h-3 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-primary transition-all duration-500 ease-out shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Step Content */}
           <div className="flex-1">
             {currentStep === 1 && <StepIdentityRecto />}
@@ -164,19 +235,25 @@ export function VerifyIdForm() {
 
           {/* Error Message */}
           {error && (
-            <div className="mt-8 p-5 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-4 text-red-600 animate-in fade-in slide-in-from-bottom-2">
-              <IoAlertCircle size={24} className="shrink-0" />
+            <div className="mt-12 p-5 bg-red-50 border border-red-100 rounded-xl flex items-center gap-4 text-red-600 animate-in shake-in duration-500">
+              <IoAlertCircle size={28} className="shrink-0" />
               <p className="font-bold text-sm tracking-tight">{error}</p>
+              <button
+                onClick={() => setError(null)}
+                className="ml-auto text-red-400 hover:text-red-600 transition-colors"
+              >
+                <LuX size={20} />
+              </button>
             </div>
           )}
 
-          {/* Navigation Buttons */}
-          <div className="flex items-center justify-between">
+          {/* Navigation Buttons footer */}
+          <div className="mt-16 pt-10 border-t border-neutral-50 flex items-center justify-between">
             <button
               type="button"
               onClick={handlePrev}
-              disabled={currentStep === 1 || submitMutation.isPending}
-              className="flex items-center gap-3 px-8 py-5 rounded-xl font-black text-dark hover:bg-neutral-50 transition-all disabled:opacity-0"
+              disabled={currentStep === 1 || isUploading}
+              className="flex items-center gap-3 px-8 py-5 rounded-xl font-black text-dark hover:bg-neutral-50 transition-all disabled:opacity-0 active:scale-95"
             >
               <LuChevronLeft size={20} />
               Précédent
@@ -185,27 +262,31 @@ export function VerifyIdForm() {
             {currentStep === STEPS.length ? (
               <button
                 type="button"
-                onClick={methods.handleSubmit(onSubmit)}
-                disabled={submitMutation.isPending}
-                className="flex items-center gap-4 px-12 py-5 bg-primary text-white rounded-2xl font-black shadow-2xl shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] transition-all active:scale-95 disabled:opacity-70"
+                onClick={handleSubmit(onSubmit)}
+                disabled={isUploading}
+                className="btn-primary px-12 py-5 text-lg font-black"
               >
-                {submitMutation.isPending ? (
+                {isUploading ? (
                   <>
-                    <LuLoader size={20} className="animate-spin" />
-                    Envoi en cours...
+                    <LuLoader size={24} className="animate-spin" />
+                    Envoi...
                   </>
                 ) : (
                   <>
                     Terminer la vérification
-                    <LuShieldCheck size={22} />
+                    <LuShieldCheck size={24} />
                   </>
                 )}
               </button>
             ) : (
-              <button type="button" onClick={handleNext} className="btn-dark">
-                Suivant
+              <button
+                type="button"
+                onClick={handleNext}
+                className="btn-dark px-12 py-5 group"
+              >
+                Étape suivante
                 <LuChevronRight
-                  size={20}
+                  size={22}
                   className="group-hover:translate-x-1 transition-transform"
                 />
               </button>
@@ -214,12 +295,20 @@ export function VerifyIdForm() {
         </div>
       </FormProvider>
 
-      {/* Security Badge */}
-      <div className="flex items-center justify-center gap-3 opacity-30">
-        <LuShieldCheck size={16} />
-        <span className="text-[10px] font-black uppercase tracking-[0.2em]">
-          Vos données sont chiffrées et sécurisées
-        </span>
+      {/* Trust Footer */}
+      <div className="flex flex-col md:flex-row items-center justify-center gap-8 opacity-40">
+        <div className="flex items-center gap-3">
+          <LuShieldCheck size={18} className="text-green-600" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-dark">
+            Données Chiffrées AES-256
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <LuShieldCheck size={18} className="text-primary" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-dark">
+            Conforme aux normes RGPD
+          </span>
+        </div>
       </div>
     </div>
   );

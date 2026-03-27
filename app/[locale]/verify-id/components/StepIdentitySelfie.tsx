@@ -1,25 +1,19 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { KycIdentityFormData } from "@/schemas/driver";
-import { useUploadDocument } from "@/hooks/useDriver";
 import CameraCapture from "@/components/kyc/CameraCapture";
-import {
-  LuUser,
-  LuCamera,
-  LuCircleCheck,
-  LuLoader,
-  LuX,
-} from "react-icons/lu";
+import { LuCamera, LuCheck, LuX, LuInfo } from "react-icons/lu";
+import { IoAlert } from "react-icons/io5";
 
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <p className="text-red-500 text-xs font-semibold mt-1.5 flex items-center gap-1">
-      <span className="inline-block w-1.5 h-1.5 bg-red-500 rounded-full" />
-      {message}
-    </p>
+    <div className="flex items-center gap-2 text-red-500 mt-2 p-3 bg-red-50 rounded-xl border border-red-100 animate-in fade-in slide-in-from-top-1">
+      <IoAlert size={16} className="shrink-0" />
+      <p className="text-xs font-bold leading-tight">{message}</p>
+    </div>
   );
 }
 
@@ -30,96 +24,166 @@ export function StepIdentitySelfie() {
     formState: { errors },
   } = useFormContext<KycIdentityFormData>();
 
-  const uploadMutation = useUploadDocument();
   const [showCamera, setShowCamera] = useState(false);
+  const currentVal = watch("selfieUrl");
   const [preview, setPreview] = useState<string | null>(null);
-  const currentUrl = watch("selfieUrl");
 
-  const handleCapture = async (blob: Blob) => {
-    setShowCamera(false);
-    
-    // Local preview via Blob URL
-    const previewUrl = URL.createObjectURL(blob);
-    setPreview(previewUrl);
-
-    try {
-      const file = new File([blob], "selfie.jpg", { type: "image/jpeg" });
-      const result = await uploadMutation.mutateAsync(file);
-      setValue("selfieUrl", result.url, { shouldValidate: true });
-    } catch {
-      setPreview(null);
+  useEffect(() => {
+    if (typeof currentVal === "string" && currentVal.startsWith("http")) {
+      setPreview(currentVal);
+    } else if (currentVal instanceof File) {
+      const url = URL.createObjectURL(currentVal);
+      setPreview(url);
+      return () => URL.revokeObjectURL(url);
     }
+  }, [currentVal]);
+
+  const handleCapture = (blob: Blob) => {
+    setShowCamera(false);
+    const file = new File([blob], "selfie.jpg", { type: "image/jpeg" });
+    setValue("selfieUrl", file, { shouldValidate: true });
   };
 
   const clear = () => {
-    setPreview(null);
     setValue("selfieUrl", "", { shouldValidate: true });
+    setPreview(null);
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
-      <div className="space-y-2 text-center">
-        <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <LuUser size={32} className="text-primary" />
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center animate-in fade-in slide-in-from-bottom-8 duration-700">
+      {/* Visual Guide / Illustration */}
+      <div className="space-y-6">
+        <div className="bg-neutral-50 rounded-xl p-8 border border-neutral-100 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700" />
+
+          <h3 className="text-xl font-black text-dark tracking-tight mb-6 flex items-center gap-3">
+            <span className="w-8 h-8 rounded-lg bg-dark text-white flex items-center justify-center text-sm font-bold">
+              3
+            </span>
+            Guide du Selfie
+          </h3>
+
+          {/* SVG Illustration - Selfie with Card */}
+          <div className="relative aspect-square bg-white rounded-xl border-2 border-dashed border-neutral-200 flex items-center justify-center p-6 shadow-sm mb-6 overflow-hidden max-w-[280px] mx-auto">
+            <div className="w-full h-full rounded-full bg-neutral-100 border border-neutral-200 relative overflow-hidden">
+              {/* Person Silhouette */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-neutral-300 rounded-full" />
+              <div className="absolute top-8 left-1/2 -translate-x-1/2 w-20 h-24 bg-neutral-300 rounded-[30px]" />
+
+              {/* Hand holding card */}
+              <div className="absolute bottom-10 right-4 w-16 h-20 bg-primary/20 border-2 border-primary/40 rounded-lg rotate-12 flex flex-col p-2 gap-1">
+                <div className="w-4 h-4 rounded-full bg-primary/30" />
+                <div className="h-1 w-full bg-primary/20 rounded-full" />
+                <div className="h-1 w-2/3 bg-primary/20 rounded-full" />
+              </div>
+
+              {/* Camera Flash effect */}
+              <div className="absolute inset-0 bg-primary/5 animate-pulse" />
+            </div>
+            {/* Overlay Focus */}
+            <div className="absolute inset-4 border-2 border-primary/40 rounded-full border-dashed animate-spin-slow" />
+          </div>
+
+          <ul className="space-y-3">
+            {[
+              "Tenez votre carte à côté de votre visage",
+              "Votre visage doit être entièrement découvert",
+              "La photo doit être nette et sans flou",
+            ].map((text, idx) => (
+              <li
+                key={idx}
+                className="flex items-start gap-3 text-sm font-bold text-neutral-500"
+              >
+                <div className="w-5 h-5 rounded-full bg-green-500/10 text-green-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <LuCheck size={12} />
+                </div>
+                {text}
+              </li>
+            ))}
+          </ul>
         </div>
-        <h2 className="text-3xl font-black text-dark tracking-tight">Selfie de vérification</h2>
-        <p className="text-neutral-500 font-medium max-w-sm mx-auto">
-          Prenez un selfie en tenant votre pièce d'identité à côté de votre visage.
-        </p>
+
+        <div className="p-4 bg-primary/5 rounded-xl border border-primary-100/50 flex items-start gap-3">
+          <LuInfo size={18} className="text-primary shrink-0 mt-0.5" />
+          <p className="text-[11px] font-bold text-primary/70 leading-relaxed uppercase tracking-widest">
+            Le selfie permet de confirmer que vous êtes bien le titulaire du
+            document.
+          </p>
+        </div>
       </div>
 
-      <div className="space-y-4">
-        {currentUrl && preview ? (
-          <div className="relative rounded-3xl overflow-hidden border-4 border-green-400/30 bg-neutral-50 shadow-2xl">
-            <img src={preview} alt="Selfie" className="w-full aspect-square object-cover scale-x-[-1]" />
-            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
-              <div className="flex items-center gap-3 text-white">
-                <div className="bg-green-500 rounded-full p-1">
-                  <LuCircleCheck size={18} className="text-white" />
+      {/* Action Zone */}
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <h2 className="text-4xl font-black text-dark tracking-tighter leading-none">
+            Selfie de contrôle
+          </h2>
+          <p className="text-neutral-500 font-medium">
+            Prenez un selfie avec votre document en main.
+          </p>
+        </div>
+
+        {preview ? (
+          <div className="relative rounded-xl overflow-hidden border-2 border-primary bg-neutral-50 shadow-2xl animate-in zoom-in-95 duration-500 group">
+            <img
+              src={preview}
+              alt="Selfie"
+              className="w-full aspect-square object-cover scale-x-[-1]"
+            />
+            <div className="absolute inset-0 bg-dark/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-sm">
+              <button
+                type="button"
+                onClick={clear}
+                className="btn-white text-red-500 border-red-100 hover:bg-red-50 scale-90 group-hover:scale-100 transition-transform"
+              >
+                <LuX size={18} />
+                Supprimer
+              </button>
+            </div>
+            <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-4 rounded-xl border border-white/40 flex items-center justify-between shadow-xl">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center shadow-lg shadow-green-500/30">
+                  <LuCheck size={20} />
                 </div>
-                <span className="text-sm font-black uppercase tracking-widest">Selfie validé</span>
+                <div>
+                  <p className="text-xs font-black text-dark uppercase tracking-widest">
+                    Selfie validé
+                  </p>
+                  <p className="text-[10px] text-neutral-500 font-bold uppercase">
+                    Sera envoyé à la fin
+                  </p>
+                </div>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={clear}
-              className="absolute top-4 right-4 p-3 bg-white/90 hover:bg-red-50 rounded-2xl shadow-xl transition-all"
-            >
-              <LuX size={18} className="text-neutral-600" />
-            </button>
           </div>
         ) : (
           <div
-            onClick={() => !uploadMutation.isPending && setShowCamera(true)}
-            className={`group relative aspect-square border-4 border-dashed rounded-3xl flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-500 overflow-hidden ${
+            onClick={() => setShowCamera(true)}
+            className={`group relative aspect-square border-2 border-dashed rounded-xl flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-500 overflow-hidden ${
               errors.selfieUrl
-                ? "border-red-400 bg-red-50/50"
-                : "border-neutral-200 hover:border-primary/50 hover:bg-neutral-50 bg-neutral-50/40"
+                ? "border-red-400 bg-red-50"
+                : "border-neutral-200 hover:border-primary/50 hover:bg-neutral-50 bg-neutral-50/20"
             }`}
           >
-            {uploadMutation.isPending ? (
-              <div className="flex flex-col items-center gap-4">
-                <LuLoader size={48} className="text-primary animate-spin" />
-                <p className="text-lg font-black text-neutral-600 uppercase tracking-tighter">Transfert...</p>
-              </div>
-            ) : (
-              <>
-                <div className="w-24 h-24 rounded-full bg-primary text-white flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-2xl shadow-primary/40">
-                  <LuCamera size={40} />
-                </div>
-                <p className="text-xl font-black text-neutral-800 tracking-tight">
-                  Ouvrir la caméra
-                </p>
-                <p className="text-sm text-neutral-400 mt-2 font-bold px-12">
-                  Assurez-vous d'être dans un endroit bien éclairé.
-                </p>
-              </>
-            )}
+            <div className="w-24 h-24 rounded-full bg-primary text-white shadow-2xl shadow-primary/40 flex items-center justify-center mb-6 relative">
+              <LuCamera size={22} />
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-xl font-black text-dark tracking-tight">
+                Ouvrir la caméra
+              </p>
+              <p className="text-sm text-neutral-400 font-bold uppercase tracking-widest text-[10px]">
+                Prise de vue sécurisée en direct
+              </p>
+            </div>
+
+            {/* Scanning effect decoration */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-primary/20 animate-scan pointer-events-none" />
           </div>
         )}
-        <div className="text-center">
-          <FieldError message={errors.selfieUrl?.message} />
-        </div>
+
+        <FieldError message={errors.selfieUrl?.message as string} />
       </div>
 
       {showCamera && (

@@ -1,25 +1,19 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { KycIdentityFormData } from "@/schemas/driver";
-import { useUploadDocument } from "@/hooks/useDriver";
-import {
-  LuCreditCard,
-  LuUpload,
-  LuCircleCheck,
-  LuLoader,
-  LuX,
-} from "react-icons/lu";
+import { LuUpload, LuCheck, LuX, LuInfo } from "react-icons/lu";
+import { IoAlert } from "react-icons/io5";
 
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <p className="text-red-500 text-xs font-semibold mt-1.5 flex items-center gap-1">
-      <span className="inline-block w-1.5 h-1.5 bg-red-500 rounded-full" />
-      {message}
-    </p>
+    <div className="flex items-center gap-2 text-red-500 mt-2 p-3 bg-red-50 rounded-xl border border-red-100 animate-in fade-in slide-in-from-top-1">
+      <IoAlert size={16} className="shrink-0" />
+      <p className="text-xs font-bold leading-tight">{message}</p>
+    </div>
   );
 }
 
@@ -30,27 +24,26 @@ export function StepIdentityRecto() {
     formState: { errors },
   } = useFormContext<KycIdentityFormData>();
 
-  const uploadMutation = useUploadDocument();
+  const currentVal = watch("rectoUrl");
   const [preview, setPreview] = useState<string | null>(null);
-  const currentUrl = watch("rectoUrl");
+
+  useEffect(() => {
+    if (typeof currentVal === "string" && currentVal.startsWith("http")) {
+      setPreview(currentVal);
+    } else if (currentVal instanceof File) {
+      const url = URL.createObjectURL(currentVal);
+      setPreview(url);
+      return () => URL.revokeObjectURL(url);
+    }
+  }, [currentVal]);
 
   const onDrop = useCallback(
-    async (acceptedFiles: File[]) => {
+    (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
       if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = () => setPreview(reader.result as string);
-      reader.readAsDataURL(file);
-
-      try {
-        const result = await uploadMutation.mutateAsync(file);
-        setValue("rectoUrl", result.url, { shouldValidate: true });
-      } catch {
-        setPreview(null);
-      }
+      setValue("rectoUrl", file, { shouldValidate: true });
     },
-    [uploadMutation, setValue],
+    [setValue],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -61,50 +54,122 @@ export function StepIdentityRecto() {
   });
 
   const clear = () => {
-    setPreview(null);
     setValue("rectoUrl", "", { shouldValidate: true });
+    setPreview(null);
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
-      <div className="space-y-2 text-center">
-        <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <LuCreditCard size={32} className="text-primary" />
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center animate-in fade-in slide-in-from-bottom-8 duration-700">
+      {/* Visual Guide / Illustration */}
+      <div className="space-y-6">
+        <div className="bg-neutral-50 rounded-xl p-8 border border-neutral-100 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700" />
+
+          <h3 className="text-xl font-black text-dark tracking-tight mb-6 flex items-center gap-3">
+            <span className="w-8 h-8 rounded-lg bg-dark text-white flex items-center justify-center text-sm font-bold">
+              1
+            </span>
+            Guide de capture
+          </h3>
+
+          {/* SVG Illustration - ID Card Recto */}
+          <div className="relative aspect-video bg-white rounded-xl border-2 border-dashed border-neutral-200 flex items-center justify-center p-6 shadow-sm mb-6 overflow-hidden">
+            <div className="w-full h-full rounded-lg bg-neutral-50 border border-neutral-100 relative p-4 flex flex-col justify-between shadow-inner">
+              <div className="flex gap-3">
+                <div className="w-10 h-10 rounded-full bg-neutral-200 animate-pulse" />
+                <div className="flex-1 space-y-2 py-1">
+                  <div className="h-2 w-2/3 bg-neutral-200 rounded-full" />
+                  <div className="h-2 w-1/2 bg-neutral-200 rounded-full" />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="h-8 w-full border-2 border-primary/20 bg-primary/5 rounded-md flex items-center px-2">
+                  <div className="h-1.5 w-1/2 bg-primary/20 rounded-full" />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="h-12 bg-neutral-100 rounded-md" />
+                  <div className="h-12 bg-neutral-100 rounded-md" />
+                </div>
+              </div>
+              {/* Overlay focus marks */}
+              <div className="absolute inset-0 border-2 border-primary rounded-lg opacity-20 scale-[1.02]" />
+              <div className="absolute top-2 right-2 flex gap-1">
+                <div className="w-2 h-2 rounded-full bg-primary/40" />
+                <div className="w-2 h-2 rounded-full bg-primary/20" />
+              </div>
+            </div>
+          </div>
+
+          <ul className="space-y-3">
+            {[
+              "Assurez-vous que les 4 coins sont visibles",
+              "Évitez les reflets de lumière sur la carte",
+              "Le texte doit être parfaitement lisible",
+            ].map((text, idx) => (
+              <li
+                key={idx}
+                className="flex items-start gap-3 text-sm font-bold text-neutral-500"
+              >
+                <div className="w-5 h-5 rounded-full bg-green-500/10 text-green-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <LuCheck size={12} />
+                </div>
+                {text}
+              </li>
+            ))}
+          </ul>
         </div>
-        <h2 className="text-3xl font-black text-dark tracking-tight">
-          Recto de la pièce d'identité
-        </h2>
-        <p className="text-neutral-500 font-medium max-w-sm mx-auto">
-          Prenez en photo le devant de votre carte d'identité ou de votre
-          passeport.
-        </p>
+
+        <div className="p-4 bg-primary/5 rounded-xl border border-primary-100/50 flex items-start gap-3">
+          <LuInfo size={18} className="text-primary shrink-0 mt-0.5" />
+          <p className="text-[11px] font-bold text-primary/70 leading-relaxed uppercase tracking-widest">
+            Capturez le côté face de votre pièce d'identité officielle.
+          </p>
+        </div>
       </div>
 
-      <div className="space-y-4">
-        {currentUrl && preview ? (
-          <div className="relative rounded-3xl overflow-hidden border-4 border-green-400/30 bg-neutral-50 shadow-2xl">
+      {/* Upload Zone */}
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <h2 className="text-4xl font-black text-dark tracking-tighter leading-none">
+            Recto du document
+          </h2>
+          <p className="text-neutral-500 font-medium">
+            Glissez ou prenez une photo claire du recto.
+          </p>
+        </div>
+
+        {preview ? (
+          <div className="relative rounded-xl overflow-hidden border-2 border-primary bg-neutral-50 shadow-2xl animate-in zoom-in-95 duration-500 group">
             <img
               src={preview}
               alt="Recto"
               className="w-full aspect-[1.6/1] object-cover"
             />
-            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
-              <div className="flex items-center gap-3 text-white">
-                <div className="bg-green-500 rounded-full p-1">
-                  <LuCircleCheck size={18} className="text-white" />
+            <div className="absolute inset-0 bg-dark/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-sm">
+              <button
+                type="button"
+                onClick={clear}
+                className="btn-white text-red-500 border-red-100 hover:bg-red-50 scale-90 group-hover:scale-100 transition-transform"
+              >
+                <LuX size={18} />
+                Supprimer
+              </button>
+            </div>
+            <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-4 rounded-xl border border-white/40 flex items-center justify-between shadow-xl">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center shadow-lg shadow-green-500/30">
+                  <LuCheck size={20} />
                 </div>
-                <span className="text-sm font-black uppercase tracking-widest">
-                  Document prêt
-                </span>
+                <div>
+                  <p className="text-xs font-black text-dark uppercase tracking-widest">
+                    Document prêt
+                  </p>
+                  <p className="text-[10px] text-neutral-500 font-bold uppercase">
+                    Sera envoyé à la fin
+                  </p>
+                </div>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={clear}
-              className="absolute top-4 right-4 p-3 bg-white/90 hover:bg-red-50 rounded-2xl shadow-xl transition-all"
-            >
-              <LuX size={18} className="text-neutral-600" />
-            </button>
           </div>
         ) : (
           <div
@@ -113,37 +178,28 @@ export function StepIdentityRecto() {
               isDragActive
                 ? "border-primary bg-primary/5 scale-[1.02]"
                 : errors.rectoUrl
-                  ? "border-red-400 bg-red-50/50"
-                  : "border-neutral-200 hover:border-primary/50 hover:bg-neutral-50 bg-neutral-50/40"
+                  ? "border-red-400 bg-red-50"
+                  : "border-neutral-200 hover:border-primary/50 hover:bg-neutral-50 bg-neutral-50/20"
             }`}
           >
             <input {...getInputProps()} />
 
-            {uploadMutation.isPending ? (
-              <div className="flex flex-col items-center gap-4">
-                <LuLoader size={48} className="text-primary animate-spin" />
-                <p className="text-lg font-black text-neutral-600 uppercase tracking-tighter">
-                  Transfert...
-                </p>
-              </div>
-            ) : (
-              <>
-                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 bg-white shadow-xl border border-neutral-100">
-                  <LuUpload size={32} className="text-primary" />
-                </div>
-                <p className="text-lg font-black text-neutral-800 tracking-tight">
-                  {isDragActive ? "Lâchez ici !" : "Uploader le Recto"}
-                </p>
-                <p className="text-sm text-neutral-400 mt-2 font-bold px-8">
-                  JPG, PNG ou WebP — Max. 5 Mo
-                </p>
-              </>
-            )}
+            <div className="w-18 h-18 rounded-full bg-white shadow-2xl border border-neutral-100 flex items-center justify-center mb-6">
+              <LuUpload size={22} className="text-primary" />
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-xl font-black text-dark tracking-tight">
+                {isDragActive ? "Lâchez pour uploader" : "Uploader le Recto"}
+              </p>
+              <p className="text-sm text-neutral-400 font-bold uppercase tracking-widest text-[10px]">
+                JPG, PNG — Max 5 Mo
+              </p>
+            </div>
           </div>
         )}
-        <div className="text-center">
-          <FieldError message={errors.rectoUrl?.message} />
-        </div>
+
+        <FieldError message={errors.rectoUrl?.message as string} />
       </div>
     </div>
   );

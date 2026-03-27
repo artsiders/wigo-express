@@ -50,9 +50,9 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
   const defaultLastName = nameParts.slice(1).join(" ") ?? "";
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="space-y-2">
-        <h2 className="text-3xl font-black text-dark">
+        <h2 className="text-4xl font-black text-dark tracking-tighter">
           Informations Personnelles
         </h2>
         <p className="text-neutral-500 font-medium">
@@ -60,23 +60,23 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-2">
         {/* First Name */}
         <div className="space-y-2">
-          <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
+          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
             Prénom
           </label>
-          <div className="relative">
+          <div className="relative group">
             <LuUser
-              size={16}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"
+              size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors"
             />
             <input
               {...register("firstName")}
               type="text"
               defaultValue={defaultFirstName}
               placeholder="Ex: Alex"
-              className={`input pl-11 ${errors.firstName ? "border-red-400 focus:ring-red-400/30" : ""}`}
+              className={`input pl-12 ${errors.firstName ? "input-error" : ""}`}
             />
           </div>
           <FieldError message={errors.firstName?.message} />
@@ -84,20 +84,20 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
 
         {/* Last Name */}
         <div className="space-y-2">
-          <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
+          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
             Nom
           </label>
-          <div className="relative">
+          <div className="relative group">
             <LuUser
-              size={16}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"
+              size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors"
             />
             <input
               {...register("lastName")}
               type="text"
               defaultValue={defaultLastName}
               placeholder="Ex: Conducteur"
-              className={`input pl-11 ${errors.lastName ? "border-red-400 focus:ring-red-400/30" : ""}`}
+              className={`input pl-12 ${errors.lastName ? "input-error" : ""}`}
             />
           </div>
           <FieldError message={errors.lastName?.message} />
@@ -107,50 +107,52 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
       {/* Email (display only) */}
       {sessionEmail && (
         <div className="space-y-2">
-          <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
-            Email (compte)
+          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+            Email de votre compte
           </label>
-          <div className="relative">
+          <div className="relative group">
             <LuMail
-              size={16}
+              size={18}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"
             />
             <input
               type="email"
               value={sessionEmail}
               disabled
-              className="input pl-11 opacity-50 cursor-not-allowed bg-neutral-50"
+              className="input pl-12 opacity-50 cursor-not-allowed bg-neutral-50 border-neutral-200"
             />
           </div>
-          <p className="text-xs text-neutral-400 pl-1">
-            Lié à votre compte - non modifiable ici
+          <p className="text-[10px] font-bold text-neutral-400 ml-1 uppercase tracking-widest">
+            Non modifiable — lié à votre identité Wigo
           </p>
         </div>
       )}
 
       {/* Phone with normalize and flag selector */}
       <div className="space-y-2">
-        <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
-          Téléphone
+        <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+          Numéro de téléphone
         </label>
-        <div className="flex gap-2">
-          {/* Flag selector */}
+        <div className="flex gap-4">
+          {/* Flag selector using btn-white structure */}
           <div className="relative">
             <button
               type="button"
               onClick={() => setShowFlags(!showFlags)}
-              className="h-[60px] px-4 flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-2xl hover:bg-neutral-100 transition-all font-bold text-dark"
+              className="h-[60px] px-5 flex items-center gap-3 bg-white border border-neutral-200 rounded-xl hover:bg-neutral-50 hover:border-neutral-300 transition-all font-bold text-dark shadow-sm group"
             >
-              <span className="text-xl">{selectedCountry.flag}</span>
-              <span className="text-[15px] opacity-70">+1</span>
+              <span className="text-2xl">{selectedCountry.flag}</span>
+              <span className="text-[14px] font-black text-neutral-400">
+                +1
+              </span>
               <LuChevronDown
-                size={14}
-                className={`opacity-40 transition-transform ${showFlags ? "rotate-180" : ""}`}
+                size={16}
+                className={`text-neutral-300 transition-transform duration-300 ${showFlags ? "rotate-180" : ""}`}
               />
             </button>
 
             {showFlags && (
-              <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-neutral-100 rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="absolute top-full left-0 mt-3 w-56 bg-white border border-neutral-100 rounded-xl shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
                 {COUNTRIES.map((c) => (
                   <button
                     key={c.code}
@@ -159,12 +161,16 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
                       setSelectedCountry(c);
                       setShowFlags(false);
                     }}
-                    className={`w-full flex items-center gap-3 p-3 rounded-xl hover:bg-neutral-50 transition-all text-left ${selectedCountry.code === c.code ? "bg-primary/5 text-primary" : ""}`}
+                    className={`w-full flex items-center gap-4 p-4 rounded-lg hover:bg-neutral-50 transition-all text-left ${selectedCountry.code === c.code ? "bg-primary/5 text-primary" : "text-dark"}`}
                   >
-                    <span className="text-xl">{c.flag}</span>
+                    <span className="text-2xl leading-none">{c.flag}</span>
                     <div className="flex flex-col">
-                      <span className="text-sm font-bold">{c.label}</span>
-                      <span className="text-[11px] opacity-60">+1</span>
+                      <span className="text-sm font-black tracking-tight">
+                        {c.label}
+                      </span>
+                      <span className="text-[10px] font-bold text-neutral-400 uppercase">
+                        +1
+                      </span>
                     </div>
                   </button>
                 ))}
@@ -173,7 +179,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
           </div>
 
           {/* Actual input with masks */}
-          <div className="flex-1 relative">
+          <div className="flex-1 relative group text-lg">
             <input
               {...register("phone")}
               onChange={(e) => {
@@ -182,7 +188,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
               }}
               type="tel"
               placeholder="(555) 555-5555"
-              className={`input ${errors.phone ? "border-red-400 focus:ring-red-400/30" : ""}`}
+              className={`input font-black tracking-wider ${errors.phone ? "input-error" : ""}`}
             />
           </div>
         </div>

@@ -64,9 +64,9 @@ export const DriverApplicationSchema = Step1Schema.merge(Step2Schema)
   .merge(Step4Schema);
 
 export const KycIdentitySchema = z.object({
-  rectoUrl: z.string().min(1, "La photo du recto est requise").url(),
-  versoUrl: z.string().min(1, "La photo du verso est requise").url(),
-  selfieUrl: z.string().min(1, "Le selfie avec votre carte est requis").url(),
+  rectoUrl: z.any().refine((val) => val && (typeof val === "string" || val instanceof File), "La photo du recto est requise"),
+  versoUrl: z.any().refine((val) => val && (typeof val === "string" || val instanceof File), "La photo du verso est requise"),
+  selfieUrl: z.any().refine((val) => val && (typeof val === "string" || val instanceof File), "Le selfie avec votre carte est requis"),
 });
 
 export type DriverApplicationFormData = z.infer<typeof DriverApplicationSchema>;

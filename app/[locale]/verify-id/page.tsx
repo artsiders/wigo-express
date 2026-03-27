@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import { VerifyIdForm } from "./components/VerifyIdForm";
 import { LuLoader } from "react-icons/lu";
+import Footer from "@/components/Footer";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +20,7 @@ export default async function VerifyIdPage() {
       <Navbar />
 
       <div className="pt-42 pb-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto space-y-12">
+        <div className="container mx-auto space-y-12">
           {/* Header */}
           <div className="text-center space-y-6 animate-in fade-in slide-in-from-top-6 duration-700">
             <h1 className="text-3xl md:text-5xl font-black text-dark tracking-tighter leading-[0.9] max-w-2xl mx-auto">
@@ -86,6 +87,7 @@ export default async function VerifyIdPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

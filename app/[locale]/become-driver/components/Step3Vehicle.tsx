@@ -2,15 +2,14 @@
 
 import { useFormContext } from "react-hook-form";
 import type { DriverApplicationFormData } from "@/schemas/driver";
-import { LuCar, LuHash, LuPalette, LuUsers, LuCalendar } from "react-icons/lu";
+import { LuCar, LuHash, LuPalette, LuUsers, LuCalendar, LuChevronDown } from "react-icons/lu";
 
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <p className="text-red-500 text-xs font-semibold mt-1.5 flex items-center gap-1">
-      <span className="inline-block w-1.5 h-1.5 bg-red-500 rounded-full" />
-      {message}
-    </p>
+    <div className="flex items-center gap-2 text-red-500 mt-2 p-3 bg-red-50 rounded-xl border border-red-100 animate-in fade-in slide-in-from-top-1">
+      <p className="text-xs font-bold leading-tight">{message}</p>
+    </div>
   );
 }
 
@@ -35,47 +34,50 @@ export function Step3Vehicle() {
   } = useFormContext<DriverApplicationFormData>();
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="space-y-2">
-        <h2 className="text-3xl font-black text-dark">Votre Véhicule</h2>
+        <h2 className="text-4xl font-black text-dark tracking-tighter">Votre Véhicule</h2>
         <p className="text-neutral-500 font-medium">
           Pour que vos passagers puissent vous reconnaître facilement.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Make */}
         <div className="space-y-2">
-          <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
+          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
             Marque
           </label>
-          <div className="relative">
-            <LuCar size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <div className="relative group">
+            <LuCar size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors" />
             <select
               {...register("vehicleMake")}
-              className={`input pl-11 appearance-none ${errors.vehicleMake ? "border-red-400 focus:ring-red-400/30" : ""}`}
+              className={`input pl-12 appearance-none input-select ${errors.vehicleMake ? "input-error" : ""}`}
             >
-              <option value="">Sélectionnez une marque</option>
+              <option value="">Sélectionnez</option>
               {CAR_MAKES.map((m) => (
                 <option key={m} value={m}>{m}</option>
               ))}
             </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-400">
+               <LuChevronDown size={14} />
+            </div>
           </div>
           <FieldError message={errors.vehicleMake?.message} />
         </div>
 
         {/* Model */}
         <div className="space-y-2">
-          <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
+          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
             Modèle
           </label>
-          <div className="relative">
-            <LuCar size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 opacity-60" />
+          <div className="relative group">
+            <LuCar size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors opacity-60" />
             <input
               {...register("vehicleModel")}
               type="text"
               placeholder="Ex: Model 3, 308, Golf..."
-              className={`input pl-11 ${errors.vehicleModel ? "border-red-400 focus:ring-red-400/30" : ""}`}
+              className={`input pl-12 ${errors.vehicleModel ? "input-error" : ""}`}
             />
           </div>
           <FieldError message={errors.vehicleModel?.message} />
@@ -83,36 +85,39 @@ export function Step3Vehicle() {
 
         {/* Year */}
         <div className="space-y-2">
-          <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
-            Année
+          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+            Année de mise en circulation
           </label>
-          <div className="relative">
-            <LuCalendar size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <div className="relative group">
+            <LuCalendar size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors" />
             <select
               {...register("vehicleYear", { valueAsNumber: true })}
-              className={`input pl-11 appearance-none ${errors.vehicleYear ? "border-red-400 focus:ring-red-400/30" : ""}`}
+              className={`input pl-12 appearance-none input-select ${errors.vehicleYear ? "input-error" : ""}`}
             >
-              <option value="">Sélectionnez l'année</option>
+              <option value="">Sélectionnez</option>
               {YEARS.map((y) => (
                 <option key={y} value={y}>{y}</option>
               ))}
             </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-400">
+               <LuChevronDown size={14} />
+            </div>
           </div>
           <FieldError message={errors.vehicleYear?.message} />
         </div>
 
         {/* License Plate */}
         <div className="space-y-2">
-          <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
+          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
             Plaque d'immatriculation
           </label>
-          <div className="relative">
-            <LuHash size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <div className="relative group">
+            <LuHash size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors" />
             <input
               {...register("vehiclePlate")}
               type="text"
               placeholder="Ex: AA-123-BB"
-              className={`input pl-11 uppercase ${errors.vehiclePlate ? "border-red-400 focus:ring-red-400/30" : ""}`}
+              className={`input pl-12 uppercase font-black tracking-widest ${errors.vehiclePlate ? "input-error" : ""}`}
             />
           </div>
           <FieldError message={errors.vehiclePlate?.message} />
@@ -120,50 +125,61 @@ export function Step3Vehicle() {
 
         {/* Color */}
         <div className="space-y-2">
-          <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
-            Couleur
+          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+            Couleur dominante
           </label>
-          <div className="relative">
-            <LuPalette size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <div className="relative group">
+            <LuPalette size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors" />
             <select
               {...register("vehicleColor")}
-              className={`input pl-11 appearance-none ${errors.vehicleColor ? "border-red-400 focus:ring-red-400/30" : ""}`}
+              className={`input pl-12 appearance-none input-select ${errors.vehicleColor ? "input-error" : ""}`}
             >
-              <option value="">Sélectionnez une couleur</option>
+              <option value="">Sélectionnez</option>
               {COLORS.map((c) => (
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-400">
+               <LuChevronDown size={14} />
+            </div>
           </div>
           <FieldError message={errors.vehicleColor?.message} />
         </div>
 
         {/* Seats */}
         <div className="space-y-2">
-          <label className="text-[13px] font-bold text-neutral-600 uppercase tracking-widest pl-1">
-            Places disponibles
+          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+            Nombre de places disponibles
           </label>
-          <div className="relative">
-            <LuUsers size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <div className="relative group">
+            <LuUsers size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors" />
             <select
               {...register("vehicleSeats", { valueAsNumber: true })}
-              className={`input pl-11 appearance-none ${errors.vehicleSeats ? "border-red-400 focus:ring-red-400/30" : ""}`}
+              className={`input pl-12 appearance-none input-select ${errors.vehicleSeats ? "input-error" : ""}`}
             >
               {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
                 <option key={n} value={n}>{n} place{n > 1 ? "s" : ""}</option>
               ))}
             </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-400">
+               <LuChevronDown size={14} />
+            </div>
           </div>
           <FieldError message={errors.vehicleSeats?.message} />
         </div>
       </div>
 
       {/* Info banner */}
-      <div className="p-4 rounded-2xl bg-primary/5 border border-primary/15 flex items-start gap-3">
-        <LuCar size={18} className="text-primary shrink-0 mt-0.5" />
-        <p className="text-sm text-neutral-600 font-medium">
-          Votre véhicule sera visible dans votre profil de conducteur. Assurez-vous qu'il soit conforme aux règles en vigueur.
-        </p>
+      <div className="p-6 rounded-xl bg-primary/5 border border-primary/10 flex items-start gap-4">
+        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+           <LuCar size={20} className="text-primary" />
+        </div>
+        <div>
+           <p className="text-sm text-dark font-black uppercase tracking-tight mb-1">Visibilité du véhicule</p>
+           <p className="text-xs text-neutral-500 font-bold leading-relaxed">
+             Ces informations permettent aux passagers de vous repérer. Assurez-vous qu'elles sont exactes avant de valider votre profil.
+           </p>
+        </div>
       </div>
     </div>
   );
