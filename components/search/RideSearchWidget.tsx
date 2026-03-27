@@ -262,7 +262,7 @@ export default function RideSearchWidget({
         >
           {activeDropdown === "depart" && (
             <div
-              className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden z-60`}
+              className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-xl shadow-xl border border-neutral-200 overflow-hidden z-60`}
             >
               <div className="p-1 max-h-56 overflow-y-auto">
                 {departSuggestions.map((s, idx) => (
@@ -274,7 +274,7 @@ export default function RideSearchWidget({
                       setDepartCoords({ lat: s.lat, lon: s.lon });
                       setActiveDropdown("arrivee");
                     }}
-                    className="w-full text-left px-3 py-2 hover:bg-neutral-100 rounded-xl flex items-center gap-3 text-dark font-bold text-sm"
+                    className="w-full text-left px-3 py-3 hover:bg-neutral-100 rounded-lg flex items-center gap-3 text-dark font-bold text-sm"
                   >
                     <IoLocationOutline
                       className="text-neutral-700 shrink-0"
@@ -319,7 +319,7 @@ export default function RideSearchWidget({
         >
           {activeDropdown === "arrivee" && (
             <div
-              className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden z-60`}
+              className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-xl shadow-xl border border-neutral-200 overflow-hidden z-60`}
             >
               <div className="p-1 max-h-56 overflow-y-auto">
                 {arriveeSuggestions.map((s, idx) => (
@@ -331,7 +331,7 @@ export default function RideSearchWidget({
                       setArriveeCoords({ lat: s.lat, lon: s.lon });
                       setActiveDropdown("date");
                     }}
-                    className="w-full text-left px-3 py-2 hover:bg-neutral-100 rounded-xl flex items-center gap-3 text-dark font-bold text-sm"
+                    className="w-full text-left px-3 py-3 hover:bg-neutral-100 rounded-lg flex items-center gap-3 text-dark font-bold text-sm"
                   >
                     <IoMapOutline
                       className="text-neutral-700 shrink-0"

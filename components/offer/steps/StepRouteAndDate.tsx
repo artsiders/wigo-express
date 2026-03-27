@@ -26,11 +26,41 @@ interface LocationSuggestion {
 }
 
 const defaultSuggestions: LocationSuggestion[] = [
-  { name: "Montréal", state: "Québec", country: "Canada", lat: 45.5017, lon: -73.5673 },
-  { name: "Québec", state: "Québec", country: "Canada", lat: 46.8139, lon: -71.2082 },
-  { name: "Toronto", state: "Ontario", country: "Canada", lat: 43.6532, lon: -79.3832 },
-  { name: "Gatineau", state: "Québec", country: "Canada", lat: 45.4765, lon: -75.7013 },
-  { name: "Sherbrooke", state: "Québec", country: "Canada", lat: 45.401, lon: -71.8991 },
+  {
+    name: "Montréal",
+    state: "Québec",
+    country: "Canada",
+    lat: 45.5017,
+    lon: -73.5673,
+  },
+  {
+    name: "Québec",
+    state: "Québec",
+    country: "Canada",
+    lat: 46.8139,
+    lon: -71.2082,
+  },
+  {
+    name: "Toronto",
+    state: "Ontario",
+    country: "Canada",
+    lat: 43.6532,
+    lon: -79.3832,
+  },
+  {
+    name: "Gatineau",
+    state: "Québec",
+    country: "Canada",
+    lat: 45.4765,
+    lon: -75.7013,
+  },
+  {
+    name: "Sherbrooke",
+    state: "Québec",
+    country: "Canada",
+    lat: 45.401,
+    lon: -71.8991,
+  },
 ];
 
 const fetchLocations = async (query: string): Promise<LocationSuggestion[]> => {
@@ -72,8 +102,16 @@ const formatSuggestion = (s: LocationSuggestion) => {
 };
 
 export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
-  const { departure, arrival, departCoords, arriveeCoords, date, time, setRoute, setDateTime } =
-    useOfferStore();
+  const {
+    departure,
+    arrival,
+    departCoords,
+    arriveeCoords,
+    date,
+    time,
+    setRoute,
+    setDateTime,
+  } = useOfferStore();
   const [error, setError] = useState("");
   const [activeDropdown, setActiveDropdown] = useState<
     "depart" | "arrivee" | "date" | null
@@ -136,7 +174,9 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
 
   const handleNext = () => {
     if (!departure || !arrival || !departCoords || !arriveeCoords) {
-      setError("Veuillez choisir votre ville de départ et d'arrivée via les suggestions.");
+      setError(
+        "Veuillez choisir votre ville de départ et d'arrivée via les suggestions.",
+      );
       return;
     }
     if (!date || !time) {
@@ -182,7 +222,9 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
           >
             {/* Depart Dropdown */}
             {activeDropdown === "depart" && (
-              <div className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden z-60`}>
+              <div
+                className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-xl shadow-xl border border-neutral-200 overflow-hidden z-60`}
+              >
                 <div className="p-1 max-h-56 overflow-y-auto">
                   {departSuggestions.length > 0 ? (
                     departSuggestions.map((city, idx) => (
@@ -190,13 +232,23 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                         key={idx}
                         type="button"
                         onClick={() => {
-                          setRoute(formatSuggestion(city), arrival, { lat: city.lat, lon: city.lon }, arriveeCoords);
+                          setRoute(
+                            formatSuggestion(city),
+                            arrival,
+                            { lat: city.lat, lon: city.lon },
+                            arriveeCoords,
+                          );
                           setActiveDropdown("arrivee");
                         }}
-                        className="w-full text-left px-3 py-2 hover:bg-neutral-100 rounded-xl flex items-center gap-3 text-dark font-bold text-sm"
+                        className="w-full text-left px-3 py-3 hover:bg-neutral-100 rounded-lg flex items-center gap-3 text-dark font-bold text-sm"
                       >
-                        <IoLocationOutline className="text-neutral-700 shrink-0" size={16} />
-                        <span className="truncate">{formatSuggestion(city)}</span>
+                        <IoLocationOutline
+                          className="text-neutral-700 shrink-0"
+                          size={16}
+                        />
+                        <span className="truncate">
+                          {formatSuggestion(city)}
+                        </span>
                       </button>
                     ))
                   ) : (
@@ -222,7 +274,9 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
           >
             {/* Arrival Dropdown */}
             {activeDropdown === "arrivee" && (
-              <div className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden z-60`}>
+              <div
+                className={`absolute left-0 right-0 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"} bg-white rounded-xl shadow-xl border border-neutral-200 overflow-hidden z-60`}
+              >
                 <div className="p-1 max-h-56 overflow-y-auto">
                   {arriveeSuggestions.length > 0 ? (
                     arriveeSuggestions.map((city, idx) => (
@@ -230,13 +284,23 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                         key={idx}
                         type="button"
                         onClick={() => {
-                          setRoute(departure, formatSuggestion(city), departCoords, { lat: city.lat, lon: city.lon });
+                          setRoute(
+                            departure,
+                            formatSuggestion(city),
+                            departCoords,
+                            { lat: city.lat, lon: city.lon },
+                          );
                           setActiveDropdown("date");
                         }}
-                        className="w-full text-left px-3 py-2 hover:bg-neutral-100 rounded-xl flex items-center gap-3 text-dark font-bold text-sm"
+                        className="w-full text-left px-3 py-3 hover:bg-neutral-100 rounded-lg flex items-center gap-3 text-dark font-bold text-sm"
                       >
-                        <IoMapOutline className="text-neutral-700 shrink-0" size={16} />
-                        <span className="truncate">{formatSuggestion(city)}</span>
+                        <IoMapOutline
+                          className="text-neutral-700 shrink-0"
+                          size={16}
+                        />
+                        <span className="truncate">
+                          {formatSuggestion(city)}
+                        </span>
                       </button>
                     ))
                   ) : (
@@ -272,14 +336,14 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                 className={`absolute left-0 right-0 z-60 ${dropdownPos === "top" ? "bottom-full mb-2" : "top-full mt-2"}`}
               >
                 <div className="bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden w-full max-w-[320px]">
-                   <CustomCalendar
-                     selectedDate={date ? new Date(date) : null}
-                     onSelectDate={(d) => {
-                       setDateTime(format(d, "yyyy-MM-dd"), time);
-                       setActiveDropdown(null);
-                     }}
-                     position={dropdownPos}
-                   />
+                  <CustomCalendar
+                    selectedDate={date ? new Date(date) : null}
+                    onSelectDate={(d) => {
+                      setDateTime(format(d, "yyyy-MM-dd"), time);
+                      setActiveDropdown(null);
+                    }}
+                    position={dropdownPos}
+                  />
                 </div>
               </div>
             )}
