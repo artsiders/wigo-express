@@ -6,11 +6,16 @@ import gsap from "gsap";
 import { IoCloseOutline } from "react-icons/io5";
 import RideSearchWidget from "./RideSearchWidget";
 
+// 1. Mise à jour de l'interface pour accepter onClose
 interface RideSearchPopupProps {
   initialOpen: boolean;
+  onClose?: () => void;
 }
 
-export default function RideSearchPopup({ initialOpen }: RideSearchPopupProps) {
+export default function RideSearchPopup({
+  initialOpen,
+  onClose,
+}: RideSearchPopupProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(initialOpen);
@@ -20,7 +25,6 @@ export default function RideSearchPopup({ initialOpen }: RideSearchPopupProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
-  // Sync state with URL parameter if it changes
   useEffect(() => {
     const isParamOpen = searchParams?.get("searchOpen") === "true";
     if (isParamOpen && !isOpen) {
@@ -33,11 +37,12 @@ export default function RideSearchPopup({ initialOpen }: RideSearchPopupProps) {
     if (!isRendered) return;
 
     let ctx = gsap.context(() => {
-      // Setup timeline
-      const tl = gsap.timeline({ paused: true, onReverseComplete: onClosed });
+      const tl = gsap.timeline({
+        paused: true,
+        onReverseComplete: () => onClosed(), // Utilisation d'une arrow function pour plus de sûreté
+      });
       tlRef.current = tl;
 
-      // Overlay animation (fade in and blur)
       tl.to(
         overlayRef.current,
         {
@@ -45,15 +50,14 @@ export default function RideSearchPopup({ initialOpen }: RideSearchPopupProps) {
           duration: 0.4,
           ease: "power2.inOut",
         },
-        0
+        0,
       );
 
-      // Container wrap animation (scale and fade)
       tl.fromTo(
         containerRef.current,
         { opacity: 0, scale: 0.8, y: 30 },
         { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.2)" },
-        0.1
+        0.1,
       );
     });
 
@@ -80,10 +84,18 @@ export default function RideSearchPopup({ initialOpen }: RideSearchPopupProps) {
     setIsRendered(false);
     document.body.style.overflow = "";
 
+    // Nettoyage de l'URL
     const currentUrl = new URL(window.location.href);
     if (currentUrl.searchParams.has("searchOpen")) {
       currentUrl.searchParams.delete("searchOpen");
-      router.replace(currentUrl.pathname + currentUrl.search, { scroll: false });
+      router.replace(currentUrl.pathname + currentUrl.search, {
+        scroll: false,
+      });
+    }
+
+    // 2. IMPORTANT : On prévient le parent que le popup est fermé
+    if (onClose) {
+      onClose();
     }
   };
 
@@ -92,14 +104,12 @@ export default function RideSearchPopup({ initialOpen }: RideSearchPopupProps) {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-200 flex items-center justify-center bg-dark-900/60 backdrop-blur-md opacity-0 p-4"
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-dark-900/60 backdrop-blur-md opacity-0 p-4"
     >
+      {/* Overlay click to close */}
       <div className="absolute inset-0 cursor-pointer" onClick={closePopup} />
-      
-      <div
-        ref={containerRef}
-        className="relative z-10 w-full max-w-5xl"
-      >
+
+      <div ref={containerRef} className="relative z-10 w-full max-w-5xl">
         <button
           onClick={closePopup}
           className="absolute -top-12 right-0 w-11 h-11 bg-white/10 hover:bg-white/20 hover:scale-110 border border-white/20 backdrop-blur-xl text-white rounded-full flex items-center justify-center transition-all cursor-pointer shadow-lg z-50"
@@ -107,7 +117,6 @@ export default function RideSearchPopup({ initialOpen }: RideSearchPopupProps) {
           <IoCloseOutline size={26} />
         </button>
 
-        {/* The Search Widget */}
         <div className="overflow-visible relative z-20">
           <RideSearchWidget variant="horizontal" onSearchSubmit={closePopup} />
         </div>

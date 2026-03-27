@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import RideSearchWidget from "@/components/search/RideSearchWidget";
 import RideCard from "@/components/search/RideCard";
 import { IoFilterOutline, IoChevronDown, IoChevronUp } from "react-icons/io5";
@@ -14,6 +14,7 @@ type SearchPageContentProps = {
   };
 };
 
+// --- Sous-composant Contenu des Filtres ---
 function FiltersContent() {
   return (
     <div className="space-y-8">
@@ -68,12 +69,14 @@ function FiltersContent() {
   );
 }
 
+// --- Composant Dropdown (Mobile) ---
 function FiltersDropdown() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
-    function handleClick(e: MouseEvent) {
+  // Fermer si on clique en dehors
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (
         open &&
         dropdownRef.current &&
@@ -81,66 +84,49 @@ function FiltersDropdown() {
       ) {
         setOpen(false);
       }
-    }
-    if (open) {
-      document.addEventListener("mousedown", handleClick);
-    } else {
-      document.removeEventListener("mousedown", handleClick);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
     };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
-  function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.key === "Escape") setOpen(false);
-    if (e.key === " " || e.key === "Enter") setOpen((v) => !v);
-  }
+  const handleToggle = (e: React.MouseEvent) => {
+    e.stopPropagation(); // CRUCIAL : empêche le document de recevoir le clic
+    setOpen((prev) => !prev);
+  };
 
   return (
     <div className="relative mx-2 mb-4" ref={dropdownRef}>
       <button
-        className="w-full flex items-center justify-between p-5 rounded-full bg-dark-900 text-white shadow border border-neutral-800 font-bold text-base cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary transition-colors list-none select-none"
+        className="w-full flex items-center justify-between p-5 rounded-full bg-dark-900 text-white shadow border border-neutral-800 font-bold text-base cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary transition-colors select-none"
         type="button"
         aria-expanded={open}
-        aria-controls="filters-dropdown-content"
-        tabIndex={0}
-        onClick={() => setOpen((v) => !v)}
-        onKeyDown={handleKeyDown}
+        onClick={handleToggle}
       >
         <span className="flex items-center gap-2">
           <IoFilterOutline size={22} className="text-primary" />
           Filtres
         </span>
-        <span className="flex items-center ml-2">
+        <span className="flex items-center ml-2 relative w-6 h-6">
           <IoChevronDown
             size={22}
-            className={`text-white transition-transform duration-300${open ? " rotate-180 opacity-0 pointer-events-none" : ""}`}
-            aria-hidden={open}
+            className={`text-white transition-all duration-300 absolute ${open ? "rotate-180 opacity-0 invisible" : "rotate-0 opacity-100 visible"}`}
           />
           <IoChevronUp
             size={22}
-            className={`text-white transition-transform duration-300 absolute${open ? " opacity-100 static" : " opacity-0 pointer-events-none"}`}
-            style={{
-              marginLeft: open ? 0 : -22,
-              position: open ? "static" : "absolute",
-            }}
-            aria-hidden={!open}
+            className={`text-white transition-all duration-300 absolute ${open ? "rotate-0 opacity-100 visible" : "rotate-180 opacity-0 invisible"}`}
           />
         </span>
       </button>
+
       <div
-        id="filters-dropdown-content"
-        aria-hidden={!open}
-        style={{
-          pointerEvents: open ? "auto" : "none",
-          height: open ? "auto" : 0,
-        }}
         className={`overflow-hidden transition-all duration-400 ease-in-out mt-3 ${
-          open ? "opacity-100 scale-100" : "opacity-0 scale-95"
+          open
+            ? "max-h-[1000px] opacity-100 scale-100"
+            : "max-h-0 opacity-0 scale-95"
         }`}
+        style={{ pointerEvents: open ? "auto" : "none" }}
       >
-        <div className="bg-dark rounded-4xl squircle p-6 shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-neutral-800 text-white">
+        <div className="bg-dark rounded-4xl p-6 shadow-xl border border-neutral-800 text-white">
           <FiltersContent />
         </div>
       </div>
@@ -148,17 +134,17 @@ function FiltersDropdown() {
   );
 }
 
+// --- Composant Principal de la Page ---
 export default function SearchPageContent({ params }: SearchPageContentProps) {
   const depart = typeof params.depart === "string" ? params.depart : "";
   const arrivee = typeof params.arrivee === "string" ? params.arrivee : "";
   const dateStr = typeof params.date === "string" ? params.date : "";
 
-  const initialSearchOpen = params.searchOpen === "true";
+  // État local pour le popup afin d'éviter les réouvertures basées sur l'URL seule
+  const [showPopup, setShowPopup] = useState(params.searchOpen === "true");
 
-  // Filter mocked rides (naive implementation for demo)
+  // Filtrage des trajets
   let filteredRides = MOCK_RIDES;
-
-  // Actually filter the mock data if query params match some of our cities.
   if (depart) {
     filteredRides = filteredRides.filter((r) =>
       r.departure.city.toLowerCase().includes(depart.toLowerCase()),
@@ -170,12 +156,19 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
     );
   }
 
-  // If filtered is empty, we just show all of them with a message for the demo
   const hasResults = filteredRides.length > 0;
   const displayRides = hasResults ? filteredRides : MOCK_RIDES;
+
   return (
     <>
-      <RideSearchPopup initialOpen={initialSearchOpen} />
+      {/* On utilise showPopup pour contrôler le rendu */}
+      {showPopup && (
+        <RideSearchPopup
+          initialOpen={true}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
+
       <div className="w-full border-b border-neutral-100 z-40 pb-6 pt-4 px-4 lg:hidden">
         <div className="mt-4">
           <FiltersDropdown />
@@ -190,7 +183,7 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
           <div className="hidden lg:block z-40">
             <RideSearchWidget variant="vertical" />
           </div>
-          <div className="bg-dark rounded-xl squircle p-6 md:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-neutral-800 hidden lg:block text-white">
+          <div className="bg-dark rounded-xl p-6 md:p-8 shadow-xl border border-neutral-800 hidden lg:block text-white">
             <div className="flex items-center gap-3 mb-8 font-black text-white text-lg">
               <IoFilterOutline size={24} className="text-primary" />
               Trier & Filtrer
@@ -207,34 +200,29 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
                 {displayRides.length} trajets
               </span>
             </h1>
-            {depart && arrivee ? (
-              <p className="text-neutral-500 font-medium mt-2 text-lg">
-                De <span className="text-dark font-bold">{depart}</span> vers{" "}
-                <span className="text-dark font-bold">{arrivee}</span>{" "}
-                {dateStr && (
-                  <span>
-                    le <span className="text-dark font-bold">{dateStr}</span>
-                  </span>
-                )}
-              </p>
-            ) : (
-              <p className="text-neutral-500 font-medium mt-2 text-lg">
-                Découvrez tous nos trajets premium.
-              </p>
-            )}
+
+            <p className="text-neutral-500 font-medium mt-2 text-lg">
+              {depart && arrivee ? (
+                <>
+                  De <span className="text-dark font-bold">{depart}</span> vers{" "}
+                  <span className="text-dark font-bold">{arrivee}</span>{" "}
+                  {dateStr && (
+                    <span>
+                      le <span className="text-dark font-bold">{dateStr}</span>
+                    </span>
+                  )}
+                </>
+              ) : (
+                "Découvrez tous nos trajets premium."
+              )}
+            </p>
 
             {!hasResults && (
               <div className="mt-8">
                 <Alert
                   type="warning"
                   title="Aucun trajet ne correspond"
-                  description={
-                    <>
-                      Nous n&apos;avons pas trouvé de trajet exact. Voici
-                      quelques suggestions populaires que vous pourriez aimer à
-                      la place.
-                    </>
-                  }
+                  description="Nous n'avons pas trouvé de trajet exact. Voici quelques suggestions populaires."
                   className="w-full"
                 />
               </div>
@@ -248,7 +236,7 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
           </div>
 
           <div className="mt-14 text-center">
-            <button className="px-10 py-4 bg-white border-2 border-neutral-100 rounded-full shadow-sm text-sm font-bold text-dark hover:border-primary hover:text-primary transition-colors hover:shadow-md">
+            <button className="px-10 py-4 bg-white border-2 border-neutral-100 rounded-full shadow-sm text-sm font-bold text-dark hover:border-primary hover:text-primary transition-colors">
               Charger plus de trajets
             </button>
           </div>
