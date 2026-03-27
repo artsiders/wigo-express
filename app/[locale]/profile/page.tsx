@@ -29,7 +29,7 @@ export default function ProfilePage() {
     return (
       <div className="min-h-screen bg-light-300 text-dark flex flex-col">
         <Navbar />
-        <div className="pt-24 container mx-auto px-6 w-full flex-1 animate-pulse">
+        <div className="pt-38 container mx-auto px-6 w-full flex-1 animate-pulse">
           <div className="h-8 w-64 bg-zinc-200 rounded mb-8"></div>
           <div className="grid lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1 bg-white h-64 border border-zinc-200 rounded-xl"></div>
