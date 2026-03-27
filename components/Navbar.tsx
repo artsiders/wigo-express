@@ -172,8 +172,10 @@ export default function Navbar() {
                 onClick={() => setHowItWorksOpen(!howItWorksOpen)}
                 className="flex items-center gap-1.5 hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50"
               >
-                <IoSunnyOutline size={18} />
                 <span>{t("howItWorks")}</span>
+                <IoChevronDownOutline
+                  className={`transition-transform text-neutral-600 ${howItWorksOpen ? "rotate-180" : ""}`}
+                />
               </button>
               
               {howItWorksOpen && (
@@ -195,15 +197,7 @@ export default function Navbar() {
                     {t("howItWorksPassengers")}
                   </Link>
                   <Link
-                    href="#"
-                    onClick={() => setHowItWorksOpen(false)}
-                    className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-dark hover:bg-blue-50 hover:text-primary rounded-lg transition-colors"
-                  >
-                    <IoSchoolOutline size={20} className="text-gray-500" />
-                    {t("howItWorksStudents")}
-                  </Link>
-                  <Link
-                    href="#"
+                    href="/securite"
                     onClick={() => setHowItWorksOpen(false)}
                     className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-dark bg-blue-50/50 hover:bg-blue-100 hover:text-primary rounded-lg transition-colors"
                   >
@@ -211,7 +205,7 @@ export default function Navbar() {
                     {t("howItWorksSafety")}
                   </Link>
                   <Link
-                    href="#"
+                    href="/durable"
                     onClick={() => setHowItWorksOpen(false)}
                     className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-dark hover:bg-blue-50 hover:text-primary rounded-lg transition-colors"
                   >
@@ -405,14 +399,21 @@ export default function Navbar() {
           {/* Liens Mobile - Largeur égale (w-full) et alignés à droite */}
           <div className="w-full space-y-2">
             <div className="animate-item w-full flex flex-col p-2 rounded-xl border border-gray-300 bg-white shadow-sm">
-               <span className="p-2 w-full text-sm text-gray-500 uppercase font-bold tracking-widest flex items-center gap-2">
-                 <IoSunnyOutline /> {t("howItWorks")}
+               <span className="p-2 w-full text-sm text-gray-500 uppercase font-bold tracking-widest flex items-center justify-between">
+                 {t("howItWorks")}
+                 <IoChevronDownOutline className="opacity-50" />
                </span>
                <Link href="/conducteurs" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 p-3 hover:text-primary text-lg font-semibold text-gray-900 border-b border-gray-100">
                  <IoCarOutline size={22} className="text-gray-500" /> {t("howItWorksDrivers")}
                </Link>
-               <Link href="/passagers" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 p-3 hover:text-primary text-lg font-semibold text-gray-900">
+               <Link href="/passagers" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 p-3 hover:text-primary text-lg font-semibold text-gray-900 border-b border-gray-100">
                  <IoPersonOutline size={22} className="text-gray-500" /> {t("howItWorksPassengers")}
+               </Link>
+               <Link href="/securite" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 p-3 hover:text-primary text-lg font-semibold text-gray-900 border-b border-gray-100">
+                 <IoShieldCheckmarkOutline size={22} className="text-blue-500" /> {t("howItWorksSafety")}
+               </Link>
+               <Link href="/durable" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 p-3 hover:text-primary text-lg font-semibold text-gray-900">
+                 <IoEarthOutline size={22} className="text-gray-500" /> {t("howItWorksEco")}
                </Link>
             </div>
             <Link
