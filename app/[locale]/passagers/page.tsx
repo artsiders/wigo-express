@@ -14,6 +14,7 @@ import {
   IoSearchOutline,
   IoShieldCheckmarkOutline,
   IoWalletOutline,
+  IoCheckmarkCircle,
   IoChevronForward,
   IoStar,
 } from "react-icons/io5";
@@ -108,69 +109,50 @@ export default function PassagersPage() {
       </section>
 
       {/* NARRATIVE STEPS */}
-      <section className="relative w-full bg-light z-20 pb-32 px-6">
-        <div className="container mx-auto max-w-6xl">
-          {/* STEP 1 */}
-          <div className="stack-card sticky top-28 z-10 w-full bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-neutral-100 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12 mb-[10vh] overflow-hidden">
-            <div className="flex-1">
-              <div className="w-16 h-16 bg-blue-50 text-primary flex items-center justify-center rounded-2xl mb-8 border border-blue-100 shadow-inner">
-                <IoSearchOutline size={32} />
+      <section className="relative w-full bg-light z-20 pb-32 px-4 lg:px-6">
+        <div className="container mx-auto max-w-6xl space-y-12">
+          {/* STEP 1: Des trajets taillés */}
+          <div className="w-full bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-neutral-100 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden transition-transform duration-500 hover:shadow-[0_25px_60px_rgba(0,0,0,0.06)]">
+            <div className="flex-1 w-full text-left order-2 lg:order-1 pt-6 lg:pt-0">
+              <div className="w-14 h-14 bg-blue-50 text-blue-600 flex items-center justify-center rounded-2xl mb-8 border border-blue-100">
+                <IoSearchOutline size={28} />
               </div>
               <h2 className="text-3xl lg:text-5xl font-black tracking-tight mb-6">
                 Des trajets taillés <br />
-                <span className="text-primary">pour vous.</span>
+                <span className="text-blue-600">pour vous.</span>
               </h2>
-              <p className="text-lg text-neutral-600 leading-relaxed mb-8">
+              <p className="text-lg text-neutral-500 leading-relaxed mb-6 max-w-md">
                 Indiquez simplement d'où vous partez et où vous allez. Notre
                 algorithme vous propose instantanément les meilleures
                 correspondances, au meilleur prix. Fini les longs trajets en
                 solitaire.
               </p>
             </div>
-            <div className="flex-1 w-full bg-light rounded-2xl p-6 relative border border-black/5 shadow-inner">
-              <div className="space-y-4">
-                <div className="bg-white p-4 rounded-xl shadow-sm border border-neutral-100 flex items-center gap-4">
-                  <div className="w-3 h-3 bg-primary rounded-full shadow-[0_0_10px_rgba(37,99,235,0.5)]"></div>
-                  <div className="flex-1 h-3 bg-neutral-100 rounded-full"></div>
-                  <div className="w-16 h-4 bg-neutral-200 rounded-md"></div>
+            <div className="flex-1 w-full order-1 lg:order-2 flex justify-center lg:justify-end">
+              <div className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-neutral-100/50 w-full max-w-md relative">
+                <div className="absolute top-1/2 left-10 -translate-y-1/2 w-0.5 h-16 bg-neutral-200"></div>
+                <div className="mb-8 relative pl-12">
+                  <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-blue-600 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.4)] z-10"></div>
+                  <div className="h-4 bg-neutral-100 rounded-full w-4/5 mb-2"></div>
+                  <div className="h-4 bg-neutral-100 rounded-full w-12 absolute right-0 top-0"></div>
                 </div>
-                <div className="w-0.5 h-6 bg-neutral-200 ml-5"></div>
-                <div className="bg-white p-4 rounded-xl shadow-sm border border-neutral-100 flex items-center gap-4">
-                  <div className="w-3 h-3 bg-dark rounded-full"></div>
-                  <div className="flex-1 h-3 bg-neutral-100 rounded-full"></div>
-                  <div className="w-16 h-4 bg-neutral-200 rounded-md"></div>
+                <div className="mb-6 relative pl-12">
+                  <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-dark rounded-full z-10"></div>
+                  <div className="h-4 bg-neutral-100 rounded-full w-3/5 mb-2"></div>
+                  <div className="h-4 bg-neutral-100 rounded-full w-12 absolute right-0 top-0"></div>
                 </div>
               </div>
-              <div className="absolute top-1/2 right-[-20px] transform -translate-y-1/2 w-48 h-48 bg-primary/10 rounded-full blur-[50px] pointer-events-none"></div>
             </div>
           </div>
 
-          {/* STEP 2 */}
-          <div className="stack-card sticky top-36 z-20 w-full bg-dark-900 text-white rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.4)] border border-neutral-800 p-8 lg:p-16 flex flex-col lg:flex-row-reverse items-center gap-12 mb-[10vh] overflow-hidden">
-            <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[80%] bg-green-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+          {/* STEP 2: Roulez l'esprit tranquille */}
+          <div className="w-full bg-[#111811] text-white rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.4)] border border-green-900/30 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden transition-transform duration-500 hover:shadow-[0_35px_70px_rgba(0,0,0,0.5)] relative">
+            <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[80%] bg-green-500/10 rounded-full blur-[100px] pointer-events-none"></div>
 
-            <div className="flex-1 relative z-10 lg:pl-10">
-              <div className="w-16 h-16 bg-white/10 text-white flex items-center justify-center rounded-2xl mb-8 backdrop-blur-md border border-white/20">
-                <IoShieldCheckmarkOutline size={32} />
-              </div>
-              <h2 className="text-3xl lg:text-5xl font-black tracking-tight mb-6">
-                Roulez l'esprit <br />
-                <span className="text-green-400 drop-shadow-[0_0_15px_rgba(74,222,128,0.3)]">
-                  tranquille.
-                </span>
-              </h2>
-              <p className="text-lg text-neutral-300 leading-relaxed mb-8">
-                Oubliez les mauvaises surprises. L'identité de chaque conducteur
-                est vérifiée (pièce d'identité, permis). Vous savez exactement
-                avec qui vous montez grâce aux avis certifiés laissés par notre
-                communauté.
-              </p>
-            </div>
-
-            <div className="flex-1 w-full relative z-10">
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 sm:p-8 transform -rotate-2 hover:rotate-0 transition-all duration-500 shadow-2xl">
-                <div className="flex items-center gap-6">
-                  <div className="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-white/30 shrink-0 shadow-lg">
+            <div className="flex-1 w-full flex justify-center lg:justify-start relative z-10">
+              <div className="bg-[#1c241c] border border-green-900/50 rounded-2xl p-6 sm:p-8 transform -rotate-1 hover:rotate-0 transition-all duration-500 shadow-2xl w-full max-w-sm">
+                <div className="flex items-center gap-5">
+                  <div className="w-20 h-20 rounded-xl overflow-hidden relative shadow-lg">
                     <Image
                       src="/images/profile.jpg"
                       alt="Profile"
@@ -179,17 +161,17 @@ export default function PassagersPage() {
                     />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold mb-2">Marc-Antoine</h3>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="bg-green-500/20 text-green-300 border border-green-500/30 text-xs px-2 py-1 rounded-md font-bold uppercase flex items-center gap-1">
-                        <IoShieldCheckmarkOutline /> Identité Vérifiée
-                      </span>
+                    <h3 className="text-2xl font-bold mb-1 text-white">
+                      Marc-Antoine
+                    </h3>
+                    <div className="flex items-center gap-1 mt-1 mb-2 text-[#4ade80] font-bold text-[10px] uppercase bg-green-500/10 px-2 py-1 rounded w-max border border-green-500/20">
+                      <IoShieldCheckmarkOutline size={12} /> Identité vérifiée
                     </div>
-                    <div className="flex items-center gap-1 text-yellow-400">
+                    <div className="flex items-center gap-1 text-yellow-500">
                       {[...Array(5)].map((_, i) => (
-                        <IoStar key={i} size={16} />
+                        <IoStar key={i} size={14} />
                       ))}
-                      <span className="ml-1 text-sm font-bold text-white">
+                      <span className="ml-1 text-xs font-bold text-white">
                         4.9/5
                       </span>
                     </div>
@@ -197,19 +179,35 @@ export default function PassagersPage() {
                 </div>
               </div>
             </div>
+
+            <div className="flex-1 w-full lg:pl-10 relative z-10 pt-6 lg:pt-0">
+              <div className="w-14 h-14 bg-[#1c241c] text-white flex items-center justify-center rounded-2xl mb-8 border border-green-900/50">
+                <IoShieldCheckmarkOutline size={28} />
+              </div>
+              <h2 className="text-3xl lg:text-5xl font-black tracking-tight mb-6">
+                Roulez l'esprit <br />
+                <span className="text-[#4ade80]">tranquille.</span>
+              </h2>
+              <p className="text-lg text-neutral-400 leading-relaxed mb-8 max-w-md">
+                Oubliez les mauvaises surprises. L'identité de chaque conducteur
+                est vérifiée (pièce d'identité, permis). Vous savez exactement
+                avec qui vous montez grâce aux avis certifiés laissés par notre
+                communauté.
+              </p>
+            </div>
           </div>
 
-          {/* STEP 3 */}
-          <div className="stack-card sticky top-44 z-30 w-full bg-linear-to-br from-primary-800 to-primary-600 text-white rounded-3xl shadow-[0_30px_80px_rgba(37,99,235,0.4)] border border-blue-400/30 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden">
-            <div className="flex-1 relative z-10">
-              <div className="w-16 h-16 bg-white/10 text-white flex items-center justify-center rounded-2xl mb-8 backdrop-blur-md border border-white/20">
-                <IoWalletOutline size={32} />
+          {/* STEP 3: Paiement en ligne */}
+          <div className="w-full bg-linear-to-br from-blue-50 to-white rounded-2xl shadow-[0_20px_50px_rgba(37,99,235,0.05)] border border-blue-100 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden transition-transform duration-500 hover:shadow-[0_25px_60px_rgba(37,99,235,0.1)]">
+            <div className="flex-1 w-full text-left order-2 lg:order-1 pt-6 lg:pt-0">
+              <div className="w-14 h-14 bg-blue-100 text-blue-600 flex items-center justify-center rounded-2xl mb-8 border border-blue-200">
+                <IoWalletOutline size={28} />
               </div>
-              <h2 className="text-3xl lg:text-5xl font-black tracking-tight mb-6 text-white">
-                Fini les <br />
-                paiements en <span className="text-blue-200">liquide.</span>
+              <h2 className="text-3xl lg:text-5xl font-black tracking-tight mb-6 text-dark">
+                Fini les paiements <br />
+                <span className="text-blue-600">en liquide.</span>
               </h2>
-              <p className="text-lg text-white/90 leading-relaxed mb-8">
+              <p className="text-lg text-neutral-500 leading-relaxed mb-8 max-w-md">
                 Réservez et payez en ligne en un seul clic. Le paiement est
                 sécurisé et transféré automatiquement au conducteur une fois le
                 trajet accompli. Gagnez du temps et évitez les tracas à
@@ -217,29 +215,29 @@ export default function PassagersPage() {
               </p>
               <Link
                 href="/register"
-                className="btn-secondary w-max bg-white text-primary border-none hover:bg-neutral-100"
+                className="btn-secondary w-max bg-white text-dark border-neutral-200 shadow-sm hover:border-neutral-300"
               >
                 Rejoindre Wigo Express
               </Link>
             </div>
-
-            <div className="flex-1 w-full flex justify-center relative z-10">
-              <div className="bg-white text-dark rounded-2xl p-8 shadow-2xl w-full max-w-sm transform rotate-2 hover:rotate-0 transition-all duration-500 relative">
-                <div className="absolute -top-4 -right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg border border-white">
-                  Sécurisé
+            <div className="flex-1 w-full flex justify-center lg:justify-end order-1 lg:order-2 relative z-10">
+              <div className="bg-dark text-white rounded-2xl p-10 shadow-2xl w-full max-w-md transform rotate-1 hover:rotate-0 transition-transform duration-500 relative overflow-hidden">
+                <div className="absolute -top-4 -right-4 bg-green-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-dark z-20">
+                  <IoCheckmarkCircle className="inline mr-1" size={14} />{" "}
+                  PAIEMENT GARANTI
                 </div>
-                <div className="text-center mb-6">
-                  <p className="text-neutral-500 text-sm font-bold uppercase tracking-widest mb-1">
+                <div className="text-left mb-8 relative z-10">
+                  <p className="text-neutral-500 text-xs font-bold uppercase tracking-widest mb-3">
                     Montant du trajet
                   </p>
-                  <h3 className="text-5xl font-black text-dark tracking-tighter">
+                  <h3 className="text-5xl font-black tracking-tighter text-white">
                     15.00{" "}
                     <span className="text-2xl text-neutral-400 inline-block -translate-y-2">
                       $
                     </span>
                   </h3>
                 </div>
-                <button className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg shadow-[0_10px_20px_rgba(37,99,235,0.3)] flex justify-center items-center gap-2 transition-transform hover:scale-[1.02]">
+                <button className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-sm shadow-[0_10px_20px_rgba(37,99,235,0.2)] flex justify-center items-center gap-2 transition-transform hover:scale-[1.02] relative z-10 border border-blue-500">
                   Confirmer et Payer <IoChevronForward />
                 </button>
               </div>
