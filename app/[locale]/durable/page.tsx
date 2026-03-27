@@ -112,7 +112,7 @@ export default function EcoPage() {
             </div>
 
             {/* Card 2 */}
-            <div className="eco-card bg-secondary-800 text-white p-10 rounded-3xl shadow-[0_20px_50px_rgba(16,185,129,0.3)] border border-green-500/50 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden">
+            <div className="eco-card bg-secondary-800 text-white p-10 rounded-3xl border border-green-500/50 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden">
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-[20px]"></div>
               <div className="w-16 h-16 bg-white/10 text-white rounded-2xl flex items-center justify-center mb-6 backdrop-blur-md">
                 <IoEarthOutline size={32} />

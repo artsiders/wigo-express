@@ -107,7 +107,7 @@ export default function ConducteursPage() {
 
             <div className="relative hero-elem lg:h-full min-h-[400px]">
               <div className="absolute inset-0 bg-primary/5 rounded-3xl transform rotate-3 scale-105" />
-              <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+              <div className="relative w-full h-full min-h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
                 <Image
                   src="/images/close-up-group-friends-traveling-car-concept-speed.webp"
                   alt="Conducteur au volant"
