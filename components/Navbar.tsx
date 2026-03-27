@@ -18,6 +18,11 @@ import {
   IoListOutline,
   IoSearchOutline,
   IoAddOutline,
+  IoCarOutline,
+  IoSchoolOutline,
+  IoShieldCheckmarkOutline,
+  IoEarthOutline,
+  IoSunnyOutline
 } from "react-icons/io5";
 import gsap from "gsap";
 import { useSession, signOut } from "next-auth/react";
@@ -33,10 +38,12 @@ export default function Navbar() {
 
   const [langOpen, setLangOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [howItWorksOpen, setHowItWorksOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const userMenuRef = useRef<HTMLDivElement | null>(null);
+  const howItWorksRef = useRef<HTMLDivElement | null>(null);
   const overlayRef = useRef(null);
 
   // --- ANIMATION GSAP ---
@@ -93,11 +100,17 @@ export default function Navbar() {
       ) {
         setUserMenuOpen(false);
       }
+      if (
+        howItWorksRef.current &&
+        !howItWorksRef.current.contains(e.target as Node)
+      ) {
+        setHowItWorksOpen(false);
+      }
     };
-    if (langOpen || userMenuOpen)
+    if (langOpen || userMenuOpen || howItWorksOpen)
       window.addEventListener("mousedown", handleClickOutside);
     return () => window.removeEventListener("mousedown", handleClickOutside);
-  }, [langOpen, userMenuOpen]);
+  }, [langOpen, userMenuOpen, howItWorksOpen]);
 
   const changeLanguage = (l: string) => {
     startTransition(() => {
@@ -154,13 +167,59 @@ export default function Navbar() {
           {/* RIGHT SECTION (Auth/Profile + Lang + Burger + Mobile Icons) */}
           <div className="flex items-center h-full gap-2 md:gap-3">
             {/* DESKTOP NAV - PARTIE DROITE (Comment ça marche) */}
-            <div className="hidden lg:block text-sm font-bold text-dark-800">
-              <Link
-                href="/#comment-ca-marche"
-                className="hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50"
+            <div className="hidden lg:block text-sm font-bold text-dark-800 relative" ref={howItWorksRef}>
+              <button
+                onClick={() => setHowItWorksOpen(!howItWorksOpen)}
+                className="flex items-center gap-1.5 hover:text-primary text-dark font-bold transition-all px-4 py-2 rounded-md border border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50"
               >
-                {t("howItWorks")}
-              </Link>
+                <IoSunnyOutline size={18} />
+                <span>{t("howItWorks")}</span>
+              </button>
+              
+              {howItWorksOpen && (
+                <div className="absolute left-0 mt-3 min-w-[240px] bg-white border border-neutral-200 rounded-xl shadow-xl p-2 z-50 flex flex-col gap-1">
+                  <Link
+                    href="/conducteurs"
+                    onClick={() => setHowItWorksOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-dark hover:bg-blue-50 hover:text-primary rounded-lg transition-colors"
+                  >
+                    <IoCarOutline size={20} className="text-gray-500" />
+                    {t("howItWorksDrivers")}
+                  </Link>
+                  <Link
+                    href="/passagers"
+                    onClick={() => setHowItWorksOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-dark hover:bg-blue-50 hover:text-primary rounded-lg transition-colors"
+                  >
+                    <IoPersonOutline size={20} className="text-gray-500" />
+                    {t("howItWorksPassengers")}
+                  </Link>
+                  <Link
+                    href="#"
+                    onClick={() => setHowItWorksOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-dark hover:bg-blue-50 hover:text-primary rounded-lg transition-colors"
+                  >
+                    <IoSchoolOutline size={20} className="text-gray-500" />
+                    {t("howItWorksStudents")}
+                  </Link>
+                  <Link
+                    href="#"
+                    onClick={() => setHowItWorksOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-dark bg-blue-50/50 hover:bg-blue-100 hover:text-primary rounded-lg transition-colors"
+                  >
+                    <IoShieldCheckmarkOutline size={20} className="text-blue-600" />
+                    {t("howItWorksSafety")}
+                  </Link>
+                  <Link
+                    href="#"
+                    onClick={() => setHowItWorksOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-dark hover:bg-blue-50 hover:text-primary rounded-lg transition-colors"
+                  >
+                    <IoEarthOutline size={20} className="text-gray-500" />
+                    {t("howItWorksEco")}
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* MOBILE PERSISTENT ICONS (Rechercher, Publier) - Visible UNIQUEMENT < lg */}
@@ -344,14 +403,18 @@ export default function Navbar() {
           </div>
 
           {/* Liens Mobile - Largeur égale (w-full) et alignés à droite */}
-          <div className="w-full">
-            <Link
-              href="/#comment-ca-marche"
-              onClick={() => setMenuOpen(false)}
-              className="animate-item w-full text-xl font-semibold text-gray-900 hover:text-primary transition-colors flex items-center justify-start gap-2 p-4 rounded-t-xl border border-gray-300 bg-white hover:shadow-md"
-            >
-              {t("howItWorks")}
-            </Link>
+          <div className="w-full space-y-2">
+            <div className="animate-item w-full flex flex-col p-2 rounded-xl border border-gray-300 bg-white shadow-sm">
+               <span className="p-2 w-full text-sm text-gray-500 uppercase font-bold tracking-widest flex items-center gap-2">
+                 <IoSunnyOutline /> {t("howItWorks")}
+               </span>
+               <Link href="/conducteurs" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 p-3 hover:text-primary text-lg font-semibold text-gray-900 border-b border-gray-100">
+                 <IoCarOutline size={22} className="text-gray-500" /> {t("howItWorksDrivers")}
+               </Link>
+               <Link href="/passagers" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 p-3 hover:text-primary text-lg font-semibold text-gray-900">
+                 <IoPersonOutline size={22} className="text-gray-500" /> {t("howItWorksPassengers")}
+               </Link>
+            </div>
             <Link
               href="/search?searchOpen=true"
               onClick={() => setMenuOpen(false)}

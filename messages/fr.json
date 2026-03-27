@@ -10,6 +10,11 @@
     "howItWorks": "Comment ça marche",
     "passenger": "Voyageur",
     "driver": "Conducteur",
+    "howItWorksPassengers": "Passagers",
+    "howItWorksDrivers": "Conducteurs",
+    "howItWorksStudents": "Pour étudiants",
+    "howItWorksSafety": "Sécurité & Confiance",
+    "howItWorksEco": "Développement durable",
     "chooseLanguage": "Choisir la langue"
   },
   "HomePage": {
