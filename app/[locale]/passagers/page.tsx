@@ -129,17 +129,23 @@ export default function PassagersPage() {
               </p>
             </div>
             <div className="flex-1 w-full order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-neutral-100/50 w-full max-w-md relative">
-                <div className="absolute top-1/2 left-10 -translate-y-1/2 w-0.5 h-16 bg-neutral-200"></div>
-                <div className="mb-8 relative pl-12">
-                  <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-primary rounded-full shadow-[0_0_8px_rgba(37,99,235,0.4)] z-10"></div>
-                  <div className="h-4 bg-neutral-100 rounded-full w-4/5 mb-2"></div>
-                  <div className="h-4 bg-neutral-100 rounded-full w-12 absolute right-0 top-0"></div>
+              <div className="bg-white p-8 lg:p-12 rounded-xl shadow-[0_15px_60px_rgba(0,0,0,0.06)] border border-neutral-100/60 w-full max-w-md flex items-stretch">
+                {/* Vertical connection line & dots */}
+                <div className="relative flex flex-col items-center justify-between py-1 mr-6 lg:mr-8 shrink-0">
+                  <div className="absolute top-2 bottom-2 w-[2px] bg-neutral-100"></div>
+                  <div className="w-3.5 h-3.5 bg-primary rounded-full shadow-[0_0_10px_rgba(37,99,235,0.5)] z-10"></div>
+                  <div className="w-3.5 h-3.5 bg-dark rounded-full z-10"></div>
                 </div>
-                <div className="mb-6 relative pl-12">
-                  <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-dark rounded-full z-10"></div>
-                  <div className="h-4 bg-neutral-100 rounded-full w-3/5 mb-2"></div>
-                  <div className="h-4 bg-neutral-100 rounded-full w-12 absolute right-0 top-0"></div>
+                {/* Horizontal bars */}
+                <div className="flex-1 flex flex-col justify-between py-1 gap-12 lg:gap-14">
+                  <div className="flex items-center justify-between w-full h-4">
+                    <div className="h-full bg-neutral-100/80 rounded-full w-[65%]"></div>
+                    <div className="h-full bg-neutral-100/80 rounded-full w-[15%]"></div>
+                  </div>
+                  <div className="flex items-center justify-between w-full h-4">
+                    <div className="h-full bg-neutral-100/80 rounded-full w-[50%]"></div>
+                    <div className="h-full bg-neutral-100/80 rounded-full w-[15%]"></div>
+                  </div>
                 </div>
               </div>
             </div>

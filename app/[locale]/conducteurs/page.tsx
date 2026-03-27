@@ -158,28 +158,36 @@ export default function ConducteursPage() {
               </p>
             </div>
             <div className="flex-1 w-full order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-neutral-100/50 w-full max-w-md relative">
-                <div className="absolute top-1/2 left-10 -translate-y-1/2 w-0.5 h-16 bg-neutral-200"></div>
-                <div className="mb-8 relative pl-12 focus-within:outline-none">
-                  <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-primary rounded-full shadow-[0_0_8px_rgba(37,99,235,0.4)] z-10"></div>
-                  <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1.5 ml-1">
-                    Départ
+              <div className="bg-white p-6 lg:p-8 rounded-xl shadow-[0_15px_60px_rgba(0,0,0,0.06)] border border-neutral-100/60 w-full max-w-md flex flex-col">
+                <div className="flex items-stretch mb-8 lg:mb-10 pt-2 lg:pt-4 px-2 lg:px-4">
+                  <div className="relative flex flex-col items-center mr-6 lg:mr-8 shrink-0">
+                    <div className="absolute top-3.5 bottom-3.5 w-[2px] bg-neutral-100"></div>
+                    <div className="w-3.5 h-3.5 bg-primary rounded-full shadow-[0_0_10px_rgba(37,99,235,0.4)] z-10 mb-10 lg:mb-12 mt-1.5"></div>
+                    <div className="w-3.5 h-3.5 bg-dark rounded-full z-10 mt-auto mb-1.5"></div>
                   </div>
-                  <div className="text-xl font-bold text-dark ml-1">
-                    Montréal, QC
+
+                  <div className="flex-1 flex flex-col justify-between gap-8 lg:gap-10">
+                    <div>
+                      <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1.5">
+                        Départ
+                      </div>
+                      <div className="text-xl font-bold text-dark">
+                        Montréal, QC
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1.5">
+                        Arrivée
+                      </div>
+                      <div className="text-xl font-bold text-dark">
+                        Québec, QC
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="mb-10 relative pl-12">
-                  <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-dark rounded-full z-10"></div>
-                  <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1.5 ml-1">
-                    Arrivée
-                  </div>
-                  <div className="text-xl font-bold text-dark ml-1">
-                    Québec, QC
-                  </div>
-                </div>
-                <div className="flex justify-between items-center bg-light p-4 rounded-xl border border-neutral-100">
-                  <span className="font-bold text-neutral-600 text-sm">
+
+                <div className="flex justify-between items-center bg-[#f8f9fa] p-5 rounded-2xl border border-neutral-100/50 mt-auto">
+                  <span className="font-bold text-neutral-500 text-sm">
                     Prix par place
                   </span>
                   <span className="font-black text-xl text-primary">
