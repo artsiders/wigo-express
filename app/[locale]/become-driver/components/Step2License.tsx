@@ -41,8 +41,8 @@ export function Step2License() {
   useEffect(() => {
     if (typeof currentVal === "string" && currentVal.startsWith("http")) {
       setPreview(currentVal);
-    } else if (currentVal instanceof File) {
-      const url = URL.createObjectURL(currentVal);
+    } else if ((currentVal as any) instanceof File) {
+      const url = URL.createObjectURL(currentVal as any);
       setPreview(url);
       return () => URL.revokeObjectURL(url);
     }
@@ -100,7 +100,7 @@ export function Step2License() {
                 className={`input pl-12 ${errors.licenseNumber ? "input-error" : ""}`}
               />
             </div>
-            <FieldError message={errors.licenseNumber?.message} />
+            <FieldError message={errors.licenseNumber?.message as string} />
           </div>
 
           {/* Expiry + Country */}
@@ -121,7 +121,7 @@ export function Step2License() {
                   className={`input pl-12 ${errors.licenseExpiry ? "input-error" : ""}`}
                 />
               </div>
-              <FieldError message={errors.licenseExpiry?.message} />
+              <FieldError message={errors.licenseExpiry?.message as string} />
             </div>
 
             <div className="space-y-2">
@@ -148,7 +148,7 @@ export function Step2License() {
                   <LuChevronDown size={14} />
                 </div>
               </div>
-              <FieldError message={errors.licenseCountry?.message} />
+              <FieldError message={errors.licenseCountry?.message as string} />
             </div>
           </div>
 
@@ -236,7 +236,7 @@ export function Step2License() {
             </div>
           )}
 
-          <FieldError message={errors.licenseDocumentUrl?.message} />
+          <FieldError message={errors.licenseDocumentUrl?.message as string} />
         </div>
       </div>
     </div>

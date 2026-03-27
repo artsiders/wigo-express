@@ -16,6 +16,16 @@ export default function CameraCapture({ onCapture, onClose }: CameraCaptureProps
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const streamRef = useRef<MediaStream | null>(null);
+
+  const stopCamera = useCallback(() => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+      setStream(null);
+    }
+  }, []);
+
   const startCamera = useCallback(async () => {
     setIsLoading(true);
     setError(null);
@@ -27,6 +37,7 @@ export default function CameraCapture({ onCapture, onClose }: CameraCaptureProps
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;
       }
+      streamRef.current = mediaStream;
       setStream(mediaStream);
     } catch (err) {
       console.error("Error accessing camera:", err);
@@ -36,17 +47,14 @@ export default function CameraCapture({ onCapture, onClose }: CameraCaptureProps
     }
   }, []);
 
-  const stopCamera = useCallback(() => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-      setStream(null);
-    }
-  }, [stream]);
-
   useEffect(() => {
     startCamera();
-    return () => stopCamera();
-  }, [startCamera, stopCamera]);
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [startCamera]);
 
   const capturePhoto = () => {
     if (videoRef.current && canvasRef.current) {

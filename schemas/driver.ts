@@ -25,9 +25,11 @@ export const Step2Schema = z.object({
     }, "Le permis est expiré ou la date est invalide"),
   licenseCountry: z.string().min(1, "Le pays est requis"),
   licenseDocumentUrl: z
-    .string()
-    .min(1, "Veuillez uploader une photo de votre permis")
-    .url("URL du document invalide"),
+    .any()
+    .refine(
+      (val) => val && (typeof val === "string" || val instanceof File),
+      "Veuillez uploader une photo de votre permis",
+    ),
 });
 
 // Step 3 - Vehicle

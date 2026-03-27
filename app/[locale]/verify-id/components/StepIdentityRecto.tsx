@@ -30,8 +30,8 @@ export function StepIdentityRecto() {
   useEffect(() => {
     if (typeof currentVal === "string" && currentVal.startsWith("http")) {
       setPreview(currentVal);
-    } else if (currentVal instanceof File) {
-      const url = URL.createObjectURL(currentVal);
+    } else if ((currentVal as any) instanceof File) {
+      const url = URL.createObjectURL(currentVal as any);
       setPreview(url);
       return () => URL.revokeObjectURL(url);
     }

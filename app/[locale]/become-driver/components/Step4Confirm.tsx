@@ -121,7 +121,7 @@ export function Step4Confirm() {
             <div
               className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
                 data.acceptTerms
-                  ? "bg-primary border-primary rotate-[360deg] scale-110 shadow-lg shadow-primary/30"
+                  ? "bg-primary border-primary rotate-360 scale-110 shadow-lg shadow-primary/30"
                   : "border-neutral-200 bg-white"
               }`}
             >

@@ -134,9 +134,9 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
       let finalLicenseUrl = data.licenseDocumentUrl;
 
       // Delayed Upload for License
-      if (data.licenseDocumentUrl instanceof File) {
+      if ((data.licenseDocumentUrl as any) instanceof File) {
         setUploadProgress(50);
-        const result = await uploadMutation.mutateAsync(data.licenseDocumentUrl);
+        const result = await uploadMutation.mutateAsync(data.licenseDocumentUrl as any);
         finalLicenseUrl = result.url;
         setUploadProgress(100);
       }
@@ -228,7 +228,7 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
   if (isSuccess) {
     return (
       <div className="w-full bg-white rounded-xl p-16 shadow-[0_40px_100px_rgba(0,0,0,0.08)] border border-neutral-100 flex flex-col items-center justify-center text-center gap-8 min-h-[500px] animate-in zoom-in-95 duration-700">
-        <div className="w-28 h-28 rounded-full bg-primary/10 text-primary flex items-center justify-center animate-bounce duration-[2000ms]">
+        <div className="w-28 h-28 rounded-full bg-primary/10 text-primary flex items-center justify-center animate-bounce duration-2000">
           <LuPartyPopper size={64} />
         </div>
         <div className="space-y-4">
