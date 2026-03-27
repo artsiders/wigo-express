@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
+import { Link } from "@/i18n/routing";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -119,13 +120,16 @@ export default function PremiumShowcaseSection() {
               </div>
             </div>
 
-            <button className="bg-white text-black font-bold py-4 px-8 w-full rounded-xl shadow-lg hover:bg-neutral-200 transition-colors uppercase text-xs tracking-widest">
+            <Link
+              href="/search?searchOpen=true"
+              className="bg-white text-black font-bold py-4 px-8 w-full rounded-xl shadow-lg hover:bg-neutral-200 transition-colors uppercase text-xs tracking-widest"
+            >
               Réserver 1 Siège
-            </button>
+            </Link>
           </div>
 
           {/* IMAGE PLACEHOLDER: Premium Car Profile aligned with Web content */}
-          <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-full min-h-[520px] overflow-hidden group">
+          <div className="w-full lg:w-1/2 relative h-[30vh] lg:h-full min-h-[400px] overflow-hidden group">
             <div className="absolute inset-0 bg-linear-to-b lg:bg-linear-to-r from-dark/95 via-dark/20 to-transparent z-10 pointer-events-none"></div>
             <Image
               src="/images/wigo-express-red-card.jpg"

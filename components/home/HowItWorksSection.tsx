@@ -13,6 +13,7 @@ import {
   IoIdCardOutline,
   IoWalletOutline,
 } from "react-icons/io5";
+import { Link } from "@/i18n/routing";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -77,7 +78,12 @@ export default function HowItWorksSection() {
             <p className="text-lg text-neutral-600 font-medium max-w-lg mb-8 leading-relaxed">
               {t("step1Desc")}
             </p>
-            <button className="btn-secondary">{t("step1Btn")}</button>
+            <Link
+              href="/search?searchOpen=true"
+              className="btn-secondary w-fit"
+            >
+              {t("step1Btn")}
+            </Link>
           </div>
 
           <div className="flex-1 w-full relative z-10 flex flex-col justify-center">

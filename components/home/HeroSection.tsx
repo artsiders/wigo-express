@@ -101,7 +101,7 @@ export default function HeroSection() {
             {/* Floating Cards */}
             <div className="flex flex-col gap-4 flex-1 items-stretch lg:ml-auto">
               {/* Floating UI Card 1: Verified Profile */}
-              <div className="floating-card bg-white/95 backdrop-blur-xl p-4 md:p-5 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.15)] border border-white/60 w-full max-w-xs text-left hidden xl:flex flex-col mx-auto lg:mx-0">
+              <div className="floating-card bg-white/95 backdrop-blur-xl p-4 md:p-5 rounded-lg shadow-[0_30px_60px_rgba(0,0,0,0.15)] w-full max-w-xs text-left hidden xl:flex flex-col mx-auto lg:mx-0">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="relative w-10 h-10 md:w-11 md:h-11 rounded-full overflow-hidden shadow-md shrink-0 border border-black/5">
                     <Image
@@ -132,7 +132,7 @@ export default function HeroSection() {
               </div>
 
               {/* Floating UI Card 2: Instant Payment */}
-              <div className="floating-card bg-dark/95 backdrop-blur-xl p-5 md:p-5 rounded-2xl shadow-[0_30px_60px_rgba(37,99,235,0.15)] border border-neutral-800/80 w-full max-w-xs text-left flex-col mx-auto lg:mx-0 hidden xl:flex">
+              <div className="floating-card bg-dark/95 backdrop-blur-xl p-5 md:p-5 rounded-lg shadow-[0_30px_60px_rgba(37,99,235,0.15)] border border-neutral-800/80 w-full max-w-xs text-left flex-col mx-auto lg:mx-0 hidden xl:flex">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-8 h-8 md:w-11 md:h-11 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
                     <IoWalletOutline className="text-lg md:text-xl" />
@@ -156,7 +156,7 @@ export default function HeroSection() {
               </div>
 
               {/* Floating UI Card 3: Route Match */}
-              <div className="floating-card bg-white/95 backdrop-blur-xl p-4 md:p-5 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.15)] border border-white/60 w-full max-w-xs text-left flex-col mx-auto lg:mx-0 hidden lg:flex">
+              <div className="floating-card bg-white/95 backdrop-blur-xl p-4 md:p-5 rounded-lg shadow-[0_30px_60px_rgba(0,0,0,0.15)] w-full max-w-xs text-left flex-col mx-auto lg:mx-0 hidden lg:flex">
                 <div className="bg-primary-500/10 mb-3 text-primary-700 text-[10px] font-bold px-3 py-1.5 rounded-lg uppercase tracking-widest w-max">
                   {t("perfectMatch")}
                 </div>
