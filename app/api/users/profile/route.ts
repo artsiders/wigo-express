@@ -19,7 +19,6 @@ export async function GET() {
           vehicles: true,
           kycVerifications: {
             orderBy: { createdAt: "desc" },
-            take: 1
           }
         }
       });

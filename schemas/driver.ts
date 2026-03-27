@@ -63,7 +63,14 @@ export const DriverApplicationSchema = Step1Schema.merge(Step2Schema)
   .merge(Step3Schema)
   .merge(Step4Schema);
 
+export const KycIdentitySchema = z.object({
+  rectoUrl: z.string().min(1, "La photo du recto est requise").url(),
+  versoUrl: z.string().min(1, "La photo du verso est requise").url(),
+  selfieUrl: z.string().min(1, "Le selfie avec votre carte est requis").url(),
+});
+
 export type DriverApplicationFormData = z.infer<typeof DriverApplicationSchema>;
+export type KycIdentityFormData = z.infer<typeof KycIdentitySchema>;
 
 export type Step1Data = z.infer<typeof Step1Schema>;
 export type Step2Data = z.infer<typeof Step2Schema>;

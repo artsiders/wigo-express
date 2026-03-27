@@ -73,6 +73,10 @@ export interface DriverStatus {
     expiryDate: string;
     country: string;
   } | null;
+  kycVerifications: Array<{
+    type: string;
+    status: string;
+  }>;
 }
 
 export const useDriverStatus = () => {
@@ -83,5 +87,28 @@ export const useDriverStatus = () => {
       return data;
     },
     staleTime: 30 * 1000,
+  });
+};
+
+// ─── Hook: Submit KYC Identity ────────────────────────────────────────────────
+
+export interface KycIdentityPayload {
+  rectoUrl: string;
+  versoUrl: string;
+  selfieUrl: string;
+}
+
+export const useSubmitKycIdentity = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<{ success: boolean }, Error, KycIdentityPayload>({
+    mutationFn: async (payload) => {
+      const { data } = await axios.post("/api/users/verify-id", payload);
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["driverStatus"] });
+      queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+    },
   });
 };

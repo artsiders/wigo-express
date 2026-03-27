@@ -180,7 +180,7 @@
 
   /* Bouton Noir */
   .btn-dark {
-    @apply bg-dark-950 text-white font-bold text-base px-6 py-3 rounded-xl hover:bg-dark-800 transition-colors shadow-lg shadow-black/20 flex justify-center items-center gap-2;
+    @apply bg-dark-950 text-white font-bold text-base px-6 py-3 rounded-xl hover:bg-primary transition-colors shadow-lg shadow-black/20 flex justify-center items-center gap-2;
   }
 
   /* Bouton Blanc */
