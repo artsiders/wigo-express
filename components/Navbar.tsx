@@ -22,7 +22,7 @@ import {
   IoSchoolOutline,
   IoShieldCheckmarkOutline,
   IoEarthOutline,
-  IoSunnyOutline
+  IoSunnyOutline,
 } from "react-icons/io5";
 import gsap from "gsap";
 import { useSession, signOut } from "next-auth/react";
@@ -146,9 +146,9 @@ export default function Navbar() {
               <Link
                 href="/search?searchOpen=true"
                 className={`font-bold transition-all px-4 py-2 rounded-md border ${
-                  pathname.includes('/search')
-                    ? 'border-primary/50 bg-primary/10 text-primary'
-                    : 'text-dark border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50 hover:text-primary'
+                  pathname.includes("/search")
+                    ? "border-primary/50 bg-primary/10 text-primary"
+                    : "text-dark border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50 hover:text-primary"
                 }`}
               >
                 {tCommon("searchRide")}
@@ -162,9 +162,10 @@ export default function Navbar() {
                       : "/become-driver?mode=become-driver"
                 }
                 className={`font-bold transition-all px-4 py-2 rounded-md border flex items-center gap-2 group ${
-                  pathname.includes('/offer') || pathname.includes('/become-driver')
-                    ? 'border-primary/50 bg-primary/10 text-primary'
-                    : 'text-dark border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50 hover:text-primary'
+                  pathname.includes("/offer") ||
+                  pathname.includes("/become-driver")
+                    ? "border-primary/50 bg-primary/10 text-primary"
+                    : "text-dark border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50 hover:text-primary"
                 }`}
               >
                 {tCommon("offerRide")}
@@ -175,13 +176,19 @@ export default function Navbar() {
           {/* RIGHT SECTION (Auth/Profile + Lang + Burger + Mobile Icons) */}
           <div className="flex items-center h-full gap-2 md:gap-3">
             {/* DESKTOP NAV - PARTIE DROITE (Comment ça marche) */}
-            <div className="hidden lg:block text-sm font-bold relative" ref={howItWorksRef}>
+            <div
+              className="hidden lg:block text-sm font-bold relative"
+              ref={howItWorksRef}
+            >
               <button
                 onClick={() => setHowItWorksOpen(!howItWorksOpen)}
                 className={`flex items-center gap-1.5 font-bold transition-all px-4 py-2 rounded-md border ${
-                  pathname.includes('/conducteurs') || pathname.includes('/passagers') || pathname.includes('/securite') || pathname.includes('/durable')
-                    ? 'border-primary/50 bg-primary/10 text-primary'
-                    : 'text-dark-800 border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50 hover:text-primary'
+                  pathname.includes("/conducteurs") ||
+                  pathname.includes("/passagers") ||
+                  pathname.includes("/securite") ||
+                  pathname.includes("/durable")
+                    ? "border-primary/50 bg-primary/10 text-primary"
+                    : "text-dark-800 border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50 hover:text-primary"
                 }`}
               >
                 <span>{t("howItWorks")}</span>
@@ -189,39 +196,67 @@ export default function Navbar() {
                   className={`transition-transform text-neutral-600 ${howItWorksOpen ? "rotate-180" : ""}`}
                 />
               </button>
-              
+
               {howItWorksOpen && (
                 <div className="absolute left-0 mt-3 min-w-[240px] bg-white border border-neutral-200 rounded-xl shadow-xl p-2 z-50 flex flex-col gap-1">
                   <Link
                     href="/conducteurs"
                     onClick={() => setHowItWorksOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-lg transition-colors ${pathname.includes('/conducteurs') ? 'bg-primary/10 text-primary' : 'text-dark hover:bg-blue-50 hover:text-primary'}`}
+                    className={`flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-lg transition-colors ${pathname.includes("/conducteurs") ? "bg-primary/10 text-primary" : "text-dark hover:bg-blue-50 hover:text-primary"}`}
                   >
-                    <IoCarOutline size={20} className={pathname.includes('/conducteurs') ? "text-primary" : "text-gray-500"} />
+                    <IoCarOutline
+                      size={20}
+                      className={
+                        pathname.includes("/conducteurs")
+                          ? "text-primary"
+                          : "text-gray-500"
+                      }
+                    />
                     {t("howItWorksDrivers")}
                   </Link>
                   <Link
                     href="/passagers"
                     onClick={() => setHowItWorksOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-lg transition-colors ${pathname.includes('/passagers') ? 'bg-primary/10 text-primary' : 'text-dark hover:bg-blue-50 hover:text-primary'}`}
+                    className={`flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-lg transition-colors ${pathname.includes("/passagers") ? "bg-primary/10 text-primary" : "text-dark hover:bg-blue-50 hover:text-primary"}`}
                   >
-                    <IoPersonOutline size={20} className={pathname.includes('/passagers') ? "text-primary" : "text-gray-500"} />
+                    <IoPersonOutline
+                      size={20}
+                      className={
+                        pathname.includes("/passagers")
+                          ? "text-primary"
+                          : "text-gray-500"
+                      }
+                    />
                     {t("howItWorksPassengers")}
                   </Link>
                   <Link
                     href="/securite"
                     onClick={() => setHowItWorksOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-lg transition-colors ${pathname.includes('/securite') ? 'bg-blue-100 text-blue-700' : 'text-dark bg-blue-50/50 hover:bg-blue-100 hover:text-primary'}`}
+                    className={`flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-lg transition-colors ${pathname.includes("/securite") ? "bg-blue-100 text-blue-700" : "text-dark bg-blue-50/50 hover:bg-blue-100 hover:text-primary"}`}
                   >
-                    <IoShieldCheckmarkOutline size={20} className={pathname.includes('/securite') ? "text-blue-700" : "text-blue-600"} />
+                    <IoShieldCheckmarkOutline
+                      size={20}
+                      className={
+                        pathname.includes("/securite")
+                          ? "text-blue-700"
+                          : "text-primary"
+                      }
+                    />
                     {t("howItWorksSafety")}
                   </Link>
                   <Link
                     href="/durable"
                     onClick={() => setHowItWorksOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-lg transition-colors ${pathname.includes('/durable') ? 'bg-primary/10 text-primary' : 'text-dark hover:bg-blue-50 hover:text-primary'}`}
+                    className={`flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-lg transition-colors ${pathname.includes("/durable") ? "bg-primary/10 text-primary" : "text-dark hover:bg-blue-50 hover:text-primary"}`}
                   >
-                    <IoEarthOutline size={20} className={pathname.includes('/durable') ? "text-primary" : "text-gray-500"} />
+                    <IoEarthOutline
+                      size={20}
+                      className={
+                        pathname.includes("/durable")
+                          ? "text-primary"
+                          : "text-gray-500"
+                      }
+                    />
                     {t("howItWorksEco")}
                   </Link>
                 </div>
@@ -411,34 +446,82 @@ export default function Navbar() {
           {/* Liens Mobile - Largeur égale (w-full) et alignés à droite */}
           <div className="w-full space-y-2">
             <div className="animate-item w-full flex flex-col p-2 rounded-xl border border-gray-300 bg-white shadow-sm">
-               <span className="p-2 w-full text-sm text-gray-500 uppercase font-bold tracking-widest flex items-center justify-between">
-                 {t("howItWorks")}
-                 <IoChevronDownOutline className="opacity-50" />
-               </span>
-               <Link href="/conducteurs" onClick={() => setMenuOpen(false)} className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes('/conducteurs') ? 'text-primary bg-primary/5 border-primary/20' : 'text-gray-900 border-gray-100 hover:text-primary'}`}>
-                 <IoCarOutline size={22} className={pathname.includes('/conducteurs') ? "text-primary" : "text-gray-500"} /> {t("howItWorksDrivers")}
-               </Link>
-               <Link href="/passagers" onClick={() => setMenuOpen(false)} className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes('/passagers') ? 'text-primary bg-primary/5 border-primary/20' : 'text-gray-900 border-gray-100 hover:text-primary'}`}>
-                 <IoPersonOutline size={22} className={pathname.includes('/passagers') ? "text-primary" : "text-gray-500"} /> {t("howItWorksPassengers")}
-               </Link>
-               <Link href="/securite" onClick={() => setMenuOpen(false)} className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes('/securite') ? 'text-blue-600 bg-blue-50 border-blue-200' : 'text-gray-900 border-gray-100 hover:text-blue-600'}`}>
-                 <IoShieldCheckmarkOutline size={22} className={pathname.includes('/securite') ? "text-blue-600" : "text-gray-500"} /> {t("howItWorksSafety")}
-               </Link>
-               <Link href="/durable" onClick={() => setMenuOpen(false)} className={`flex items-center gap-3 p-3 font-semibold ${pathname.includes('/durable') ? 'text-primary bg-primary/5' : 'text-gray-900 hover:text-primary'}`}>
-                 <IoEarthOutline size={22} className={pathname.includes('/durable') ? "text-primary" : "text-gray-500"} /> {t("howItWorksEco")}
-               </Link>
+              <span className="p-2 w-full text-sm text-gray-500 uppercase font-bold tracking-widest flex items-center justify-between">
+                {t("howItWorks")}
+                <IoChevronDownOutline className="opacity-50" />
+              </span>
+              <Link
+                href="/conducteurs"
+                onClick={() => setMenuOpen(false)}
+                className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes("/conducteurs") ? "text-primary bg-primary/5 border-primary/20" : "text-gray-900 border-gray-100 hover:text-primary"}`}
+              >
+                <IoCarOutline
+                  size={22}
+                  className={
+                    pathname.includes("/conducteurs")
+                      ? "text-primary"
+                      : "text-gray-500"
+                  }
+                />{" "}
+                {t("howItWorksDrivers")}
+              </Link>
+              <Link
+                href="/passagers"
+                onClick={() => setMenuOpen(false)}
+                className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes("/passagers") ? "text-primary bg-primary/5 border-primary/20" : "text-gray-900 border-gray-100 hover:text-primary"}`}
+              >
+                <IoPersonOutline
+                  size={22}
+                  className={
+                    pathname.includes("/passagers")
+                      ? "text-primary"
+                      : "text-gray-500"
+                  }
+                />{" "}
+                {t("howItWorksPassengers")}
+              </Link>
+              <Link
+                href="/securite"
+                onClick={() => setMenuOpen(false)}
+                className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes("/securite") ? "text-primary bg-blue-50 border-blue-200" : "text-gray-900 border-gray-100 hover:text-primary"}`}
+              >
+                <IoShieldCheckmarkOutline
+                  size={22}
+                  className={
+                    pathname.includes("/securite")
+                      ? "text-primary"
+                      : "text-gray-500"
+                  }
+                />{" "}
+                {t("howItWorksSafety")}
+              </Link>
+              <Link
+                href="/durable"
+                onClick={() => setMenuOpen(false)}
+                className={`flex items-center gap-3 p-3 font-semibold ${pathname.includes("/durable") ? "text-primary bg-primary/5" : "text-gray-900 hover:text-primary"}`}
+              >
+                <IoEarthOutline
+                  size={22}
+                  className={
+                    pathname.includes("/durable")
+                      ? "text-primary"
+                      : "text-gray-500"
+                  }
+                />{" "}
+                {t("howItWorksEco")}
+              </Link>
             </div>
             <Link
               href="/search?searchOpen=true"
               onClick={() => setMenuOpen(false)}
-              className={`animate-item w-full text-xl font-semibold transition-colors flex items-center justify-start gap-2 p-4 border rounded-xl shadow-sm ${pathname.includes('/search') ? 'text-primary border-primary bg-primary/5' : 'text-gray-900 border-gray-300 bg-white hover:text-primary hover:shadow-md'}`}
+              className={`animate-item w-full text-xl font-semibold transition-colors flex items-center justify-start gap-2 p-4 border rounded-xl shadow-sm ${pathname.includes("/search") ? "text-primary border-primary bg-primary/5" : "text-gray-900 border-gray-300 bg-white hover:text-primary hover:shadow-md"}`}
             >
               {tCommon("searchRide")}
             </Link>
             <Link
               href="/profile"
               onClick={() => setMenuOpen(false)}
-              className={`animate-item w-full text-xl font-semibold transition-colors flex items-center justify-start gap-2 p-4 border rounded-xl shadow-sm ${pathname.includes('/profile') ? 'text-primary border-primary bg-primary/5' : 'text-gray-900 border-gray-300 bg-white hover:text-primary hover:shadow-md'}`}
+              className={`animate-item w-full text-xl font-semibold transition-colors flex items-center justify-start gap-2 p-4 border rounded-xl shadow-sm ${pathname.includes("/profile") ? "text-primary border-primary bg-primary/5" : "text-gray-900 border-gray-300 bg-white hover:text-primary hover:shadow-md"}`}
             >
               Mon Profil
             </Link>
@@ -449,7 +532,7 @@ export default function Navbar() {
                   : "/become-driver?mode=become-driver"
               }
               onClick={() => setMenuOpen(false)}
-              className={`animate-item w-full text-xl font-semibold transition-colors flex items-center justify-start gap-2 p-4 border rounded-xl shadow-sm ${pathname.includes('/offer') || pathname.includes('/become-driver') ? 'text-primary border-primary bg-primary/5' : 'text-gray-900 border-gray-300 bg-white hover:text-primary hover:shadow-md'}`}
+              className={`animate-item w-full text-xl font-semibold transition-colors flex items-center justify-start gap-2 p-4 border rounded-xl shadow-sm ${pathname.includes("/offer") || pathname.includes("/become-driver") ? "text-primary border-primary bg-primary/5" : "text-gray-900 border-gray-300 bg-white hover:text-primary hover:shadow-md"}`}
             >
               <span>{tCommon("offerRide")}</span>
             </Link>

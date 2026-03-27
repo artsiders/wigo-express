@@ -117,7 +117,7 @@ export default function ConducteursPage() {
               </div>
               {/* Floating element */}
               <div className="absolute -bottom-6 -left-6 bg-white p-5 rounded-xl shadow-xl flex items-center gap-4">
-                <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-blue-100 text-primary rounded-full flex items-center justify-center">
                   <IoCashOutline size={24} />
                 </div>
                 <div>
@@ -143,13 +143,13 @@ export default function ConducteursPage() {
           {/* STEP 1: Créez votre trajet */}
           <div className="w-full bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-neutral-100 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden transition-transform duration-500 hover:shadow-[0_25px_60px_rgba(0,0,0,0.06)]">
             <div className="flex-1 w-full text-left order-2 lg:order-1 pt-6 lg:pt-0">
-              <div className="w-14 h-14 bg-blue-50 text-blue-600 flex items-center justify-center rounded-2xl mb-8 border border-blue-100">
+              <div className="w-14 h-14 bg-blue-50 text-primary flex items-center justify-center rounded-2xl mb-8 border border-blue-100">
                 <IoCarOutline size={28} />
               </div>
               <h2 className="text-3xl lg:text-5xl font-black tracking-tight mb-6">
                 Créez votre
                 <br />
-                <span className="text-blue-600">trajet en 1 minute.</span>
+                <span className="text-primary">trajet en 1 minute.</span>
               </h2>
               <p className="text-lg text-neutral-500 leading-relaxed mb-6 max-w-md">
                 C'est simple et rapide. Fixez votre point de départ, votre
@@ -161,7 +161,7 @@ export default function ConducteursPage() {
               <div className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-neutral-100/50 w-full max-w-md relative">
                 <div className="absolute top-1/2 left-10 -translate-y-1/2 w-0.5 h-16 bg-neutral-200"></div>
                 <div className="mb-8 relative pl-12 focus-within:outline-none">
-                  <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-blue-600 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.4)] z-10"></div>
+                  <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-primary rounded-full shadow-[0_0_8px_rgba(37,99,235,0.4)] z-10"></div>
                   <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1.5 ml-1">
                     Départ
                   </div>
@@ -182,7 +182,7 @@ export default function ConducteursPage() {
                   <span className="font-bold text-neutral-600 text-sm">
                     Prix par place
                   </span>
-                  <span className="font-black text-xl text-blue-600">
+                  <span className="font-black text-xl text-primary">
                     25.00 $
                   </span>
                 </div>

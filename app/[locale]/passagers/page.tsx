@@ -114,12 +114,12 @@ export default function PassagersPage() {
           {/* STEP 1: Des trajets taillés */}
           <div className="w-full bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-neutral-100 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden transition-transform duration-500 hover:shadow-[0_25px_60px_rgba(0,0,0,0.06)]">
             <div className="flex-1 w-full text-left order-2 lg:order-1 pt-6 lg:pt-0">
-              <div className="w-14 h-14 bg-blue-50 text-blue-600 flex items-center justify-center rounded-2xl mb-8 border border-blue-100">
+              <div className="w-14 h-14 bg-blue-50 text-primary flex items-center justify-center rounded-2xl mb-8 border border-blue-100">
                 <IoSearchOutline size={28} />
               </div>
               <h2 className="text-3xl lg:text-5xl font-black tracking-tight mb-6">
                 Des trajets taillés <br />
-                <span className="text-blue-600">pour vous.</span>
+                <span className="text-primary">pour vous.</span>
               </h2>
               <p className="text-lg text-neutral-500 leading-relaxed mb-6 max-w-md">
                 Indiquez simplement d'où vous partez et où vous allez. Notre
@@ -132,7 +132,7 @@ export default function PassagersPage() {
               <div className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-neutral-100/50 w-full max-w-md relative">
                 <div className="absolute top-1/2 left-10 -translate-y-1/2 w-0.5 h-16 bg-neutral-200"></div>
                 <div className="mb-8 relative pl-12">
-                  <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-blue-600 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.4)] z-10"></div>
+                  <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 bg-primary rounded-full shadow-[0_0_8px_rgba(37,99,235,0.4)] z-10"></div>
                   <div className="h-4 bg-neutral-100 rounded-full w-4/5 mb-2"></div>
                   <div className="h-4 bg-neutral-100 rounded-full w-12 absolute right-0 top-0"></div>
                 </div>
@@ -200,12 +200,12 @@ export default function PassagersPage() {
           {/* STEP 3: Paiement en ligne */}
           <div className="w-full bg-linear-to-br from-blue-50 to-white rounded-2xl shadow-[0_20px_50px_rgba(37,99,235,0.05)] border border-blue-100 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden transition-transform duration-500 hover:shadow-[0_25px_60px_rgba(37,99,235,0.1)]">
             <div className="flex-1 w-full text-left order-2 lg:order-1 pt-6 lg:pt-0">
-              <div className="w-14 h-14 bg-blue-100 text-blue-600 flex items-center justify-center rounded-2xl mb-8 border border-blue-200">
+              <div className="w-14 h-14 bg-blue-100 text-primary flex items-center justify-center rounded-2xl mb-8 border border-blue-200">
                 <IoWalletOutline size={28} />
               </div>
               <h2 className="text-3xl lg:text-5xl font-black tracking-tight mb-6 text-dark">
                 Fini les paiements <br />
-                <span className="text-blue-600">en liquide.</span>
+                <span className="text-primary">en liquide.</span>
               </h2>
               <p className="text-lg text-neutral-500 leading-relaxed mb-8 max-w-md">
                 Réservez et payez en ligne en un seul clic. Le paiement est
@@ -237,7 +237,7 @@ export default function PassagersPage() {
                     </span>
                   </h3>
                 </div>
-                <button className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-sm shadow-[0_10px_20px_rgba(37,99,235,0.2)] flex justify-center items-center gap-2 transition-transform hover:scale-[1.02] relative z-10 border border-blue-500">
+                <button className="w-full bg-primary text-white py-4 rounded-xl font-bold text-sm shadow-[0_10px_20px_rgba(37,99,235,0.2)] flex justify-center items-center gap-2 transition-transform hover:scale-[1.02] relative z-10 border border-blue-500">
                   Confirmer et Payer <IoChevronForward />
                 </button>
               </div>

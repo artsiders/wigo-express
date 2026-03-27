@@ -159,7 +159,7 @@ export default function SecurityPage() {
           <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
             {/* Feat 2 */}
             <div className="feat-card bg-white p-10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-neutral-100 group hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <div className="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <IoLockClosedOutline size={32} />
               </div>
               <h3 className="text-2xl font-bold mb-4">
@@ -175,7 +175,7 @@ export default function SecurityPage() {
 
             {/* Feat 3 */}
             <div className="feat-card bg-white p-10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-neutral-100 group hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <div className="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <IoAlertCircleOutline size={32} />
               </div>
               <h3 className="text-2xl font-bold mb-4">

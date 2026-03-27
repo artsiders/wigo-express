@@ -149,7 +149,7 @@ export default function ProfilePage() {
                 </div>
                 {profile.isDriver && (
                   <div className="flex items-center gap-3 p-3 rounded-md border bg-blue-50/50 border-blue-100">
-                    <LuCar className="text-blue-600" size={20} />
+                    <LuCar className="text-primary" size={20} />
                     <span className="text-sm font-medium text-blue-900">
                       Conducteur certifié
                     </span>
@@ -191,7 +191,7 @@ export default function ProfilePage() {
                   <h3 className="font-bold text-zinc-900">
                     Véhicule enregistré
                   </h3>
-                  <button className="text-xs font-bold text-blue-600 hover:text-blue-700">
+                  <button className="text-xs font-bold text-primary hover:text-blue-700">
                     Gérer
                   </button>
                 </div>
@@ -234,7 +234,7 @@ export default function ProfilePage() {
                 </p>
                 <Link
                   href="/search"
-                  className="inline-block mt-6 text-sm font-bold text-blue-600 hover:underline"
+                  className="inline-block mt-6 text-sm font-bold text-primary hover:underline"
                 >
                   Rechercher un trajet maintenant
                 </Link>
