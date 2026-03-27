@@ -141,7 +141,7 @@ export default function ConducteursPage() {
       <section className="relative w-full bg-light z-20 pb-32 px-4 lg:px-6">
         <div className="container mx-auto max-w-7xl space-y-12">
           {/* STEP 1: Créez votre trajet */}
-          <div className="w-full bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-neutral-100 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden transition-transform duration-500 hover:shadow-[0_25px_60px_rgba(0,0,0,0.06)]">
+          <div className="w-full bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-neutral-300 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden transition-transform duration-500 hover:shadow-[0_25px_60px_rgba(0,0,0,0.06)]">
             <div className="flex-1 w-full text-left order-2 lg:order-1 pt-6 lg:pt-0">
               <div className="w-14 h-14 bg-blue-50 text-primary flex items-center justify-center rounded-2xl mb-8 border border-blue-100">
                 <IoCarOutline size={28} />
@@ -158,7 +158,7 @@ export default function ConducteursPage() {
               </p>
             </div>
             <div className="flex-1 w-full order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="bg-white p-6 lg:p-8 rounded-xl shadow-[0_15px_60px_rgba(0,0,0,0.06)] border border-neutral-100/60 w-full max-w-md flex flex-col">
+              <div className="bg-white p-6 lg:p-8 rounded-xl shadow-[0_15px_60px_rgba(0,0,0,0.06)] border border-neutral-200 w-full max-w-md flex flex-col">
                 <div className="flex items-stretch mb-8 lg:mb-10 pt-2 lg:pt-4 px-2 lg:px-4">
                   <div className="relative flex flex-col items-center mr-6 lg:mr-8 shrink-0">
                     <div className="absolute top-3.5 bottom-3.5 w-[2px] bg-neutral-100"></div>
