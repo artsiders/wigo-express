@@ -40,6 +40,7 @@ export default function Navbar() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [howItWorksOpen, setHowItWorksOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileHowItWorksOpen, setMobileHowItWorksOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const userMenuRef = useRef<HTMLDivElement | null>(null);
@@ -441,138 +442,156 @@ export default function Navbar() {
                 </button>
               ))}
             </div>
-          </div>
-
-          {/* Liens Mobile - Largeur égale (w-full) et alignés à droite */}
-          <div className="w-full space-y-2">
-            <div className="animate-item w-full flex flex-col p-2 rounded-xl border border-gray-300 bg-white shadow-sm">
-              <span className="p-2 w-full text-sm text-gray-500 uppercase font-bold tracking-widest flex items-center justify-between">
-                {t("howItWorks")}
-                <IoChevronDownOutline className="opacity-50" />
-              </span>
-              <Link
-                href="/conducteurs"
-                onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes("/conducteurs") ? "text-primary bg-primary/5 border-primary/20" : "text-gray-900 border-gray-100 hover:text-primary"}`}
-              >
-                <IoCarOutline
-                  size={22}
-                  className={
-                    pathname.includes("/conducteurs")
-                      ? "text-primary"
-                      : "text-gray-500"
-                  }
-                />{" "}
-                {t("howItWorksDrivers")}
-              </Link>
-              <Link
-                href="/passagers"
-                onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes("/passagers") ? "text-primary bg-primary/5 border-primary/20" : "text-gray-900 border-gray-100 hover:text-primary"}`}
-              >
-                <IoPersonOutline
-                  size={22}
-                  className={
-                    pathname.includes("/passagers")
-                      ? "text-primary"
-                      : "text-gray-500"
-                  }
-                />{" "}
-                {t("howItWorksPassengers")}
-              </Link>
-              <Link
-                href="/securite"
-                onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes("/securite") ? "text-primary bg-blue-50 border-blue-200" : "text-gray-900 border-gray-100 hover:text-primary"}`}
-              >
-                <IoShieldCheckmarkOutline
-                  size={22}
-                  className={
-                    pathname.includes("/securite")
-                      ? "text-primary"
-                      : "text-gray-500"
-                  }
-                />{" "}
-                {t("howItWorksSafety")}
-              </Link>
-              <Link
-                href="/durable"
-                onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-3 p-3 font-semibold ${pathname.includes("/durable") ? "text-primary bg-primary/5" : "text-gray-900 hover:text-primary"}`}
-              >
-                <IoEarthOutline
-                  size={22}
-                  className={
-                    pathname.includes("/durable")
-                      ? "text-primary"
-                      : "text-gray-500"
-                  }
-                />{" "}
-                {t("howItWorksEco")}
-              </Link>
-            </div>
-            <Link
-              href="/search?searchOpen=true"
-              onClick={() => setMenuOpen(false)}
-              className={`animate-item w-full text-xl font-semibold transition-colors flex items-center justify-start gap-2 p-4 border rounded-xl shadow-sm ${pathname.includes("/search") ? "text-primary border-primary bg-primary/5" : "text-gray-900 border-gray-300 bg-white hover:text-primary hover:shadow-md"}`}
-            >
-              {tCommon("searchRide")}
-            </Link>
-            <Link
-              href="/profile"
-              onClick={() => setMenuOpen(false)}
-              className={`animate-item w-full text-xl font-semibold transition-colors flex items-center justify-start gap-2 p-4 border rounded-xl shadow-sm ${pathname.includes("/profile") ? "text-primary border-primary bg-primary/5" : "text-gray-900 border-gray-300 bg-white hover:text-primary hover:shadow-md"}`}
-            >
-              Mon Profil
-            </Link>
-            <Link
-              href={
-                (session?.user as any)?.isDriver
-                  ? "/offer"
-                  : "/become-driver?mode=become-driver"
-              }
-              onClick={() => setMenuOpen(false)}
-              className={`animate-item w-full text-xl font-semibold transition-colors flex items-center justify-start gap-2 p-4 border rounded-xl shadow-sm ${pathname.includes("/offer") || pathname.includes("/become-driver") ? "text-primary border-primary bg-primary/5" : "text-gray-900 border-gray-300 bg-white hover:text-primary hover:shadow-md"}`}
-            >
-              <span>{tCommon("offerRide")}</span>
-            </Link>
-            {status === "authenticated" && session?.user ? (
-              <>
-                <Link
-                  href="/my-trajets"
-                  onClick={() => setMenuOpen(false)}
-                  className="animate-item w-full text-xl font-semibold text-gray-900 hover:text-primary transition-colors flex items-center justify-start gap-2 p-4 rounded-b-2xl border border-gray-300 bg-white hover:shadow-md"
+            {/* Liens Mobile - Largeur égale (w-full) et alignés à droite */}
+            <div className="w-full relative">
+              <div className="animate-item w-full flex flex-col mt-3 p-2 rounded-xl border border-gray-300 bg-white shadow-sm transition-all duration-300">
+                <button
+                  onClick={() => setMobileHowItWorksOpen(!mobileHowItWorksOpen)}
+                  className="p-3 w-full text-sm text-neutral-700 uppercase font-semibold tracking-widest flex items-center justify-between hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
                 >
-                  Mes trajets
+                  {t("howItWorks")}
+                  <IoChevronDownOutline
+                    className={`transition-transform duration-300 ${mobileHowItWorksOpen ? "rotate-180" : "opacity-50"}`}
+                  />
+                </button>
+
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${mobileHowItWorksOpen ? "max-h-[500px] opacity-100 mt-2" : "max-h-0 opacity-0"}`}
+                >
+                  <div className="flex flex-col border-t border-gray-100">
+                    <Link
+                      href="/conducteurs"
+                      onClick={() => setMenuOpen(false)}
+                      className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes("/conducteurs") ? "text-primary bg-primary/5 border-primary/20" : "text-gray-900 border-gray-100 hover:text-primary"}`}
+                    >
+                      <IoCarOutline
+                        size={22}
+                        className={
+                          pathname.includes("/conducteurs")
+                            ? "text-primary"
+                            : "text-gray-500"
+                        }
+                      />{" "}
+                      {t("howItWorksDrivers")}
+                    </Link>
+                    <Link
+                      href="/passagers"
+                      onClick={() => setMenuOpen(false)}
+                      className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes("/passagers") ? "text-primary bg-primary/5 border-primary/20" : "text-gray-900 border-gray-100 hover:text-primary"}`}
+                    >
+                      <IoPersonOutline
+                        size={22}
+                        className={
+                          pathname.includes("/passagers")
+                            ? "text-primary"
+                            : "text-gray-500"
+                        }
+                      />{" "}
+                      {t("howItWorksPassengers")}
+                    </Link>
+                    <Link
+                      href="/securite"
+                      onClick={() => setMenuOpen(false)}
+                      className={`flex items-center gap-3 p-3 font-semibold border-b ${pathname.includes("/securite") ? "text-primary bg-blue-50 border-blue-200" : "text-gray-900 border-gray-100 hover:text-primary"}`}
+                    >
+                      <IoShieldCheckmarkOutline
+                        size={22}
+                        className={
+                          pathname.includes("/securite")
+                            ? "text-primary"
+                            : "text-gray-500"
+                        }
+                      />{" "}
+                      {t("howItWorksSafety")}
+                    </Link>
+                    <Link
+                      href="/durable"
+                      onClick={() => setMenuOpen(false)}
+                      className={`flex items-center gap-3 p-3 font-semibold ${pathname.includes("/durable") ? "text-primary bg-primary/5" : "text-gray-900 hover:text-primary"}`}
+                    >
+                      <IoEarthOutline
+                        size={22}
+                        className={
+                          pathname.includes("/durable")
+                            ? "text-primary"
+                            : "text-gray-500"
+                        }
+                      />{" "}
+                      {t("howItWorksEco")}
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Block 2: Main Links Grouped Together */}
+              <div className="animate-item flex flex-col w-full border border-gray-300 rounded-xl bg-white shadow-sm overflow-hidden mt-3">
+                <Link
+                  href="/search?searchOpen=true"
+                  onClick={() => setMenuOpen(false)}
+                  className={`w-full text-lg font-semibold transition-colors flex items-center justify-start gap-3 p-4 border-b ${pathname.includes("/search") ? "text-primary bg-primary/5 border-b-primary/20" : "text-gray-900 border-b-gray-200 hover:bg-gray-50 hover:text-primary"}`}
+                >
+                  {tCommon("searchRide")}
                 </Link>
-                {/* Bouton déconnexion - Garde son design mais s'aligne à droite */}
+
+                {status === "authenticated" && session?.user && (
+                  <Link
+                    href="/profile"
+                    onClick={() => setMenuOpen(false)}
+                    className={`w-full text-lg font-semibold transition-colors flex items-center justify-start gap-3 p-4 border-b ${pathname.includes("/profile") ? "text-primary bg-primary/5 border-b-primary/20" : "text-gray-900 border-b-gray-200 hover:bg-gray-50 hover:text-primary"}`}
+                  >
+                    Mon Profil
+                  </Link>
+                )}
+
+                <Link
+                  href={
+                    (session?.user as any)?.isDriver
+                      ? "/offer"
+                      : "/become-driver?mode=become-driver"
+                  }
+                  onClick={() => setMenuOpen(false)}
+                  className={`w-full text-lg font-semibold transition-colors flex items-center justify-start gap-3 p-4 ${status === "authenticated" && session?.user ? "border-b" : ""} ${pathname.includes("/offer") || pathname.includes("/become-driver") ? "text-primary bg-primary/5 border-b-primary/20" : "text-gray-900 border-b-gray-200 hover:bg-gray-50 hover:text-primary"}`}
+                >
+                  {tCommon("offerRide")}
+                </Link>
+
+                {status === "authenticated" && session?.user && (
+                  <Link
+                    href="/my-trajets"
+                    onClick={() => setMenuOpen(false)}
+                    className={`w-full text-lg font-semibold transition-colors flex items-center justify-start gap-3 p-4 ${pathname.includes("/my-trajets") ? "text-primary bg-primary/5" : "text-gray-900 hover:bg-gray-50 hover:text-primary"}`}
+                  >
+                    Mes trajets
+                  </Link>
+                )}
+              </div>
+
+              {status === "authenticated" && session?.user ? (
                 <button
                   onClick={() => signOut()}
-                  className="animate-item mt-6 bg-rose-600 text-white text-lg font-bold px-12 py-4 rounded-xl shadow-2xl shadow-red-500/30 flex items-center justify-start gap-2"
+                  className="animate-item w-full mt-8 bg-rose-600/10 text-rose-600 border border-rose-200 text-lg font-bold px-6 py-4 rounded-xl shadow-sm flex items-center justify-center gap-2 hover:bg-rose-600 hover:text-white transition-colors"
                 >
-                  <IoLogOutOutline /> Déconnexion
+                  <IoLogOutOutline size={22} /> Déconnexion
                 </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  onClick={() => setMenuOpen(false)}
-                  className="animate-item w-full text-xl font-semibold text-gray-900 hover:text-primary transition-colors flex items-center justify-start gap-2 p-4 rounded-b-2xl border border-gray-300 bg-white hover:shadow-md"
-                >
-                  {tCommon("login")}
-                </Link>
-
-                {/* Bouton inscription */}
-                <Link
-                  href="/register"
-                  onClick={() => setMenuOpen(false)}
-                  className="animate-item mt-6 btn-secondary text-lg font-semibold flex items-center"
-                >
-                  {tCommon("registerMobile")}
-                </Link>
-              </>
-            )}
+              ) : (
+                <div className="flex flex-col gap-2 mt-6">
+                  <Link
+                    href="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="animate-item w-full text-center text-dark border border-gray-300 text-lg font-bold px-12 py-4 rounded-xl shadow-sm hover:shadow-md bg-white hover:bg-gray-50 transition-colors"
+                  >
+                    {tCommon("login")}
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => setMenuOpen(false)}
+                    className="animate-item w-full text-center bg-dark text-white text-lg font-bold px-12 py-4 rounded-xl shadow-lg hover:shadow-xl mt-2 transition-all"
+                  >
+                    {tCommon("register")}
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
