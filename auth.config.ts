@@ -12,8 +12,9 @@ export default {
         session.user.id = token.sub;
         session.user.name = token.name as string;
         session.user.image = token.picture as string;
-        (session.user as any).isDriver = !!token.isDriver;
-        (session.user as any).idVerified = !!token.idVerified;
+        session.user.role = token.role as any;
+        session.user.isDriver = !!token.isDriver;
+        session.user.idVerified = !!token.idVerified;
       }
       return session;
     },
@@ -22,6 +23,7 @@ export default {
         token.sub = user.id;
         token.name = user.name;
         token.picture = user.image;
+        token.role = (user as any).role;
         token.isDriver = !!(user as any).isDriver;
         token.idVerified = !!(user as any).idVerified;
       }

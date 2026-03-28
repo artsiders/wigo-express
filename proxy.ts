@@ -91,8 +91,26 @@ export const proxy = auth((req) => {
     return createRedirect("/become-driver?mode=become-driver");
   }
 
+  // Règle 5 : Protection de l'admin
+  const isAdminRoute = pathnameWithoutLocale.startsWith("/admin");
+  const userRole = (req.auth?.user as any)?.role;
+  const hasAdminAccess = userRole === "ADMIN" || userRole === "MODERATOR";
+
+  if (isAdminRoute) {
+    if (!isLoggedIn) {
+      const callbackUrl = pathname;
+      const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+      return Response.redirect(
+        new URL(`/${currentLocale}/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+      );
+    }
+    if (!hasAdminAccess) {
+      return createRedirect("/");
+    }
+  }
+
   /**
-   * 5. FINALISATION
+   * 6. FINALISATION
    */
   return intlMiddleware(req);
 });
