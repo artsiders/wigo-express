@@ -52,7 +52,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="space-y-2">
-        <h2 className="text-4xl font-black text-dark tracking-tighter">
+        <h2 className="text-4xl font-bold text-dark tracking-tighter">
           Informations Personnelles
         </h2>
         <p className="text-neutral-500 font-medium">
@@ -140,9 +140,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
               className="h-[60px] px-5 flex items-center gap-3 bg-white border border-neutral-200 rounded-xl hover:bg-neutral-50 hover:border-neutral-300 transition-all font-bold text-dark shadow-sm group"
             >
               <span className="text-2xl">{selectedCountry.flag}</span>
-              <span className="text-[14px] font-black text-neutral-400">
-                +1
-              </span>
+              <span className="font-bold text-neutral-400">+1</span>
               <LuChevronDown
                 size={16}
                 className={`text-neutral-300 transition-transform duration-300 ${showFlags ? "rotate-180" : ""}`}
@@ -163,12 +161,10 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
                   >
                     <span className="text-2xl leading-none">{c.flag}</span>
                     <div className="flex flex-col">
-                      <span className="text-sm font-black tracking-tight">
+                      <span className="text-sm font-bold tracking-tight">
                         {c.label}
                       </span>
-                      <span className="text-[10px] font-bold text-neutral-400 uppercase">
-                        +1
-                      </span>
+                      <span className="font-semibold text-neutral-500">+1</span>
                     </div>
                   </button>
                 ))}
@@ -177,7 +173,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
           </div>
 
           {/* Actual input with masks */}
-          <div className="flex-1 relative group text-lg">
+          <div className="flex-1 relative group">
             <input
               {...register("phone")}
               onChange={(e) => {
@@ -186,7 +182,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
               }}
               type="tel"
               placeholder="(555) 555-5555"
-              className={`input font-black tracking-wider ${errors.phone ? "input-error" : ""}`}
+              className={`input font-semibold ${errors.phone ? "input-error" : ""}`}
             />
           </div>
         </div>
