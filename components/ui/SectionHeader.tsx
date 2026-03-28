@@ -14,7 +14,7 @@ export default function SectionHeader({
   bgImageUrl = "/images/hero-image.webp",
 }: SectionHeaderProps) {
   return (
-    <header className="relative bg-white rounded-xl p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-neutral-200 overflow-hidden">
+    <header className="relative bg-white rounded-xl p-4 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-1 shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-neutral-200 overflow-hidden">
       {/* Background Image + Overlay */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <img
@@ -24,7 +24,7 @@ export default function SectionHeader({
           draggable={false}
         />
         {/* Overlay Gradient */}
-        <div className="absolute inset-0 bg-linear-to-r from-primary-500 to-primary-700/50" />
+        <div className="absolute inset-0 bg-linear-to-r from-primary-500 via-primary to-primary-700/50" />
       </div>
       {/* Subtle Glow Effect */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>

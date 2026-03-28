@@ -57,7 +57,7 @@ export default function ProfilePage() {
         title="Mon Profil"
         description="Gérez vos informations personnelles et vos préférences de trajet."
         action={
-          <button className="btn-primary">
+          <button className="btn-white">
             <LuSettings size={16} />
             Modifier
           </button>
