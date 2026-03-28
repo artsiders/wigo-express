@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import {
   LuChevronRight,
   LuChevronLeft,
@@ -145,53 +145,78 @@ export function VerifyIdForm() {
     );
   }
 
-  return (
-    <div className="container mx-auto w-full space-y-12">
-      {/* Step Progress Header */}
-      <div className="relative flex justify-between items-center px-8 md:px-20">
-        {/* Progress Line Background */}
-        <div className="absolute top-[28px] left-[15%] right-[15%] h-1 bg-neutral-100 z-0 rounded-full" />
-        {/* Progress Line Active */}
-        <div
-          className="absolute top-[28px] left-[15%] h-1 bg-primary z-0 rounded-full transition-all duration-700 ease-out"
-          style={{ width: `${((currentStep - 1) / (STEPS.length - 1)) * 70}%` }}
-        />
+  const progress = (currentStep / STEPS.length) * 100;
 
-        {STEPS.map((step) => {
-          const isActive = currentStep === step.id;
-          const isCompleted = currentStep > step.id;
-          return (
-            <div
-              key={step.id}
-              className="flex flex-col items-center gap-3 relative z-10"
-            >
+  return (
+    <div className="flex flex-col lg:flex-row gap-8 items-start w-full">
+      {/* ── Sidebar Navigation ─────────────────────────────────────────────── */}
+      <aside className="w-full lg:w-1/4 bg-white rounded-xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.04)] border border-neutral-100 hidden md:block sticky top-32">
+        <div className="space-y-1">
+          {STEPS.map((step) => {
+            const Icon = step.icon;
+            const isActive = currentStep === step.id;
+            const isCompleted = currentStep > step.id;
+
+            return (
               <div
-                className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-500 shadow-xl ${
+                key={step.id}
+                className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-500 ${
                   isActive
-                    ? "bg-primary text-white scale-110 shadow-primary/30"
-                    : isCompleted
-                      ? "bg-green-500 text-white"
-                      : "bg-white text-neutral-300 border border-neutral-100"
+                    ? "bg-primary/5 scale-[1.02] border border-primary/10"
+                    : "opacity-50"
                 }`}
               >
-                {isCompleted ? (
-                  <IoCheckmarkCircle size={24} />
-                ) : (
-                  <step.icon size={24} />
-                )}
+                <div
+                  className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-sm transition-all duration-500 ${
+                    isActive
+                      ? "bg-primary text-white"
+                      : isCompleted
+                        ? "bg-green-500 text-white"
+                        : "bg-neutral-100 text-neutral-400"
+                  }`}
+                >
+                  {isCompleted ? (
+                    <IoCheckmarkCircle size={20} />
+                  ) : (
+                    <Icon size={18} />
+                  )}
+                </div>
+                <div>
+                  <h3
+                    className={`font-bold text-xs uppercase tracking-widest ${isActive ? "text-primary" : "text-dark"}`}
+                  >
+                    {step.label}
+                  </h3>
+                  <p className="text-sm text-neutral-500 tracking-tighter opacity-70">
+                    {step.description}
+                  </p>
+                </div>
               </div>
-              <span
-                className={`text-[11px] font-black uppercase tracking-widest hidden md:block ${isActive ? "text-primary" : "text-neutral-400"}`}
-              >
-                {step.label}
-              </span>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+
+        {/* Vertical Progress Mini-bar */}
+        <div className="mt-10 pt-8 border-t border-neutral-50">
+          <div className="flex justify-between items-center mb-2">
+            <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
+              Avancement
+            </p>
+            <p className="text-xs font-black text-primary">
+              {Math.round(progress)}%
+            </p>
+          </div>
+          <div className="w-full bg-neutral-100 h-1.5 rounded-full overflow-hidden">
+            <div
+              className="bg-primary h-full transition-all duration-700 ease-out shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)]"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      </aside>
 
       <FormProvider {...methods}>
-        <div className="w-full bg-white rounded-xl p-8 md:p-14 shadow-[0_40px_100px_rgba(0,0,0,0.06)] border border-neutral-100 flex flex-col min-h-[500px] relative overflow-hidden">
+        <div className="w-full lg:w-3/4 bg-white rounded-xl p-8 md:p-14 shadow-[0_40px_100px_rgba(0,0,0,0.06)] border border-neutral-100 flex flex-col min-h-[500px] relative overflow-hidden">
           {/* Global Upload Overlay */}
           {isUploading && (
             <div className="absolute inset-0 bg-white/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-10 text-center animate-in fade-in duration-300">
@@ -227,7 +252,10 @@ export function VerifyIdForm() {
           )}
 
           {/* Step Content */}
-          <div className="flex-1">
+          <div
+            className="flex-1 animate-in fade-in slide-in-from-right-4 duration-500"
+            key={currentStep}
+          >
             {currentStep === 1 && <StepIdentityRecto />}
             {currentStep === 2 && <StepIdentityVerso />}
             {currentStep === 3 && <StepIdentitySelfie />}
@@ -295,8 +323,8 @@ export function VerifyIdForm() {
         </div>
       </FormProvider>
 
-      {/* Trust Footer */}
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8 opacity-40">
+      {/* Trust Footer - moved outside main loop or kept at bottom */}
+      <div className="lg:hidden flex flex-col items-center justify-center gap-8 opacity-40 mt-12 w-full">
         <div className="flex items-center gap-3">
           <LuShieldCheck size={18} className="text-green-600" />
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-dark">
