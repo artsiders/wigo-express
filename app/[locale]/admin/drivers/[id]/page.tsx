@@ -2,15 +2,15 @@
 
 import { useAdminDriverDetail, useUpdateDriverStatus } from "@/hooks/useAdmin";
 import Image from "next/image";
-import { 
-  MdCheck, 
-  MdClose, 
+import {
+  MdCheck,
+  MdClose,
   MdArrowBack,
   MdDirectionsCar,
   MdEmail,
   MdCalendarToday,
   MdPublic,
-  MdInfo
+  MdInfo,
 } from "react-icons/md";
 import { Link, useRouter } from "@/i18n/routing";
 import { useParams } from "next/navigation";
@@ -19,7 +19,7 @@ export default function DriverDetailPage() {
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
-  
+
   const { data: request, isLoading } = useAdminDriverDetail(id);
   const { mutate: updateStatus, isPending } = useUpdateDriverStatus();
 
@@ -40,7 +40,10 @@ export default function DriverDetailPage() {
       <div className="flex flex-col items-center justify-center py-20 bg-white rounded-xl border border-neutral-200">
         <MdInfo size={48} className="text-neutral-300 mb-4" />
         <h2 className="text-xl font-bold text-dark-900">Demande introuvable</h2>
-        <Link href="/admin/drivers" className="mt-4 text-primary-600 font-bold hover:underline">
+        <Link
+          href="/admin/drivers"
+          className="mt-4 text-primary-600 font-bold hover:underline"
+        >
           Retour à la liste
         </Link>
       </div>
@@ -48,22 +51,32 @@ export default function DriverDetailPage() {
   }
 
   const handleAction = (isApproved: boolean) => {
-    updateStatus({ id, isApproved }, {
-      onSuccess: () => {
-        router.push("/admin/drivers");
-      }
-    });
+    updateStatus(
+      { id, isApproved },
+      {
+        onSuccess: () => {
+          router.push("/admin/drivers");
+        },
+      },
+    );
   };
 
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <Link href="/admin/drivers" className="inline-flex items-center gap-2 text-primary-600 font-bold text-xs uppercase tracking-widest hover:text-primary-700 transition-colors">
+        <Link
+          href="/admin/drivers"
+          className="inline-flex items-center gap-2 text-primary-600 font-bold text-xs uppercase tracking-widest hover:text-primary-700 transition-colors"
+        >
           <MdArrowBack /> Retour à la liste
         </Link>
-        <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
-          !request.user.isDriver ? "bg-amber-50 text-amber-600 border-amber-100" : "bg-emerald-50 text-emerald-600 border-emerald-100"
-        }`}>
+        <div
+          className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
+            !request.user.isDriver
+              ? "bg-amber-50 text-amber-600 border-amber-100"
+              : "bg-emerald-50 text-emerald-600 border-emerald-100"
+          }`}
+        >
           {request.user.isDriver ? "Validé" : "En attente"}
         </div>
       </div>
@@ -76,27 +89,29 @@ export default function DriverDetailPage() {
               <MdDirectionsCar className="text-secondary-600" />
               Permis de conduire : {request.number}
             </h3>
-            <div className="relative aspect-[4/3] w-full bg-neutral-50 rounded-lg overflow-hidden border border-neutral-100">
+            <div className="relative aspect-4/3 w-full bg-neutral-50 rounded-lg overflow-hidden border border-neutral-100">
               {request.documentUrl ? (
-                <Image 
-                  src={request.documentUrl} 
-                  alt="Driver License" 
-                  fill 
+                <Image
+                  src={request.documentUrl}
+                  alt="Driver License"
+                  fill
                   className="object-contain"
                   priority
                 />
               ) : (
                 <div className="w-full h-full flex flex-col items-center justify-center text-neutral-300 gap-4">
                   <MdDirectionsCar size={64} className="opacity-20" />
-                  <span className="text-xs font-black uppercase tracking-widest opacity-40">Document non disponible</span>
+                  <span className="text-xs font-black uppercase tracking-widest opacity-40">
+                    Document non disponible
+                  </span>
                 </div>
               )}
             </div>
             {request.documentUrl && (
               <div className="mt-4 flex justify-end">
-                <a 
-                  href={request.documentUrl} 
-                  target="_blank" 
+                <a
+                  href={request.documentUrl}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-bold text-primary-600 hover:text-primary-700 underline"
                 >
@@ -110,11 +125,18 @@ export default function DriverDetailPage() {
         {/* User Info & Actions */}
         <div className="space-y-6">
           <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
-            <h3 className="text-sm font-black text-dark-900 uppercase tracking-widest mb-6">Utilisateur</h3>
+            <h3 className="text-sm font-black text-dark-900 uppercase tracking-widest mb-6">
+              Utilisateur
+            </h3>
             <div className="flex items-center gap-4 mb-6">
               <div className="relative w-16 h-16 rounded-xl overflow-hidden ring-1 ring-neutral-100">
                 {request.user.image ? (
-                  <Image src={request.user.image} alt="User" fill className="object-cover" />
+                  <Image
+                    src={request.user.image}
+                    alt="User"
+                    fill
+                    className="object-cover"
+                  />
                 ) : (
                   <div className="w-full h-full bg-secondary-50 text-secondary-600 flex items-center justify-center text-xl font-bold">
                     {request.user.name[0]}
@@ -131,17 +153,25 @@ export default function DriverDetailPage() {
 
             <div className="space-y-4 py-6 border-y border-neutral-50 mb-8">
               <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Pays du permis</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">
+                  Pays du permis
+                </span>
                 <div className="flex items-center gap-2 text-dark-800 text-sm font-bold">
                   <MdPublic size={14} className="text-neutral-300" />
                   {request.country}
                 </div>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Date d'expiration</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">
+                  Date d'expiration
+                </span>
                 <div className="flex items-center gap-2 text-dark-800 text-sm font-bold">
                   <MdCalendarToday size={14} className="text-neutral-300" />
-                  {new Date(request.expiryDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  {new Date(request.expiryDate).toLocaleDateString("fr-FR", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
                 </div>
               </div>
             </div>
@@ -165,7 +195,9 @@ export default function DriverDetailPage() {
               </div>
             ) : (
               <div className="mt-8 p-4 rounded-xl bg-neutral-50 border border-neutral-100 text-center">
-                <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Conducteur déjà validé</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">
+                  Conducteur déjà validé
+                </span>
               </div>
             )}
           </div>

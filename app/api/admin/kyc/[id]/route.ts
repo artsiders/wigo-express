@@ -4,8 +4,9 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const session = await auth();
 
   if (!session || (session.user.role !== "ADMIN" && session.user.role !== "MODERATOR")) {
@@ -14,7 +15,7 @@ export async function GET(
 
   try {
     const kycRequest = await prisma.kycVerification.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         user: {
           select: {
@@ -41,8 +42,9 @@ export async function GET(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const session = await auth();
   const { status } = await request.json();
 
@@ -52,7 +54,7 @@ export async function PATCH(
 
   try {
     const kycRequest = await prisma.kycVerification.update({
-      where: { id: params.id },
+      where: { id },
       data: { status },
     });
 
