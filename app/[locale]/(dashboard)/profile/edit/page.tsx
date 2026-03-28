@@ -4,14 +4,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useProfile, useUpdateProfile } from "@/hooks/useProfile";
 import { useRouter } from "@/i18n/routing";
-import {
-  LuUser,
-  LuMail,
-  LuText,
-  LuCheck,
-  LuX,
-  LuLoaderCircle,
-} from "react-icons/lu";
+import { LuUser, LuMail, LuText, LuLoaderCircle } from "react-icons/lu";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ProfileEditSkeleton from "@/components/ui/ProfileEditSkeleton";
@@ -260,10 +253,9 @@ export default function ProfileEditPage() {
                   }
                   className="btn-primary w-full"
                 >
-                  {updateProfile.isPending ||
-                    (isUploading && (
-                      <LuLoaderCircle className="animate-spin" size={24} />
-                    ))}
+                  {(updateProfile.isPending || isUploading) && (
+                    <LuLoaderCircle className="animate-spin" size={24} />
+                  )}
                   Sauvegarder les modifications
                 </button>
                 <button
