@@ -60,7 +60,7 @@ export default function ProfilePage() {
         title="Mon Profil"
         description="Gérez vos informations personnelles et vos préférences de trajet."
         action={
-          <button className="px-4 py-2 text-sm font-medium bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors flex items-center gap-2 text-zinc-700">
+          <button className="btn-outlined">
             <LuSettings size={16} />
             Modifier
           </button>
@@ -211,10 +211,7 @@ export default function ProfilePage() {
                 <h3 className="font-bold text-zinc-900">
                   Véhicules enregistrés
                 </h3>
-                <Link
-                  href="/profile/vehicles"
-                  className="text-xs font-bold text-primary hover:text-blue-700"
-                >
+                <Link href="/profile/vehicles" className="btn-outlined">
                   Gérer
                 </Link>
               </div>

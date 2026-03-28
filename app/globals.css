@@ -190,7 +190,7 @@
 
   /* Bouton Outline (bordure sur primaire) */
   .btn-outlined {
-    @apply bg-transparent text-primary-600 font-bold text-base px-6 py-3 rounded-xl border-2 border-primary-500 hover:bg-primary-50 transition-colors flex justify-center items-center gap-2;
+    @apply bg-transparent text-primary-500 font-semibold text-base px-6 py-3 rounded-xl border border-primary-200 hover:bg-primary-100/40 hover:border-primary-300 transition-colors flex justify-center items-center gap-2;
   }
 
   /* Bouton Désactivé (pour exemple) */
