@@ -100,7 +100,7 @@ export default function ConducteursPage() {
                   href="/become-driver"
                   className="btn-primary shadow-xl shadow-primary/30 flex w-fit items-center gap-2 text-lg px-8 py-4"
                 >
-                  Devenir Conducteur <IoChevronForward />
+                  Devenir Conducteur·rice <IoChevronForward />
                 </Link>
               </div>
             </div>
@@ -110,7 +110,7 @@ export default function ConducteursPage() {
               <div className="relative w-full h-full min-h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
                 <Image
                   src="/images/close-up-group-friends-traveling-car-concept-speed.webp"
-                  alt="Conducteur au volant"
+                  alt="Conducteur·rice au volant"
                   fill
                   className="object-cover"
                 />

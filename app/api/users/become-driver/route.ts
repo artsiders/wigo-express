@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     });
     if (existingLicense) {
       return NextResponse.json(
-        { error: "Vous avez déjà soumis une candidature conducteur" },
+        { error: "Vous avez déjà soumis une candidature Conducteur·rice" },
         { status: 409 }
       );
     }

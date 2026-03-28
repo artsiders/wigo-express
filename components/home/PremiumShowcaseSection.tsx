@@ -87,7 +87,7 @@ export default function PremiumShowcaseSection() {
                 <div className="w-12 h-12 bg-neutral-800 rounded-full overflow-hidden relative border-2 border-neutral-700">
                   <Image
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
-                    alt="Conducteur vérifié"
+                    alt="Conducteur·rice vérifié"
                     fill
                     className="object-cover"
                   />

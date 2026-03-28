@@ -142,8 +142,8 @@ export default function EcoPage() {
               </h3>
               <p className="text-neutral-500 leading-relaxed">
                 Rejoignez le mouvement de la mobilité responsable. Que vous
-                soyez conducteur ou passager, vous posez chaque jour un acte
-                fort pour l'avenir de l'environnement.
+                soyez Conducteur·rice ou passager, vous posez chaque jour un
+                acte fort pour l'avenir de l'environnement.
               </p>
             </div>
           </div>

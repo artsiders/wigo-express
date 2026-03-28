@@ -20,13 +20,16 @@ export default async function BecomeDriverPage({ searchParams }: Props) {
   return (
     <div className="flex flex-col gap-8">
       <Breadcrumb
-        items={[{ label: "Accueil", href: "/" }, { label: "Devenir Conducteur" }]}
+        items={[
+          { label: "Accueil", href: "/" },
+          { label: "Devenir Conducteur·rice" },
+        ]}
       />
 
       <SectionHeader
         title={
           <>
-            Devenir <span className="text-primary">Conducteur</span>
+            Devenir <span className="text-primary">Conducteur·rice</span>
           </>
         }
         description="Rejoignez la communauté des conducteurs Wigo Express et commencez à partager vos frais de route dès aujourd'hui."
@@ -38,7 +41,7 @@ export default async function BecomeDriverPage({ searchParams }: Props) {
           <Alert
             type="warning"
             title="Action requise avant de publier"
-            description="Pour proposer un trajet, vous devez d'abord compléter votre profil de conducteur. C'est rapide et sécurisé !"
+            description="Pour proposer un trajet, vous devez d'abord compléter votre profil de Conducteur·rice. C'est rapide et sécurisé !"
             onClose={() => {}}
           />
         </div>

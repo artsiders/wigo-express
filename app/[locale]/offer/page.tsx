@@ -131,8 +131,8 @@ export default function OfferRidePage() {
           <p className="text-xl text-neutral-500 font-medium mb-10 max-w-xl mx-auto leading-relaxed">
             Pour publier un trajet sur{" "}
             <span className="font-bold text-dark">Wigo Express</span>, vous
-            devez d'abord compléter votre profil de conducteur dans votre espace
-            privé.
+            devez d'abord compléter votre profil de Conducteur·rice dans votre
+            espace privé.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
@@ -140,7 +140,7 @@ export default function OfferRidePage() {
               href="/profile?mode=become-driver"
               className="px-8 py-4 bg-dark text-white rounded-xl font-bold text-lg hover:bg-primary transition-all flex items-center justify-center gap-3 active:scale-95 group"
             >
-              Compléter mon profil conducteur
+              Compléter mon profil Conducteur·rice
               <LuArrowRight className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link

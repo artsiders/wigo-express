@@ -9,7 +9,7 @@
   "Navbar": {
     "howItWorks": "Comment ça marche",
     "passenger": "Voyageur",
-    "driver": "Conducteur",
+    "driver": "Conducteur·rice",
     "howItWorksPassengers": "Passagers",
     "howItWorksDrivers": "Conducteurs",
     "howItWorksSafety": "Sécurité & Confiance",
@@ -52,7 +52,7 @@
     "step2Secure": "Sécurisé",
     "step3Title1": "Vos trajets favoris",
     "step3Title2": "à petits prix.",
-    "step3Desc": "Pas besoin de monnaie en voiture. Votre place est payée en ligne lors de la réservation et transférée automatiquement au conducteur. Avec Wigo Express, tout est simple et 100% sécurisé.",
+    "step3Desc": "Pas besoin de monnaie en voiture. Votre place est payée en ligne lors de la réservation et transférée automatiquement au Conducteur·rice. Avec Wigo Express, tout est simple et 100% sécurisé.",
     "step3Garanti": "Paiement Wigo Garanti",
     "step3Available": "Solde Disponible",
     "step3ReceivedYesterday": "Reçu hier",
@@ -68,7 +68,7 @@
     "driverCard2Desc": "Vous ne prenez pas de preneurs au hasard. Chaque identité est rigoureusement confirmée par notre système avant la réservation.",
     "driverCard3Title": "Flexibilité Totale",
     "driverCard3Desc": "C'est votre voiture, ce sont vos règles. Décidez quand vous partez, combien de sièges vous offrez et acceptez ou refusez les demandes librement.",
-    "driverBtn": "Devenir Conducteur"
+    "driverBtn": "Devenir Conducteur·rice"
   },
   "NotFound": {
     "title1": "Vous avez fait",

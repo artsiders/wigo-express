@@ -145,7 +145,7 @@ export default function ProfilePage() {
           {isLicensePending && (
             <Alert
               type="info"
-              title="Dossier conducteur en cours"
+              title="Dossier Conducteur·rice en cours"
               description="Nous vérifions vos documents de conduite. Vous recevrez une notification d'ici 24 à 48 heures."
               className="shadow-indigo-100/50"
             />
@@ -170,8 +170,8 @@ export default function ProfilePage() {
                       Rentabilisez vos trajets quotidiens
                     </h3>
                     <p className="text-neutral-100 max-w-md">
-                      Devenez conducteur sur la plateforme et partagez vos frais
-                      de route en toute sécurité.
+                      Devenez Conducteur·rice sur la plateforme et partagez vos
+                      frais de route en toute sécurité.
                     </p>
                   </div>
                   <div className="shrink-0 flex items-center gap-2 bg-white text-zinc-900 px-6 py-3 rounded-md font-bold transition-transform group-hover:translate-x-1">
@@ -248,7 +248,7 @@ export default function ProfilePage() {
                 Aucun trajet prévu
               </h4>
               <p className="text-zinc-500 text-sm mt-1 max-w-xs mx-auto">
-                Vos futurs trajets en tant que passager ou conducteur
+                Vos futurs trajets en tant que passager ou Conducteur·rice
                 apparaîtront ici.
               </p>
               <Link href="/search" className="btn-dark w-fit mx-auto mt-6">

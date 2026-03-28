@@ -136,8 +136,8 @@ export default function RideDetails({ id }: RideDetailsProps) {
                     {ride.departurePlace || "Lieu de départ à confirmer"}
                   </p>
                   <p className="text-sm text-neutral-400 font-medium leading-relaxed max-w-md">
-                    Le conducteur précisera l'adresse exacte après réservation
-                    si nécessaire.
+                    Le Conducteur·rice précisera l'adresse exacte après
+                    réservation si nécessaire.
                   </p>
                 </div>
               </div>
@@ -188,7 +188,7 @@ export default function RideDetails({ id }: RideDetailsProps) {
                 </div>
                 <div className="text-left flex-1">
                   <h4 className="text-base font-bold text-dark">
-                    {ride.driver.name || "Conducteur inconnu"}
+                    {ride.driver.name || "Conducteur·rice inconnu"}
                   </h4>
                   <div className="flex items-center gap-1 text-sm font-bold text-neutral-500 mt-1">
                     <IoStar className="text-yellow-400" />
@@ -206,7 +206,7 @@ export default function RideDetails({ id }: RideDetailsProps) {
               {(ride.driver.bio || ride.driver.createdAt) && (
                 <div className="pt-4 border-t border-neutral-100 flex flex-col gap-3">
                   {ride.driver.bio && (
-                    <p className="text-sm font-medium text-neutral-500 italic leading-relaxed">
+                    <p className="text-sm font-medium text-neutral-500 leading-relaxed">
                       "{ride.driver.bio}"
                     </p>
                   )}

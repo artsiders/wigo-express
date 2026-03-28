@@ -69,7 +69,7 @@ async function main() {
       },
       include: { vehicles: true }
     });
-    console.log(`✅ Conducteur Premium créé : ${driver1.email}`);
+    console.log(`✅ Conducteur·rice Premium créé : ${driver1.email}`);
 
     // ==========================================
     // 2. CONDUCTRICE (Sophie)

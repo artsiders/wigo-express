@@ -192,10 +192,10 @@ export default function PassagersPage() {
                 <span className="text-[#4ade80]">tranquille.</span>
               </h2>
               <p className="text-lg text-neutral-400 leading-relaxed mb-8 max-w-md">
-                Oubliez les mauvaises surprises. L'identité de chaque conducteur
-                est vérifiée (pièce d'identité, permis). Vous savez exactement
-                avec qui vous montez grâce aux avis certifiés laissés par notre
-                communauté.
+                Oubliez les mauvaises surprises. L'identité de chaque
+                Conducteur·rice est vérifiée (pièce d'identité, permis). Vous
+                savez exactement avec qui vous montez grâce aux avis certifiés
+                laissés par notre communauté.
               </p>
             </div>
           </div>
@@ -212,8 +212,8 @@ export default function PassagersPage() {
               </h2>
               <p className="text-lg text-neutral-500 leading-relaxed mb-8 max-w-md">
                 Réservez et payez en ligne en un seul clic. Le paiement est
-                sécurisé et transféré automatiquement au conducteur une fois le
-                trajet accompli. Gagnez du temps et évitez les tracas à
+                sécurisé et transféré automatiquement au Conducteur·rice une
+                fois le trajet accompli. Gagnez du temps et évitez les tracas à
                 l'arrivée.
               </p>
               <Link

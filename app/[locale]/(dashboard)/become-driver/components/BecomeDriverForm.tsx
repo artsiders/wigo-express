@@ -256,7 +256,7 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
         </div>
         <div className="space-y-3">
           <h2 className="text-4xl font-black text-dark tracking-tighter">
-            Profil Conducteur Actif
+            Profil Conducteur·rice Actif
           </h2>
           <p className="text-neutral-500 font-medium max-w-sm mx-auto text-lg">
             Félicitations ! Votre profil est validé. Vous pouvez maintenant
@@ -283,8 +283,8 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
           description={
             <div className="space-y-6">
               <p className="text-neutral-600 font-medium leading-relaxed">
-                Votre candidature pour devenir conducteur a bien été reçue. Nos
-                modérateurs vérifient vos documents sous un délai de 24 à 48
+                Votre candidature pour devenir Conducteur·rice a bien été reçue.
+                Nos modérateurs vérifient vos documents sous un délai de 24 à 48
                 heures.
               </p>
               <div className="flex gap-4">
