@@ -19,6 +19,7 @@ export interface UserProfile {
   name: string | null;
   email: string;
   image: string | null;
+  bio: string | null;
   isDriver: boolean;
   idVerified: boolean;
   license: License | null;
@@ -42,6 +43,19 @@ export const useProfile = () => {
     queryFn: async () => {
       const { data } = await axios.get<UserProfile>("/api/users/profile");
       return data;
+    },
+  });
+};
+
+export const useUpdateProfile = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: { name?: string; bio?: string; image?: string }) => {
+      const { data } = await axios.patch("/api/users/profile", payload);
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userProfile"] });
     },
   });
 };

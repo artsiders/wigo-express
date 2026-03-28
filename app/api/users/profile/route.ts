@@ -35,10 +35,37 @@ export async function GET() {
     }
 
     // Sanitize user data before returning
-    const { password, ...safeUser } = user;
+    const { password, ...safeUser } = user as any;
     return NextResponse.json(safeUser);
   } catch (error) {
     console.error("Profile API Error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await req.json();
+    const { name, bio, image } = body;
+
+    const updatedUser = await prisma.user.update({
+      where: { id: session.user.id },
+      data: {
+        name,
+        bio,
+        image,
+      },
+    });
+
+    const { password, ...safeUser } = updatedUser as any;
+    return NextResponse.json(safeUser);
+  } catch (error) {
+    console.error("Profile Update API Error:", error);
+    return NextResponse.json({ error: "Failed to update profile" }, { status: 500 });
   }
 }

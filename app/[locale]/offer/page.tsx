@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import OfferWizardLayout from "@/components/offer/OfferWizardLayout";
 import Image from "next/image";
@@ -13,6 +13,8 @@ import dynamic from "next/dynamic";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OfferRideSchema, type OfferRideFormData } from "@/schemas/offer";
+import Breadcrumb from "@/components/ui/Breadcrumb";
+import SectionHeader from "@/components/ui/SectionHeader";
 import OfferSkeleton from "@/components/offer/OfferSkeleton";
 
 const RouteMap = dynamic(() => import("@/components/search/RouteMap"), {
@@ -51,7 +53,10 @@ export default function OfferRidePage() {
   });
 
   const { watch } = methods;
-  const departCoords = { lat: watch("departureLat"), lon: watch("departureLng") };
+  const departCoords = {
+    lat: watch("departureLat"),
+    lon: watch("departureLng"),
+  };
   const arriveeCoords = { lat: watch("arrivalLat"), lon: watch("arrivalLng") };
 
   const stepParam = searchParams?.get("step");
@@ -101,8 +106,6 @@ export default function OfferRidePage() {
     }
   }, [currentStep]);
 
-
-
   if (status === "loading") {
     return <OfferSkeleton />;
   }
@@ -126,18 +129,21 @@ export default function OfferRidePage() {
           </h1>
 
           <p className="text-xl text-neutral-500 font-medium mb-10 max-w-xl mx-auto leading-relaxed">
-            Pour publier un trajet sur <span className="font-bold text-dark">Wigo Express</span>, vous devez d'abord compléter votre profil de conducteur dans votre espace privé.
+            Pour publier un trajet sur{" "}
+            <span className="font-bold text-dark">Wigo Express</span>, vous
+            devez d'abord compléter votre profil de conducteur dans votre espace
+            privé.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
-            <Link 
+            <Link
               href="/profile?mode=become-driver"
               className="px-8 py-4 bg-dark text-white rounded-xl font-bold text-lg hover:bg-primary transition-all flex items-center justify-center gap-3 active:scale-95 group"
             >
               Compléter mon profil conducteur
               <LuArrowRight className="group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link 
+            <Link
               href="/"
               className="px-10 py-5 bg-neutral-100 text-dark rounded-2xl font-bold text-lg hover:bg-neutral-200 transition-all flex items-center justify-center"
             >
@@ -150,19 +156,25 @@ export default function OfferRidePage() {
               <div className="w-10 h-10 rounded-xl bg-green-50 text-green-500 flex items-center justify-center shrink-0">
                 <LuShieldCheck size={20} />
               </div>
-              <p className="text-sm font-bold text-neutral-600 leading-tight">Sécurité garantie pour tous</p>
+              <p className="text-sm font-bold text-neutral-600 leading-tight">
+                Sécurité garantie pour tous
+              </p>
             </div>
             <div className="flex items-center gap-4 text-left">
               <div className="w-10 h-10 rounded-xl bg-primary/5 text-primary flex items-center justify-center shrink-0">
                 <LuCar size={20} />
               </div>
-              <p className="text-sm font-bold text-neutral-600 leading-tight">Partagez vos frais de route</p>
+              <p className="text-sm font-bold text-neutral-600 leading-tight">
+                Partagez vos frais de route
+              </p>
             </div>
             <div className="flex items-center gap-4 text-left">
               <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0">
                 <LuShieldCheck size={20} strokeWidth={3} />
               </div>
-              <p className="text-sm font-bold text-neutral-600 leading-tight">Profil vérifié & certifié</p>
+              <p className="text-sm font-bold text-neutral-600 leading-tight">
+                Profil vérifié & certifié
+              </p>
             </div>
           </div>
         </div>
@@ -171,7 +183,21 @@ export default function OfferRidePage() {
   }
 
   return (
-    <main className="container mx-auto px-4 mt-8 md:mt-12 md:px-8 lg:px-12 flex flex-col items-center">
+    <main className="container mx-auto px-4 mt-8 flex flex-col items-center">
+      <div className="w-full mb-8">
+        <Breadcrumb
+          items={[
+            { label: "Accueil", href: "/" },
+            { label: "Publier un trajet" },
+          ]}
+        />
+        <div className="mt-6">
+          <SectionHeader
+            title="Publier un trajet"
+            description="Partagez vos frais de route et voyagez en toute convivialité avec la communauté Wigo Express."
+          />
+        </div>
+      </div>
       <div className="w-full container flex flex-col lg:flex-row gap-8 lg:gap-16 items-stretch">
         {/* Creative Left Column - Dynamic based on step */}
         <div
@@ -181,9 +207,11 @@ export default function OfferRidePage() {
           {/* Top section: Media (Map or Image) */}
           <div className="relative w-full flex-1 min-h-[50%] bg-neutral-100">
             {currentStep === 3 ? (
-              <RouteMap 
-                dLat={departCoords.lat || undefined} dLon={departCoords.lon || undefined} 
-                aLat={arriveeCoords.lat || undefined} aLon={arriveeCoords.lon || undefined} 
+              <RouteMap
+                dLat={departCoords.lat || undefined}
+                dLon={departCoords.lon || undefined}
+                aLat={arriveeCoords.lat || undefined}
+                aLon={arriveeCoords.lon || undefined}
               />
             ) : (
               <Image
