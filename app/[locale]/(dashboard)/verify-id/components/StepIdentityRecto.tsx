@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { KycIdentityFormData } from "@/schemas/driver";
-import { LuUpload, LuCheck, LuX, LuInfo } from "react-icons/lu";
+import { LuUpload, LuCheck, LuX, LuInfo, LuUser } from "react-icons/lu";
 import { IoAlert } from "react-icons/io5";
 
 function FieldError({ message }: { message?: string }) {
@@ -64,7 +64,6 @@ export function StepIdentityRecto() {
       <div className="space-y-6">
         <div className="bg-neutral-50 rounded-xl p-8 border border-neutral-100 relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700" />
-
           <h3 className="text-xl font-black text-dark tracking-tight mb-6 flex items-center gap-3">
             <span className="w-8 h-8 rounded-lg bg-dark text-white flex items-center justify-center text-sm font-bold">
               1
@@ -73,31 +72,60 @@ export function StepIdentityRecto() {
           </h3>
 
           {/* SVG Illustration - ID Card Recto */}
-          <div className="w-full h-full rounded-lg mb-4 bg-neutral-50 border border-neutral-100 relative p-4 flex flex-col justify-between shadow-inner">
-            <div className="flex gap-3">
-              <div className="w-10 h-10 rounded-full bg-neutral-200 animate-pulse" />
-              <div className="flex-1 space-y-2 py-1">
-                <div className="h-2 w-2/3 bg-neutral-200 rounded-full" />
-                <div className="h-2 w-1/2 bg-neutral-200 rounded-full" />
+          <div className="w-full max-w-lg aspect-[1.6] bg-white rounded-3xl relative z-20 mx-auto shadow-sm mb-4">
+            <img
+              src="/images/canada-flag-icon.png"
+              alt="Canada"
+              className="object-contain absolute bottom-0 right-0 w-48 h-48 -rotate-45 opacity-10 pointer-events-none"
+            />
+
+            <div className="border border-neutral-200/60 rounded-2xl p-5 sm:p-7 h-full relative z-10 overflow-hidden text-left flex flex-col justify-between bg-white/50 backdrop-blur-xs">
+              {/* Header Simple */}
+              <div className="flex justify-between items-start mb-2">
+                <img
+                  src="/images/canada-flag.png"
+                  alt="Canada"
+                  width={22}
+                  height={22}
+                  className="object-contain"
+                />
+                <div className="text-[10px] font-bold text-neutral-400 tracking-[0.2em] uppercase">
+                  Recto / Front
+                </div>
               </div>
-            </div>
-            <div className="space-y-3">
-              <div className="h-8 w-full border-2 border-primary/20 bg-primary/5 rounded-md flex items-center px-2">
-                <div className="h-1.5 w-1/2 bg-primary/20 rounded-full" />
+
+              {/* Profile row */}
+              <div className="flex gap-5 sm:gap-6 items-center relative z-10">
+                {/* Cadre photo avec Icône React */}
+                <div className="w-18 h-18 sm:w-24 sm:h-24 aspect-square rounded-2xl shrink-0 border border-neutral-200 bg-neutral-50 flex items-center justify-center shadow-inner">
+                  <LuUser className="w-12 h-12 sm:w-16 sm:h-16 text-neutral-300" />
+                </div>
+
+                <div className="space-y-3 w-full">
+                  <div>
+                    <div className="text-[8px] font-bold text-neutral-400 uppercase tracking-wider mb-1">
+                      Nom / Name
+                    </div>
+                    <div className="h-4 w-3/4 bg-neutral-200/60 rounded-md" />
+                  </div>
+                  <div>
+                    <div className="text-[8px] font-bold text-neutral-400 uppercase tracking-wider mb-1">
+                      Prénom / Given Name
+                    </div>
+                    <div className="h-4 w-1/2 bg-neutral-200/60 rounded-md" />
+                  </div>
+                </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="h-12 bg-neutral-100 rounded-md" />
-                <div className="h-12 bg-neutral-100 rounded-md" />
+
+              {/* Bottom row */}
+              <div className="flex justify-between items-end relative z-10 mt-3">
+                <div className="h-1.5 w-32 bg-neutral-100 rounded-full" />
+                <div className="px-4 py-2 rounded-lg bg-neutral-50 text-[10px] text-neutral-400 font-mono border border-neutral-100 font-bold shadow-sm inline-flex items-center">
+                  ID-00000000
+                </div>
               </div>
-            </div>
-            {/* Overlay focus marks */}
-            <div className="absolute inset-0 border-2 border-primary rounded-lg opacity-20 scale-[1.02]" />
-            <div className="absolute top-2 right-2 flex gap-1">
-              <div className="w-2 h-2 rounded-full bg-primary/40" />
-              <div className="w-2 h-2 rounded-full bg-primary/20" />
             </div>
           </div>
-
           <ul className="space-y-3">
             {[
               "Assurez-vous que les 4 coins sont visibles",
