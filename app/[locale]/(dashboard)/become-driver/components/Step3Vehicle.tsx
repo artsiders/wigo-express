@@ -175,7 +175,7 @@ export function Step3Vehicle() {
               {...register("vehiclePlate")}
               type="text"
               placeholder="Ex: AA-123-BB"
-              className={`input pl-12 uppercase font-black tracking-widest ${errors.vehiclePlate ? "input-error" : ""}`}
+              className={`input pl-12 font-semibold ${errors.vehiclePlate ? "input-error" : ""}`}
             />
           </div>
           <FieldError message={errors.vehiclePlate?.message} />
