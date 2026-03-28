@@ -36,10 +36,13 @@ export async function POST(req: NextRequest) {
     }
 
     // Forward to Cloudinary using unsigned upload preset
+    const folderParam = formData.get("folder") as string;
+    const folder = folderParam ? `wigo-express/${folderParam}` : "wigo-express/driver-docs";
+
     const cloudinaryForm = new FormData();
     cloudinaryForm.append("file", file);
     cloudinaryForm.append("upload_preset", UPLOAD_PRESET);
-    cloudinaryForm.append("folder", "wigo-express/driver-docs");
+    cloudinaryForm.append("folder", folder);
 
     const cloudRes = await fetch(
       `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
