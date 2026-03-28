@@ -127,7 +127,7 @@ export function VerifyIdForm() {
           <IoCheckmarkCircle size={64} />
         </div>
         <div className="space-y-3">
-          <h2 className="text-4xl font-black text-dark tracking-tight">
+          <h2 className="text-4xl font-bold text-dark tracking-tight">
             Documents envoyés !
           </h2>
           <p className="text-neutral-500 font-medium max-w-sm mx-auto text-lg leading-relaxed">
@@ -199,10 +199,10 @@ export function VerifyIdForm() {
         {/* Vertical Progress Mini-bar */}
         <div className="mt-10 pt-8 border-t border-neutral-50">
           <div className="flex justify-between items-center mb-2">
-            <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
+            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
               Avancement
             </p>
-            <p className="text-xs font-black text-primary">
+            <p className="text-xs font-bold text-primary">
               {Math.round(progress)}%
             </p>
           </div>
@@ -227,13 +227,13 @@ export function VerifyIdForm() {
                     className="text-primary/20 animate-spin"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-2xl font-black text-primary">
+                    <span className="text-2xl font-bold text-primary">
                       {Math.round(uploadProgress)}%
                     </span>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-black text-dark tracking-tight">
+                  <h3 className="text-2xl font-bold text-dark tracking-tight">
                     Sécurisation de vos documents
                   </h3>
                   <p className="text-neutral-500 font-medium italic">
@@ -276,15 +276,15 @@ export function VerifyIdForm() {
           )}
 
           {/* Navigation Buttons footer */}
-          <div className="mt-16 pt-10 border-t border-neutral-50 flex items-center justify-between">
+          <div className="mt-16 pt-10 border-t border-neutral-50 flex flex-row gap-2 items-center justify-between">
             <button
               type="button"
               onClick={handlePrev}
               disabled={currentStep === 1 || isUploading}
-              className="flex items-center gap-3 px-8 py-5 rounded-xl font-black text-dark hover:bg-neutral-50 transition-all disabled:opacity-0 active:scale-95"
+              className="btn-outlined"
             >
               <LuChevronLeft size={20} />
-              Précédent
+              <span className="hidden sm:inline">Précédent</span>
             </button>
 
             {currentStep === STEPS.length ? (
@@ -292,7 +292,7 @@ export function VerifyIdForm() {
                 type="button"
                 onClick={handleSubmit(onSubmit)}
                 disabled={isUploading}
-                className="btn-primary px-12 py-5 text-lg font-black"
+                className="btn-primary px-12 py-5 text-lg font-bold"
               >
                 {isUploading ? (
                   <>
@@ -310,9 +310,9 @@ export function VerifyIdForm() {
               <button
                 type="button"
                 onClick={handleNext}
-                className="btn-dark px-12 py-5 group"
+                className="btn-dark group"
               >
-                Étape suivante
+                Suivant
                 <LuChevronRight
                   size={22}
                   className="group-hover:translate-x-1 transition-transform"
@@ -327,13 +327,13 @@ export function VerifyIdForm() {
       <div className="lg:hidden flex flex-col items-center justify-center gap-8 opacity-40 mt-12 w-full">
         <div className="flex items-center gap-3">
           <LuShieldCheck size={18} className="text-green-600" />
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-dark">
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-dark">
             Données Chiffrées AES-256
           </span>
         </div>
         <div className="flex items-center gap-3">
           <LuShieldCheck size={18} className="text-primary" />
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-dark">
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-dark">
             Conforme aux normes RGPD
           </span>
         </div>

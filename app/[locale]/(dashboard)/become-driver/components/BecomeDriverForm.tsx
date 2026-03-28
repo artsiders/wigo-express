@@ -495,15 +495,15 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
           )}
 
           {/* Navigation */}
-          <div className="mt-16 pt-10 border-t border-neutral-50 flex items-center justify-between">
+          <div className="mt-16 pt-10 border-t border-neutral-50 flex flex-row gap-2 items-center justify-between">
             <button
               type="button"
               onClick={handlePrev}
               disabled={currentStep === 1 || isLoading}
-              className="flex items-center gap-3 px-8 py-5 rounded-xl font-black text-dark hover:bg-neutral-50 transition-all disabled:opacity-0 active:scale-95"
+              className="btn-outlined flex items-center"
             >
               <LuChevronLeft size={20} />
-              Précédent
+              <span className="hidden sm:inline ml-2">Précédent</span>
             </button>
 
             {currentStep === STEPS.length ? (
@@ -511,7 +511,7 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
                 type="button"
                 onClick={handleSubmit(onSubmit)}
                 disabled={isLoading}
-                className="btn-primary px-12 py-5 text-lg font-black"
+                className="btn-primary px-12 py-5 text-lg font-bold"
               >
                 {isLoading ? (
                   <>
@@ -529,9 +529,9 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
               <button
                 type="button"
                 onClick={handleNext}
-                className="btn-dark px-12 py-5 group"
+                className="btn-dark group"
               >
-                Étape suivante
+                Suivant
                 <LuChevronRight
                   size={22}
                   className="group-hover:translate-x-1 transition-transform"
