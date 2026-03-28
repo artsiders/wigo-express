@@ -1,20 +1,17 @@
 "use client";
 
-import { useAdminKyc, useUpdateKycStatus } from "@/hooks/useAdmin";
+import { useAdminKyc } from "@/hooks/useAdmin";
 import Image from "next/image";
 import { 
-  MdCheck, 
-  MdClose, 
   MdInfo, 
-  MdLaunch,
-  MdArrowBack
+  MdArrowBack,
+  MdCalendarToday
 } from "react-icons/md";
 import { Link } from "@/i18n/routing";
 import { useState } from "react";
 
 export default function AdminKycPage() {
   const { data: kycRequests, isLoading } = useAdminKyc();
-  const { mutate: updateStatus, isPending } = useUpdateKycStatus();
   const [filter, setFilter] = useState<string>("ALL");
 
   const filteredRequests = kycRequests?.filter((req: any) => 
@@ -71,12 +68,12 @@ export default function AdminKycPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filteredRequests?.map((request: any) => (
-              <div 
+              <Link 
                 key={request.id} 
-                className="group flex flex-col bg-white rounded-xl border border-neutral-200 shadow-sm hover:border-primary-200 transition-all duration-200 overflow-hidden"
+                href={`/admin/kyc/${request.id}`}
+                className="group flex flex-col bg-white rounded-xl border border-neutral-200 shadow-sm hover:border-primary-200 hover:shadow-md transition-all duration-200 overflow-hidden"
               >
-                {/* Image Section - Clickable */}
-                <Link href={`/admin/kyc/${request.id}`} className="relative h-40 w-full bg-neutral-100 overflow-hidden">
+                <div className="relative h-40 w-full bg-neutral-100 overflow-hidden">
                   <Image 
                     src={request.documentUrl} 
                     alt="Document KYC" 
@@ -86,10 +83,10 @@ export default function AdminKycPage() {
                   <div className="absolute top-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-sm rounded text-[9px] font-black text-white uppercase tracking-widest border border-white/10">
                     {request.type}
                   </div>
-                </Link>
+                </div>
 
                 <div className="p-4 flex flex-col flex-1">
-                  <Link href={`/admin/kyc/${request.id}`} className="flex items-center gap-3 mb-4 group/user">
+                  <div className="flex items-center gap-3 mb-4">
                     <div className="relative w-10 h-10 rounded-lg overflow-hidden ring-1 ring-neutral-100">
                       {request.user.image ? (
                         <Image src={request.user.image} alt="User" fill className="object-cover" />
@@ -100,16 +97,18 @@ export default function AdminKycPage() {
                       )}
                     </div>
                     <div className="overflow-hidden">
-                      <h3 className="text-sm font-bold text-dark-900 truncate group-hover/user:text-primary-600 transition-colors">
+                      <h3 className="text-sm font-bold text-dark-900 truncate group-hover:text-primary-600 transition-colors">
                         {request.user.name}
                       </h3>
                       <p className="text-[10px] font-medium text-neutral-400 truncate">{request.user.email}</p>
                     </div>
-                  </Link>
+                  </div>
 
-                  <div className="mt-auto space-y-2">
+                  <div className="mt-auto space-y-2 pt-2 border-t border-neutral-50">
                     <div className="flex items-center justify-between text-[10px] font-bold">
-                      <span className="text-neutral-400 uppercase tracking-widest">Statut</span>
+                      <span className="text-neutral-400 uppercase tracking-widest flex items-center gap-1">
+                        <MdCalendarToday size={12} /> {new Date(request.createdAt).toLocaleDateString()}
+                      </span>
                       <span className={`px-2 py-0.5 rounded uppercase tracking-widest text-[9px] ${
                         request.status === "PENDING" ? "bg-amber-50 text-amber-600 border border-amber-100" : 
                         request.status === "APPROVED" ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-red-50 text-red-600 border border-red-100"
@@ -117,28 +116,9 @@ export default function AdminKycPage() {
                         {request.status}
                       </span>
                     </div>
-
-                    {request.status === "PENDING" && (
-                      <div className="grid grid-cols-2 gap-2 pt-3">
-                        <button
-                          onClick={() => updateStatus({ id: request.id, status: "REJECTED" })}
-                          disabled={isPending}
-                          className="flex items-center justify-center gap-1.5 py-2 px-3 bg-neutral-50 text-neutral-500 rounded-lg hover:bg-red-50 hover:text-red-500 border border-neutral-200 transition-all text-[10px] font-black uppercase tracking-widest disabled:opacity-50"
-                        >
-                          <MdClose size={14} /> Refuser
-                        </button>
-                        <button
-                          onClick={() => updateStatus({ id: request.id, status: "APPROVED" })}
-                          disabled={isPending}
-                          className="flex items-center justify-center gap-1.5 py-2 px-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-all text-[10px] font-black uppercase tracking-widest shadow-sm disabled:opacity-50"
-                        >
-                          <MdCheck size={14} /> OK
-                        </button>
-                      </div>
-                    )}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

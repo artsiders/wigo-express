@@ -2,40 +2,70 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 
-export async function PATCH(
-  req: Request,
+export async function GET(
+  request: Request,
   { params }: { params: { id: string } }
 ) {
   const session = await auth();
-  const { id } = await params;
 
   if (!session || (session.user.role !== "ADMIN" && session.user.role !== "MODERATOR")) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
   try {
-    const { status } = await req.json();
+    const kycRequest = await prisma.kycVerification.findUnique({
+      where: { id: params.id },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            image: true,
+            bio: true,
+            createdAt: true,
+          },
+        },
+      },
+    });
 
-    if (!["APPROVED", "REJECTED"].includes(status)) {
-      return new NextResponse("Invalid status", { status: 400 });
+    if (!kycRequest) {
+      return new NextResponse("Not Found", { status: 404 });
     }
 
-    const kyc = await prisma.kycVerification.update({
-      where: { id },
+    return NextResponse.json(kycRequest);
+  } catch (error) {
+    console.error("[KYC_GET_ID]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const session = await auth();
+  const { status } = await request.json();
+
+  if (!session || (session.user.role !== "ADMIN" && session.user.role !== "MODERATOR")) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
+  try {
+    const kycRequest = await prisma.kycVerification.update({
+      where: { id: params.id },
       data: { status },
     });
 
-    // If approved, update the user's idVerified status
     if (status === "APPROVED") {
       await prisma.user.update({
-        where: { id: kyc.userId },
+        where: { id: kycRequest.userId },
         data: { idVerified: true },
       });
     }
 
-    return NextResponse.json(kyc);
+    return NextResponse.json(kycRequest);
   } catch (error) {
-    console.error("[KYC_PATCH]", error);
+    console.error("[KYC_PATCH_ID]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

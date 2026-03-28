@@ -34,7 +34,6 @@ export const AdminHeader = () => {
             <span className="text-sm font-bold text-dark-900 uppercase tracking-tight">
               {session?.user?.name || "Administrateur"}
             </span>
-            F
             <span className="text-[10px] text-primary-600 font-bold uppercase tracking-widest">
               {session?.user?.role}
             </span>

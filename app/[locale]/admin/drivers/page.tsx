@@ -1,21 +1,18 @@
 "use client";
 
-import { useAdminDrivers, useUpdateDriverStatus } from "@/hooks/useAdmin";
+import { useAdminDrivers } from "@/hooks/useAdmin";
 import Image from "next/image";
 import { 
-  MdCheck, 
-  MdClose, 
   MdInfo, 
-  MdLaunch,
   MdArrowBack,
-  MdDirectionsCar
+  MdDirectionsCar,
+  MdCalendarToday
 } from "react-icons/md";
 import { Link } from "@/i18n/routing";
 import { useState } from "react";
 
 export default function AdminDriversPage() {
   const { data: driverRequests, isLoading } = useAdminDrivers();
-  const { mutate: updateStatus, isPending } = useUpdateDriverStatus();
   const [filter, setFilter] = useState<string>("ALL");
 
   const filteredRequests = driverRequests?.filter((req: any) => 
@@ -72,12 +69,12 @@ export default function AdminDriversPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filteredRequests?.map((request: any) => (
-              <div 
+              <Link 
                 key={request.id} 
-                className="group flex flex-col bg-white rounded-xl border border-neutral-200 shadow-sm hover:border-secondary-200 transition-all duration-200 overflow-hidden"
+                href={`/admin/drivers/${request.id}`}
+                className="group flex flex-col bg-white rounded-xl border border-neutral-200 shadow-sm hover:border-secondary-200 hover:shadow-md transition-all duration-200 overflow-hidden"
               >
-                {/* Image Section - Clickable */}
-                <Link href={`/admin/drivers/${request.id}`} className="relative h-40 w-full bg-neutral-50 overflow-hidden">
+                <div className="relative h-40 w-full bg-neutral-50 overflow-hidden">
                   {request.documentUrl ? (
                     <Image 
                       src={request.documentUrl} 
@@ -94,10 +91,10 @@ export default function AdminDriversPage() {
                   <div className="absolute top-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-sm rounded text-[9px] font-black text-white uppercase tracking-widest border border-white/10">
                     Permis: {request.number}
                   </div>
-                </Link>
+                </div>
 
                 <div className="p-4 flex flex-col flex-1">
-                  <Link href={`/admin/drivers/${request.id}`} className="flex items-center gap-3 mb-4 group/user">
+                  <div className="flex items-center gap-3 mb-4">
                     <div className="relative w-10 h-10 rounded-lg overflow-hidden ring-1 ring-neutral-100">
                       {request.user.image ? (
                         <Image src={request.user.image} alt="User" fill className="object-cover" />
@@ -108,27 +105,22 @@ export default function AdminDriversPage() {
                       )}
                     </div>
                     <div className="overflow-hidden">
-                      <h3 className="text-sm font-bold text-dark-900 truncate group-hover/user:text-secondary-600 transition-colors">
+                      <h3 className="text-sm font-bold text-dark-900 truncate group-hover:text-secondary-600 transition-colors">
                         {request.user.name}
                       </h3>
                       <p className="text-[10px] font-medium text-neutral-400 truncate">{request.user.email}</p>
                     </div>
-                  </Link>
+                  </div>
 
-                  <div className="mt-auto space-y-4">
-                    <div className="grid grid-cols-2 gap-2">
-                      <div className="p-2 rounded-lg bg-light-300 border border-transparent">
-                        <span className="text-[8px] font-black uppercase tracking-widest text-neutral-400 block mb-0.5">Pays</span>
-                        <span className="text-xs font-bold text-dark-900 truncate block">{request.country}</span>
-                      </div>
-                      <div className="p-2 rounded-lg bg-light-300 border border-transparent">
-                        <span className="text-[8px] font-black uppercase tracking-widest text-neutral-400 block mb-0.5">Expire</span>
-                        <span className={`text-xs font-bold truncate block ${new Date(request.expiryDate) < new Date() ? "text-red-500" : "text-dark-900"}`}>
-                          {new Date(request.expiryDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
-                        </span>
-                      </div>
+                  <div className="mt-auto space-y-3 pt-3 border-t border-neutral-50">
+                    <div className="flex items-center justify-between text-[10px] font-bold">
+                      <span className="text-neutral-400 uppercase tracking-widest flex items-center gap-1">
+                        <MdCalendarToday size={12} /> Expiration
+                      </span>
+                      <span className={`text-[10px] font-bold ${new Date(request.expiryDate) < new Date() ? "text-red-500" : "text-dark-800"}`}>
+                        {new Date(request.expiryDate).toLocaleDateString()}
+                      </span>
                     </div>
-
                     <div className="flex items-center justify-between text-[10px] font-bold">
                       <span className="text-neutral-400 uppercase tracking-widest">Statut</span>
                       <span className={`px-2 py-0.5 rounded uppercase tracking-widest text-[9px] ${
@@ -137,28 +129,9 @@ export default function AdminDriversPage() {
                         {request.user.isDriver ? "Validé" : "Attente"}
                       </span>
                     </div>
-
-                    {!request.user.isDriver && (
-                      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-neutral-100">
-                        <button
-                          onClick={() => updateStatus({ id: request.id, isApproved: false })}
-                          disabled={isPending}
-                          className="flex items-center justify-center gap-1.5 py-2 px-3 bg-neutral-50 text-neutral-500 rounded-lg hover:bg-red-50 hover:text-red-500 border border-neutral-200 transition-all text-[10px] font-black uppercase tracking-widest disabled:opacity-50"
-                        >
-                          <MdClose size={14} /> Refuser
-                        </button>
-                        <button
-                          onClick={() => updateStatus({ id: request.id, isApproved: true })}
-                          disabled={isPending}
-                          className="flex items-center justify-center gap-1.5 py-2 px-3 bg-secondary-600 text-white rounded-lg hover:bg-secondary-700 transition-all text-[10px] font-black uppercase tracking-widest shadow-sm disabled:opacity-50"
-                        >
-                          <MdCheck size={14} /> OK
-                        </button>
-                      </div>
-                    )}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

@@ -21,8 +21,9 @@ export const useUpdateKycStatus = () => {
       const { data } = await axios.patch(`/api/admin/kyc/${id}`, { status });
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["admin-kyc"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-kyc", variables.id] });
     },
   });
 };
@@ -47,8 +48,33 @@ export const useUpdateDriverStatus = () => {
       const { data } = await axios.patch(`/api/admin/drivers/${id}`, { isApproved });
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["admin-drivers"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-drivers", variables.id] });
     },
+  });
+};
+
+// Fetching KYC Details
+export const useAdminKycDetail = (id: string) => {
+  return useQuery({
+    queryKey: ["admin-kyc", id],
+    queryFn: async () => {
+      const { data } = await axios.get(`/api/admin/kyc/${id}`);
+      return data;
+    },
+    enabled: !!id,
+  });
+};
+
+// Fetching Driver Details
+export const useAdminDriverDetail = (id: string) => {
+  return useQuery({
+    queryKey: ["admin-drivers", id],
+    queryFn: async () => {
+      const { data } = await axios.get(`/api/admin/drivers/${id}`);
+      return data;
+    },
+    enabled: !!id,
   });
 };

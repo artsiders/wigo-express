@@ -2,46 +2,74 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 
-export async function PATCH(
-  req: Request,
+export async function GET(
+  request: Request,
   { params }: { params: { id: string } }
 ) {
   const session = await auth();
-  const { id } = await params;
 
   if (!session || (session.user.role !== "ADMIN" && session.user.role !== "MODERATOR")) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
   try {
-    const { isApproved } = await req.json();
-
-    const license = await prisma.license.findUnique({
-      where: { id },
+    const driverRequest = await prisma.license.findUnique({
+      where: { id: params.id },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            image: true,
+            bio: true,
+            isDriver: true,
+            createdAt: true,
+          },
+        },
+      },
     });
 
-    if (!license) {
-      return new NextResponse("License not found", { status: 404 });
+    if (!driverRequest) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+
+    return NextResponse.json(driverRequest);
+  } catch (error) {
+    console.error("[DRIVER_GET_ID]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const session = await auth();
+  const { isApproved } = await request.json();
+
+  if (!session || (session.user.role !== "ADMIN" && session.user.role !== "MODERATOR")) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
+  try {
+    const driverRequest = await prisma.license.findUnique({
+      where: { id: params.id },
+    });
+
+    if (!driverRequest) {
+      return new NextResponse("Not Found", { status: 404 });
     }
 
     if (isApproved) {
-      // Approve the driver
       await prisma.user.update({
-        where: { id: license.userId },
+        where: { id: driverRequest.userId },
         data: { isDriver: true },
-      });
-    } else {
-      // If rejected, we might want to delete the license or set a status
-      // For now, let's keep it simple and just set isDriver to false
-      await prisma.user.update({
-        where: { id: license.userId },
-        data: { isDriver: false },
       });
     }
 
-    return NextResponse.json({ success: true, isApproved });
+    return NextResponse.json(driverRequest);
   } catch (error) {
-    console.error("[DRIVERS_PATCH]", error);
+    console.error("[DRIVER_PATCH_ID]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
