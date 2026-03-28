@@ -21,7 +21,10 @@ import RideDetailsSkeleton from "@/components/ui/RideDetailsSkeleton";
 export const formatTime = (dateString: string) => {
   try {
     const d = new Date(dateString);
-    return d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+    return d.toLocaleTimeString("fr-FR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   } catch (e) {
     return dateString;
   }
@@ -30,7 +33,11 @@ export const formatTime = (dateString: string) => {
 export const formatDate = (dateString: string) => {
   try {
     const d = new Date(dateString);
-    return d.toLocaleDateString("fr-FR", { weekday: 'long', day: 'numeric', month: 'long' });
+    return d.toLocaleDateString("fr-FR", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    });
   } catch (e) {
     return dateString;
   }
@@ -56,7 +63,9 @@ export default function RideDetails({ id }: RideDetailsProps) {
       <div className="container mx-auto pt-4 md:pt-12 px-4 sm:px-8 pb-12 text-center flex flex-col items-center gap-4">
         <IoCloseCircleOutline size={64} className="text-red-400" />
         <h2 className="text-2xl font-black text-dark">Trajet introuvable</h2>
-        <p className="text-neutral-500">Ce trajet n'existe plus ou a été supprimé.</p>
+        <p className="text-neutral-500">
+          Ce trajet n'existe plus ou a été supprimé.
+        </p>
         <button
           onClick={() => router.back()}
           className="mt-4 px-6 py-3 bg-dark text-white font-bold rounded-full hover:bg-primary transition-colors"
@@ -72,8 +81,8 @@ export default function RideDetails({ id }: RideDetailsProps) {
   const bookingFee = Math.round(ride.price * 0.1); // 10% fee MVP
 
   // Calculate arrival time based on duration (if duration is "3h" format, could add it). For MVP, we mock the arrival time text if not available
-  const arrivalTime = ride.duration ? `+ ${ride.duration}` : "--:--"; 
-  
+  const arrivalTime = ride.duration ? `+ ${ride.duration}` : "--:--";
+
   return (
     <div className="container mx-auto pt-4 md:pt-12 px-4 sm:px-8 animate-fade-in pb-12">
       {/* Top Navigation */}
@@ -94,7 +103,7 @@ export default function RideDetails({ id }: RideDetailsProps) {
           <div>
             <h1 className="text-4xl md:text-5xl font-black text-dark leading-tight flex items-center flex-wrap gap-4">
               <span>{ride.departureCity}</span>
-              <span className="text-neutral-300">vers</span>
+              <span className="text-neutral-600">{">"}</span>
               <span>{ride.arrivalCity}</span>
             </h1>
             <p className="text-xl font-bold text-primary mt-3 flex items-center gap-2 capitalize">
@@ -127,7 +136,8 @@ export default function RideDetails({ id }: RideDetailsProps) {
                     {ride.departurePlace || "Lieu de départ à confirmer"}
                   </p>
                   <p className="text-sm text-neutral-400 font-medium leading-relaxed max-w-md">
-                    Le conducteur précisera l'adresse exacte après réservation si nécessaire.
+                    Le conducteur précisera l'adresse exacte après réservation
+                    si nécessaire.
                   </p>
                 </div>
               </div>
@@ -162,7 +172,10 @@ export default function RideDetails({ id }: RideDetailsProps) {
               <div className="flex items-center gap-5">
                 <div className="relative w-16 h-16 rounded-full shrink-0 shadow-sm border border-neutral-200">
                   <Image
-                    src={ride.driver.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200"}
+                    src={
+                      ride.driver.image ||
+                      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200"
+                    }
                     alt={ride.driver.name || "Driver"}
                     fill
                     className="object-cover rounded-full transition-transform duration-500"
@@ -179,7 +192,9 @@ export default function RideDetails({ id }: RideDetailsProps) {
                   </h4>
                   <div className="flex items-center gap-1 text-sm font-bold text-neutral-500 mt-1">
                     <IoStar className="text-yellow-400" />
-                    <span className="text-dark">{ride.driver.rating || 5.0}</span>
+                    <span className="text-dark">
+                      {ride.driver.rating || 5.0}
+                    </span>
                     <span className="text-neutral-400 hidden sm:inline">
                       ({ride.driver.reviewsCount || 0} avis)
                     </span>
@@ -197,11 +212,15 @@ export default function RideDetails({ id }: RideDetailsProps) {
                   )}
                   <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold text-neutral-400 uppercase tracking-widest mt-1">
                     {ride.driver.createdAt && (
-                      <span>Membre depuis {new Date(ride.driver.createdAt).getFullYear()}</span>
+                      <span>
+                        Membre depuis{" "}
+                        {new Date(ride.driver.createdAt).getFullYear()}
+                      </span>
                     )}
-                    {ride.driver.createdAt && ride.driver.totalRides !== undefined && (
-                      <span className="w-1 h-1 rounded-full bg-neutral-300"></span>
-                    )}
+                    {ride.driver.createdAt &&
+                      ride.driver.totalRides !== undefined && (
+                        <span className="w-1 h-1 rounded-full bg-neutral-300"></span>
+                      )}
                     {ride.driver.totalRides !== undefined && (
                       <span>{ride.driver.totalRides} trajets publiés</span>
                     )}
@@ -217,10 +236,12 @@ export default function RideDetails({ id }: RideDetailsProps) {
                   Véhicule
                 </h4>
                 <p className="text-lg font-bold text-dark">
-                  {ride.vehicle?.make || "Véhicule"} {ride.vehicle?.model || "Standard"}
+                  {ride.vehicle?.make || "Véhicule"}{" "}
+                  {ride.vehicle?.model || "Standard"}
                 </p>
                 <p className="text-sm font-medium text-neutral-500 mb-2">
-                  {ride.vehicle?.color || "Couleur"} • Année {ride.vehicle?.year || "Inconnue"}
+                  {ride.vehicle?.color || "Couleur"} • Année{" "}
+                  {ride.vehicle?.year || "Inconnue"}
                 </p>
 
                 {ride.vehicle?.features && ride.vehicle.features.length > 0 && (
@@ -273,10 +294,9 @@ export default function RideDetails({ id }: RideDetailsProps) {
                 <h4 className="text-base font-bold text-dark">
                   Politique d'annulation
                 </h4>
-                <p
-                  className="text-sm font-medium text-neutral-500 leading-snug line-clamp-2"
-                >
-                  Annulation gratuite jusqu'à 24h avant le départ, puis frais applicables.
+                <p className="text-sm font-medium text-neutral-500 leading-snug line-clamp-2">
+                  Annulation gratuite jusqu'à 24h avant le départ, puis frais
+                  applicables.
                 </p>
               </div>
             </div>
@@ -408,8 +428,8 @@ export default function RideDetails({ id }: RideDetailsProps) {
               />
               <p className="text-xs font-medium text-neutral-300 leading-relaxed">
                 La contribution de {Math.floor(ride.price)} MAD est préautorisée
-                sur votre carte. Une partie est reversée en cas
-                d'annulation de dernière minute. (frais de réservation: {bookingFee} MAD)
+                sur votre carte. Une partie est reversée en cas d'annulation de
+                dernière minute. (frais de réservation: {bookingFee} MAD)
               </p>
             </div>
 
@@ -431,7 +451,10 @@ export default function RideDetails({ id }: RideDetailsProps) {
                   </button>
                   {isDropdownOpen && (
                     <div className="absolute bottom-full mb-2 left-0 w-full bg-dark border border-neutral-700 shadow-2xl rounded-2xl overflow-hidden z-30">
-                      {Array.from({ length: Math.min(4, ride.availableSeats) }, (_, i) => i + 1).map((num) => (
+                      {Array.from(
+                        { length: Math.min(4, ride.availableSeats) },
+                        (_, i) => i + 1,
+                      ).map((num) => (
                         <button
                           key={num}
                           className="w-full text-left px-5 py-3 hover:bg-neutral-800 text-sm font-bold text-white transition-colors"
@@ -455,7 +478,6 @@ export default function RideDetails({ id }: RideDetailsProps) {
                 Ce trajet est complet.
               </div>
             )}
-            
           </div>
         </aside>
       </div>
