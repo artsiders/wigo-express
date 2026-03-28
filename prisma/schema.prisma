@@ -157,7 +157,7 @@ model License {
 model KycVerification {
   id            String   @id @default(cuid())
   userId        String
-  type          String   // "ID" | "LICENSE"
+  type          String   // "LICENSE" | "IDENTITY_RECTO" | "IDENTITY_VERSO" | "SELFIE"
   status        String   @default("PENDING") // PENDING, APPROVED, REJECTED
   documentUrl   String
 

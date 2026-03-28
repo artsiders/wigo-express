@@ -112,7 +112,9 @@ export default function ProfilePage() {
                 )}
                 {!profile.idVerified && !profile.isDriver && (
                   <div className="flex items-center gap-1.5 py-1 px-3 bg-neutral-700/50 border border-neutral-600 rounded-full text-neutral-400 text-[9px] font-black uppercase tracking-wider">
-                    Profil en attente
+                    {isIdentityPending || isLicensePending
+                      ? "Profil en attente"
+                      : "Membre Standard"}
                   </div>
                 )}
               </div>
@@ -157,6 +159,29 @@ export default function ProfilePage() {
               title="Vérification d'identité en cours"
               description="Votre identité est en cours de validation par notre service de sécurité. Cela peut prendre quelques heures."
               className="shadow-indigo-100/50"
+            />
+          )}
+
+          {!profile.idVerified && !isIdentityPending && (
+            <Alert
+              type="warning"
+              title="Vérification d'identité"
+              description={
+                <div className="flex flex-col md:flex-row md:items-center gap-4">
+                  <p className="flex-1">
+                    Pour renforcer la confiance et accéder à toutes nos
+                    fonctionnalités (dont la conduite), nous vous recommandons
+                    de vérifier votre identité.
+                  </p>
+                  <Link
+                    href="/verify-id"
+                    className="btn-dark px-6 py-2 whitespace-nowrap text-sm h-fit"
+                  >
+                    Vérifier maintenant
+                  </Link>
+                </div>
+              }
+              className="shadow-amber-100/50 border-amber-100"
             />
           )}
 
