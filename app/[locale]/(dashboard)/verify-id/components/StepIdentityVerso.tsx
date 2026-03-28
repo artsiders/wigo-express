@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { KycIdentityFormData } from "@/schemas/driver";
-import { LuUpload, LuCheck, LuX, LuInfo } from "react-icons/lu";
+import { LuUpload, LuCheck, LuX, LuInfo, LuBarcode } from "react-icons/lu";
 import { IoAlert } from "react-icons/io5";
 
 function FieldError({ message }: { message?: string }) {
@@ -65,7 +65,7 @@ export function StepIdentityVerso() {
         <div className="bg-neutral-50 rounded-xl p-8 border border-neutral-100 relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700" />
 
-          <h3 className="text-xl font-black text-dark tracking-tight mb-6 flex items-center gap-3">
+          <h3 className="text-xl font-semibold text-dark tracking-tight mb-6 flex items-center gap-3">
             <span className="w-8 h-8 rounded-lg bg-dark text-white flex items-center justify-center text-sm font-bold">
               2
             </span>
@@ -73,24 +73,54 @@ export function StepIdentityVerso() {
           </h3>
 
           {/* SVG Illustration - ID Card Verso */}
-          <div className="w-full h-full rounded-lg mb-4 bg-neutral-50 border border-neutral-100 relative p-4 flex flex-col items-center justify-center gap-2 shadow-inner">
-            {/* Magnetic Strip */}
-            <div className="w-full h-8 bg-neutral-800/80 rounded mt-2 opacity-90" />
-            <div className="w-full flex-1 flex flex-col gap-2 py-4">
-              <div className="h-2 w-full bg-neutral-200 rounded-full" />
-              <div className="h-10 w-full border-2 border-primary/20 bg-primary/5 rounded-md flex items-center justify-center overflow-hidden">
-                <div className="w-full grid grid-cols-10 gap-1 px-4 opacity-50">
-                  {Array.from({ length: 10 }).map((_, i) => (
-                    <div key={i} className="h-1 bg-primary/20 rounded-full" />
-                  ))}
+
+          <div className="w-full max-w-lg aspect-[1.6] bg-white rounded-3xl relative z-20 mx-auto shadow-sm mb-4">
+            {/* Même filigrane que le recto */}
+            <img
+              src="/images/canada-flag-icon.png"
+              alt="Canada"
+              className="object-contain absolute bottom-0 right-0 w-48 h-48 -rotate-45 opacity-10 pointer-events-none"
+            />
+
+            <div className="border border-neutral-200/60 rounded-2xl p-4 h-full relative z-10 overflow-hidden text-left flex flex-col justify-between bg-white/50 backdrop-blur-xs">
+              {/* Header : Drapeau + Label Verso */}
+              <div className="flex justify-between items-start mb-2">
+                <img
+                  src="/images/canada-flag.png"
+                  alt="Canada"
+                  width={22}
+                  height={22}
+                  className="object-contain"
+                />
+                <div className="text-[10px] font-bold text-neutral-400 tracking-[0.2em] uppercase">
+                  Verso / Back
                 </div>
               </div>
-              <div className="h-2 w-2/3 bg-neutral-200 rounded-full mx-auto" />
-            </div>
-            {/* Overlay focus marks */}
-            <div className="absolute inset-0 border-2 border-primary rounded-lg opacity-20 scale-[1.02]" />
-            <div className="absolute bottom-2 right-2 p-2">
-              <LuCheck className="text-green-500" size={24} />
+
+              {/* Corps du Verso */}
+              <div className="space-y-6 relative z-10">
+                {/* Bande magnétique simulée */}
+                <div className="w-[110%] -ml-8 h-8 sm:h-10 bg-neutral-800/90 rounded-sm mb-2" />
+
+                {/* Informations d'adresse ou autres données */}
+                <div className="space-y-3">
+                  <div>
+                    <div className="text-[8px] font-bold text-neutral-400 uppercase tracking-wider mb-1">
+                      Adresse / Address
+                    </div>
+                    <div className="h-3 w-full bg-neutral-200/60 rounded-md" />
+                    <div className="h-3 w-2/3 bg-neutral-200/60 rounded-md mt-2" />
+                  </div>
+                </div>
+
+                {/* Code-barres simulé avec React Icon */}
+                <div className="flex flex-col items-start justify-start pt-2 opacity-40">
+                  <LuBarcode className="w-fit h-8 text-neutral-800" />
+                  <div className="text-[8px] font-mono tracking-[0.5em] mt-1">
+                    123456789012
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -102,7 +132,7 @@ export function StepIdentityVerso() {
             ].map((text, idx) => (
               <li
                 key={idx}
-                className="flex items-start gap-3 text-sm font-bold text-neutral-500"
+                className="flex items-start gap-3 text-sm font-semibold text-neutral-500"
               >
                 <div className="w-5 h-5 rounded-full bg-green-500/10 text-green-600 flex items-center justify-center shrink-0 mt-0.5">
                   <LuCheck size={12} />
@@ -183,7 +213,7 @@ export function StepIdentityVerso() {
             </div>
 
             <div className="space-y-1">
-              <p className="text-xl font-black text-dark tracking-tight">
+              <p className="text-xl font-semibold text-dark tracking-tight">
                 {isDragActive ? "Lâchez pour uploader" : "Uploader le Verso"}
               </p>
               <p className="text-sm text-neutral-400 font-bold uppercase tracking-widest text-[10px]">

@@ -63,8 +63,8 @@ export function StepIdentityRecto() {
       {/* Visual Guide / Illustration */}
       <div className="space-y-6">
         <div className="bg-neutral-50 rounded-xl p-8 border border-neutral-100 relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700" />
-          <h3 className="text-xl font-black text-dark tracking-tight mb-6 flex items-center gap-3">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700" />
+          <h3 className="text-xl font-semibold text-dark tracking-tight mb-6 flex items-center gap-3">
             <span className="w-8 h-8 rounded-lg bg-dark text-white flex items-center justify-center text-sm font-bold">
               1
             </span>
@@ -79,7 +79,7 @@ export function StepIdentityRecto() {
               className="object-contain absolute bottom-0 right-0 w-48 h-48 -rotate-45 opacity-10 pointer-events-none"
             />
 
-            <div className="border border-neutral-200/60 rounded-2xl p-5 sm:p-7 h-full relative z-10 overflow-hidden text-left flex flex-col justify-between bg-white/50 backdrop-blur-xs">
+            <div className="border border-neutral-200/60 rounded-2xl p-4 h-full relative z-10 overflow-hidden text-left flex flex-col justify-between bg-white/50 backdrop-blur-xs">
               {/* Header Simple */}
               <div className="flex justify-between items-start mb-2">
                 <img
@@ -126,6 +126,7 @@ export function StepIdentityRecto() {
               </div>
             </div>
           </div>
+
           <ul className="space-y-3">
             {[
               "Assurez-vous que les 4 coins sont visibles",
@@ -134,7 +135,7 @@ export function StepIdentityRecto() {
             ].map((text, idx) => (
               <li
                 key={idx}
-                className="flex items-start gap-3 text-sm font-bold text-neutral-500"
+                className="flex items-start gap-3 text-sm font-semibold text-neutral-500"
               >
                 <div className="w-5 h-5 rounded-full bg-green-500/10 text-green-600 flex items-center justify-center shrink-0 mt-0.5">
                   <LuCheck size={12} />
@@ -215,7 +216,7 @@ export function StepIdentityRecto() {
             </div>
 
             <div className="space-y-1">
-              <p className="text-xl font-black text-dark tracking-tight">
+              <p className="text-xl font-semibold text-dark tracking-tight">
                 {isDragActive ? "Lâchez pour uploader" : "Uploader le Recto"}
               </p>
               <p className="text-sm text-neutral-400 font-bold uppercase tracking-widest text-[10px]">
