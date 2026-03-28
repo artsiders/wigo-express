@@ -131,13 +131,13 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
         <label className="font-semibold tracking-widest ml-1 mb-2 block">
           Numéro de téléphone
         </label>
-        <div className="flex gap-4">
+        <div className="flex gap-1">
           {/* Flag selector using btn-white structure */}
           <div className="relative">
             <button
               type="button"
               onClick={() => setShowFlags(!showFlags)}
-              className="h-[60px] px-5 flex items-center gap-3 bg-white border border-neutral-200 rounded-xl hover:bg-neutral-50 hover:border-neutral-300 transition-all font-bold text-dark shadow-sm group"
+              className="h-[58px] px-4 flex items-center gap-3 bg-white border border-neutral-300 rounded-xl hover:bg-neutral-50 hover:border-neutral-300 transition-all font-bold text-dark group"
             >
               <span className="text-2xl">{selectedCountry.flag}</span>
               <span className="font-bold text-neutral-400">+1</span>

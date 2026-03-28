@@ -408,7 +408,7 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
 
       {/* ── Form Panel ─────────────────────────────────────────────────────── */}
       <FormProvider {...methods}>
-        <section className="w-full lg:w-3/4 bg-white rounded-xl p-8 md:p-14 shadow-[0_40px_100px_rgba(0,0,0,0.05)] border border-neutral-100 relative overflow-hidden min-h-[600px]">
+        <section className="w-full lg:w-3/4 bg-white rounded-xl p-6 md:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.05)] border border-neutral-100 relative overflow-hidden min-h-[600px]">
           {/* Global Upload Overlay */}
           {isUploading && (
             <div className="absolute inset-0 bg-white/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-10 text-center animate-in fade-in duration-300">
