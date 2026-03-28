@@ -339,208 +339,209 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
   const isLoading = isUploading || isSubmitting || submitMutation.isPending;
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 items-start w-full">
-      {/* ── Sidebar Navigation ─────────────────────────────────────────────── */}
-      <aside className="w-full lg:w-1/4 bg-white rounded-xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.04)] border border-neutral-100 hidden md:block sticky top-32">
-        <div className="space-y-1">
-          {STEPS.map((step) => {
-            const Icon = step.icon;
-            const isActive = currentStep === step.id;
-            const isCompleted = currentStep > step.id;
-
-            return (
-              <div
-                key={step.id}
-                className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-500 ${
-                  isActive
-                    ? "bg-primary/5 scale-[1.02] border border-primary/10"
-                    : "opacity-50"
-                }`}
+    <div>
+      {!isIdentityPendingOrVerified && currentStep === 1 && (
+        <Alert
+          type="warning"
+          title="Vérification d'identité recommandée"
+          className="mb-8"
+          description={
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <p className="text-sm text-neutral-600 font-medium flex-1">
+                Votre identité doit être validée pour être visible. Vous pouvez
+                commencer ici, mais pensez à compléter votre KYC.
+              </p>
+              <Link
+                href="/verify-id"
+                className="btn-secondary px-6 whitespace-nowrap"
               >
+                Vérifier maintenant
+              </Link>
+            </div>
+          }
+        />
+      )}
+      <div className="flex flex-col lg:flex-row gap-8 items-start w-full">
+        {/* ── Sidebar Navigation ─────────────────────────────────────────────── */}
+        <aside className="w-full lg:w-1/4 bg-white rounded-xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.04)] border border-neutral-100 hidden md:block sticky top-32">
+          <div className="space-y-1">
+            {STEPS.map((step) => {
+              const Icon = step.icon;
+              const isActive = currentStep === step.id;
+              const isCompleted = currentStep > step.id;
+
+              return (
                 <div
-                  className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-sm transition-all duration-500 ${
+                  key={step.id}
+                  className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-500 ${
                     isActive
-                      ? "bg-primary text-white"
-                      : isCompleted
-                        ? "bg-green-500 text-white"
-                        : "bg-neutral-100 text-neutral-400"
+                      ? "bg-primary/5 scale-[1.02] border border-primary/10"
+                      : "opacity-50"
                   }`}
                 >
-                  {isCompleted ? (
-                    <IoCheckmarkCircle size={20} />
-                  ) : (
-                    <Icon size={18} />
-                  )}
-                </div>
-                <div>
-                  <h3
-                    className={`font-bold text-xs uppercase tracking-widest ${isActive ? "text-primary" : "text-dark"}`}
-                  >
-                    {step.label}
-                  </h3>
-                  <p className="text-sm text-neutral-500 tracking-tighter opacity-70">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Vertical Progress Mini-bar */}
-        <div className="mt-10 pt-8 border-t border-neutral-50">
-          <div className="flex justify-between items-center mb-2">
-            <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
-              Avancement
-            </p>
-            <p className="text-xs font-black text-primary">
-              {Math.round(progress)}%
-            </p>
-          </div>
-          <div className="w-full bg-neutral-100 h-1.5 rounded-full overflow-hidden">
-            <div
-              className="bg-primary h-full transition-all duration-700 ease-out shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)]"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-      </aside>
-
-      {/* ── Form Panel ─────────────────────────────────────────────────────── */}
-      <FormProvider {...methods}>
-        <section className="w-full lg:w-3/4 bg-white rounded-xl p-6 md:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.05)] border border-neutral-100 relative overflow-hidden min-h-[600px]">
-          {/* Global Upload Overlay */}
-          {isUploading && (
-            <div className="absolute inset-0 bg-white/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-10 text-center animate-in fade-in duration-300">
-              <div className="w-full max-w-sm space-y-8">
-                <div className="relative w-24 h-24 mx-auto">
-                  <LuLoader
-                    size={96}
-                    className="text-primary/10 animate-spin"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-xl font-black text-primary">
-                      {Math.round(uploadProgress)}%
-                    </span>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-black text-dark tracking-tight">
-                    Traitement sécurisé
-                  </h3>
-                  <p className="text-neutral-500 font-medium italic text-sm">
-                    Transfert de vos documents vers nos serveurs...
-                  </p>
-                </div>
-                <div className="w-full bg-neutral-100 h-2 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-primary transition-all duration-500"
-                    style={{ width: `${uploadProgress}%` }}
-                  />
+                    className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-sm transition-all duration-500 ${
+                      isActive
+                        ? "bg-primary text-white"
+                        : isCompleted
+                          ? "bg-green-500 text-white"
+                          : "bg-neutral-100 text-neutral-400"
+                    }`}
+                  >
+                    {isCompleted ? (
+                      <IoCheckmarkCircle size={20} />
+                    ) : (
+                      <Icon size={18} />
+                    )}
+                  </div>
+                  <div>
+                    <h3
+                      className={`font-bold text-xs uppercase tracking-widest ${isActive ? "text-primary" : "text-dark"}`}
+                    >
+                      {step.label}
+                    </h3>
+                    <p className="text-sm text-neutral-500 tracking-tighter opacity-70">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Vertical Progress Mini-bar */}
+          <div className="mt-10 pt-8 border-t border-neutral-50">
+            <div className="flex justify-between items-center mb-2">
+              <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">
+                Avancement
+              </p>
+              <p className="text-xs font-black text-primary">
+                {Math.round(progress)}%
+              </p>
+            </div>
+            <div className="w-full bg-neutral-100 h-1.5 rounded-full overflow-hidden">
+              <div
+                className="bg-primary h-full transition-all duration-700 ease-out shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)]"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+        </aside>
+
+        {/* ── Form Panel ─────────────────────────────────────────────────────── */}
+        <FormProvider {...methods}>
+          <section className="w-full lg:w-3/4 bg-white rounded-xl p-6 md:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.05)] border border-neutral-100 relative overflow-hidden min-h-[600px]">
+            {/* Global Upload Overlay */}
+            {isUploading && (
+              <div className="absolute inset-0 bg-white/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-10 text-center animate-in fade-in duration-300">
+                <div className="w-full max-w-sm space-y-8">
+                  <div className="relative w-24 h-24 mx-auto">
+                    <LuLoader
+                      size={96}
+                      className="text-primary/10 animate-spin"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-xl font-black text-primary">
+                        {Math.round(uploadProgress)}%
+                      </span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-black text-dark tracking-tight">
+                      Traitement sécurisé
+                    </h3>
+                    <p className="text-neutral-500 font-medium italic text-sm">
+                      Transfert de vos documents vers nos serveurs...
+                    </p>
+                  </div>
+                  <div className="w-full bg-neutral-100 h-2 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-primary transition-all duration-500"
+                      style={{ width: `${uploadProgress}%` }}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-
-          {/* Step content */}
-          <div
-            className="animate-in fade-in slide-in-from-right-4 duration-500"
-            key={currentStep}
-          >
-            {!isIdentityPendingOrVerified && currentStep === 1 && (
-              <Alert
-                type="warning"
-                title="Vérification d'identité recommandée"
-                className="mb-10 shadow-lg shadow-yellow-500/5 border-yellow-200"
-                description={
-                  <div className="flex flex-col md:flex-row items-center gap-6">
-                    <p className="text-sm text-neutral-600 font-medium flex-1">
-                      Votre identité doit être validée pour être visible. Vous
-                      pouvez commencer ici, mais pensez à compléter votre KYC.
-                    </p>
-                    <Link
-                      href="/verify-id"
-                      className="btn-secondary px-6 whitespace-nowrap"
-                    >
-                      Vérifier maintenant
-                    </Link>
-                  </div>
-                }
-              />
             )}
 
-            {currentStep === 1 && (
-              <Step1Personal
-                sessionName={sessionName}
-                sessionEmail={sessionEmail}
-              />
-            )}
-            {currentStep === 2 && <Step2License />}
-            {currentStep === 3 && <Step3Vehicle />}
-            {currentStep === 4 && <Step4Confirm />}
-          </div>
-
-          {/* API error alert */}
-          {apiError && (
-            <div className="mt-10 p-5 bg-red-50 border border-red-100 rounded-xl flex items-center gap-4 text-red-600 animate-in shake-in duration-500">
-              <LuCircleAlert size={28} className="shrink-0" />
-              <p className="font-bold text-sm tracking-tight">{apiError}</p>
-              <button
-                onClick={() => setApiError(null)}
-                className="ml-auto text-red-400 hover:text-red-600 transition-colors"
-              >
-                <LuX size={20} />
-              </button>
-            </div>
-          )}
-
-          {/* Navigation */}
-          <div className="mt-16 pt-10 border-t border-neutral-50 flex flex-row gap-2 items-center justify-between">
-            <button
-              type="button"
-              onClick={handlePrev}
-              disabled={currentStep === 1 || isLoading}
-              className="btn-outlined flex items-center"
+            {/* Step content */}
+            <div
+              className="animate-in fade-in slide-in-from-right-4 duration-500"
+              key={currentStep}
             >
-              <LuChevronLeft size={20} />
-              <span className="hidden sm:inline ml-2">Précédent</span>
-            </button>
-
-            {currentStep === STEPS.length ? (
-              <button
-                type="button"
-                onClick={handleSubmit(onSubmit)}
-                disabled={isLoading}
-                className="btn-primary px-12 py-5 text-lg font-bold"
-              >
-                {isLoading ? (
-                  <>
-                    <LuLoader size={24} className="animate-spin" />
-                    Envoi...
-                  </>
-                ) : (
-                  <>
-                    Soumettre mon profil
-                    <LuShieldCheck size={24} />
-                  </>
-                )}
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={handleNext}
-                className="btn-dark group"
-              >
-                Suivant
-                <LuChevronRight
-                  size={22}
-                  className="group-hover:translate-x-1 transition-transform"
+              {currentStep === 1 && (
+                <Step1Personal
+                  sessionName={sessionName}
+                  sessionEmail={sessionEmail}
                 />
-              </button>
+              )}
+              {currentStep === 2 && <Step2License />}
+              {currentStep === 3 && <Step3Vehicle />}
+              {currentStep === 4 && <Step4Confirm />}
+            </div>
+
+            {/* API error alert */}
+            {apiError && (
+              <div className="mt-10 p-5 bg-red-50 border border-red-100 rounded-xl flex items-center gap-4 text-red-600 animate-in shake-in duration-500">
+                <LuCircleAlert size={28} className="shrink-0" />
+                <p className="font-bold text-sm tracking-tight">{apiError}</p>
+                <button
+                  onClick={() => setApiError(null)}
+                  className="ml-auto text-red-400 hover:text-red-600 transition-colors"
+                >
+                  <LuX size={20} />
+                </button>
+              </div>
             )}
-          </div>
-        </section>
-      </FormProvider>
+
+            {/* Navigation */}
+            <div className="mt-16 pt-10 border-t border-neutral-50 flex flex-row gap-2 items-center justify-between">
+              <button
+                type="button"
+                onClick={handlePrev}
+                disabled={currentStep === 1 || isLoading}
+                className="btn-outlined flex items-center"
+              >
+                <LuChevronLeft size={20} />
+                <span className="hidden sm:inline ml-2">Précédent</span>
+              </button>
+
+              {currentStep === STEPS.length ? (
+                <button
+                  type="button"
+                  onClick={handleSubmit(onSubmit)}
+                  disabled={isLoading}
+                  className="btn-primary px-12 py-5 text-lg font-bold"
+                >
+                  {isLoading ? (
+                    <>
+                      <LuLoader size={24} className="animate-spin" />
+                      Envoi...
+                    </>
+                  ) : (
+                    <>
+                      Soumettre mon profil
+                      <LuShieldCheck size={24} />
+                    </>
+                  )}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="btn-dark group"
+                >
+                  Suivant
+                  <LuChevronRight
+                    size={22}
+                    className="group-hover:translate-x-1 transition-transform"
+                  />
+                </button>
+              )}
+            </div>
+          </section>
+        </FormProvider>
+      </div>
     </div>
   );
 }

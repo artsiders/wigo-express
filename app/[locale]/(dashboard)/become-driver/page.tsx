@@ -27,11 +27,7 @@ export default async function BecomeDriverPage({ searchParams }: Props) {
       />
 
       <SectionHeader
-        title={
-          <>
-            Devenir <span className="text-primary">Conducteur·rice</span>
-          </>
-        }
+        title={<>Devenir Conducteur·rice</>}
         description="Rejoignez la communauté des conducteurs Wigo Express et commencez à partager vos frais de route dès aujourd'hui."
       />
 
