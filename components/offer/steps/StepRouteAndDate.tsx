@@ -6,7 +6,6 @@ import {
   IoLocationOutline,
   IoCalendarOutline,
   IoTimeOutline,
-  IoAlert,
 } from "react-icons/io5";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -104,7 +103,6 @@ const formatSuggestion = (s: LocationSuggestion) => {
 
 export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
   const {
-    register,
     setValue,
     watch,
     trigger,
@@ -115,11 +113,6 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
   const arrival = watch("arrivalCity");
   const date = watch("date");
   const time = watch("time");
-  const departCoords = {
-    lat: watch("departureLat"),
-    lon: watch("departureLng"),
-  };
-  const arriveeCoords = { lat: watch("arrivalLat"), lon: watch("arrivalLng") };
 
   const [activeDropdown, setActiveDropdown] = useState<
     "depart" | "arrivee" | "date" | null
@@ -207,7 +200,6 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
 
       {Object.keys(errors).length > 0 && (
         <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-3">
-          <IoAlert className="text-red-500 mt-0.5 shrink-0" size={20} />
           <div className="flex flex-col">
             <span className="font-bold text-red-900 text-sm">
               Veuillez corriger les erreurs suivantes :
