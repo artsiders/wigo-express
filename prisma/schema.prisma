@@ -24,6 +24,12 @@ model User {
   tripsAsDriver    Trip[]            @relation("DriverTrips")
   bookings         Booking[]
 
+  // Driver MVP Details
+  rating           Float             @default(0)
+  reviewsCount     Int               @default(0)
+  totalRides       Int               @default(0)
+  bio              String?           @db.Text
+
   // KYC and Driver Profiles
   isDriver         Boolean           @default(false)
   idVerified       Boolean           @default(false)
@@ -75,6 +81,8 @@ model Vehicle {
   licensePlate  String   @unique
   color         String?
   seatsCapacity Int      @default(4)
+  photo         String?
+  features      String[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -93,6 +101,16 @@ model Trip {
   totalSeats    Int
   availableSeats Int
   status        String   @default("SCHEDULED") // SCHEDULED, CANCELLED, COMPLETED
+
+  // MVP Ride Details
+  departurePlace String?
+  arrivalPlace   String?
+  duration       String?
+  instantBooking Boolean  @default(false)
+  max2Back       Boolean  @default(false)
+  luggage        Boolean  @default(true)
+  smoking        Boolean  @default(false)
+  pet            Boolean  @default(false)
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

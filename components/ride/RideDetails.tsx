@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MockRideDetails } from "@/lib/mock-ride";
+import { useTripDetails } from "@/hooks/useTrips";
 import {
   IoArrowBack,
   IoCardOutline,
@@ -17,15 +17,67 @@ import {
   IoFlashOutline,
 } from "react-icons/io5";
 
+export const formatTime = (dateString: string) => {
+  try {
+    const d = new Date(dateString);
+    return d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+  } catch (e) {
+    return dateString;
+  }
+};
+
+export const formatDate = (dateString: string) => {
+  try {
+    const d = new Date(dateString);
+    return d.toLocaleDateString("fr-FR", { weekday: 'long', day: 'numeric', month: 'long' });
+  } catch (e) {
+    return dateString;
+  }
+};
+
 interface RideDetailsProps {
-  ride: MockRideDetails;
+  id: string;
 }
 
-export default function RideDetails({ ride }: RideDetailsProps) {
+export default function RideDetails({ id }: RideDetailsProps) {
   const router = useRouter();
   const [seatsToReserve, setSeatsToReserve] = useState(1);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const { data: ride, isLoading, isError } = useTripDetails(id);
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto pt-4 md:pt-12 px-4 sm:px-8 pb-12 flex flex-col justify-center items-center min-h-[50vh] gap-4">
+        <div className="w-16 h-16 rounded-full border-4 border-neutral-200 border-t-primary animate-spin"></div>
+        <p className="text-neutral-500 font-bold">Chargement du trajet...</p>
+      </div>
+    );
+  }
+
+  if (isError || !ride) {
+    return (
+      <div className="container mx-auto pt-4 md:pt-12 px-4 sm:px-8 pb-12 text-center flex flex-col items-center gap-4">
+        <IoCloseCircleOutline size={64} className="text-red-400" />
+        <h2 className="text-2xl font-black text-dark">Trajet introuvable</h2>
+        <p className="text-neutral-500">Ce trajet n'existe plus ou a été supprimé.</p>
+        <button
+          onClick={() => router.back()}
+          className="mt-4 px-6 py-3 bg-dark text-white font-bold rounded-full hover:bg-primary transition-colors"
+        >
+          Retour aux résultats
+        </button>
+      </div>
+    );
+  }
+
+  const departureTime = formatTime(ride.departureDate);
+  const departureDate = formatDate(ride.departureDate);
+  const bookingFee = Math.round(ride.price * 0.1); // 10% fee MVP
+
+  // Calculate arrival time based on duration (if duration is "3h" format, could add it). For MVP, we mock the arrival time text if not available
+  const arrivalTime = ride.duration ? `+ ${ride.duration}` : "--:--"; 
+  
   return (
     <div className="container mx-auto pt-4 md:pt-12 px-4 sm:px-8 animate-fade-in pb-12">
       {/* Top Navigation */}
@@ -45,12 +97,12 @@ export default function RideDetails({ ride }: RideDetailsProps) {
           {/* Header Title */}
           <div>
             <h1 className="text-4xl md:text-5xl font-black text-dark leading-tight flex items-center flex-wrap gap-4">
-              <span>{ride.departure.city.split(",")[0]}</span>
+              <span>{ride.departureCity}</span>
               <span className="text-neutral-300">vers</span>
-              <span>{ride.arrival.city.split(",")[0]}</span>
+              <span>{ride.arrivalCity}</span>
             </h1>
-            <p className="text-xl font-bold text-primary mt-3">
-              {ride.departure.date} à {ride.departure.time}
+            <p className="text-xl font-bold text-primary mt-3 flex items-center gap-2 capitalize">
+              {departureDate} à {departureTime}
             </p>
           </div>
 
@@ -69,17 +121,17 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                 <div className="flex-1 pb-10">
                   <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-1">
                     <span className="text-lg font-black text-dark">
-                      {ride.departure.time.split(" ")[0]}
+                      {departureTime}
                     </span>
                     <h3 className="text-lg font-bold text-dark">
-                      {ride.departure.city}
+                      {ride.departureCity}
                     </h3>
                   </div>
                   <p className="text-base font-medium text-neutral-600 mb-1">
-                    {ride.departure.address}
+                    {ride.departurePlace || "Lieu de départ à confirmer"}
                   </p>
                   <p className="text-sm text-neutral-400 font-medium leading-relaxed max-w-md">
-                    {ride.departure.description}
+                    Le conducteur précisera l'adresse exacte après réservation si nécessaire.
                   </p>
                 </div>
               </div>
@@ -93,17 +145,14 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-1">
                     <span className="text-lg font-black text-dark">
-                      {ride.arrival.time.split(" ")[0]}
+                      {arrivalTime}
                     </span>
                     <h3 className="text-lg font-bold text-dark">
-                      {ride.arrival.city}
+                      {ride.arrivalCity}
                     </h3>
                   </div>
                   <p className="text-base font-medium text-neutral-600 mb-1">
-                    {ride.arrival.address}
-                  </p>
-                  <p className="text-sm text-neutral-400 font-medium leading-relaxed max-w-md">
-                    {ride.arrival.description}
+                    {ride.arrivalPlace || "Point de dépose à confirmer"}
                   </p>
                 </div>
               </div>
@@ -117,8 +166,8 @@ export default function RideDetails({ ride }: RideDetailsProps) {
               <div className="flex items-center gap-5">
                 <div className="relative w-16 h-16 rounded-full shrink-0 shadow-sm border border-neutral-200">
                   <Image
-                    src={ride.driver.photo}
-                    alt={ride.driver.name}
+                    src={ride.driver.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200"}
+                    alt={ride.driver.name || "Driver"}
                     fill
                     className="object-cover rounded-full transition-transform duration-500"
                   />
@@ -130,20 +179,20 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                 </div>
                 <div className="text-left flex-1">
                   <h4 className="text-base font-bold text-dark">
-                    {ride.driver.name}
+                    {ride.driver.name || "Conducteur inconnu"}
                   </h4>
                   <div className="flex items-center gap-1 text-sm font-bold text-neutral-500 mt-1">
                     <IoStar className="text-yellow-400" />
-                    <span className="text-dark">{ride.driver.rating}</span>
+                    <span className="text-dark">{ride.driver.rating || 5.0}</span>
                     <span className="text-neutral-400 hidden sm:inline">
-                      ({ride.driver.reviewsCount} avis)
+                      ({ride.driver.reviewsCount || 0} avis)
                     </span>
                   </div>
                 </div>
               </div>
 
               {/* Additional Driver Info */}
-              {(ride.driver.bio || ride.driver.memberSince) && (
+              {(ride.driver.bio || ride.driver.createdAt) && (
                 <div className="pt-4 border-t border-neutral-100 flex flex-col gap-3">
                   {ride.driver.bio && (
                     <p className="text-sm font-medium text-neutral-500 italic leading-relaxed">
@@ -151,13 +200,13 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                     </p>
                   )}
                   <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold text-neutral-400 uppercase tracking-widest mt-1">
-                    {ride.driver.memberSince && (
-                      <span>Membre depuis {ride.driver.memberSince}</span>
+                    {ride.driver.createdAt && (
+                      <span>Membre depuis {new Date(ride.driver.createdAt).getFullYear()}</span>
                     )}
-                    {ride.driver.memberSince && ride.driver.totalRides && (
+                    {ride.driver.createdAt && ride.driver.totalRides !== undefined && (
                       <span className="w-1 h-1 rounded-full bg-neutral-300"></span>
                     )}
-                    {ride.driver.totalRides && (
+                    {ride.driver.totalRides !== undefined && (
                       <span>{ride.driver.totalRides} trajets publiés</span>
                     )}
                   </div>
@@ -172,34 +221,25 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                   Véhicule
                 </h4>
                 <p className="text-lg font-bold text-dark">
-                  {ride.car.make} {ride.car.model}
+                  {ride.vehicle?.make || "Véhicule"} {ride.vehicle?.model || "Standard"}
                 </p>
                 <p className="text-sm font-medium text-neutral-500 mb-2">
-                  {ride.car.color} • Année {ride.car.year}
+                  {ride.vehicle?.color || "Couleur"} • Année {ride.vehicle?.year || "Inconnue"}
                 </p>
 
-                {/* Additional Car Info */}
-                {(ride.car.licensePlate ||
-                  (ride.car.features && ride.car.features.length > 0)) && (
+                {ride.vehicle?.features && ride.vehicle.features.length > 0 && (
                   <div className="mt-auto pt-2 flex flex-col gap-2">
-                    {ride.car.licensePlate && (
-                      <p className="text-[11px] font-bold text-primary bg-primary/10 w-fit px-2 py-0.5 rounded-md border border-primary/20 uppercase tracking-widest flex items-center gap-1.5">
-                        <IoCarOutline size={12} /> {ride.car.licensePlate}
-                      </p>
-                    )}
-                    {ride.car.features && ride.car.features.length > 0 && (
-                      <p className="text-xs font-medium text-neutral-500 leading-snug">
-                        {ride.car.features.join(" • ")}
-                      </p>
-                    )}
+                    <p className="text-xs font-medium text-neutral-500 leading-snug">
+                      {ride.vehicle.features.join(" • ")}
+                    </p>
                   </div>
                 )}
               </div>
-              {ride.car.photo ? (
+              {ride.vehicle?.photo ? (
                 <div className="relative h-60 sm:h-auto sm:w-1/2 bg-neutral-100 group-hover:bg-neutral-200 transition-colors">
                   <Image
-                    src={ride.car.photo}
-                    alt={ride.car.make}
+                    src={ride.vehicle.photo}
+                    alt={ride.vehicle.make}
                     fill
                     className="object-cover transition-transform duration-700 pointer-events-none"
                   />
@@ -213,18 +253,17 @@ export default function RideDetails({ ride }: RideDetailsProps) {
               )}
             </div>
 
-            {/* Stops */}
+            {/* Stops - Removed for strict MVP, simplfied to Info bloc */}
             <div className="bg-white rounded-xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
                 <IoMapOutline size={24} className="text-primary" />
               </div>
               <div>
                 <h4 className="text-base font-bold text-dark">
-                  Arrêts supplémentaires
+                  Itinéraire direct
                 </h4>
                 <p className="text-sm font-medium text-neutral-500">
-                  Cet itinéraire compte{" "}
-                  {ride.stops.length > 0 ? "plusieurs" : "zéro"} arrêts.
+                  Le trajet est prévu d'être direct vers la destination.
                 </p>
               </div>
             </div>
@@ -240,9 +279,8 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                 </h4>
                 <p
                   className="text-sm font-medium text-neutral-500 leading-snug line-clamp-2"
-                  title={ride.policy.description}
                 >
-                  {ride.policy.description}
+                  Annulation gratuite jusqu'à 24h avant le départ, puis frais applicables.
                 </p>
               </div>
             </div>
@@ -261,14 +299,14 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                 <span className="text-5xl font-black text-white leading-none">
                   {Math.floor(ride.price)}
                 </span>
-                <span className="text-2xl font-bold">{ride.currency}</span>
+                <span className="text-2xl font-bold">MAD</span>
                 <span className="text-sm font-medium text-neutral-400 mb-1 ml-1 uppercase tracking-wider">
                   par place
                 </span>
               </div>
 
               <div className="flex gap-2 mt-4">
-                {ride.amenities.instantBooking && (
+                {ride.instantBooking && (
                   <span className="flex items-center gap-1.5 text-[11px] font-bold text-dark bg-white px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-white/10">
                     <IoFlashOutline
                       size={15}
@@ -277,7 +315,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                     Instantané
                   </span>
                 )}
-                {ride.amenities.max2Back && (
+                {ride.max2Back && (
                   <span className="flex items-center gap-1.5 text-[11px] font-bold text-white bg-white/10 border border-white/20 px-3 py-1.5 rounded-full uppercase tracking-widest">
                     Max 2 / arrière
                   </span>
@@ -294,7 +332,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
               </h4>
 
               <div className="flex flex-wrap gap-2">
-                {ride.amenities.luggage && (
+                {ride.luggage && (
                   <div className="px-3 py-2 bg-neutral-800/50 rounded-lg border border-neutral-700/50 flex items-center gap-2">
                     <svg
                       width="18"
@@ -316,8 +354,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                     </span>
                   </div>
                 )}
-                {/* Visual indicator for non-included if we want, or just omit them. Keeping it clean. */}
-                {!ride.amenities.smoking && (
+                {!ride.smoking && (
                   <div className="px-3 py-2 bg-neutral-800/50 rounded-lg border border-neutral-700/50 flex items-center gap-2">
                     <div className="relative">
                       <svg
@@ -341,7 +378,7 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                     </span>
                   </div>
                 )}
-                {!ride.amenities.pet && (
+                {!ride.pet && (
                   <div className="px-3 py-2 bg-neutral-800/50 rounded-lg border border-neutral-700/50 flex items-center gap-2">
                     <div className="relative">
                       <svg
@@ -374,48 +411,55 @@ export default function RideDetails({ ride }: RideDetailsProps) {
                 className="text-neutral-400 shrink-0 mt-0.5"
               />
               <p className="text-xs font-medium text-neutral-300 leading-relaxed">
-                La contribution de {Math.floor(ride.price)}$ est préautorisée
-                sur votre carte. Une partie du montant est reversée en cas
-                d'annulation de dernière minute. (frais: {ride.bookingFee}$)
+                La contribution de {Math.floor(ride.price)} MAD est préautorisée
+                sur votre carte. Une partie est reversée en cas
+                d'annulation de dernière minute. (frais de réservation: {bookingFee} MAD)
               </p>
             </div>
 
             {/* Booking Controls */}
-            <div className="flex flex-col gap-4 relative z-20">
-              <div className="relative h-14">
-                <button
-                  className="w-full h-full flex items-center justify-between px-5 rounded-full bg-dark-900 border border-neutral-700 hover:border-neutral-500 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                >
-                  <span className="text-sm font-bold text-white">
-                    Réserver {seatsToReserve} place
-                    {seatsToReserve > 1 ? "s" : ""}
-                  </span>
-                  <IoChevronDown
-                    className={`text-white transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
-                  />
+            {ride.availableSeats > 0 ? (
+              <div className="flex flex-col gap-4 relative z-20">
+                <div className="relative h-14">
+                  <button
+                    className="w-full h-full flex items-center justify-between px-5 rounded-full bg-dark-900 border border-neutral-700 hover:border-neutral-500 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  >
+                    <span className="text-sm font-bold text-white">
+                      Réserver {seatsToReserve} place
+                      {seatsToReserve > 1 ? "s" : ""}
+                    </span>
+                    <IoChevronDown
+                      className={`text-white transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {isDropdownOpen && (
+                    <div className="absolute bottom-full mb-2 left-0 w-full bg-dark border border-neutral-700 shadow-2xl rounded-2xl overflow-hidden z-30">
+                      {Array.from({ length: Math.min(4, ride.availableSeats) }, (_, i) => i + 1).map((num) => (
+                        <button
+                          key={num}
+                          className="w-full text-left px-5 py-3 hover:bg-neutral-800 text-sm font-bold text-white transition-colors"
+                          onClick={() => {
+                            setSeatsToReserve(num);
+                            setIsDropdownOpen(false);
+                          }}
+                        >
+                          {num} place{num > 1 ? "s" : ""}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <button className="w-full h-14 bg-primary text-white text-base font-black rounded-full hover:bg-white hover:text-dark transition-colors shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+                  Confirmer & Payer
                 </button>
-                {isDropdownOpen && (
-                  <div className="absolute bottom-full mb-2 left-0 w-full bg-dark border border-neutral-700 shadow-2xl rounded-2xl overflow-hidden z-30">
-                    {[1, 2, 3, 4].map((num) => (
-                      <button
-                        key={num}
-                        className="w-full text-left px-5 py-3 hover:bg-neutral-800 text-sm font-bold text-white transition-colors"
-                        onClick={() => {
-                          setSeatsToReserve(num);
-                          setIsDropdownOpen(false);
-                        }}
-                      >
-                        {num} place{num > 1 ? "s" : ""}
-                      </button>
-                    ))}
-                  </div>
-                )}
               </div>
-              <button className="w-full h-14 bg-primary text-white text-base font-black rounded-full hover:bg-white hover:text-dark transition-colors shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
-                Confirmer & Payer
-              </button>
-            </div>
+            ) : (
+              <div className="p-4 bg-orange-500/10 border border-orange-500/20 text-orange-400 font-bold rounded-2xl text-center">
+                Ce trajet est complet.
+              </div>
+            )}
+            
           </div>
         </aside>
       </div>

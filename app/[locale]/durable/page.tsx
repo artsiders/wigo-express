@@ -16,7 +16,6 @@ import {
   IoChevronForward,
 } from "react-icons/io5";
 
-// NextAuth pour vérifier la session utilisateur
 import { useSession } from "next-auth/react";
 
 if (typeof window !== "undefined") {
@@ -26,7 +25,6 @@ if (typeof window !== "undefined") {
 export default function EcoPage() {
   const container = useRef<HTMLDivElement>(null);
 
-  // Vérifier si un utilisateur est connecté
   const { data: session } = useSession();
 
   useEffect(() => {

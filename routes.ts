@@ -8,6 +8,7 @@ export const privateRoutes = [
   "/profile",
   "/offer",
   "/become-driver",
+  "/my-trajets",
 ];
 
 /**

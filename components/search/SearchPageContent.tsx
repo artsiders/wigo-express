@@ -6,7 +6,8 @@ import RideCard from "@/components/search/RideCard";
 import { IoFilterOutline, IoChevronDown, IoChevronUp } from "react-icons/io5";
 import Alert from "../ui/Alert";
 import RideSearchPopup from "@/components/search/RideSearchPopup";
-import { MOCK_RIDES } from "@/helpers/mock-ride";
+import { useSearchTrips } from "@/hooks/useTrips";
+import { mapToRideData } from "@/lib/ride-mapper";
 
 type SearchPageContentProps = {
   params: {
@@ -143,21 +144,11 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
   // État local pour le popup afin d'éviter les réouvertures basées sur l'URL seule
   const [showPopup, setShowPopup] = useState(params.searchOpen === "true");
 
-  // Filtrage des trajets
-  let filteredRides = MOCK_RIDES;
-  if (depart) {
-    filteredRides = filteredRides.filter((r) =>
-      r.departure.city.toLowerCase().includes(depart.toLowerCase()),
-    );
-  }
-  if (arrivee) {
-    filteredRides = filteredRides.filter((r) =>
-      r.arrival.city.toLowerCase().includes(arrivee.toLowerCase()),
-    );
-  }
-
-  const hasResults = filteredRides.length > 0;
-  const displayRides = hasResults ? filteredRides : MOCK_RIDES;
+  // Requête API pour les trajets
+  const { data: fetchTrips, isLoading, isError } = useSearchTrips({ depart, arrivee, date: dateStr });
+  
+  const displayRides = fetchTrips ? fetchTrips.map(mapToRideData) : [];
+  const hasResults = displayRides.length > 0;
 
   return (
     <>
@@ -217,12 +208,22 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
               )}
             </p>
 
-            {!hasResults && (
+            {!hasResults && !isLoading && (
               <div className="mt-8">
                 <Alert
                   type="warning"
                   title="Aucun trajet ne correspond"
-                  description="Nous n'avons pas trouvé de trajet exact. Voici quelques suggestions populaires."
+                  description="Explorez d'autres dates ou d'autres villes de départ."
+                  className="w-full"
+                />
+              </div>
+            )}
+            {isError && (
+              <div className="mt-8">
+                <Alert
+                  type="error"
+                  title="Erreur de chargement"
+                  description="Impossible de charger les trajets pour le moment."
                   className="w-full"
                 />
               </div>
@@ -230,7 +231,14 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
           </div>
 
           <div className="flex flex-col gap-6 w-full">
-            {displayRides.map((ride) => (
+            {isLoading && (
+              <div className="flex flex-col gap-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-full h-40 bg-neutral-100 animate-pulse rounded-xl"></div>
+                ))}
+              </div>
+            )}
+            {!isLoading && displayRides.map((ride) => (
               <RideCard key={ride.id} ride={ride} />
             ))}
           </div>
