@@ -276,7 +276,7 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
 
   if (isLicensePending || hasLicense) {
     return (
-      <div className="max-w-3xl mx-auto py-10">
+      <div className="max-w-7xl mx-auto py-10">
         <Alert
           type="info"
           title="Demande en cours d'examen"

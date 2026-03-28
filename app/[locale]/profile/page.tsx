@@ -13,6 +13,7 @@ import { Link } from "@/i18n/routing";
 import { IoCameraOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
 import Image from "next/image";
 import Footer from "@/components/Footer";
+import Alert from "@/components/ui/Alert";
 
 // Helper pour extraire les initiales du nom
 function getInitials(name?: string | null): string {
@@ -48,6 +49,16 @@ export default function ProfilePage() {
       window.location.href = "/login?callbackUrl=/profile";
     return null;
   }
+
+  const isLicensePending = profile.kycVerifications?.some(
+    (v) => v.type === "LICENSE" && v.status === "PENDING",
+  );
+
+  const isIdentityPending = profile.kycVerifications?.some(
+    (v) =>
+      ["IDENTITY_RECTO", "IDENTITY_VERSO", "SELFIE"].includes(v.type) &&
+      v.status === "PENDING",
+  );
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 font-sans selection:bg-blue-100">
@@ -168,8 +179,27 @@ export default function ProfilePage() {
 
           {/* Main Content Area */}
           <div className="lg:col-span-8 space-y-8">
+            {/* Status Alerts */}
+            {isLicensePending && (
+              <Alert
+                type="info"
+                title="Dossier conducteur en cours"
+                description="Nous vérifions vos documents de conduite. Vous recevrez une notification d'ici 24 à 48 heures."
+                className="shadow-indigo-100/50"
+              />
+            )}
+
+            {isIdentityPending && (
+              <Alert
+                type="info"
+                title="Vérification d'identité en cours"
+                description="Votre identité est en cours de validation par notre service de sécurité. Cela peut prendre quelques heures."
+                className="shadow-indigo-100/50"
+              />
+            )}
+
             {/* Action Card: Become Driver (if not) */}
-            {!profile.isDriver && (
+            {!profile.isDriver && !isLicensePending && (
               <Link href="/become-driver" className="group block">
                 <div className="bg-primary rounded-2xl p-8 relative overflow-hidden transition-all hover:bg-primary-600">
                   <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
