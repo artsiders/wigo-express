@@ -22,136 +22,121 @@ export default function AdminKycPage() {
   );
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div className="space-y-2">
-          <Link href="/admin" className="inline-flex items-center gap-2 text-primary-500 font-bold text-sm tracking-tight hover:gap-3 transition-all mb-4">
-            <MdArrowBack /> Retour au tableau de bord
+        <div className="space-y-1">
+          <Link href="/admin" className="inline-flex items-center gap-2 text-primary-600 font-bold text-xs uppercase tracking-widest hover:text-primary-700 transition-colors mb-2">
+            <MdArrowBack /> Dashboard
           </Link>
-          <h1 className="text-4xl font-black text-dark-900 tracking-tight flex items-center gap-4">
+          <h1 className="text-3xl font-black text-dark-900 tracking-tight flex items-center gap-3">
             Validations KYC
-            <span className="px-3 py-1 bg-primary-50 text-primary-600 text-xs font-black rounded-lg border border-primary-100 uppercase tracking-widest">
-              {kycRequests?.length || 0} total
+            <span className="px-2 py-0.5 bg-neutral-100 text-neutral-500 text-[10px] font-black rounded-md border border-neutral-200 uppercase tracking-widest">
+              {kycRequests?.length || 0}
             </span>
           </h1>
-          <p className="text-neutral-500 font-medium">
-            Vérifiez l'identité des utilisateurs pour assurer la sécurité de la plateforme.
+          <p className="text-neutral-500 text-sm font-medium">
+            Vérifiez l'identité des utilisateurs pour assurer la sécurité.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-neutral-200 shadow-sm">
+        <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-neutral-200 shadow-sm">
           {["ALL", "PENDING", "APPROVED", "REJECTED"].map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
                 filter === f 
-                  ? "bg-primary-500 text-white shadow-lg shadow-primary-500/20" 
+                  ? "bg-primary-500 text-white shadow-sm" 
                   : "text-neutral-400 hover:bg-neutral-50 hover:text-dark-900"
               }`}
             >
-              {f === "ALL" ? "Tout" : f === "PENDING" ? "En attente" : f === "APPROVED" ? "Approuvé" : "Rejeté"}
+              {f === "ALL" ? "Tout" : f === "PENDING" ? "Attente" : f === "APPROVED" ? "Ok" : "Refus"}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-8">
+      <div className="grid grid-cols-1 gap-6">
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-96 bg-neutral-100 animate-pulse rounded-[32px]" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-64 bg-neutral-100 animate-pulse rounded-xl" />
             ))}
           </div>
         ) : filteredRequests?.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-32 bg-white rounded-[40px] border border-neutral-200 shadow-sm">
-            <div className="p-6 bg-primary-50 rounded-full mb-6">
-              <MdInfo size={48} className="text-primary-500" />
-            </div>
-            <h3 className="text-2xl font-black text-dark-900">Aucune demande trouvée</h3>
-            <p className="text-neutral-500 font-medium mt-2">Essayez de changer les filtres ou revenez plus tard.</p>
+          <div className="flex flex-col items-center justify-center py-20 bg-white rounded-xl border border-neutral-200 shadow-sm">
+            <MdInfo size={32} className="text-neutral-300 mb-4" />
+            <h3 className="text-lg font-bold text-dark-900">Aucune demande</h3>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filteredRequests?.map((request: any) => (
               <div 
                 key={request.id} 
-                className="group relative bg-white rounded-[40px] border border-neutral-100 shadow-sm hover:shadow-2xl hover:shadow-primary-500/5 transition-all duration-500 overflow-hidden"
+                className="group flex flex-col bg-white rounded-xl border border-neutral-200 shadow-sm hover:border-primary-200 transition-all duration-200 overflow-hidden"
               >
-                <div className="relative h-64 w-full bg-neutral-100 group-hover:h-72 transition-all duration-500">
+                {/* Image Section - Clickable */}
+                <Link href={`/admin/kyc/${request.id}`} className="relative h-40 w-full bg-neutral-100 overflow-hidden">
                   <Image 
                     src={request.documentUrl} 
                     alt="Document KYC" 
                     fill 
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="object-cover"
                   />
-                  <div className="absolute top-6 right-6 px-4 py-2 bg-black/40 backdrop-blur-md rounded-full text-white text-[10px] font-black uppercase tracking-widest border border-white/20">
+                  <div className="absolute top-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-sm rounded text-[9px] font-black text-white uppercase tracking-widest border border-white/10">
                     {request.type}
                   </div>
-                  <a 
-                    href={request.documentUrl} 
-                    target="_blank" 
-                    className="absolute bottom-6 left-6 p-3 bg-white/90 backdrop-blur-md text-dark-900 rounded-2xl hover:scale-110 transition-transform shadow-xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 duration-500"
-                  >
-                    <MdLaunch size={20} />
-                  </a>
-                </div>
+                </Link>
 
-                <div className="p-8">
-                  <div className="flex items-center gap-5 mb-8">
-                    <div className="relative w-14 h-14 rounded-2xl overflow-hidden ring-4 ring-primary-500/5 shadow-lg">
+                <div className="p-4 flex flex-col flex-1">
+                  <Link href={`/admin/kyc/${request.id}`} className="flex items-center gap-3 mb-4 group/user">
+                    <div className="relative w-10 h-10 rounded-lg overflow-hidden ring-1 ring-neutral-100">
                       {request.user.image ? (
                         <Image src={request.user.image} alt="User" fill className="object-cover" />
                       ) : (
-                        <div className="w-full h-full bg-primary-500 flex items-center justify-center text-white text-xl font-bold">
+                        <div className="w-full h-full bg-primary-50 text-primary-600 flex items-center justify-center text-sm font-bold">
                           {request.user.name[0]}
                         </div>
                       )}
                     </div>
-                    <div>
-                      <h3 className="text-xl font-black text-dark-900 tracking-tight leading-none mb-1">
+                    <div className="overflow-hidden">
+                      <h3 className="text-sm font-bold text-dark-900 truncate group-hover/user:text-primary-600 transition-colors">
                         {request.user.name}
                       </h3>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">{request.user.email}</p>
+                      <p className="text-[10px] font-medium text-neutral-400 truncate">{request.user.email}</p>
                     </div>
-                  </div>
+                  </Link>
 
-                  <div className="flex flex-col gap-4">
-                    <div className="flex items-center justify-between p-4 rounded-2xl bg-light-300 border border-transparent group-hover:border-neutral-100 transition-colors">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Statut</span>
-                      <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm ${
-                        request.status === "PENDING" ? "bg-amber-100 text-amber-600" : 
-                        request.status === "APPROVED" ? "bg-secondary-100 text-secondary-600" : "bg-red-100 text-red-600"
+                  <div className="mt-auto space-y-2">
+                    <div className="flex items-center justify-between text-[10px] font-bold">
+                      <span className="text-neutral-400 uppercase tracking-widest">Statut</span>
+                      <span className={`px-2 py-0.5 rounded uppercase tracking-widest text-[9px] ${
+                        request.status === "PENDING" ? "bg-amber-50 text-amber-600 border border-amber-100" : 
+                        request.status === "APPROVED" ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-red-50 text-red-600 border border-red-100"
                       }`}>
                         {request.status}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between p-4 rounded-2xl bg-light-300 border border-transparent group-hover:border-neutral-100 transition-colors">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Date</span>
-                      <span className="text-xs font-bold text-dark-800">
-                        {new Date(request.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
-                      </span>
-                    </div>
-                  </div>
 
-                  {request.status === "PENDING" && (
-                    <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-neutral-100">
-                      <button
-                        onClick={() => updateStatus({ id: request.id, status: "REJECTED" })}
-                        disabled={isPending}
-                        className="btn-white text-red-500 hover:text-red-600 hover:bg-red-50 border-neutral-200"
-                      >
-                        <MdClose size={20} /> Rejeter
-                      </button>
-                      <button
-                        onClick={() => updateStatus({ id: request.id, status: "APPROVED" })}
-                        disabled={isPending}
-                        className="btn-primary"
-                      >
-                        <MdCheck size={20} /> Approuver
-                      </button>
-                    </div>
-                  )}
+                    {request.status === "PENDING" && (
+                      <div className="grid grid-cols-2 gap-2 pt-3">
+                        <button
+                          onClick={() => updateStatus({ id: request.id, status: "REJECTED" })}
+                          disabled={isPending}
+                          className="flex items-center justify-center gap-1.5 py-2 px-3 bg-neutral-50 text-neutral-500 rounded-lg hover:bg-red-50 hover:text-red-500 border border-neutral-200 transition-all text-[10px] font-black uppercase tracking-widest disabled:opacity-50"
+                        >
+                          <MdClose size={14} /> Refuser
+                        </button>
+                        <button
+                          onClick={() => updateStatus({ id: request.id, status: "APPROVED" })}
+                          disabled={isPending}
+                          className="flex items-center justify-center gap-1.5 py-2 px-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-all text-[10px] font-black uppercase tracking-widest shadow-sm disabled:opacity-50"
+                        >
+                          <MdCheck size={14} /> OK
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}

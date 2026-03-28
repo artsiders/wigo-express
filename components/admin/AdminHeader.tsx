@@ -11,7 +11,10 @@ export const AdminHeader = () => {
     <header className="fixed top-0 right-0 left-64 h-20 glass-panel flex items-center justify-between px-8 z-40">
       <div className="flex-1 max-w-lg">
         <div className="relative group">
-          <MdSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary-500 transition-colors" size={22} />
+          <MdSearch
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary-500 transition-colors"
+            size={22}
+          />
           <input
             type="text"
             placeholder="Rechercher une demande..."
@@ -31,21 +34,22 @@ export const AdminHeader = () => {
             <span className="text-sm font-bold text-dark-900 uppercase tracking-tight">
               {session?.user?.name || "Administrateur"}
             </span>
+            F
             <span className="text-[10px] text-primary-600 font-bold uppercase tracking-widest">
               {session?.user?.role}
             </span>
           </div>
-          <div className="relative w-11 h-11 ring-2 ring-primary-500/10 rounded-xl overflow-hidden shadow-lg shadow-primary-500/5 transition-transform hover:scale-105">
+          <div className="relative w-11 h-11 ring-2 ring-primary-500/10 rounded-xl overflow-hidden shadow-lg shadow-primary-500/5 transition-transform">
             {session?.user?.image ? (
-              <Image 
-                src={session.user.image} 
-                alt="Profile" 
-                fill 
+              <Image
+                src={session.user.image}
+                alt="Profile"
+                fill
                 className="object-cover"
               />
             ) : (
               <div className="w-full h-full bg-linear-to-tr from-primary-500 to-primary-600 flex items-center justify-center text-white font-bold text-lg">
-                {session?.user?.name?.[0] || 'A'}
+                {session?.user?.name?.[0] || "A"}
               </div>
             )}
           </div>

@@ -10,7 +10,10 @@ export default async function AdminLayout({
 }) {
   const session = await auth();
 
-  if (!session || (session.user.role !== "ADMIN" && session.user.role !== "MODERATOR")) {
+  if (
+    !session ||
+    (session.user.role !== "ADMIN" && session.user.role !== "MODERATOR")
+  ) {
     redirect("/");
   }
 
@@ -19,7 +22,7 @@ export default async function AdminLayout({
       <AdminSidebar />
       <div className="flex-1 ml-64 min-h-screen flex flex-col">
         <AdminHeader />
-        <main className="flex-1 pt-20 px-8 py-10">
+        <main className="flex-1 pt-32 px-8 py-10">
           <div className="max-w-[1400px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out fill-mode-forwards">
             {children}
           </div>
