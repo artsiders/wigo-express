@@ -69,7 +69,23 @@ export async function PATCH(
       });
     }
 
-    return NextResponse.json(driverRequest);
+    const updatedDriver = await prisma.license.findUnique({
+      where: { id },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            image: true,
+            bio: true,
+            isDriver: true,
+            createdAt: true,
+          },
+        },
+      },
+    });
+
+    return NextResponse.json(updatedDriver);
   } catch (error) {
     console.error("[DRIVER_PATCH_ID]", error);
     return new NextResponse("Internal Error", { status: 500 });

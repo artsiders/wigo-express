@@ -56,6 +56,17 @@ export async function PATCH(
     const kycRequest = await prisma.kycVerification.update({
       where: { id },
       data: { status },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            image: true,
+            bio: true,
+            createdAt: true,
+          },
+        },
+      },
     });
 
     if (status === "APPROVED") {
