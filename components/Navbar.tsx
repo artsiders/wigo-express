@@ -349,20 +349,20 @@ export default function Navbar() {
                 {userMenuOpen && (
                   <div className="absolute right-0 mt-3 w-48 bg-white border border-neutral-200 rounded-lg shadow-xl p-2 flex flex-col z-50">
                     <Link
-                      href="/my-trajets"
-                      onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-dark hover:bg-gray-50 rounded-md transition-colors"
-                    >
-                      <IoListOutline size={18} className="text-primary" />
-                      Mes trajets
-                    </Link>
-                    <Link
                       href="/profile"
                       onClick={() => setUserMenuOpen(false)}
                       className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-dark hover:bg-gray-50 rounded-md transition-colors"
                     >
                       <IoPersonOutline size={18} className="text-primary" />
                       Mon compte
+                    </Link>
+                    <Link
+                      href="/my-trajets"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-dark hover:bg-gray-50 rounded-md transition-colors"
+                    >
+                      <IoListOutline size={18} className="text-primary" />
+                      Mes trajets
                     </Link>
                     <div className="h-px bg-gray-100 my-1 mx-2"></div>
                     <button

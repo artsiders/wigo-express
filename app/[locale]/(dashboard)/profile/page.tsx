@@ -14,6 +14,7 @@ import Image from "next/image";
 import Alert from "@/components/ui/Alert";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import SectionHeader from "@/components/ui/SectionHeader";
+import ProfileSkeleton from "@/components/ui/ProfileSkeleton";
 
 // Helper pour extraire les initiales du nom
 function getInitials(name?: string | null): string {
@@ -27,11 +28,7 @@ export default function ProfilePage() {
   const { data: profile, isLoading, error } = useProfile();
 
   if (isLoading) {
-    return (
-      <div className="w-full h-full flex items-center justify-center min-h-[50vh]">
-        <div className="w-10 h-10 border-4 border-zinc-200 border-t-primary rounded-full animate-spin"></div>
-      </div>
-    );
+    return <ProfileSkeleton />;
   }
 
   if (error || !profile) {

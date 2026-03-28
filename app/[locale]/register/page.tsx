@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useLayoutEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import {
@@ -14,7 +14,6 @@ import {
 import { signIn } from "next-auth/react";
 import AlertDialog, { AlertType } from "@/components/ui/AlertDialog";
 import Alert from "@/components/ui/Alert";
-import gsap from "gsap";
 import GoogleLoginButton from "@/components/auth/GoogleLoginButton";
 
 export default function RegisterPage() {
@@ -32,22 +31,6 @@ export default function RegisterPage() {
 
   const formRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.fromTo(
-        formRef.current,
-        { opacity: 0, x: -50 },
-        { opacity: 1, x: 0, duration: 1.2, ease: "power3.out" },
-      );
-      gsap.fromTo(
-        imageRef.current,
-        { scale: 1.1, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.5, ease: "power2.out" },
-      );
-    });
-    return () => ctx.revert();
-  }, []);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -176,7 +159,10 @@ export default function RegisterPage() {
                 Rejoignez la communauté Wigo Express en quelques clics.
               </p>
 
-              <GoogleLoginButton text="S'inscrire avec Google" disabled={loading} />
+              <GoogleLoginButton
+                text="S'inscrire avec Google"
+                disabled={loading}
+              />
 
               <div className="flex items-center gap-4 my-8">
                 <div className="flex-1 h-px bg-neutral-100"></div>
@@ -187,12 +173,14 @@ export default function RegisterPage() {
               </div>
 
               {alertInfo.isOpen && (
-                <div className="mb-6 animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="mb-6">
                   <Alert
                     type={alertInfo.type}
                     title={alertInfo.title}
                     description={alertInfo.desc}
-                    onClose={() => setAlertInfo({ ...alertInfo, isOpen: false })}
+                    onClose={() =>
+                      setAlertInfo({ ...alertInfo, isOpen: false })
+                    }
                   />
                 </div>
               )}

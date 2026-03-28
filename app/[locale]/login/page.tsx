@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
@@ -14,7 +14,6 @@ import {
 import { signIn } from "next-auth/react";
 import AlertDialog, { AlertType } from "@/components/ui/AlertDialog";
 import Alert from "@/components/ui/Alert";
-import gsap from "gsap";
 import GoogleLoginButton from "@/components/auth/GoogleLoginButton";
 
 export default function LoginPage() {
@@ -52,21 +51,7 @@ export default function LoginPage() {
   const formRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.fromTo(
-        formRef.current,
-        { opacity: 0, x: 50 },
-        { opacity: 1, x: 0, duration: 1.2, ease: "power3.out" },
-      );
-      gsap.fromTo(
-        imageRef.current,
-        { scale: 1.1, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.5, ease: "power2.out" },
-      );
-    });
-    return () => ctx.revert();
-  }, []);
+  // Animation de reveal supprimée (ni scale, ni opacity, ni gsap, ni animation sur reveal)
 
   const handleCredentialsLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -168,12 +153,14 @@ export default function LoginPage() {
               </div>
 
               {alertInfo.isOpen && (
-                <div className="mb-6 animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="mb-6">
                   <Alert
                     type={alertInfo.type}
                     title={alertInfo.title}
                     description={alertInfo.desc}
-                    onClose={() => setAlertInfo({ ...alertInfo, isOpen: false })}
+                    onClose={() =>
+                      setAlertInfo({ ...alertInfo, isOpen: false })
+                    }
                   />
                 </div>
               )}
@@ -235,7 +222,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-dark text-white rounded-lg py-4 font-bold mt-4 shadow-xl shadow-dark/20 hover:bg-primary hover:shadow-primary/30 transition-all active:scale-[0.98] disabled:opacity-70 flex justify-center items-center h-14"
+                  className="w-full bg-dark text-white rounded-lg py-4 font-bold mt-4 shadow-xl shadow-dark/20 hover:bg-primary hover:shadow-primary/30 transition-all disabled:opacity-70 flex justify-center items-center h-14"
                 >
                   {loading ? (
                     <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
