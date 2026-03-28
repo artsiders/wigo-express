@@ -3,13 +3,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { OfferRideFormData } from "@/schemas/offer";
-import {
-  LuUsers,
-  LuDollarSign,
-  LuShieldCheck,
-  LuDog,
-  LuZap,
-} from "react-icons/lu";
+import { LuUsers, LuShieldCheck, LuDog, LuZap } from "react-icons/lu";
 
 export default function StepOptionsAndPrice({
   onNext,
@@ -22,6 +16,13 @@ export default function StepOptionsAndPrice({
   const max2Back = watch("max2Back");
   const instantBooking = watch("instantBooking");
   const petFriendly = watch("petFriendly");
+
+  // Helper: Ensure manual entry is always a number in bounds [1, 200]
+  const handlePriceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/[^0-9]/g, "");
+    let numeric = Math.max(1, Math.min(200, Number(value)));
+    setValue("price", isNaN(numeric) ? 1 : numeric);
+  };
 
   return (
     <div className="flex flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -76,7 +77,7 @@ export default function StepOptionsAndPrice({
           <span className="block mb-6 text-dark font-semibold tracking-tight">
             Prix par passager
           </span>
-          <div className="flex items-center gap-8 mb-4">
+          <div className="flex items-center gap-4 mb-4">
             <button
               type="button"
               onClick={() => setValue("price", Math.max(1, price - 1))}
@@ -85,8 +86,18 @@ export default function StepOptionsAndPrice({
               -
             </button>
             <div className="text-6xl font-semibold flex items-baseline gap-1 text-primary">
-              <span className="text-3xl font-medium text-dark">$</span>
-              {price}
+              <input
+                type="number"
+                min={1}
+                max={200}
+                value={price}
+                step={1}
+                onChange={handlePriceInputChange}
+                className="input text-primary font-bold text-2xl"
+                style={{ MozAppearance: "textfield" }}
+                inputMode="numeric"
+                pattern="[0-9]*"
+              />
             </div>
             <button
               type="button"

@@ -101,7 +101,7 @@ export default function StepSummary() {
             <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-2">
               Départ prévu
             </span>
-            <span className="font-bold text-dark italic">
+            <span className="font-bold text-dark">
               {date
                 ? format(new Date(date), "EEEE d MMMM", { locale: fr })
                 : "Non définie"}{" "}
@@ -113,7 +113,7 @@ export default function StepSummary() {
               <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-2">
                 Economie
               </span>
-              <span className="font-bold text-dark italic">
+              <span className="font-bold text-dark">
                 {seats} passager{seats > 1 ? "s" : ""}{" "}
                 <span className="text-neutral-300 mx-1">/</span>{" "}
                 <span className="text-primary">{price}$ CAD</span>
