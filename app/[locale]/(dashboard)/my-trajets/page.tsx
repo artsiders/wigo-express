@@ -7,8 +7,9 @@ import {
   IoTicketOutline,
   IoChevronForward,
 } from "react-icons/io5";
-import Image from "next/image";
 import { Link } from "@/i18n/routing";
+import Breadcrumb from "@/components/ui/Breadcrumb";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { useMyTrajets, TripProvider } from "@/hooks/useTrips";
 import Alert from "@/components/ui/Alert";
 import RideCardSkeleton from "@/components/ui/RideCardSkeleton";
@@ -65,35 +66,17 @@ export default function MyTrajetsPage() {
   const currentRides = activeTab === "published" ? publishedRides : bookedRides;
 
   return (
-    <main className="container mx-auto mt-8 md:mt-12 px-4 md:px-8 lg:px-12 pb-24">
-      {/* Header Premium */}
-      <div className="bg-primary text-white rounded-xl p-6 lg:p-8 mb-12 relative overflow-hidden shadow-2xl">
-        <Image
-          src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=2000"
-          alt="Abstract Highway"
-          fill
-          className="object-cover opacity-30 mix-blend-overlay"
-          priority
-        />
-        <div className="absolute inset-0 bg-linear-to-r from-primary via-primary/70 to-transparent"></div>
+    <div className="flex flex-col gap-6 w-full max-w-5xl">
+      <Breadcrumb items={[{ label: "Accueil", href: "/" }, { label: "Mes Trajets" }]} />
+      
+      <SectionHeader 
+        title="Mes trajets" 
+        description="Consultez l'historique de vos trajets proposés et gérez vos réservations passées et à venir avec fluidité."
+      />
 
-        <div className="relative z-10 flex flex-col justify-between items-start gap-6 max-w-3xl">
-          <div>
-            <div className="w-12 h-1 bg-white mb-6 rounded-full opacity-60"></div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 tracking-tight">
-              Mes trajets
-            </h1>
-            <p className="text-white/90 text-lg font-medium max-w-xl leading-relaxed">
-              Consultez l'historique de vos trajets proposés et gérez vos
-              réservations passées et à venir avec fluidité.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start w-full">
+      <div className="flex flex-col xl:flex-row gap-8 items-start w-full">
         {/* Colonne Gauche: Rides List */}
-        <div className="w-full lg:w-8/12 flex flex-col">
+        <div className="w-full xl:w-8/12 flex flex-col">
           {/* Tabs */}
           <div className="flex items-center gap-4 mb-10 bg-white p-2 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-neutral-100 w-fit">
             <button
@@ -157,7 +140,7 @@ export default function MyTrajetsPage() {
         </div>
 
         {/* Colonne Droite: Statistiques & Actions (Sticky) */}
-        <div className="w-full lg:w-4/12 flex flex-col gap-6 sticky top-28">
+        <div className="w-full xl:w-4/12 flex flex-col gap-6 sticky top-28">
           <div className="bg-white rounded-xl p-8 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-neutral-100 flex flex-col items-center text-center">
             <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-6">
               <IoCarSportOutline className="text-3xl text-primary" />
@@ -177,6 +160,6 @@ export default function MyTrajetsPage() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

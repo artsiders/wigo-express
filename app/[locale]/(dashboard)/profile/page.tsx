@@ -1,7 +1,6 @@
 "use client";
 
 import { useProfile } from "@/hooks/useProfile";
-import Navbar from "@/components/Navbar";
 import {
   LuShieldCheck,
   LuCar,
@@ -14,6 +13,8 @@ import { IoCameraOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
 import Image from "next/image";
 import Footer from "@/components/Footer";
 import Alert from "@/components/ui/Alert";
+import Breadcrumb from "@/components/ui/Breadcrumb";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 // Helper pour extraire les initiales du nom
 function getInitials(name?: string | null): string {
@@ -28,18 +29,8 @@ export default function ProfilePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-light-300 text-dark flex flex-col">
-        <Navbar />
-        <div className="pt-38 container mx-auto px-6 w-full flex-1 animate-pulse">
-          <div className="h-8 w-64 bg-zinc-200 rounded mb-8"></div>
-          <div className="grid lg:grid-cols-4 gap-6">
-            <div className="lg:col-span-1 bg-white h-64 border border-zinc-200 rounded-xl"></div>
-            <div className="lg:col-span-3 space-y-6">
-              <div className="bg-white h-32 border border-zinc-200 rounded-xl"></div>
-              <div className="bg-white h-96 border border-zinc-200 rounded-xl"></div>
-            </div>
-          </div>
-        </div>
+      <div className="w-full h-full flex items-center justify-center min-h-[50vh]">
+        <div className="w-10 h-10 border-4 border-zinc-200 border-t-primary rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -61,28 +52,19 @@ export default function ProfilePage() {
   );
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 font-sans selection:bg-blue-100">
-      <Navbar />
-
-      <main className="pt-38 pb-16 container mx-auto px-4 sm:px-6">
-        {/* Header Section */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight text-zinc-900">
-              Mon Profil{" "}
-              <span className="text-zinc-400 font-normal">/ Paramètres</span>
-            </h1>
-            <p className="text-zinc-500 mt-1">
-              Gérez vos informations personnelles et vos préférences de trajet.
-            </p>
-          </div>
-          <div className="flex gap-3">
-            <button className="px-4 py-2 text-sm font-medium bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors flex items-center gap-2 text-zinc-700">
-              <LuSettings size={16} />
-              Modifier
-            </button>
-          </div>
-        </header>
+    <div className="flex flex-col gap-6">
+      <Breadcrumb items={[{ label: "Accueil", href: "/" }, { label: "Mon Profil" }]} />
+      
+      <SectionHeader 
+        title="Mon Profil" 
+        description="Gérez vos informations personnelles et vos préférences de trajet."
+        action={
+          <button className="px-4 py-2 text-sm font-medium bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors flex items-center gap-2 text-zinc-700">
+            <LuSettings size={16} />
+            Modifier
+          </button>
+        }
+      />
 
         <div className="grid lg:grid-cols-12 gap-8">
           {/* Left Sidebar: User Quick Info */}
@@ -286,8 +268,6 @@ export default function ProfilePage() {
             </section>
           </div>
         </div>
-      </main>
-      <Footer />
     </div>
   );
 }

@@ -2,8 +2,8 @@
 
 import { useProfile } from "@/hooks/useProfile";
 import { useAddVehicle, useDeleteVehicle, CreateVehiclePayload } from "@/hooks/useVehicles";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/ui/Breadcrumb";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { Link } from "@/i18n/routing";
 import {
   IoArrowBack,
@@ -78,21 +78,14 @@ export default function VehiclesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 font-sans">
-      <Navbar />
-
-      <main className="pt-38 pb-16 container mx-auto px-4 sm:px-6 max-w-4xl">
-        <Link href="/profile" className="flex items-center gap-2 text-zinc-500 hover:text-dark mb-8 w-fit transition-colors">
-          <IoArrowBack />
-          <span className="text-sm font-bold">Retour au profil</span>
-        </Link>
-
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-          <div>
-            <h1 className="text-3xl font-black text-zinc-900">Mes véhicules</h1>
-            <p className="text-zinc-500 mt-1">Gérez les véhicules que vous utilisez pour vos trajets.</p>
-          </div>
-          {!showAddForm && (
+    <div className="flex flex-col gap-6">
+      <Breadcrumb items={[{ label: "Accueil", href: "/" }, { label: "Mon Profil", href: "/profile" }, { label: "Mes Véhicules" }]} />
+      
+      <SectionHeader 
+        title="Mes Véhicules" 
+        description="Gérez les véhicules que vous utilisez pour vos trajets."
+        action={
+          !showAddForm && (
             <button 
               onClick={() => setShowAddForm(true)}
               className="px-6 py-3 bg-dark text-white font-bold rounded-full hover:bg-primary transition-colors flex items-center gap-2 shadow-xl shadow-dark/10"
@@ -100,8 +93,9 @@ export default function VehiclesPage() {
               <IoAddOutline size={20} />
               Ajouter un véhicule
             </button>
-          )}
-        </div>
+          )
+        }
+      />
 
         {showAddForm ? (
           <div className="bg-white rounded-2xl p-6 md:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-zinc-200 animate-fade-in relative">
@@ -241,8 +235,6 @@ export default function VehiclesPage() {
           </div>
         )}
 
-      </main>
-      <Footer />
     </div>
   );
 }
