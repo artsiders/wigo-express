@@ -23,6 +23,17 @@ export interface UserProfile {
   idVerified: boolean;
   license: License | null;
   kycVerifications: KycVerification[];
+  vehicles?: {
+    id: string;
+    make: string;
+    model: string;
+    year: number;
+    color: string | null;
+    licensePlate: string;
+    seatsCapacity: number;
+    photo: string | null;
+    features: string[];
+  }[];
 }
 
 export const useProfile = () => {

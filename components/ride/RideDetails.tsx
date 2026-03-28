@@ -16,6 +16,7 @@ import {
   IoShieldCheckmark,
   IoFlashOutline,
 } from "react-icons/io5";
+import RideDetailsSkeleton from "@/components/ui/RideDetailsSkeleton";
 
 export const formatTime = (dateString: string) => {
   try {
@@ -47,12 +48,7 @@ export default function RideDetails({ id }: RideDetailsProps) {
   const { data: ride, isLoading, isError } = useTripDetails(id);
 
   if (isLoading) {
-    return (
-      <div className="container mx-auto pt-4 md:pt-12 px-4 sm:px-8 pb-12 flex flex-col justify-center items-center min-h-[50vh] gap-4">
-        <div className="w-16 h-16 rounded-full border-4 border-neutral-200 border-t-primary animate-spin"></div>
-        <p className="text-neutral-500 font-bold">Chargement du trajet...</p>
-      </div>
-    );
+    return <RideDetailsSkeleton />;
   }
 
   if (isError || !ride) {
@@ -171,7 +167,7 @@ export default function RideDetails({ id }: RideDetailsProps) {
                     fill
                     className="object-cover rounded-full transition-transform duration-500"
                   />
-                  {ride.driver.isVerified && (
+                  {ride.driver.idVerified && (
                     <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm">
                       <IoShieldCheckmark className="text-green-500 text-base" />
                     </div>

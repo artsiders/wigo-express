@@ -226,30 +226,40 @@ export default function ProfilePage() {
               <section className="bg-white border border-zinc-200 rounded-xl">
                 <div className="px-6 py-4 border-b border-zinc-100 flex justify-between items-center">
                   <h3 className="font-bold text-zinc-900">
-                    Véhicule enregistré
+                    Véhicules enregistrés
                   </h3>
-                  <button className="text-xs font-bold text-primary hover:text-blue-700">
+                  <Link href="/profile/vehicles" className="text-xs font-bold text-primary hover:text-blue-700">
                     Gérer
-                  </button>
+                  </Link>
                 </div>
-                <div className="p-6 flex items-center gap-6">
-                  <div className="w-16 h-16 bg-zinc-50 border border-zinc-100 rounded flex items-center justify-center text-zinc-400">
-                    <LuCar size={32} />
+                
+                {(!profile.vehicles || profile.vehicles.length === 0) ? (
+                  <div className="p-6 flex items-center justify-between">
+                    <p className="text-sm text-zinc-500">Aucun véhicule enregistré.</p>
+                    <Link href="/profile/vehicles" className="text-xs font-bold px-3 py-1.5 bg-zinc-100 rounded-md">Ajouter</Link>
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-bold text-zinc-900">
-                      Véhicule non spécifié
-                    </p>
-                    <p className="text-xs text-zinc-500 uppercase tracking-tighter">
-                      Immatriculation en attente
-                    </p>
-                    <div className="mt-2 flex gap-2">
-                      <span className="px-2 py-0.5 bg-zinc-100 text-[10px] font-bold text-zinc-600 rounded">
-                        3 Places disponibles
-                      </span>
+                ) : (
+                  profile.vehicles.map(v => (
+                    <div key={v.id} className="p-6 flex items-center gap-6 border-b border-zinc-50 last:border-0">
+                      <div className="w-16 h-16 bg-zinc-50 border border-zinc-100 rounded flex items-center justify-center text-zinc-400">
+                        <LuCar size={32} />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-bold text-zinc-900">
+                          {v.make} {v.model}
+                        </p>
+                        <p className="text-xs text-zinc-500 uppercase tracking-tighter">
+                          {v.licensePlate}
+                        </p>
+                        <div className="mt-2 flex gap-2">
+                          <span className="px-2 py-0.5 bg-zinc-100 text-[10px] font-bold text-zinc-600 rounded">
+                            {v.seatsCapacity} Places
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  ))
+                )}
               </section>
             )}
 

@@ -3,10 +3,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = params.id;
+    const { id } = await params;
     if (!id) {
       return NextResponse.json({ error: "Missing Trip ID" }, { status: 400 });
     }
@@ -37,7 +37,7 @@ export async function GET(
 
     return NextResponse.json(trip);
   } catch (error) {
-    console.error(`GET /api/trips/[id] ${params.id} error:`, error);
+    console.error(`GET /api/trips/[id] error:`, error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

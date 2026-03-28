@@ -8,6 +8,7 @@ import Alert from "../ui/Alert";
 import RideSearchPopup from "@/components/search/RideSearchPopup";
 import { useSearchTrips } from "@/hooks/useTrips";
 import { mapToRideData } from "@/lib/ride-mapper";
+import RideCardSkeleton from "@/components/ui/RideCardSkeleton";
 
 type SearchPageContentProps = {
   params: {
@@ -234,7 +235,7 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
             {isLoading && (
               <div className="flex flex-col gap-4">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-full h-40 bg-neutral-100 animate-pulse rounded-xl"></div>
+                  <RideCardSkeleton key={i} />
                 ))}
               </div>
             )}

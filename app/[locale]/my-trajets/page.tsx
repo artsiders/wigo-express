@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useMyTrajets, TripProvider } from "@/hooks/useTrips";
 import Alert from "@/components/ui/Alert";
+import RideCardSkeleton from "@/components/ui/RideCardSkeleton";
 
 // Format API date to simple time string (e.g. "08:00")
 const formatTime = (dateString: string) => {
@@ -124,7 +125,7 @@ export default function MyTrajetsPage() {
             {isLoading && (
               <div className="flex flex-col gap-4">
                 {[1, 2].map(i => (
-                  <div key={i} className="w-full h-40 bg-neutral-100 animate-pulse rounded-xl"></div>
+                  <RideCardSkeleton key={i} />
                 ))}
               </div>
             )}
