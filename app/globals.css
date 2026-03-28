@@ -172,25 +172,50 @@
   .btn-primary {
     @apply bg-primary-500 text-white font-bold text-base px-6 py-3 rounded-xl hover:bg-primary-600 transition-colors shadow-xl shadow-primary-500/20 flex justify-center items-center gap-2;
   }
+  .btn-primary:disabled,
+  .btn-primary[disabled],
+  .btn-primary[aria-disabled="true"] {
+    @apply opacity-60 cursor-not-allowed bg-primary-300 hover:bg-primary-300 pointer-events-none;
+  }
 
   /* Bouton Secondaire (Bleu foncé) */
   .btn-secondary {
     @apply bg-secondary-600 text-white font-bold text-base px-6 py-3 rounded-xl hover:bg-dark transition-colors shadow-lg flex justify-center items-center gap-2;
+  }
+  .btn-secondary:disabled,
+  .btn-secondary[disabled],
+  .btn-secondary[aria-disabled="true"] {
+    @apply opacity-60 cursor-not-allowed bg-secondary-300 hover:bg-secondary-300 pointer-events-none;
   }
 
   /* Bouton Noir */
   .btn-dark {
     @apply bg-dark-950 text-white font-bold text-base px-6 py-3 rounded-xl hover:bg-primary transition-colors shadow-lg shadow-black/20 flex justify-center items-center gap-2;
   }
+  .btn-dark:disabled,
+  .btn-dark[disabled],
+  .btn-dark[aria-disabled="true"] {
+    @apply opacity-60 cursor-not-allowed bg-dark-400 hover:bg-dark-400 pointer-events-none;
+  }
 
   /* Bouton Blanc */
   .btn-white {
     @apply bg-white text-dark-900 font-bold text-base px-6 py-3 rounded-xl border border-neutral-200 hover:bg-light-400 hover:border-neutral-300 transition-colors shadow flex justify-center items-center gap-2;
   }
+  .btn-white:disabled,
+  .btn-white[disabled],
+  .btn-white[aria-disabled="true"] {
+    @apply opacity-60 cursor-not-allowed bg-neutral-100 text-neutral-400 hover:bg-neutral-100 pointer-events-none;
+  }
 
   /* Bouton Outline (bordure sur primaire) */
   .btn-outlined {
     @apply bg-transparent text-primary-500 font-semibold text-base px-6 py-3 rounded-xl border border-primary-200 hover:bg-primary-100/40 hover:border-primary-300 transition-colors flex justify-center items-center gap-2;
+  }
+  .btn-outlined:disabled,
+  .btn-outlined[disabled],
+  .btn-outlined[aria-disabled="true"] {
+    @apply opacity-60 cursor-not-allowed border-primary-100 text-primary-200 bg-primary-50 hover:bg-primary-50 pointer-events-none;
   }
 
   /* Bouton Désactivé (pour exemple) */
