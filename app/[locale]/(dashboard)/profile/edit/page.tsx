@@ -14,7 +14,7 @@ import {
 } from "react-icons/lu";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import SectionHeader from "@/components/ui/SectionHeader";
-import ProfileSkeleton from "@/components/ui/ProfileSkeleton";
+import ProfileEditSkeleton from "@/components/ui/ProfileEditSkeleton";
 import LargeInput from "@/components/ui/LargeInput";
 import Alert from "@/components/ui/Alert";
 import ProfileImageUpload from "@/components/profile/ProfileImageUpload";
@@ -71,7 +71,7 @@ export default function ProfileEditPage() {
   }, [profile, reset]);
 
   if (isLoading) {
-    return <ProfileSkeleton />;
+    return <ProfileEditSkeleton />;
   }
 
   if (isError || !profile) {

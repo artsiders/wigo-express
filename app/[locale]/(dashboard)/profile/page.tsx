@@ -56,20 +56,23 @@ export default function ProfilePage() {
       <SectionHeader
         title="Mon Profil"
         description="Gérez vos informations personnelles et vos préférences de trajet."
-        action={
-          <Link href="/profile/edit" className="btn-white">
-            <LuSettings size={16} />
-            Modifier
-          </Link>
-        }
       />
 
       <div className="grid lg:grid-cols-12 gap-8">
         {/* Left Sidebar: User Quick Info */}
         <aside className="lg:col-span-4 space-y-6">
-          <div className="bg-dark rounded-2xl p-8 shadow-2xl border border-neutral-800 text-white relative overflow-hidden">
+          <div className="bg-dark rounded-2xl p-8 shadow-2xl border border-neutral-800 text-white relative overflow-hidden group">
             {/* Décoration en arrière-plan */}
             <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+
+            {/* Bouton Modifier déplacé ici */}
+            <Link
+              href="/profile/edit"
+              className="absolute top-6 right-6 p-2 bg-neutral-800 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-700 transition-all z-20"
+              title="Modifier le profil"
+            >
+              <LuSettings size={18} />
+            </Link>
 
             <div className="relative z-10 flex flex-col items-center text-center">
               <div className="relative group cursor-pointer w-32 h-32">
