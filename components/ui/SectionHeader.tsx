@@ -1,8 +1,8 @@
 import React from "react";
 
 export interface SectionHeaderProps {
-  title: string;
-  description?: string;
+  title: React.ReactNode;
+  description?: React.ReactNode;
   action?: React.ReactNode;
   bgImageUrl?: string;
 }

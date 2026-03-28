@@ -193,7 +193,7 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
   // Detailed Skeleton (Avoid jumps/flashes)
   if (isLoadingStatus) {
     return (
-      <div className="flex flex-col lg:flex-row gap-8 items-start w-full container mx-auto px-2 md:px-0 opacity-60">
+      <div className="flex flex-col lg:flex-row gap-8 items-start w-full opacity-60">
         {/* Sidebar Skeleton */}
         <aside className="w-full lg:w-1/4 bg-white rounded-xl p-8 border border-neutral-100 hidden md:block">
           <div className="space-y-2">
@@ -339,7 +339,7 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
   const isLoading = isUploading || isSubmitting || submitMutation.isPending;
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 items-start w-full container mx-auto px-2 md:px-0">
+    <div className="flex flex-col lg:flex-row gap-8 items-start w-full">
       {/* ── Sidebar Navigation ─────────────────────────────────────────────── */}
       <aside className="w-full lg:w-1/4 bg-white rounded-xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.04)] border border-neutral-100 hidden md:block sticky top-32">
         <div className="space-y-1">
