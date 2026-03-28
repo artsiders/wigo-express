@@ -23,6 +23,7 @@ import {
   IoShieldCheckmarkOutline,
   IoEarthOutline,
   IoSunnyOutline,
+  IoCarSportOutline,
 } from "react-icons/io5";
 import gsap from "gsap";
 import { useSession, signOut } from "next-auth/react";
@@ -365,6 +366,14 @@ export default function Navbar() {
                       <IoListOutline size={18} className="text-primary" />
                       Mes trajets
                     </Link>
+                    <Link
+                      href="/profile/vehicles"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-dark hover:bg-gray-50 rounded-md transition-colors"
+                    >
+                      <IoCarOutline size={18} className="text-primary" />
+                      Mes véhicules
+                    </Link>
                     <div className="h-px bg-gray-100 my-1 mx-2"></div>
                     <button
                       onClick={() => signOut()}
@@ -557,13 +566,22 @@ export default function Navbar() {
                 </Link>
 
                 {status === "authenticated" && session?.user && (
-                  <Link
-                    href="/my-trajets"
-                    onClick={() => setMenuOpen(false)}
-                    className={`w-full text-lg font-semibold transition-colors flex items-center justify-start gap-3 p-4 ${pathname.includes("/my-trajets") ? "text-primary bg-primary/5" : "text-gray-900 hover:bg-gray-50 hover:text-primary"}`}
-                  >
-                    Mes trajets
-                  </Link>
+                  <>
+                    <Link
+                      href="/my-trajets"
+                      onClick={() => setMenuOpen(false)}
+                      className={`w-full text-lg font-semibold transition-colors flex items-center justify-start gap-3 p-4 border-b border-neutral-200 ${pathname.includes("/my-trajets") ? "text-primary bg-primary/5" : "text-gray-900 hover:bg-gray-50 hover:text-primary"}`}
+                    >
+                      Mes trajets
+                    </Link>
+                    <Link
+                      href="/profile/vehicles"
+                      onClick={() => setMenuOpen(false)}
+                      className={`w-full text-lg font-semibold transition-colors flex items-center justify-start gap-3 p-4 ${pathname.includes("/profile/vehicles") ? "text-primary bg-primary/5" : "text-gray-900 hover:bg-gray-50 hover:text-primary"}`}
+                    >
+                      Mes véhicules
+                    </Link>
+                  </>
                 )}
               </div>
 
