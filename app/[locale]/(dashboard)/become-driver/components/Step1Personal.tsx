@@ -63,7 +63,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-2">
         {/* First Name */}
         <div className="space-y-2">
-          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+          <label className="font-semibold tracking-widest ml-1 mb-2 block">
             Prénom
           </label>
           <div className="relative group">
@@ -83,7 +83,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
 
         {/* Last Name */}
         <div className="space-y-2">
-          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+          <label className="font-semibold tracking-widest ml-1 mb-2 block">
             Nom
           </label>
           <div className="relative group">
@@ -105,7 +105,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
       {/* Email (display only) */}
       {sessionEmail && (
         <div className="space-y-2">
-          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+          <label className="font-semibold tracking-widest ml-1 mb-2 block">
             Email de votre compte
           </label>
           <div className="relative group">
@@ -128,7 +128,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
 
       {/* Phone with normalize and flag selector */}
       <div className="space-y-2">
-        <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+        <label className="font-semibold tracking-widest ml-1 mb-2 block">
           Numéro de téléphone
         </label>
         <div className="flex gap-4">

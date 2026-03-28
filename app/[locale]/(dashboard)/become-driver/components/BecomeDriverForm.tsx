@@ -374,11 +374,11 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
                 </div>
                 <div>
                   <h3
-                    className={`font-black text-xs uppercase tracking-widest ${isActive ? "text-primary" : "text-dark"}`}
+                    className={`font-bold text-xs uppercase tracking-widest ${isActive ? "text-primary" : "text-dark"}`}
                   >
                     {step.label}
                   </h3>
-                  <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-tighter opacity-70">
+                  <p className="text-sm text-neutral-500 tracking-tighter opacity-70">
                     {step.description}
                   </p>
                 </div>
