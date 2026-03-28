@@ -73,26 +73,24 @@ export function StepIdentityVerso() {
           </h3>
 
           {/* SVG Illustration - ID Card Verso */}
-          <div className="relative aspect-video bg-white rounded-xl border-2 border-dashed border-neutral-200 flex items-center justify-center p-6 shadow-sm mb-6 overflow-hidden">
-            <div className="w-full h-full rounded-lg bg-neutral-50 border border-neutral-100 relative p-4 flex flex-col items-center justify-center gap-2 shadow-inner">
-              {/* Magnetic Strip */}
-              <div className="w-full h-8 bg-neutral-800/80 rounded mt-2 opacity-90" />
-              <div className="w-full flex-1 flex flex-col gap-2 py-4">
-                <div className="h-2 w-full bg-neutral-200 rounded-full" />
-                <div className="h-10 w-full border-2 border-primary/20 bg-primary/5 rounded-md flex items-center justify-center overflow-hidden">
-                  <div className="w-full grid grid-cols-10 gap-1 px-4 opacity-50">
-                    {Array.from({ length: 10 }).map((_, i) => (
-                      <div key={i} className="h-1 bg-primary/20 rounded-full" />
-                    ))}
-                  </div>
+          <div className="w-full h-full rounded-lg mb-4 bg-neutral-50 border border-neutral-100 relative p-4 flex flex-col items-center justify-center gap-2 shadow-inner">
+            {/* Magnetic Strip */}
+            <div className="w-full h-8 bg-neutral-800/80 rounded mt-2 opacity-90" />
+            <div className="w-full flex-1 flex flex-col gap-2 py-4">
+              <div className="h-2 w-full bg-neutral-200 rounded-full" />
+              <div className="h-10 w-full border-2 border-primary/20 bg-primary/5 rounded-md flex items-center justify-center overflow-hidden">
+                <div className="w-full grid grid-cols-10 gap-1 px-4 opacity-50">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i} className="h-1 bg-primary/20 rounded-full" />
+                  ))}
                 </div>
-                <div className="h-2 w-2/3 bg-neutral-200 rounded-full mx-auto" />
               </div>
-              {/* Overlay focus marks */}
-              <div className="absolute inset-0 border-2 border-primary rounded-lg opacity-20 scale-[1.02]" />
-              <div className="absolute bottom-2 right-2 p-2">
-                <LuCheck className="text-green-500" size={24} />
-              </div>
+              <div className="h-2 w-2/3 bg-neutral-200 rounded-full mx-auto" />
+            </div>
+            {/* Overlay focus marks */}
+            <div className="absolute inset-0 border-2 border-primary rounded-lg opacity-20 scale-[1.02]" />
+            <div className="absolute bottom-2 right-2 p-2">
+              <LuCheck className="text-green-500" size={24} />
             </div>
           </div>
 

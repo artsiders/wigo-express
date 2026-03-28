@@ -73,30 +73,28 @@ export function StepIdentityRecto() {
           </h3>
 
           {/* SVG Illustration - ID Card Recto */}
-          <div className="relative aspect-video bg-white rounded-xl border-2 border-dashed border-neutral-200 flex items-center justify-center p-6 shadow-sm mb-6 overflow-hidden">
-            <div className="w-full h-full rounded-lg bg-neutral-50 border border-neutral-100 relative p-4 flex flex-col justify-between shadow-inner">
-              <div className="flex gap-3">
-                <div className="w-10 h-10 rounded-full bg-neutral-200 animate-pulse" />
-                <div className="flex-1 space-y-2 py-1">
-                  <div className="h-2 w-2/3 bg-neutral-200 rounded-full" />
-                  <div className="h-2 w-1/2 bg-neutral-200 rounded-full" />
-                </div>
+          <div className="w-full h-full rounded-lg mb-4 bg-neutral-50 border border-neutral-100 relative p-4 flex flex-col justify-between shadow-inner">
+            <div className="flex gap-3">
+              <div className="w-10 h-10 rounded-full bg-neutral-200 animate-pulse" />
+              <div className="flex-1 space-y-2 py-1">
+                <div className="h-2 w-2/3 bg-neutral-200 rounded-full" />
+                <div className="h-2 w-1/2 bg-neutral-200 rounded-full" />
               </div>
-              <div className="space-y-3">
-                <div className="h-8 w-full border-2 border-primary/20 bg-primary/5 rounded-md flex items-center px-2">
-                  <div className="h-1.5 w-1/2 bg-primary/20 rounded-full" />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="h-12 bg-neutral-100 rounded-md" />
-                  <div className="h-12 bg-neutral-100 rounded-md" />
-                </div>
+            </div>
+            <div className="space-y-3">
+              <div className="h-8 w-full border-2 border-primary/20 bg-primary/5 rounded-md flex items-center px-2">
+                <div className="h-1.5 w-1/2 bg-primary/20 rounded-full" />
               </div>
-              {/* Overlay focus marks */}
-              <div className="absolute inset-0 border-2 border-primary rounded-lg opacity-20 scale-[1.02]" />
-              <div className="absolute top-2 right-2 flex gap-1">
-                <div className="w-2 h-2 rounded-full bg-primary/40" />
-                <div className="w-2 h-2 rounded-full bg-primary/20" />
+              <div className="grid grid-cols-2 gap-3">
+                <div className="h-12 bg-neutral-100 rounded-md" />
+                <div className="h-12 bg-neutral-100 rounded-md" />
               </div>
+            </div>
+            {/* Overlay focus marks */}
+            <div className="absolute inset-0 border-2 border-primary rounded-lg opacity-20 scale-[1.02]" />
+            <div className="absolute top-2 right-2 flex gap-1">
+              <div className="w-2 h-2 rounded-full bg-primary/40" />
+              <div className="w-2 h-2 rounded-full bg-primary/20" />
             </div>
           </div>
 
