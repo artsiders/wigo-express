@@ -44,7 +44,7 @@ export default function RideDetailsSkeleton() {
 
               {/* Arrival Node */}
               <div className="flex gap-4 md:gap-6 relative group pt-2 w-full">
-                <div className="w-5 h-5 rounded-full border-4 border-white bg-neutral-200 shrink-0 relative z-10 mt-0.5 -ml-[1px] animate-pulse shadow-sm"></div>
+                <div className="w-5 h-5 rounded-full border-4 border-white bg-neutral-200 shrink-0 relative z-10 mt-0.5 -ml-px animate-pulse shadow-sm"></div>
 
                 <div className="flex-1">
                   <div className="flex gap-2 mb-2">
@@ -76,10 +76,10 @@ export default function RideDetailsSkeleton() {
 
             {/* Car Skeleton */}
             <div className="bg-white rounded-xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.02)] border border-neutral-100 flex flex-col justify-center">
-               <div className="h-3 w-16 bg-neutral-100 rounded animate-pulse mb-2"></div>
-               <div className="h-6 w-32 bg-neutral-200 rounded animate-pulse mb-2"></div>
-               <div className="h-4 w-40 bg-neutral-100 rounded animate-pulse mb-6"></div>
-               <div className="h-3 w-48 bg-neutral-100 rounded animate-pulse mt-auto"></div>
+              <div className="h-3 w-16 bg-neutral-100 rounded animate-pulse mb-2"></div>
+              <div className="h-6 w-32 bg-neutral-200 rounded animate-pulse mb-2"></div>
+              <div className="h-4 w-40 bg-neutral-100 rounded animate-pulse mb-6"></div>
+              <div className="h-3 w-48 bg-neutral-100 rounded animate-pulse mt-auto"></div>
             </div>
           </div>
         </div>
@@ -92,10 +92,10 @@ export default function RideDetailsSkeleton() {
               <div className="h-12 w-32 bg-neutral-800 rounded animate-pulse"></div>
               <div className="h-6 w-12 bg-neutral-800 rounded animate-pulse mb-1"></div>
             </div>
-            
+
             <div className="flex gap-2 mt-4 mb-8">
-               <div className="h-6 w-24 bg-neutral-800 rounded-full animate-pulse"></div>
-               <div className="h-6 w-24 bg-neutral-800 rounded-full animate-pulse"></div>
+              <div className="h-6 w-24 bg-neutral-800 rounded-full animate-pulse"></div>
+              <div className="h-6 w-24 bg-neutral-800 rounded-full animate-pulse"></div>
             </div>
 
             <div className="h-px bg-neutral-800 w-full mb-8"></div>
@@ -104,9 +104,9 @@ export default function RideDetailsSkeleton() {
             <div className="mb-8 space-y-4">
               <div className="h-3 w-24 bg-neutral-800 rounded animate-pulse mb-4"></div>
               <div className="flex gap-2 flex-wrap">
-                 <div className="h-10 w-32 bg-neutral-800 rounded-lg animate-pulse"></div>
-                 <div className="h-10 w-32 bg-neutral-800 rounded-lg animate-pulse"></div>
-                 <div className="h-10 w-32 bg-neutral-800 rounded-lg animate-pulse mt-2"></div>
+                <div className="h-10 w-32 bg-neutral-800 rounded-lg animate-pulse"></div>
+                <div className="h-10 w-32 bg-neutral-800 rounded-lg animate-pulse"></div>
+                <div className="h-10 w-32 bg-neutral-800 rounded-lg animate-pulse mt-2"></div>
               </div>
             </div>
 
@@ -115,8 +115,8 @@ export default function RideDetailsSkeleton() {
 
             {/* Booking Controls */}
             <div className="flex flex-col gap-4">
-               <div className="h-14 w-full bg-neutral-800 rounded-full animate-pulse"></div>
-               <div className="h-14 w-full bg-neutral-700/50 rounded-full animate-pulse"></div>
+              <div className="h-14 w-full bg-neutral-800 rounded-full animate-pulse"></div>
+              <div className="h-14 w-full bg-neutral-700/50 rounded-full animate-pulse"></div>
             </div>
           </div>
         </aside>
