@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import RideSearchWidget from "@/components/search/RideSearchWidget";
 import RideCard from "@/components/search/RideCard";
 import { IoFilterOutline, IoChevronDown, IoChevronUp } from "react-icons/io5";
 import Alert from "../ui/Alert";
-import RideSearchPopup from "@/components/search/RideSearchPopup";
 import { useSearchTrips } from "@/hooks/useTrips";
 import { mapToRideData } from "@/lib/ride-mapper";
 import RideCardSkeleton from "@/components/ui/RideCardSkeleton";
@@ -142,25 +141,18 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
   const arrivee = typeof params.arrivee === "string" ? params.arrivee : "";
   const dateStr = typeof params.date === "string" ? params.date : "";
 
-  // État local pour le popup afin d'éviter les réouvertures basées sur l'URL seule
-  const [showPopup, setShowPopup] = useState(params.searchOpen === "true");
-
   // Requête API pour les trajets
-  const { data: fetchTrips, isLoading, isError } = useSearchTrips({ depart, arrivee, date: dateStr });
-  
+  const {
+    data: fetchTrips,
+    isLoading,
+    isError,
+  } = useSearchTrips({ depart, arrivee, date: dateStr });
+
   const displayRides = fetchTrips ? fetchTrips.map(mapToRideData) : [];
   const hasResults = displayRides.length > 0;
 
   return (
     <>
-      {/* On utilise showPopup pour contrôler le rendu */}
-      {showPopup && (
-        <RideSearchPopup
-          initialOpen={true}
-          onClose={() => setShowPopup(false)}
-        />
-      )}
-
       <div className="w-full border-b border-neutral-100 z-40 pb-6 pt-4 px-4 lg:hidden">
         <div className="mt-4">
           <FiltersDropdown />
@@ -239,9 +231,10 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
                 ))}
               </div>
             )}
-            {!isLoading && displayRides.map((ride) => (
-              <RideCard key={ride.id} ride={ride} />
-            ))}
+            {!isLoading &&
+              displayRides.map((ride) => (
+                <RideCard key={ride.id} ride={ride} />
+              ))}
           </div>
 
           <div className="mt-14 text-center">

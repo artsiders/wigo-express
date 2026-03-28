@@ -98,10 +98,7 @@ export default function PassagersPage() {
             petit prix.
           </p>
           <div className="flex justify-center hero-elem">
-            <Link
-              href="/search?searchOpen=true"
-              className="btn-primary text-lg px-8 py-4"
-            >
+            <Link href="/search" className="btn-primary text-lg px-8 py-4">
               Chercher un trajet <IoChevronForward />
             </Link>
           </div>

@@ -78,10 +78,7 @@ export default function HowItWorksSection() {
             <p className="text-lg text-neutral-600 font-medium max-w-lg mb-8 leading-relaxed">
               {t("step1Desc")}
             </p>
-            <Link
-              href="/search?searchOpen=true"
-              className="btn-secondary w-fit"
-            >
+            <Link href="/search" className="btn-secondary w-fit">
               {t("step1Btn")}
             </Link>
           </div>

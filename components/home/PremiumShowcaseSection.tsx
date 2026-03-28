@@ -121,7 +121,7 @@ export default function PremiumShowcaseSection() {
             </div>
 
             <Link
-              href="/search?searchOpen=true"
+              href="/search"
               className="bg-white text-black font-bold py-4 px-8 w-full rounded-xl shadow-lg hover:bg-neutral-200 transition-colors uppercase text-xs tracking-widest"
             >
               Réserver 1 Siège

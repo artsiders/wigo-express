@@ -145,7 +145,7 @@ export default function Navbar() {
             {/* DESKTOP NAV - PARTIE GAUCHE (Rechercher, Publier) */}
             <div className="hidden lg:flex gap-2 xl:gap-3 items-center text-sm font-bold text-dark-800">
               <Link
-                href="/search?searchOpen=true"
+                href="/search"
                 className={`font-bold transition-all px-4 py-2 rounded-lg border ${
                   pathname.includes("/search")
                     ? "border-primary/50 bg-primary/10 text-primary"
@@ -267,7 +267,7 @@ export default function Navbar() {
             {/* MOBILE PERSISTENT ICONS (Rechercher, Publier) - Visible UNIQUEMENT < lg */}
             <div className="flex lg:hidden items-center gap-1.5">
               <Link
-                href="/search?searchOpen=true"
+                href="/search"
                 className="p-3 border border-neutral-200 rounded-lg hover:bg-gray-100"
               >
                 <IoSearchOutline size={22} />
@@ -526,7 +526,7 @@ export default function Navbar() {
               {/* Block 2: Main Links Grouped Together */}
               <div className="animate-item flex flex-col w-full border border-gray-300 rounded-xl bg-white shadow-sm overflow-hidden mt-3">
                 <Link
-                  href="/search?searchOpen=true"
+                  href="/search"
                   onClick={() => setMenuOpen(false)}
                   className={`w-full text-lg font-semibold transition-colors flex items-center justify-start gap-3 p-4 border-b ${pathname.includes("/search") ? "text-primary bg-primary/5 border-b-primary/20" : "text-gray-900 border-b-gray-200 hover:bg-gray-50 hover:text-primary"}`}
                 >

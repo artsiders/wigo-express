@@ -160,7 +160,7 @@ export default function EcoPage() {
                   S'inscrire maintenant <IoChevronForward />
                 </Link>
               )}
-              <Link href="/search?searchOpen=true" className="btn-outlined">
+              <Link href="/search" className="btn-outlined">
                 Trouver un trajet
               </Link>
             </div>

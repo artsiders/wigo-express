@@ -71,7 +71,7 @@ export default function Footer() {
                 {tFooter("usefulLinks")}
               </h4>
               <Link
-                href="/search?searchOpen=true"
+                href="/search"
                 className="text-neutral-700 hover:text-primary hover:translate-x-1 transition-all"
               >
                 {tFooter("searchRide")}
