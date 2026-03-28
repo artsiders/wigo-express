@@ -269,10 +269,7 @@ export default function ProfilePage() {
                   Vos futurs trajets en tant que passager ou conducteur
                   apparaîtront ici.
                 </p>
-                <Link
-                  href="/search"
-                  className="inline-block mt-6 text-sm font-bold text-primary hover:underline"
-                >
+                <Link href="/search" className="btn-dark w-fit mx-auto mt-6">
                   Rechercher un trajet maintenant
                 </Link>
               </div>
