@@ -19,6 +19,7 @@ import LargeInput from "@/components/ui/LargeInput";
 import Alert from "@/components/ui/Alert";
 import ProfileImageUpload from "@/components/profile/ProfileImageUpload";
 
+import { useSession } from "next-auth/react";
 import axios from "axios";
 
 interface ProfileFormValues {
@@ -29,6 +30,7 @@ interface ProfileFormValues {
 
 export default function ProfileEditPage() {
   const router = useRouter();
+  const { update } = useSession();
   const { data: profile, isLoading, isError } = useProfile();
   const updateProfile = useUpdateProfile();
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
@@ -103,6 +105,12 @@ export default function ProfileEditPage() {
       // Then update the profile with the (possibly new) image URL
       await updateProfile.mutateAsync({
         ...data,
+        image: finalImageUrl,
+      });
+
+      // Synchronize NextAuth session with the new data
+      await update({
+        name: data.name,
         image: finalImageUrl,
       });
       
