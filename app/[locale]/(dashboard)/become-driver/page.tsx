@@ -42,7 +42,6 @@ export default async function BecomeDriverPage({ searchParams }: Props) {
             type="warning"
             title="Action requise avant de publier"
             description="Pour proposer un trajet, vous devez d'abord compléter votre profil de Conducteur·rice. C'est rapide et sécurisé !"
-            onClose={() => {}}
           />
         </div>
       )}
