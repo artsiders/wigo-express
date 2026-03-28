@@ -9,11 +9,20 @@ import {
   MdCalendarToday,
 } from "react-icons/md";
 import { Link } from "@/i18n/routing";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAdminStore } from "@/store/useAdminStore";
 
 export default function AdminDriversPage() {
   const { data: driverRequests, isLoading } = useAdminDrivers();
   const [filter, setFilter] = useState<string>("ALL");
+  const { setBreadcrumbs } = useAdminStore();
+
+  useEffect(() => {
+    setBreadcrumbs([
+      { label: "Dashboard", href: "/admin" },
+      { label: "Conducteurs" }
+    ]);
+  }, [setBreadcrumbs]);
 
   const filteredRequests = driverRequests?.filter((req: any) =>
     filter === "ALL"
@@ -27,12 +36,6 @@ export default function AdminDriversPage() {
     <div className="space-y-8">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-1">
-          <Link
-            href="/admin"
-            className="inline-flex items-center gap-2 text-primary-600 font-bold text-xs uppercase tracking-widest hover:text-primary-700 transition-colors mb-2"
-          >
-            <MdArrowBack /> Dashboard
-          </Link>
           <h1 className="text-3xl font-black text-dark-900 tracking-tight flex items-center gap-3">
             Demandes Conducteurs
             <span className="px-2 py-0.5 bg-neutral-100 text-neutral-500 text-[10px] font-black rounded-md border border-neutral-200 uppercase tracking-widest">

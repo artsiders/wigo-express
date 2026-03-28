@@ -21,9 +21,15 @@ export const useUpdateKycStatus = () => {
       const { data } = await axios.patch(`/api/admin/kyc/${id}`, { status });
       return data;
     },
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["admin-kyc"] });
-      queryClient.invalidateQueries({ queryKey: ["admin-kyc", variables.id] });
+    onSuccess: (updatedData) => {
+      // Direct update of the specific item cache
+      queryClient.setQueryData(["admin-kyc", updatedData.id], updatedData);
+      
+      // Update the item in the local list cache without refetching everything
+      queryClient.setQueryData(["admin-kyc"], (old: any[] | undefined) => {
+        if (!old) return old;
+        return old.map((item) => (item.id === updatedData.id ? { ...item, ...updatedData } : item));
+      });
     },
   });
 };
@@ -48,9 +54,15 @@ export const useUpdateDriverStatus = () => {
       const { data } = await axios.patch(`/api/admin/drivers/${id}`, { isApproved });
       return data;
     },
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["admin-drivers"] });
-      queryClient.invalidateQueries({ queryKey: ["admin-drivers", variables.id] });
+    onSuccess: (updatedData) => {
+      // Direct update of the specific item cache
+      queryClient.setQueryData(["admin-drivers", updatedData.id], updatedData);
+      
+      // Update the list cache
+      queryClient.setQueryData(["admin-drivers"], (old: any[] | undefined) => {
+        if (!old) return old;
+        return old.map((item) => (item.id === updatedData.id ? { ...item, ...updatedData } : item));
+      });
     },
   });
 };

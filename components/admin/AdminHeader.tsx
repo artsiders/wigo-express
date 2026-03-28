@@ -2,25 +2,18 @@
 
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { MdNotificationsNone, MdSearch } from "react-icons/md";
+import { MdNotificationsNone } from "react-icons/md";
+import { useAdminStore } from "@/store/useAdminStore";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 export const AdminHeader = () => {
   const { data: session } = useSession();
+  const { breadcrumbs } = useAdminStore();
 
   return (
     <header className="fixed top-0 right-0 left-64 h-20 glass-panel flex items-center justify-between px-8 z-40">
-      <div className="flex-1 max-w-lg">
-        <div className="relative group">
-          <MdSearch
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary-500 transition-colors"
-            size={22}
-          />
-          <input
-            type="text"
-            placeholder="Rechercher une demande..."
-            className="w-full pl-12 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-2xl outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all text-sm font-medium"
-          />
-        </div>
+      <div className="flex-1 flex items-center">
+        <Breadcrumb items={breadcrumbs} />
       </div>
 
       <div className="flex items-center gap-6">

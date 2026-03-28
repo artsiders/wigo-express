@@ -4,11 +4,20 @@ import { useAdminKyc } from "@/hooks/useAdmin";
 import Image from "next/image";
 import { MdInfo, MdArrowBack, MdCalendarToday } from "react-icons/md";
 import { Link } from "@/i18n/routing";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAdminStore } from "@/store/useAdminStore";
 
 export default function AdminKycPage() {
   const { data: kycRequests, isLoading } = useAdminKyc();
   const [filter, setFilter] = useState<string>("ALL");
+  const { setBreadcrumbs } = useAdminStore();
+
+  useEffect(() => {
+    setBreadcrumbs([
+      { label: "Dashboard", href: "/admin" },
+      { label: "KYC Valider" }
+    ]);
+  }, [setBreadcrumbs]);
 
   const filteredRequests = kycRequests?.filter((req: any) =>
     filter === "ALL" ? true : req.status === filter,
@@ -18,12 +27,6 @@ export default function AdminKycPage() {
     <div className="space-y-8">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-1">
-          <Link
-            href="/admin"
-            className="inline-flex items-center gap-2 text-primary-600 font-bold text-xs uppercase tracking-widest hover:text-primary-700 transition-colors mb-2"
-          >
-            <MdArrowBack /> Dashboard
-          </Link>
           <h1 className="text-3xl font-black text-dark-900 tracking-tight flex items-center gap-3">
             Validations KYC
             <span className="px-2 py-0.5 bg-neutral-100 text-neutral-500 text-[10px] font-black rounded-md border border-neutral-200 uppercase tracking-widest">

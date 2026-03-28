@@ -9,10 +9,17 @@ import {
   MdArrowForward
 } from "react-icons/md";
 import { Link } from "@/i18n/routing";
+import { useEffect } from "react";
+import { useAdminStore } from "@/store/useAdminStore";
 
 export default function AdminDashboard() {
   const { data: kycRequests, isLoading: kycLoading } = useAdminKyc();
   const { data: driverRequests, isLoading: driverLoading } = useAdminDrivers();
+  const { setBreadcrumbs } = useAdminStore();
+
+  useEffect(() => {
+    setBreadcrumbs([{ label: "Dashboard" }]);
+  }, [setBreadcrumbs]);
 
   const pendingKyc = kycRequests?.filter((r: any) => r.status === "PENDING")?.length || 0;
   const pendingDrivers = driverRequests?.filter((r: any) => !r.user.isDriver)?.length || 0;
