@@ -85,7 +85,7 @@ export function Step2License() {
         <div className="space-y-6">
           {/* License Number */}
           <div className="space-y-2">
-            <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+            <label className="text-sm font-semibold text-neutral-700 tracking-widest ml-1">
               Numéro du permis
             </label>
             <div className="relative group">
@@ -106,7 +106,7 @@ export function Step2License() {
           {/* Expiry + Country */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+              <label className="text-sm font-semibold text-neutral-700 tracking-widest ml-1">
                 Date d'expiration
               </label>
               <div className="relative group">
@@ -125,7 +125,7 @@ export function Step2License() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+              <label className="text-sm font-semibold text-neutral-700 tracking-widest ml-1">
                 Pays d'émission
               </label>
               <div className="relative group">
@@ -162,7 +162,7 @@ export function Step2License() {
 
         {/* Right: Document Upload & Illustration */}
         <div className="space-y-6">
-          <label className="text-[12px] font-black text-neutral-500 uppercase tracking-widest ml-1">
+          <label className="text-sm font-semibold text-neutral-700 tracking-widest ml-1">
             Photo du document
           </label>
 
@@ -212,8 +212,8 @@ export function Step2License() {
             >
               <input {...getInputProps()} />
 
-              <div className="w-20 h-20 rounded-full bg-white shadow-xl border border-neutral-100 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                <LuUpload size={32} className="text-primary" />
+              <div className="w-18 h-18 rounded-full bg-white shadow-xl border border-neutral-100 flex items-center justify-center mb-6">
+                <LuUpload size={22} className="text-primary" />
               </div>
 
               <div className="space-y-1">
@@ -224,13 +224,6 @@ export function Step2License() {
                   JPG, PNG ou WebP — Max. 5 Mo
                 </p>
               </div>
-
-              {/* Decorative Guide SVG Line */}
-              <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-neutral-200 group-hover:border-primary transition-colors" />
-              <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-neutral-200 group-hover:border-primary transition-colors" />
-              <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-neutral-200 group-hover:border-primary transition-colors" />
-              <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-neutral-200 group-hover:border-primary transition-colors" />
-
               {/* Fake license illustration in background */}
               <div className="absolute inset-x-8 bottom-[-20%] h-1/2 bg-neutral-100/50 rounded-t-xl border border-neutral-200 -z-10 group-hover:translate-y-[-10%] transition-transform duration-700" />
             </div>

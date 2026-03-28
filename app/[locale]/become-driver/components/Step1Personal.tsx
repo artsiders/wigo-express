@@ -74,7 +74,6 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
             <input
               {...register("firstName")}
               type="text"
-              defaultValue={defaultFirstName}
               placeholder="Ex: Alex"
               className={`input pl-12 ${errors.firstName ? "input-error" : ""}`}
             />
@@ -95,8 +94,7 @@ export function Step1Personal({ sessionName, sessionEmail }: Props) {
             <input
               {...register("lastName")}
               type="text"
-              defaultValue={defaultLastName}
-              placeholder="Ex: Conducteur"
+              placeholder="Ex: Gagnon"
               className={`input pl-12 ${errors.lastName ? "input-error" : ""}`}
             />
           </div>

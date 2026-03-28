@@ -80,11 +80,16 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
+  // Split name for defaults
+  const nameParts = sessionName?.split(" ") ?? [];
+  const initialFirstName = nameParts[0] ?? "";
+  const initialLastName = nameParts.slice(1).join(" ") ?? "";
+
   // Upload progress logic
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
 
-  const { data: driverStatus } = useDriverStatus();
+  const { data: driverStatus, isLoading: isLoadingStatus } = useDriverStatus();
   const submitMutation = useSubmitDriverApplication();
   const uploadMutation = useUploadDocument();
 
@@ -92,12 +97,12 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
     resolver: zodResolver(DriverApplicationSchema) as any,
     mode: "onTouched",
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      firstName: initialFirstName,
+      lastName: initialLastName,
       phone: "",
       licenseNumber: "",
       licenseExpiry: "",
-      licenseCountry: "",
+      licenseCountry: "Canada",
       licenseDocumentUrl: "",
       vehicleMake: "",
       vehicleModel: "",
@@ -185,6 +190,63 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
         k.status === "PENDING",
     );
 
+  // Detailed Skeleton (Avoid jumps/flashes)
+  if (isLoadingStatus) {
+    return (
+      <div className="flex flex-col lg:flex-row gap-8 items-start w-full container mx-auto px-2 md:px-0 opacity-60">
+        {/* Sidebar Skeleton */}
+        <aside className="w-full lg:w-1/4 bg-white rounded-xl p-8 border border-neutral-100 hidden md:block">
+          <div className="space-y-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="flex items-center gap-4 p-4 rounded-xl">
+                <div className="w-10 h-10 rounded-lg bg-neutral-100 animate-pulse shrink-0" />
+                <div className="flex-1 space-y-2">
+                  <div className="h-2 w-16 bg-neutral-100 animate-pulse rounded" />
+                  <div className="h-2 w-24 bg-neutral-100 animate-pulse rounded opacity-50" />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10 pt-8 border-t border-neutral-50 space-y-3">
+            <div className="h-2 w-20 bg-neutral-100 animate-pulse rounded" />
+            <div className="w-full bg-neutral-50 h-1.5 rounded-full overflow-hidden">
+              <div className="bg-neutral-200 h-full w-1/4 animate-pulse" />
+            </div>
+          </div>
+        </aside>
+
+        {/* Main Panel Skeleton */}
+        <section className="w-full lg:w-3/4 bg-white rounded-xl p-8 md:p-14 border border-neutral-100 min-h-[600px] space-y-12">
+          <div className="space-y-4">
+            <div className="h-12 w-2/3 bg-neutral-100 animate-pulse rounded-2xl" />
+            <div className="h-3 w-1/2 bg-neutral-100 animate-pulse rounded-full opacity-60" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <div className="h-2.5 w-20 bg-neutral-100 animate-pulse rounded-full" />
+              <div className="h-14 w-full bg-neutral-50 animate-pulse rounded-xl border border-neutral-100" />
+            </div>
+            <div className="space-y-3">
+              <div className="h-2.5 w-20 bg-neutral-100 animate-pulse rounded-full" />
+              <div className="h-14 w-full bg-neutral-50 animate-pulse rounded-xl border border-neutral-100" />
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <div className="h-2.5 w-32 bg-neutral-100 animate-pulse rounded-full" />
+            <div className="h-14 w-full bg-neutral-50 animate-pulse rounded-xl border border-neutral-100" />
+          </div>
+
+          <div className="mt-16 pt-10 border-t border-neutral-50 flex justify-between items-center">
+            <div className="h-14 w-32 bg-neutral-50 animate-pulse rounded-xl" />
+            <div className="h-14 w-44 bg-neutral-200 animate-pulse rounded-xl" />
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   // States: Driver, Pending, Success
   if (driverStatus?.isDriver) {
     return (
@@ -243,7 +305,7 @@ export function BecomeDriverForm({ sessionName, sessionEmail }: Props) {
   if (isSuccess) {
     return (
       <div className="w-full bg-white rounded-xl p-16 shadow-[0_40px_100px_rgba(0,0,0,0.08)] border border-neutral-100 flex flex-col items-center justify-center text-center gap-8 min-h-[500px] animate-in zoom-in-95 duration-700">
-        <div className="w-28 h-28 rounded-full bg-primary/10 text-primary flex items-center justify-center animate-bounce duration-2000">
+        <div className="w-28 h-28 rounded-full bg-primary/10 text-primary flex items-center justify-center duration-2000">
           <LuPartyPopper size={64} />
         </div>
         <div className="space-y-4">
