@@ -6,6 +6,7 @@ import {
   IoShieldCheckmark,
   IoCashOutline,
   IoFlashOutline,
+  IoPawOutline,
 } from "react-icons/io5";
 
 export interface RideData {
@@ -31,7 +32,7 @@ export interface RideData {
   currency: string;
   seatsAvailable: number;
   duration: string;
-  features: ("instant_booking" | "max_2_back")[];
+  features: ("instant_booking" | "max_2_back" | "pets_allowed")[];
 }
 
 interface RideCardProps {
@@ -139,7 +140,12 @@ export default function RideCard({ ride }: RideCardProps) {
           )}
           {ride.features.includes("max_2_back") && (
             <span className="hidden sm:flex items-center gap-1 text-xs font-semibold text-primary-700 bg-primary-50 px-2.5 py-1 rounded-full tracking-wider">
-              Max. 2 à l'arrière
+              Max. 2 à l&apos;arrière
+            </span>
+          )}
+          {ride.features.includes("pets_allowed") && (
+            <span className="hidden lg:flex items-center gap-1 text-xs font-semibold text-green-700 bg-green-50 px-2.5 py-1 rounded-full tracking-wider">
+              <IoPawOutline size={14} /> Animaux
             </span>
           )}
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import RideSearchWidget from "@/components/search/RideSearchWidget";
 import RideCard from "@/components/search/RideCard";
 import { IoFilterOutline, IoChevronDown, IoChevronUp } from "react-icons/io5";
@@ -15,55 +15,233 @@ type SearchPageContentProps = {
   };
 };
 
-// --- Sous-composant Contenu des Filtres ---
-function FiltersContent() {
+type SortOption = "earliest" | "cheapest";
+
+interface FilterState {
+  sortBy: SortOption;
+  instantBooking: boolean;
+  petsAllowed: boolean;
+  luggageAllowed: boolean;
+  minPrice: number;
+  maxPrice: number;
+}
+
+const DEFAULT_FILTERS: FilterState = {
+  sortBy: "earliest",
+  instantBooking: false,
+  petsAllowed: false,
+  luggageAllowed: false,
+  minPrice: 0,
+  maxPrice: 500,
+};
+
+// --- Composant Contenu des Filtres ---
+interface FiltersContentProps {
+  filters: FilterState;
+  onChange: (filters: FilterState) => void;
+}
+
+function FiltersContent({ filters, onChange }: FiltersContentProps) {
+  const isDefault = JSON.stringify(filters) === JSON.stringify(DEFAULT_FILTERS);
+
+  const toggleSort = (option: SortOption) => {
+    onChange({ ...filters, sortBy: option });
+  };
+
+  const toggleFilter = (
+    key: keyof Omit<FilterState, "sortBy" | "minPrice" | "maxPrice">,
+  ) => {
+    onChange({ ...filters, [key]: !filters[key] });
+  };
+
+  const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = parseInt(e.target.value, 10);
+    if (isNaN(val)) return;
+    const value = Math.min(val, (filters.maxPrice || 500) - 10);
+    onChange({ ...filters, minPrice: value });
+  };
+
+  const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = parseInt(e.target.value, 10);
+    if (isNaN(val)) return;
+    const value = Math.max(val, (filters.minPrice || 0) + 10);
+    onChange({ ...filters, maxPrice: value });
+  };
+
+  const handleReset = () => {
+    onChange(DEFAULT_FILTERS);
+  };
+
+  // Safety values
+  const minP = filters.minPrice ?? 0;
+  const maxP = filters.maxPrice ?? 500;
+
   return (
     <div className="space-y-8">
-      <div>
-        <h4 className="text-[11px] font-bold text-neutral-400 uppercase tracking-widest mb-4">
+      {/* Header with Reset */}
+      <div className="flex items-center justify-between h-4">
+        <h4 className="text-[11px] font-bold text-neutral-400 uppercase tracking-widest">
           Trier par
         </h4>
-        <div className="space-y-4">
-          <label className="flex items-center gap-4 cursor-pointer group">
-            <div className="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center bg-dark shrink-0">
+        {!isDefault && (
+          <button
+            onClick={handleReset}
+            className="text-[10px] font-bold text-primary hover:underline transition-all"
+          >
+            Réinitialiser
+          </button>
+        )}
+      </div>
+
+      {/* Trier par logic remains same but remove the double header */}
+      <div className="space-y-4">
+        <label
+          className="flex items-center gap-4 cursor-pointer group"
+          onClick={() => toggleSort("earliest")}
+        >
+          <div
+            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center bg-dark shrink-0 transition-colors ${filters.sortBy === "earliest" ? "border-primary" : "border-neutral-600 group-hover:border-neutral-400"}`}
+          >
+            {filters.sortBy === "earliest" && (
               <div className="w-2.5 h-2.5 bg-primary rounded-full"></div>
-            </div>
-            <span className="text-sm font-bold text-white transition-colors">
-              Départ le plus tôt
-            </span>
-          </label>
-          <label className="flex items-center gap-4 cursor-pointer group">
-            <div className="w-5 h-5 rounded-full border-2 border-neutral-600 group-hover:border-primary transition-colors flex items-center justify-center bg-dark shrink-0"></div>
-            <span className="text-sm font-bold text-neutral-400 group-hover:text-white transition-colors">
-              Prix le plus bas
-            </span>
-          </label>
+            )}
+          </div>
+          <span
+            className={`text-sm font-bold transition-colors ${filters.sortBy === "earliest" ? "text-white" : "text-neutral-400 group-hover:text-neutral-200"}`}
+          >
+            Départ le plus tôt
+          </span>
+        </label>
+        <label
+          className="flex items-center gap-4 cursor-pointer group"
+          onClick={() => toggleSort("cheapest")}
+        >
+          <div
+            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center bg-dark shrink-0 transition-colors ${filters.sortBy === "cheapest" ? "border-primary" : "border-neutral-600 group-hover:border-neutral-400"}`}
+          >
+            {filters.sortBy === "cheapest" && (
+              <div className="w-2.5 h-2.5 bg-primary rounded-full"></div>
+            )}
+          </div>
+          <span
+            className={`text-sm font-bold transition-colors ${filters.sortBy === "cheapest" ? "text-white" : "text-neutral-400 group-hover:text-neutral-200"}`}
+          >
+            Prix le plus bas
+          </span>
+        </label>
+      </div>
+
+      <div className="h-px bg-neutral-800 w-full"></div>
+
+      {/* Tranche de Prix */}
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <h4 className="text-[11px] font-bold text-neutral-400 uppercase tracking-widest">
+            Tranche de prix
+          </h4>
+          <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-md">
+            {minP} - {maxP} $ CAD
+          </span>
+        </div>
+        
+        <div className="relative h-1 mb-8 bg-neutral-800 rounded-full flex items-center">
+          {/* Track highlighted between thumbs */}
+          <div 
+            className="absolute h-full bg-primary rounded-full"
+            style={{ 
+              left: `${(minP / 500) * 100}%`, 
+              right: `${100 - (maxP / 500) * 100}%` 
+            }}
+          ></div>
+          
+          <input
+            type="range"
+            min="0"
+            max="500"
+            value={minP}
+            onChange={handleMinPriceChange}
+            className="absolute w-full h-1 bg-transparent appearance-none pointer-events-none cursor-pointer z-20 slider-thumb-only"
+          />
+          <input
+            type="range"
+            min="0"
+            max="500"
+            value={maxP}
+            onChange={handleMaxPriceChange}
+            className="absolute w-full h-1 bg-transparent appearance-none pointer-events-none cursor-pointer z-20 slider-thumb-only"
+          />
+          
+          <style jsx>{`
+            .slider-thumb-only {
+              top: 50%;
+              transform: translateY(-50%);
+            }
+            .slider-thumb-only::-webkit-slider-thumb {
+              appearance: none;
+              pointer-events: auto;
+              width: 18px;
+              height: 18px;
+              background: #fff;
+              border: 2px solid #3b82f6;
+              border-radius: 50%;
+              cursor: pointer;
+              box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+              transition: all 0.2s;
+            }
+            .slider-thumb-only::-webkit-slider-thumb:hover {
+              transform: scale(1.1);
+              box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            }
+            .slider-thumb-only::-moz-range-thumb {
+              pointer-events: auto;
+              width: 16px;
+              height: 16px;
+              background: #fff;
+              border: 2px solid #3b82f6;
+              border-radius: 50%;
+              cursor: pointer;
+            }
+          `}</style>
+        </div>
+        
+        <div className="flex justify-between mt-2">
+          <span className="text-[10px] font-bold text-neutral-600">0 $ CAD</span>
+          <span className="text-[10px] font-bold text-neutral-600">500 $ CAD</span>
         </div>
       </div>
 
       <div className="h-px bg-neutral-800 w-full"></div>
 
+      {/* Options de confort */}
       <div>
         <h4 className="text-[11px] font-bold text-neutral-400 uppercase tracking-widest mb-4">
-          Confort
+          Options & Préférences
         </h4>
         <div className="space-y-4">
-          <label className="flex items-center justify-between cursor-pointer group">
-            <span className="text-sm font-bold text-neutral-400 group-hover:text-white transition-colors">
-              Max. 2 à l&apos;arrière
-            </span>
-            <div className="w-11 h-6 bg-primary rounded-full relative shadow-inner shrink-0">
-              <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm"></div>
-            </div>
-          </label>
-          <label className="flex items-center justify-between cursor-pointer group">
-            <span className="text-sm font-bold text-neutral-400 group-hover:text-white transition-colors">
-              Réservation immédiate
-            </span>
-            <div className="w-11 h-6 bg-neutral-700 rounded-full relative shadow-inner shrink-0">
-              <div className="absolute left-1 top-1 w-4 h-4 bg-neutral-400 rounded-full shadow-sm"></div>
-            </div>
-          </label>
+          {[
+            { id: "instantBooking", label: "Réservation immédiate" },
+            { id: "petsAllowed", label: "Animaux acceptés" },
+            { id: "luggageAllowed", label: "Bagages inclus" },
+          ].map((item) => (
+            <label
+              key={item.id}
+              className="flex items-center justify-between cursor-pointer group"
+              onClick={() => toggleFilter(item.id as any)}
+            >
+              <span
+                className={`text-sm font-bold transition-colors ${filters[item.id as keyof FilterState] ? "text-white" : "text-neutral-400 group-hover:text-neutral-200"}`}
+              >
+                {item.label}
+              </span>
+              <div
+                className={`w-11 h-6 rounded-full relative transition-colors duration-300 shadow-inner shrink-0 ${filters[item.id as keyof FilterState] ? "bg-primary" : "bg-neutral-800"}`}
+              >
+                <div
+                  className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all duration-300 ${filters[item.id as keyof FilterState] ? "right-1" : "left-1"}`}
+                ></div>
+              </div>
+            </label>
+          ))}
         </div>
       </div>
     </div>
@@ -71,7 +249,12 @@ function FiltersContent() {
 }
 
 // --- Composant Dropdown (Mobile) ---
-function FiltersDropdown() {
+interface FiltersDropdownProps {
+  filters: FilterState;
+  onChange: (filters: FilterState) => void;
+}
+
+function FiltersDropdown({ filters, onChange }: FiltersDropdownProps) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -91,9 +274,15 @@ function FiltersDropdown() {
   }, [open]);
 
   const handleToggle = (e: React.MouseEvent) => {
-    e.stopPropagation(); // CRUCIAL : empêche le document de recevoir le clic
+    e.stopPropagation();
     setOpen((prev) => !prev);
   };
+
+  const activeFiltersCount =
+    (filters.instantBooking ? 1 : 0) +
+    (filters.petsAllowed ? 1 : 0) +
+    (filters.luggageAllowed ? 1 : 0) +
+    ((filters.minPrice || 0) > 0 || (filters.maxPrice || 500) < 500 ? 1 : 0);
 
   return (
     <div className="relative mx-2 mb-4" ref={dropdownRef}>
@@ -103,10 +292,15 @@ function FiltersDropdown() {
         aria-expanded={open}
         onClick={handleToggle}
       >
-        <span className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <IoFilterOutline size={22} className="text-primary" />
-          Filtres
-        </span>
+          <span>Filtres</span>
+          {activeFiltersCount > 0 && (
+            <span className="bg-primary text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full ml-1">
+              {activeFiltersCount}
+            </span>
+          )}
+        </div>
         <span className="flex items-center ml-2 relative w-6 h-6">
           <IoChevronDown
             size={22}
@@ -122,13 +316,13 @@ function FiltersDropdown() {
       <div
         className={`overflow-hidden transition-all duration-400 ease-in-out mt-3 ${
           open
-            ? "max-h-[1000px] opacity-100 scale-100"
+            ? "max-h-[1200px] opacity-100 scale-100"
             : "max-h-0 opacity-0 scale-95"
         }`}
         style={{ pointerEvents: open ? "auto" : "none" }}
       >
         <div className="bg-dark rounded-4xl p-6 shadow-xl border border-neutral-800 text-white">
-          <FiltersContent />
+          <FiltersContent filters={filters} onChange={onChange} />
         </div>
       </div>
     </div>
@@ -141,6 +335,8 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
   const arrivee = typeof params.arrivee === "string" ? params.arrivee : "";
   const dateStr = typeof params.date === "string" ? params.date : "";
 
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
+
   // Requête API pour les trajets
   const {
     data: fetchTrips,
@@ -148,14 +344,53 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
     isError,
   } = useSearchTrips({ depart, arrivee, date: dateStr });
 
-  const displayRides = fetchTrips ? fetchTrips.map(mapToRideData) : [];
+  // Filtrage et Tri côté client
+  const displayRides = useMemo(() => {
+    if (!fetchTrips) return [];
+
+    let filtered = [...fetchTrips];
+
+    // 1. Filtrer par prix (Range)
+    const minP = filters.minPrice ?? 0;
+    const maxP = filters.maxPrice ?? 500;
+    filtered = filtered.filter(
+      (trip) => trip.price >= minP && trip.price <= maxP,
+    );
+
+    // 2. Appliquer les toggles (Options/Préférences)
+    if (filters.instantBooking) {
+      filtered = filtered.filter((trip) => trip.instantBooking);
+    }
+    if (filters.petsAllowed) {
+      filtered = filtered.filter((trip) => trip.pet);
+    }
+    if (filters.luggageAllowed) {
+      filtered = filtered.filter((trip) => trip.luggage);
+    }
+
+    // 3. Appliquer le tri
+    filtered.sort((a, b) => {
+      if (filters.sortBy === "earliest") {
+        return (
+          new Date(a.departureDate).getTime() -
+          new Date(b.departureDate).getTime()
+        );
+      } else if (filters.sortBy === "cheapest") {
+        return a.price - b.price;
+      }
+      return 0;
+    });
+
+    return filtered.map(mapToRideData);
+  }, [fetchTrips, filters]);
+
   const hasResults = displayRides.length > 0;
 
   return (
     <>
       <div className="w-full border-b border-neutral-100 z-40 pb-6 pt-4 px-4 lg:hidden">
         <div className="mt-4">
-          <FiltersDropdown />
+          <FiltersDropdown filters={filters} onChange={setFilters} />
         </div>
         <div className="max-w-6xl mx-auto flex flex-col gap-4">
           <RideSearchWidget variant="horizontal" />
@@ -172,7 +407,7 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
               <IoFilterOutline size={24} className="text-primary" />
               Trier & Filtrer
             </div>
-            <FiltersContent />
+            <FiltersContent filters={filters} onChange={setFilters} />
           </div>
         </aside>
 
@@ -201,12 +436,20 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
               )}
             </p>
 
-            {!hasResults && !isLoading && (
+            {!hasResults && !isLoading && !isError && (
               <div className="mt-8">
                 <Alert
                   type="warning"
-                  title="Aucun trajet ne correspond"
-                  description="Explorez d'autres dates ou d'autres villes de départ."
+                  title={
+                    fetchTrips?.length
+                      ? "Aucun trajet ne correspond à vos filtres"
+                      : "Aucun trajet trouvé"
+                  }
+                  description={
+                    fetchTrips?.length
+                      ? "Essayez de modifier vos critères de filtrage."
+                      : "Explorez d'autres dates ou d'autres villes de départ."
+                  }
                   className="w-full"
                 />
               </div>
@@ -237,11 +480,13 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
               ))}
           </div>
 
-          <div className="mt-14 text-center">
-            <button className="px-10 py-4 bg-white border-2 border-neutral-100 rounded-full shadow-sm text-sm font-bold text-dark hover:border-primary hover:text-primary transition-colors">
-              Charger plus de trajets
-            </button>
-          </div>
+          {!isLoading && hasResults && (
+            <div className="mt-14 text-center">
+              <button className="px-10 py-4 bg-white border-2 border-neutral-100 rounded-full shadow-sm text-sm font-bold text-dark hover:border-primary hover:text-primary transition-colors">
+                Charger plus de trajets
+              </button>
+            </div>
+          )}
         </div>
       </main>
     </>

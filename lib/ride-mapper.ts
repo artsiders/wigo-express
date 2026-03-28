@@ -11,9 +11,10 @@ export const formatTime = (dateString: string) => {
 };
 
 export const mapToRideData = (trip: TripProvider): RideData => {
-  const features: ("instant_booking" | "max_2_back")[] = [];
+  const features: ("instant_booking" | "max_2_back" | "pets_allowed")[] = [];
   if (trip.instantBooking) features.push("instant_booking");
   if (trip.max2Back) features.push("max_2_back");
+  if (trip.pet) features.push("pets_allowed");
 
   return {
     id: trip.id,
@@ -35,7 +36,7 @@ export const mapToRideData = (trip: TripProvider): RideData => {
       place: trip.arrivalPlace || "Lieu non spécifié",
     },
     price: trip.price,
-    currency: "MAD",
+    currency: "$ CAD",
     seatsAvailable: trip.availableSeats,
     duration: trip.duration || "-",
     features,
