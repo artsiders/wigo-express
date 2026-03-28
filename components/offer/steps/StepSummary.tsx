@@ -5,20 +5,37 @@ import { LuLoaderCircle } from "react-icons/lu";
 import { useOfferStore } from "@/store/useOfferStore";
 import { Link } from "@/i18n/routing";
 import { IoCheckmarkCircle } from "react-icons/io5";
+import { useFormContext } from "react-hook-form";
+import { OfferRideFormData } from "@/schemas/offer";
+import axios from "axios";
+import Alert from "@/components/ui/Alert";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 export default function StepSummary() {
-  const { departure, arrival, date, time, seats, price, resetOffer } = useOfferStore();
+  const { watch, getValues, reset } = useFormContext<OfferRideFormData>();
+  const { departureCity, arrivalCity, date, time, seats, price } = watch();
+  
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handlePublish = () => {
+  const handlePublish = async () => {
     setLoading(true);
-    // Simulation API
-    setTimeout(() => {
-      setLoading(false);
+    setError(null);
+    try {
+      const data = getValues();
+      await axios.post("/api/trips", data);
       setSuccess(true);
-      resetOffer();
-    }, 1500);
+      reset(); // Clear form
+      const { resetOffer } = useOfferStore.getState();
+      resetOffer(); // Clear store if used
+    } catch (err: any) {
+      console.error("Publication Error:", err);
+      setError(err.response?.data?.error || "Une erreur est survenue lors de la publication.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (success) {
@@ -47,29 +64,41 @@ export default function StepSummary() {
         <p className="text-neutral-500 font-medium">Vérifiez les informations avant publication.</p>
       </div>
 
+      {error && (
+        <Alert
+          type="error"
+          title="Erreur de publication"
+          description={error}
+          onClose={() => setError(null)}
+          className="mb-6"
+        />
+      )}
+
       <div className="flex-1 flex flex-col gap-4">
-        {/* Mock Summary Data */}
-        <div className="bg-light-400 p-5 rounded-2xl border border-neutral-100">
-            <div className="flex items-center gap-4 mb-4">
-                <div className="w-2 h-2 rounded-full bg-dark"></div>
-                <div className="font-bold text-dark">{departure || "Montréal, QC"}</div>
+        {/* Trip Preview */}
+        <div className="bg-light-400 p-6 rounded-2xl border border-neutral-100 relative overflow-hidden group">
+            <div className="flex items-center gap-4 mb-4 relative z-10 font-bold text-dark">
+                <div className="w-3 h-3 rounded-full border border-dark bg-white"></div>
+                <div>{departureCity || "Lieu de départ"}</div>
             </div>
-            <div className="ml-[3px] w-0.5 h-6 bg-neutral-300"></div>
-            <div className="flex items-center gap-4 mt-4">
-                <div className="w-2 h-2 rounded-full bg-primary outline outline-offset-4 outline-primary/20"></div>
-                <div className="font-bold text-dark">{arrival || "Québec, QC"}</div>
+            <div className="ml-[5px] w-0.5 h-6 bg-neutral-200"></div>
+            <div className="flex items-center gap-4 mt-4 relative z-10 font-bold text-dark">
+                <div className="w-3 h-3 rounded-full bg-primary"></div>
+                <div>{arrivalCity || "Lieu d'arrivée"}</div>
             </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white border-2 border-light-400 p-4 rounded-2xl">
-                <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Date & Heure</span>
-                <span className="font-bold text-dark">{date ? new Date(date).toLocaleDateString() : "Non définie"} à {time}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white border border-neutral-100 p-5 rounded-2xl">
+                <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-2">Départ prévu</span>
+                <span className="font-bold text-dark italic">
+                  {date ? format(new Date(date), "EEEE d MMMM", { locale: fr }) : "Non définie"} à <span className="text-primary">{time}</span>
+                </span>
             </div>
-            <div className="bg-white border-2 border-light-400 p-4 rounded-2xl flex justify-between items-center">
+            <div className="bg-white border border-neutral-100 p-5 rounded-2xl flex justify-between items-center group">
                 <div>
-                    <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Places & Prix</span>
-                    <span className="font-bold text-dark">{seats} passager{seats > 1 ? "s":""} x {price} $</span>
+                    <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-2">Economie</span>
+                    <span className="font-bold text-dark italic">{seats} passager{seats > 1 ? "s":""} <span className="text-neutral-300 mx-1">/</span> <span className="text-primary">{price}$ CAD</span></span>
                 </div>
             </div>
         </div>

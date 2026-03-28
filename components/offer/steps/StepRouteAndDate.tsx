@@ -6,15 +6,16 @@ import {
   IoLocationOutline,
   IoCalendarOutline,
   IoTimeOutline,
+  IoAlert,
 } from "react-icons/io5";
-import { useOfferStore } from "@/store/useOfferStore";
-import Alert from "@/components/ui/Alert";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import CustomCalendar from "@/components/search/CustomCalendar";
 import { LargeInput, LargeClickableInput } from "@/components/ui/LargeInput";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useFormContext } from "react-hook-form";
+import { OfferRideFormData } from "@/schemas/offer";
 
 interface LocationSuggestion {
   name: string;
@@ -103,16 +104,23 @@ const formatSuggestion = (s: LocationSuggestion) => {
 
 export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
   const {
-    departure,
-    arrival,
-    departCoords,
-    arriveeCoords,
-    date,
-    time,
-    setRoute,
-    setDateTime,
-  } = useOfferStore();
-  const [error, setError] = useState("");
+    register,
+    setValue,
+    watch,
+    trigger,
+    formState: { errors },
+  } = useFormContext<OfferRideFormData>();
+
+  const departure = watch("departureCity");
+  const arrival = watch("arrivalCity");
+  const date = watch("date");
+  const time = watch("time");
+  const departCoords = {
+    lat: watch("departureLat"),
+    lon: watch("departureLng"),
+  };
+  const arriveeCoords = { lat: watch("arrivalLat"), lon: watch("arrivalLng") };
+
   const [activeDropdown, setActiveDropdown] = useState<
     "depart" | "arrivee" | "date" | null
   >(null);
@@ -172,19 +180,20 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
     enabled: activeDropdown === "arrivee",
   });
 
-  const handleNext = () => {
-    if (!departure || !arrival || !departCoords || !arriveeCoords) {
-      setError(
-        "Veuillez choisir votre ville de départ et d'arrivée via les suggestions.",
-      );
-      return;
+  const handleNext = async () => {
+    const isValid = await trigger([
+      "departureCity",
+      "arrivalCity",
+      "date",
+      "time",
+      "departureLat",
+      "departureLng",
+      "arrivalLat",
+      "arrivalLng",
+    ]);
+    if (isValid) {
+      onNext();
     }
-    if (!date || !time) {
-      setError("Veuillez définir une date et une heure valides.");
-      return;
-    }
-    setError("");
-    onNext();
   };
 
   return (
@@ -196,14 +205,20 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
         </p>
       </div>
 
-      {error && (
-        <Alert
-          type="error"
-          title="Information manquante"
-          description={error}
-          onClose={() => setError("")}
-          className="mb-8"
-        />
+      {Object.keys(errors).length > 0 && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-3">
+          <IoAlert className="text-red-500 mt-0.5 shrink-0" size={20} />
+          <div className="flex flex-col">
+            <span className="font-bold text-red-900 text-sm">
+              Veuillez corriger les erreurs suivantes :
+            </span>
+            <ul className="text-xs text-red-700 list-disc list-inside mt-1 font-medium">
+              {Object.entries(errors).map(([key, error]) => (
+                <li key={key}>{(error as any).message}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       )}
 
       <div ref={containerRef} className="flex-1 flex flex-col gap-6 relative">
@@ -215,7 +230,9 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
             placeholder="Saisissez un lieu"
             value={departure}
             onChange={(e) => {
-              setRoute(e.target.value, arrival, null, arriveeCoords);
+              setValue("departureCity", e.target.value);
+              setValue("departureLat", 0);
+              setValue("departureLng", 0);
               openDropdown("depart", e);
             }}
             onFocus={(e) => openDropdown("depart", e)}
@@ -232,12 +249,9 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                         key={idx}
                         type="button"
                         onClick={() => {
-                          setRoute(
-                            formatSuggestion(city),
-                            arrival,
-                            { lat: city.lat, lon: city.lon },
-                            arriveeCoords,
-                          );
+                          setValue("departureCity", formatSuggestion(city));
+                          setValue("departureLat", city.lat);
+                          setValue("departureLng", city.lon);
                           setActiveDropdown("arrivee");
                         }}
                         className="w-full text-left px-3 py-3 hover:bg-neutral-100 rounded-lg flex items-center gap-3 text-dark font-bold text-sm"
@@ -267,7 +281,9 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
             placeholder="Saisissez un lieu"
             value={arrival}
             onChange={(e) => {
-              setRoute(departure, e.target.value, departCoords, null);
+              setValue("arrivalCity", e.target.value);
+              setValue("arrivalLat", 0);
+              setValue("arrivalLng", 0);
               openDropdown("arrivee", e);
             }}
             onFocus={(e) => openDropdown("arrivee", e)}
@@ -284,12 +300,9 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                         key={idx}
                         type="button"
                         onClick={() => {
-                          setRoute(
-                            departure,
-                            formatSuggestion(city),
-                            departCoords,
-                            { lat: city.lat, lon: city.lon },
-                          );
+                          setValue("arrivalCity", formatSuggestion(city));
+                          setValue("arrivalLat", city.lat);
+                          setValue("arrivalLng", city.lon);
                           setActiveDropdown("date");
                         }}
                         className="w-full text-left px-3 py-3 hover:bg-neutral-100 rounded-lg flex items-center gap-3 text-dark font-bold text-sm"
@@ -339,7 +352,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
                   <CustomCalendar
                     selectedDate={date ? new Date(date) : null}
                     onSelectDate={(d) => {
-                      setDateTime(format(d, "yyyy-MM-dd"), time);
+                      setValue("date", format(d, "yyyy-MM-dd"));
                       setActiveDropdown(null);
                     }}
                     position={dropdownPos}
@@ -354,7 +367,7 @@ export default function StepRouteAndDate({ onNext }: { onNext: () => void }) {
             icon={<IoTimeOutline />}
             type="time"
             value={time}
-            onChange={(e) => setDateTime(date, e.target.value)}
+            onChange={(e) => setValue("time", e.target.value)}
           />
         </div>
       </div>

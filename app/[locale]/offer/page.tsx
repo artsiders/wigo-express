@@ -10,6 +10,10 @@ import { Link } from "@/i18n/routing";
 import { LuCar, LuShieldCheck, LuArrowRight } from "react-icons/lu";
 import { useOfferStore } from "@/store/useOfferStore";
 import dynamic from "next/dynamic";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { OfferRideSchema, type OfferRideFormData } from "@/schemas/offer";
+import OfferSkeleton from "@/components/offer/OfferSkeleton";
 
 const RouteMap = dynamic(() => import("@/components/search/RouteMap"), {
   ssr: false,
@@ -24,7 +28,31 @@ export default function OfferRidePage() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const leftColRef = useRef<HTMLDivElement>(null);
-  const { departCoords, arriveeCoords } = useOfferStore();
+  const { date: storeDate, time: storeTime } = useOfferStore();
+
+  const methods = useForm<OfferRideFormData>({
+    resolver: zodResolver(OfferRideSchema),
+    defaultValues: {
+      departureCity: "",
+      arrivalCity: "",
+      departureLat: 0,
+      departureLng: 0,
+      arrivalLat: 0,
+      arrivalLng: 0,
+      date: storeDate || "",
+      time: storeTime || "08:00",
+      seats: 3,
+      price: 15,
+      max2Back: false,
+      instantBooking: true,
+      petFriendly: false,
+    },
+    mode: "onChange",
+  });
+
+  const { watch } = methods;
+  const departCoords = { lat: watch("departureLat"), lon: watch("departureLng") };
+  const arriveeCoords = { lat: watch("arrivalLat"), lon: watch("arrivalLng") };
 
   const stepParam = searchParams?.get("step");
   const currentStep = stepParam ? parseInt(stepParam, 10) : 1;
@@ -76,9 +104,7 @@ export default function OfferRidePage() {
 
 
   if (status === "loading") {
-    return <div className="min-h-screen flex items-center justify-center bg-light-300">
-      <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-    </div>;
+    return <OfferSkeleton />;
   }
 
   const isDriver = (session?.user as any)?.isDriver;
@@ -86,7 +112,7 @@ export default function OfferRidePage() {
   if (!isDriver && status === "authenticated") {
     return (
       <main className="container mx-auto px-4 mt-20 md:mt-32 flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="max-w-3xl w-full bg-white rounded-[2.5rem] p-10 md:p-16 shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-neutral-100 flex flex-col items-center text-center relative overflow-hidden">
+        <div className="max-w-3xl w-full bg-white rounded-3xl p-8 md:p-12 shadow-[0_20px_40px_rgba(0,0,0,0.05)] border border-neutral-100 flex flex-col items-center text-center relative overflow-hidden">
           {/* Background decoration */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#4D80C4]/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl"></div>
@@ -99,14 +125,14 @@ export default function OfferRidePage() {
             Prêt à <span className="text-primary italic">conduire</span> ?
           </h1>
 
-          <p className="text-xl text-neutral-500 font-medium mb-12 max-w-xl mx-auto leading-relaxed">
+          <p className="text-xl text-neutral-500 font-medium mb-10 max-w-xl mx-auto leading-relaxed">
             Pour publier un trajet sur <span className="font-bold text-dark">Wigo Express</span>, vous devez d'abord compléter votre profil de conducteur dans votre espace privé.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
             <Link 
               href="/profile?mode=become-driver"
-              className="px-10 py-5 bg-dark text-white rounded-2xl font-black text-lg shadow-2xl shadow-dark/20 hover:bg-primary transition-all flex items-center justify-center gap-3 active:scale-95 group"
+              className="px-8 py-4 bg-dark text-white rounded-xl font-bold text-lg hover:bg-primary transition-all flex items-center justify-center gap-3 active:scale-95 group"
             >
               Compléter mon profil conducteur
               <LuArrowRight className="group-hover:translate-x-1 transition-transform" />
@@ -150,14 +176,14 @@ export default function OfferRidePage() {
         {/* Creative Left Column - Dynamic based on step */}
         <div
           ref={leftColRef}
-          className="w-full lg:w-5/12 hidden lg:flex flex-col relative rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl border border-neutral-100 bg-white"
+          className="w-full lg:w-5/12 hidden lg:flex flex-col relative rounded-2xl overflow-hidden shadow-sm border border-neutral-100 bg-white"
         >
           {/* Top section: Media (Map or Image) */}
-          <div className="relative w-full flex-1 min-h-[50%]">
+          <div className="relative w-full flex-1 min-h-[50%] bg-neutral-100">
             {currentStep === 3 ? (
               <RouteMap 
-                dLat={departCoords?.lat} dLon={departCoords?.lon} 
-                aLat={arriveeCoords?.lat} aLon={arriveeCoords?.lon} 
+                dLat={departCoords.lat || undefined} dLon={departCoords.lon || undefined} 
+                aLat={arriveeCoords.lat || undefined} aLon={arriveeCoords.lon || undefined} 
               />
             ) : (
               <Image
@@ -187,7 +213,9 @@ export default function OfferRidePage() {
 
         {/* Wizard Form Right Column */}
         <div className="w-full lg:w-7/12 relative z-20 flex flex-col">
-          <OfferWizardLayout currentStep={currentStep} />
+          <FormProvider {...methods}>
+            <OfferWizardLayout currentStep={currentStep} />
+          </FormProvider>
         </div>
       </div>
     </main>
