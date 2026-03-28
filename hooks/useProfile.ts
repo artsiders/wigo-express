@@ -22,6 +22,8 @@ export interface UserProfile {
   bio: string | null;
   isDriver: boolean;
   idVerified: boolean;
+  rating: number;
+  totalRides: number;
   license: License | null;
   kycVerifications: KycVerification[];
   vehicles?: {

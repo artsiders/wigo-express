@@ -2,8 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { LuCamera, LuLoaderCircle, LuUpload } from "react-icons/lu";
-import axios from "axios";
+import { LuCamera, LuUpload } from "react-icons/lu";
 
 interface ProfileImageUploadProps {
   currentImage?: string | null;

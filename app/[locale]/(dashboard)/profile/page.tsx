@@ -96,68 +96,47 @@ export default function ProfilePage() {
               </div>
 
               <h2 className="mt-6 text-2xl font-black">{profile.name}</h2>
-              {profile.idVerified ? (
-                <div className="flex items-center gap-2 mt-2 py-1 px-4 bg-green-400/30 rounded-full text-green-400 text-sm font-bold">
-                  <IoShieldCheckmarkOutline />
-                  Profil Vérifié
-                </div>
-              ) : (
-                <div className="flex items-center gap-2 mt-2 py-1 px-4 bg-zinc-300/30 rounded-full text-zinc-500 text-sm font-bold">
-                  <IoShieldCheckmarkOutline />
-                  Profil non vérifié
-                </div>
-              )}
 
-              <div className="grid grid-cols-2 gap-4 w-full mt-10">
-                <div className="bg-neutral-800/50 p-4 rounded-xl border border-neutral-700/50">
-                  <p className="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">
+              <div className="flex flex-wrap items-center justify-center gap-2 mt-3">
+                {profile.idVerified && (
+                  <div className="flex items-center gap-1.5 py-1 px-3 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-[9px] font-black uppercase tracking-wider">
+                    <LuShieldCheck size={12} />
+                    Identité
+                  </div>
+                )}
+                {profile.isDriver && (
+                  <div className="flex items-center gap-1.5 py-1 px-3 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-[9px] font-black uppercase tracking-wider">
+                    <LuCar size={12} />
+                    Conducteur·rice
+                  </div>
+                )}
+                {!profile.idVerified && !profile.isDriver && (
+                  <div className="flex items-center gap-1.5 py-1 px-3 bg-neutral-700/50 border border-neutral-600 rounded-full text-neutral-400 text-[9px] font-black uppercase tracking-wider">
+                    Profil en attente
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 w-full mt-8">
+                <div className="bg-neutral-800/50 p-4 rounded-xl border border-neutral-700/50 hover:bg-neutral-800 transition-colors cursor-default group/stat">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-black mb-1 group-hover/stat:text-white transition-colors">
                     Trajets
                   </p>
-                  <p className="text-xl font-black">6</p>
+                  <p className="text-xl font-black">
+                    {profile.totalRides || 0}
+                  </p>
                 </div>
-                <div className="bg-neutral-800/50 p-4 rounded-xl border border-neutral-700/50">
-                  <p className="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">
+                <div className="bg-neutral-800/50 p-4 rounded-xl border border-neutral-700/50 hover:bg-neutral-800 transition-colors cursor-default group/stat">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-black mb-1 group-hover/stat:text-white transition-colors">
                     Note
                   </p>
-                  <p className="text-xl font-black">4.9/5</p>
+                  <p className="text-xl font-black">
+                    {profile.rating > 0 ? `${profile.rating}/5` : "--"}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Verification Status */}
-          <section className="bg-white border border-zinc-200 rounded-xl p-5">
-            <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-4">
-              Vérifications
-            </h3>
-            <div className="space-y-3">
-              <div
-                className={`flex items-center gap-3 p-3 rounded-md border ${profile.idVerified ? "bg-emerald-50/50 border-emerald-100" : "bg-zinc-50 border-zinc-100"}`}
-              >
-                <LuShieldCheck
-                  className={
-                    profile.idVerified ? "text-emerald-600" : "text-zinc-400"
-                  }
-                  size={20}
-                />
-                <span
-                  className={`text-sm font-medium ${profile.idVerified ? "text-emerald-900" : "text-zinc-500"}`}
-                >
-                  {profile.idVerified
-                    ? "Identité confirmée"
-                    : "Identité non vérifiée"}
-                </span>
-              </div>
-              {profile.isDriver && (
-                <div className="flex items-center gap-3 p-3 rounded-md border bg-blue-50/50 border-blue-100">
-                  <LuCar className="text-primary" size={20} />
-                  <span className="text-sm font-medium text-blue-900">
-                    Conducteur certifié
-                  </span>
-                </div>
-              )}
-            </div>
-          </section>
         </aside>
 
         {/* Main Content Area */}
