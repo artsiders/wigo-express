@@ -12,13 +12,19 @@ export interface BreadcrumbProps {
 
 export default function Breadcrumb({ items }: BreadcrumbProps) {
   return (
-    <nav aria-label="Breadcrumb" className="flex items-center text-sm font-medium text-neutral-400 mb-6 w-full overflow-x-auto whitespace-nowrap hide-scrollbar">
+    <nav
+      aria-label="Breadcrumb"
+      className="flex items-center text-sm font-medium text-neutral-400 mt-6 ml-4 w-full overflow-x-auto whitespace-nowrap hide-scrollbar"
+    >
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
         return (
           <div key={item.label} className="flex items-center">
             {item.href ? (
-              <Link href={item.href} className="hover:text-dark transition-colors">
+              <Link
+                href={item.href}
+                className="hover:text-dark transition-colors"
+              >
                 {item.label}
               </Link>
             ) : (
@@ -28,7 +34,10 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
             )}
 
             {!isLast && (
-              <IoChevronForward className="mx-2 text-neutral-300 shrink-0" size={14} />
+              <IoChevronForward
+                className="mx-2 text-neutral-300 shrink-0"
+                size={14}
+              />
             )}
           </div>
         );
