@@ -12,7 +12,7 @@ export default function SectionHeader({
   action,
 }: SectionHeaderProps) {
   return (
-    <header className="relative bg-white rounded-xl p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-neutral-200 overflow-hidden mb-8">
+    <header className="relative bg-white rounded-xl p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-neutral-200 overflow-hidden">
       {/* Subtle Glow Effect */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
 
