@@ -2,16 +2,16 @@ import React from "react";
 
 export default function ProfileSkeleton() {
   return (
-    <div className="flex flex-col gap-6 animate-pulse">
+    <div className="flex flex-col gap-6">
       {/* Breadcrumb Skeleton */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 animate-pulse">
         <div className="h-4 w-16 bg-neutral-200 rounded"></div>
         <div className="h-4 w-4 bg-neutral-100 rounded"></div>
         <div className="h-4 w-24 bg-neutral-200 rounded"></div>
       </div>
 
       {/* SectionHeader Skeleton */}
-      <div className="flex justify-between items-start mb-4">
+      <div className="flex justify-between items-start mb-4 animate-pulse">
         <div className="space-y-2">
           <div className="h-8 w-48 bg-neutral-200 rounded-lg"></div>
           <div className="h-4 w-96 bg-neutral-100 rounded"></div>
@@ -41,7 +41,7 @@ export default function ProfileSkeleton() {
             </div>
           </div>
 
-          <section className="bg-white border border-zinc-100 rounded-xl p-5 space-y-4">
+          <section className="bg-white border border-zinc-100 rounded-xl p-5 space-y-4 animate-pulse">
             <div className="h-3 w-24 bg-neutral-100 rounded uppercase tracking-widest"></div>
             <div className="space-y-3">
               <div className="h-12 w-full bg-neutral-50 border border-neutral-100 rounded-md"></div>
@@ -51,7 +51,7 @@ export default function ProfileSkeleton() {
         </aside>
 
         {/* Main Content Area Skeleton */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-8 animate-pulse">
           {/* Action Card Skeleton */}
           <div className="bg-neutral-100 rounded-2xl p-8 h-40"></div>
 
