@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import createMiddleware from 'next-intl/middleware';
@@ -13,7 +14,7 @@ import {
 const { auth } = NextAuth(authConfig);
 const intlMiddleware = createMiddleware(routing);
 
-export default auth((req) => {
+export const proxy = auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   
@@ -44,7 +45,7 @@ export default auth((req) => {
    * 3. FILTRES DE SÉCURITÉ IMMÉDIATS
    */
   const isApiRoute = pathname.startsWith(apiAuthPrefix) || pathname.startsWith('/api');
-  if (isApiRoute) return;
+  if (isApiRoute) return NextResponse.next();
 
   const isAuthRoute = authRoutes.includes(pathnameWithoutLocale);
   const isPrivateRoute = privateRoutes.some(route => 
