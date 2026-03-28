@@ -16,12 +16,18 @@ import {
   IoChevronForward,
 } from "react-icons/io5";
 
+// NextAuth pour vérifier la session utilisateur
+import { useSession } from "next-auth/react";
+
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
 export default function EcoPage() {
   const container = useRef<HTMLDivElement>(null);
+
+  // Vérifier si un utilisateur est connecté
+  const { data: session } = useSession();
 
   useEffect(() => {
     const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
@@ -72,7 +78,6 @@ export default function EcoPage() {
       {/* HERO SECTION */}
       <section className="relative w-full pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-40 bg-[url('/images/bg-texture.png')] mix-blend-overlay"></div>
-        <div className="absolute top-[-30%] right-[-10%] w-[70%] h-[90%] bg-green-500/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
 
         <div className="container mx-auto max-w-5xl relative z-10 text-center">
           <div className="inline-flex items-center gap-2 text-green-700 font-bold text-xs uppercase tracking-widest rounded-full mb-6 hero-elem">
@@ -93,7 +98,7 @@ export default function EcoPage() {
       </section>
 
       {/* CARDS SECTION */}
-      <section className="relative w-full z-20 pb-32 px-6">
+      <section className="relative w-full z-20 py-22 px-6">
         <div className="container mx-auto max-w-7xl">
           <div className="grid md:grid-cols-3 gap-8">
             {/* Card 1 */}
@@ -152,9 +157,11 @@ export default function EcoPage() {
               <span className="text-emerald-700">changement.</span>
             </h2>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Link href="/register" className="btn-secondary">
-                S'inscrire maintenant <IoChevronForward />
-              </Link>
+              {!session && (
+                <Link href="/register" className="btn-secondary">
+                  S'inscrire maintenant <IoChevronForward />
+                </Link>
+              )}
               <Link href="/search?searchOpen=true" className="btn-outlined">
                 Trouver un trajet
               </Link>

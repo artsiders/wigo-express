@@ -130,7 +130,7 @@ export default function ProfilePage() {
                     <p className="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">
                       Trajets
                     </p>
-                    <p className="text-xl font-black">48</p>
+                    <p className="text-xl font-black">6</p>
                   </div>
                   <div className="bg-neutral-800/50 p-4 rounded-xl border border-neutral-700/50">
                     <p className="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">
