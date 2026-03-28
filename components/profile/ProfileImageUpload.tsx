@@ -19,7 +19,7 @@ export default function ProfileImageUpload({
 
   // Synchroniser l'aperçu si l'image actuelle change (ex: après le chargement du profil)
   useEffect(() => {
-    if (currentImage) {
+    if (currentImage && currentImage !== "new-file-pending") {
       setPreview(currentImage);
     }
   }, [currentImage]);
