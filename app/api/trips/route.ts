@@ -30,7 +30,7 @@ export async function GET(request: Request) {
             image: true,
             rating: true,
             reviewsCount: true,
-            isVerified: true,
+            idVerified: true,
           },
         },
         vehicle: true,

@@ -21,7 +21,7 @@ export async function GET(
             image: true,
             rating: true,
             reviewsCount: true,
-            isVerified: true,
+            idVerified: true,
             bio: true,
             createdAt: true, // memberSince
             totalRides: true,

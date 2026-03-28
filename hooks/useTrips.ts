@@ -28,7 +28,7 @@ export interface TripProvider {
     image: string | null;
     rating: number;
     reviewsCount: number;
-    isVerified: boolean;
+    idVerified: boolean;
     bio?: string | null;
     createdAt?: string;
     totalRides?: number;

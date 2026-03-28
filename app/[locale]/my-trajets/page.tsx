@@ -34,7 +34,7 @@ const mapToRideData = (trip: TripProvider): RideData => {
       photo: trip.driver.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200", 
       rating: trip.driver.rating || 5.0,
       reviewsCount: trip.driver.reviewsCount || 0,
-      isVerified: trip.driver.isVerified || false,
+      isVerified: trip.driver.idVerified || false,
     },
     departure: {
       city: trip.departureCity,
