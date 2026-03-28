@@ -146,7 +146,7 @@ export default function Navbar() {
             <div className="hidden lg:flex gap-2 xl:gap-3 items-center text-sm font-bold text-dark-800">
               <Link
                 href="/search?searchOpen=true"
-                className={`font-bold transition-all px-4 py-2 rounded-md border ${
+                className={`font-bold transition-all px-4 py-2 rounded-lg border ${
                   pathname.includes("/search")
                     ? "border-primary/50 bg-primary/10 text-primary"
                     : "text-dark border-neutral-200 hover:border-primary/50 hover:bg-primary/5 bg-white/50 hover:text-primary"
@@ -162,7 +162,7 @@ export default function Navbar() {
                       ? "#"
                       : "/become-driver?mode=become-driver"
                 }
-                className={`font-bold transition-all px-4 py-2 rounded-md border flex items-center gap-2 group ${
+                className={`font-bold transition-all px-4 py-2 rounded-lg border flex items-center gap-2 group ${
                   pathname.includes("/offer") ||
                   pathname.includes("/become-driver")
                     ? "border-primary/50 bg-primary/10 text-primary"
@@ -183,7 +183,7 @@ export default function Navbar() {
             >
               <button
                 onClick={() => setHowItWorksOpen(!howItWorksOpen)}
-                className={`flex items-center gap-1.5 font-bold transition-all px-4 py-2 rounded-md border ${
+                className={`flex items-center gap-1.5 font-bold transition-all px-4 py-2 rounded-lg border ${
                   pathname.includes("/conducteurs") ||
                   pathname.includes("/passagers") ||
                   pathname.includes("/securite") ||
@@ -291,7 +291,7 @@ export default function Navbar() {
               <button
                 onClick={() => setLangOpen(!langOpen)}
                 disabled={isPending}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-md border border-gray-300 hover:border-primary/50 hover:bg-primary/5 text-dark text-xs font-bold uppercase transition-all disabled:opacity-50 bg-white/50"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-neutral-200 hover:border-primary/50 hover:bg-primary/5 text-dark text-xs font-bold uppercase transition-all disabled:opacity-50 bg-white/50"
               >
                 <IoGlobeOutline size={18} className="text-primary" />
                 <span>{locale}</span>
@@ -379,7 +379,7 @@ export default function Navbar() {
               <div className="hidden lg:flex items-center gap-3 pr-1.5">
                 <Link
                   href="/login"
-                  className="text-dark font-bold text-sm px-4 py-2 rounded-md border border-neutral-200 hover:border-primary/50 hover:bg-primary/5 transition-all"
+                  className="text-dark font-bold text-sm px-4 py-2 rounded-lg border border-neutral-200 hover:border-primary/50 hover:bg-primary/5 transition-all"
                 >
                   {tCommon("login")}
                 </Link>
