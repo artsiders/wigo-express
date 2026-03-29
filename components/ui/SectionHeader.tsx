@@ -14,7 +14,7 @@ export default function SectionHeader({
   bgImageUrl = "/images/hero-image.webp",
 }: SectionHeaderProps) {
   return (
-    <header className="relative bg-white rounded-xl p-4 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-1 shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-neutral-200 overflow-hidden">
+    <header className="relative bg-white rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-1 shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-neutral-200 overflow-hidden">
       {/* Background Image + Overlay */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <img
@@ -30,7 +30,7 @@ export default function SectionHeader({
       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
 
       <div className="relative z-10 flex-1">
-        <h1 className="text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+        <h1 className="text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
           {title}
         </h1>
         {description && (
