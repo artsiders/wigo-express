@@ -125,7 +125,7 @@ export default function Navbar() {
     <>
       <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[96%] container mx-auto px-2 md:px-4 z-100 flex items-center pointer-events-none">
         {/* UNIFIED NAVBAR */}
-        <div className="pointer-events-auto relative w-full z-10 px-3  h-20 flex items-center justify-between bg-white rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
+        <div className="pointer-events-auto relative w-full z-10 px-3 h-20 flex items-center justify-between bg-white rounded-xl md:rounded-2xl border border-black/5 shadow-xl transition-all">
           {/* LEFT SECTION (Logo + Nav) */}
           <div className="flex items-center gap-6 lg:gap-8 h-full">
             {/* LOGO */}
@@ -321,7 +321,7 @@ export default function Navbar() {
               <div className="relative hidden lg:block" ref={userMenuRef}>
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 py-1.5 pl-2 pr-3 border border-neutral-200 rounded-lg hover:border-primary/50 hover:bg-primary/20 font-semibold text-sm transition-all"
+                  className="flex items-center gap-2 py-1.5 pl-2 pr-3 border border-neutral-200 rounded-xl hover:border-primary/50 hover:bg-primary/20 font-semibold text-sm transition-all"
                 >
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-primary text-white flex items-center justify-center overflow-hidden shadow-sm">
                     {session.user.image ? (
