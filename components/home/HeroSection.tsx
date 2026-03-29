@@ -63,14 +63,14 @@ export default function HeroSection() {
               src={heroBanner}
               alt="Hero Background"
               fill
-              className="object-cover object-center rounded-2xl md:rounded-3xl"
+              className="object-cover object-center rounded-2xl md:rounded-3xl squircle"
               placeholder="blur"
               priority
             />
           </div>
 
           {/* Dark gradient overlay for readability */}
-          <div className="absolute inset-0 rounded-2xl md:rounded-3xl bg-linear-to-r from-primary-800/95 via-primary-800/60 to-primary/20 z-0 pointer-events-none"></div>
+          <div className="absolute inset-0 rounded-2xl md:rounded-3xl squircle bg-linear-to-r from-primary-800/95 via-primary-800/60 to-primary/20 z-0 pointer-events-none"></div>
         </div>
 
         {/* Content Container */}

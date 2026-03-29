@@ -109,22 +109,22 @@ export default function ConducteursPage() {
               <div className="absolute inset-0 bg-primary/5 rounded-3xl transform rotate-3 scale-105" />
               <div className="relative w-full h-full min-h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
                 <Image
-                  src="/images/close-up-group-friends-traveling-car-concept-speed.webp"
+                  src="/images/coducteur-page.webp"
                   alt="Conducteur·rice au volant"
                   fill
                   className="object-cover"
                 />
               </div>
               {/* Floating element */}
-              <div className="absolute -bottom-6 -left-6 bg-white p-5 rounded-xl shadow-xl flex items-center gap-4">
+              <div className="absolute -bottom-6 -left-6 bg-white p-3 rounded-xl shadow-xl flex items-center gap-4">
                 <div className="w-12 h-12 bg-blue-100 text-primary rounded-full flex items-center justify-center">
-                  <IoCashOutline size={24} />
+                  <IoCashOutline size={22} />
                 </div>
                 <div>
-                  <p className="text-sm text-neutral-500 font-bold uppercase">
+                  <p className="text-sm text-neutral-500 font-semibold">
                     Potentiel de revenus
                   </p>
-                  <p className="text-xl font-black text-dark">
+                  <p className="text-lg font-bold text-dark">
                     Jusqu'à 850&nbsp;$ / mois
                   </p>
                   <p className="text-xs text-neutral-400 mt-1">
