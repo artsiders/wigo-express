@@ -10,14 +10,16 @@ import { LuSparkles, LuSearch } from "react-icons/lu";
 interface RideSuggestionsProps {
   depart: string;
   arrivee: string;
+  date?: string;
 }
 
 export default function RideSuggestions({
   depart,
   arrivee,
+  date,
 }: RideSuggestionsProps) {
   const { data: suggestions, isLoading } = useTripSuggestions(
-    { depart, arrivee },
+    { depart, arrivee, date },
     true,
   );
 

@@ -117,12 +117,15 @@ export const useTripSuggestions = (filters: SearchTripsFilters, enabled: boolean
   return useQuery({
     queryKey: ['trip-suggestions', filters],
     queryFn: async (): Promise<TripProvider[]> => {
-      const { depart, arrivee } = filters;
+      const { depart, arrivee, date } = filters;
       const params = new URLSearchParams();
       if (depart) params.append('depart', depart);
       if (arrivee) params.append('arrivee', arrivee);
-      
-      const response = await axios.get(`/api/trips/suggestions?${params.toString()}`);
+      if (date) params.append('date', date);
+
+      const response = await axios.get(
+        `/api/trips/suggestions?${params.toString()}`,
+      );
       return response.data;
     },
     enabled: enabled, // Let's simplify and control enablement from the component

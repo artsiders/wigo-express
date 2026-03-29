@@ -477,7 +477,11 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
                 />
 
                 {/* Suggestions embedded below the empty state message */}
-                <RideSuggestions depart={depart} arrivee={arrivee} />
+                <RideSuggestions
+                  depart={depart}
+                  arrivee={arrivee}
+                  date={dateStr}
+                />
               </div>
             )}
             {isError && (

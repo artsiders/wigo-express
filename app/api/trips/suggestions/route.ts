@@ -6,6 +6,15 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const depart = searchParams.get("depart");
     const arrivee = searchParams.get("arrivee");
+    const dateQuery = searchParams.get("date");
+
+    const cleanLocation = (loc: string | null) => {
+      if (!loc) return undefined;
+      return loc.split(",")[0].trim();
+    };
+
+    const searchDepart = cleanLocation(depart);
+    const searchArrivee = cleanLocation(arrivee);
 
     let whereClause: any = {
       status: "SCHEDULED",
@@ -14,12 +23,22 @@ export async function GET(request: Request) {
 
     const orConditions: any[] = [];
 
-    if (depart) {
-      orConditions.push({ departureCity: { contains: depart, mode: "insensitive" } });
+    if (searchDepart && searchArrivee) {
+      // Priorité haute : même trajet, autre date
+      orConditions.push({
+        AND: [
+          { departureCity: { contains: searchDepart, mode: "insensitive" } },
+          { arrivalCity: { contains: searchArrivee, mode: "insensitive" } },
+        ],
+      });
     }
 
-    if (arrivee) {
-      orConditions.push({ arrivalCity: { contains: arrivee, mode: "insensitive" } });
+    if (searchDepart) {
+      orConditions.push({ departureCity: { contains: searchDepart, mode: "insensitive" } });
+    }
+
+    if (searchArrivee) {
+      orConditions.push({ arrivalCity: { contains: searchArrivee, mode: "insensitive" } });
     }
 
     if (orConditions.length > 0) {

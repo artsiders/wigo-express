@@ -8,19 +8,40 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const depart = searchParams.get("depart");
     const arrivee = searchParams.get("arrivee");
-    // const date = searchParams.get("date"); // for future MVP enhancements
+    const dateQuery = searchParams.get("date");
+
+    const cleanLocation = (loc: string | null) => {
+      if (!loc) return undefined;
+      // Prend le premier segment (ex: "Montréal" de "Montréal, QC, Canada")
+      return loc.split(",")[0].trim();
+    };
+
+    const searchDepart = cleanLocation(depart);
+    const searchArrivee = cleanLocation(arrivee);
 
     let whereClause: any = {
       status: "SCHEDULED",
-      availableSeats: { gt: 0 }
+      availableSeats: { gt: 0 },
     };
 
-    if (depart) {
-      whereClause.departureCity = { contains: depart, mode: "insensitive" };
+    if (searchDepart) {
+      whereClause.departureCity = { contains: searchDepart, mode: "insensitive" };
     }
-    
-    if (arrivee) {
-      whereClause.arrivalCity = { contains: arrivee, mode: "insensitive" };
+
+    if (searchArrivee) {
+      whereClause.arrivalCity = { contains: searchArrivee, mode: "insensitive" };
+    }
+
+    if (dateQuery) {
+      const startOfDay = new Date(dateQuery);
+      startOfDay.setUTCHours(0, 0, 0, 0);
+      const endOfDay = new Date(dateQuery);
+      endOfDay.setUTCHours(23, 59, 59, 999);
+
+      whereClause.departureDate = {
+        gte: startOfDay,
+        lte: endOfDay,
+      };
     }
 
     const trips = await prisma.trip.findMany({
