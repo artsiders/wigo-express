@@ -443,8 +443,9 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
               )}
             </p>
 
+            {/* Empty state alert */}
             {!hasResults && !isLoading && !isError && (
-              <div className="mt-12">
+              <div className="mt-8 mb-4">
                 <Alert
                   type={fetchTrips?.length ? "info" : "warning"}
                   title={
@@ -475,13 +476,6 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
                   }
                   className="w-full"
                 />
-
-                {/* Suggestions embedded below the empty state message */}
-                <RideSuggestions
-                  depart={depart}
-                  arrivee={arrivee}
-                  date={dateStr}
-                />
               </div>
             )}
             {isError && (
@@ -510,12 +504,9 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
               ))}
           </div>
 
-          {!isLoading && hasResults && (
-            <div className="mt-14 text-center">
-              <button className="px-10 py-4 bg-white border-2 border-neutral-100 rounded-full shadow-sm text-sm font-bold text-dark hover:border-primary hover:text-primary transition-colors">
-                Charger plus de trajets
-              </button>
-            </div>
+          {/* Always show suggestions at the bottom for better discovery */}
+          {!isLoading && (
+            <RideSuggestions depart={depart} arrivee={arrivee} date={dateStr} />
           )}
         </div>
       </main>
