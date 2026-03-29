@@ -134,7 +134,7 @@ export default function Navbar() {
               className="shrink-0 transition-transform flex items-center"
             >
               <Image
-                src="/images/logo.png"
+                src="/images/logo.webp"
                 alt="Logo"
                 width={140}
                 height={50}

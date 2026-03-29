@@ -8,6 +8,9 @@ import Alert from "../ui/Alert";
 import { useSearchTrips } from "@/hooks/useTrips";
 import { mapToRideData } from "@/lib/ride-mapper";
 import RideCardSkeleton from "@/components/ui/RideCardSkeleton";
+import RideSuggestions from "@/components/search/RideSuggestions";
+import { Link } from "@/i18n/routing";
+import { LuCar } from "react-icons/lu";
 
 type SearchPageContentProps = {
   params: {
@@ -143,17 +146,17 @@ function FiltersContent({ filters, onChange }: FiltersContentProps) {
             {minP} - {maxP} $ CAD
           </span>
         </div>
-        
+
         <div className="relative h-1 mb-8 bg-neutral-800 rounded-full flex items-center">
           {/* Track highlighted between thumbs */}
-          <div 
+          <div
             className="absolute h-full bg-primary rounded-full"
-            style={{ 
-              left: `${(minP / 500) * 100}%`, 
-              right: `${100 - (maxP / 500) * 100}%` 
+            style={{
+              left: `${(minP / 500) * 100}%`,
+              right: `${100 - (maxP / 500) * 100}%`,
             }}
           ></div>
-          
+
           <input
             type="range"
             min="0"
@@ -170,7 +173,7 @@ function FiltersContent({ filters, onChange }: FiltersContentProps) {
             onChange={handleMaxPriceChange}
             className="absolute w-full h-1 bg-transparent appearance-none pointer-events-none cursor-pointer z-20 slider-thumb-only"
           />
-          
+
           <style jsx>{`
             .slider-thumb-only {
               top: 50%;
@@ -203,10 +206,14 @@ function FiltersContent({ filters, onChange }: FiltersContentProps) {
             }
           `}</style>
         </div>
-        
+
         <div className="flex justify-between mt-2">
-          <span className="text-[10px] font-bold text-neutral-600">0 $ CAD</span>
-          <span className="text-[10px] font-bold text-neutral-600">500 $ CAD</span>
+          <span className="text-[10px] font-bold text-neutral-600">
+            0 $ CAD
+          </span>
+          <span className="text-[10px] font-bold text-neutral-600">
+            500 $ CAD
+          </span>
         </div>
       </div>
 
@@ -437,21 +444,40 @@ export default function SearchPageContent({ params }: SearchPageContentProps) {
             </p>
 
             {!hasResults && !isLoading && !isError && (
-              <div className="mt-8">
+              <div className="mt-12">
                 <Alert
-                  type="warning"
+                  type={fetchTrips?.length ? "info" : "warning"}
                   title={
                     fetchTrips?.length
                       ? "Aucun trajet ne correspond à vos filtres"
                       : "Aucun trajet trouvé"
                   }
                   description={
-                    fetchTrips?.length
-                      ? "Essayez de modifier vos critères de filtrage."
-                      : "Explorez d'autres dates ou d'autres villes de départ."
+                    <div>
+                      <div>
+                        {fetchTrips?.length
+                          ? "Nous n'avons trouvé aucun trajet correspondant à vos filtres. Essayez de les assouplir pour voir plus d'options."
+                          : "Aucun trajet n'est planifié pour cette route le jour sélectionné. Soyez le premier à proposer ce voyage ou consultez nos suggestions."}
+                      </div>
+                      <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <Link href="/offer" className="btn-dark py-2 px-4">
+                          <LuCar size={20} />
+                          Proposer ce trajet
+                        </Link>
+                        <button
+                          onClick={() => setFilters(DEFAULT_FILTERS)}
+                          className="btn-white py-2 px-4"
+                        >
+                          Réinitialiser les filtres
+                        </button>
+                      </div>
+                    </div>
                   }
                   className="w-full"
                 />
+
+                {/* Suggestions embedded below the empty state message */}
+                <RideSuggestions depart={depart} arrivee={arrivee} />
               </div>
             )}
             {isError && (
