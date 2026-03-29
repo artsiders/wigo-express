@@ -12,10 +12,13 @@ interface RideSuggestionsProps {
   arrivee: string;
 }
 
-export default function RideSuggestions({ depart, arrivee }: RideSuggestionsProps) {
+export default function RideSuggestions({
+  depart,
+  arrivee,
+}: RideSuggestionsProps) {
   const { data: suggestions, isLoading } = useTripSuggestions(
     { depart, arrivee },
-    true
+    true,
   );
 
   const displaySuggestions = suggestions?.map(mapToRideData) || [];
@@ -30,8 +33,9 @@ export default function RideSuggestions({ depart, arrivee }: RideSuggestionsProp
           Aucun trajet même approximatif
         </h3>
         <p className="text-neutral-500 font-medium text-sm max-w-sm mx-auto leading-relaxed">
-          Nous n'avons trouvé aucun trajet correspondant à vos critères, même en élargissant la recherche. 
-          Revenez plus tard ou proposez vous-même ce trajet !
+          Nous n'avons trouvé aucun trajet correspondant à vos critères, même en
+          élargissant la recherche. Revenez plus tard ou proposez vous-même ce
+          trajet !
         </p>
       </div>
     );

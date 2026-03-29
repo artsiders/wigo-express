@@ -21,11 +21,13 @@ export interface RideData {
   departure: {
     city: string;
     time: string;
+    date: string;
     place: string;
   };
   arrival: {
     city: string;
     time: string;
+    date: string;
     place: string;
   };
   price: number;
@@ -51,19 +53,27 @@ export default function RideCard({ ride }: RideCardProps) {
       <div className="flex flex-col md:flex-row gap-6 relative z-10">
         {/* Left Side: Times & Route */}
         <div className="flex-1 flex gap-6">
-          {/* Timeline UI */}
-          <div className="flex flex-col items-center justify-between py-1 relative w-6">
-            <span className="text-sm font-black text-dark">
-              {ride.departure.time}
-            </span>
+          <div className="flex flex-col items-center justify-between py-1 relative w-14 shrink-0">
+            <div className="flex flex-col items-center">
+              <span className="text-xs font-bold text-primary uppercase mb-1">
+                {ride.departure.date}
+              </span>
+              <span className="text-sm font-black text-dark">
+                {ride.departure.time}
+              </span>
+            </div>
+            
             <div className="flex-1 w-0.5 bg-neutral-200 my-2 relative">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs text-neutral-500 font-bold bg-white py-1">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-neutral-400 font-bold bg-white px-1 py-0.5 border border-neutral-100 rounded-md">
                 {ride.duration}
               </div>
             </div>
-            <span className="text-sm font-black text-dark">
-              {ride.arrival.time}
-            </span>
+
+            <div className="flex flex-col items-center">
+              <span className="text-sm font-black text-dark">
+                {ride.arrival.time}
+              </span>
+            </div>
           </div>
 
           {/* Locations UI */}

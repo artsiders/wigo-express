@@ -10,6 +10,15 @@ export const formatTime = (dateString: string) => {
   }
 };
 
+export const formatDate = (dateString: string) => {
+  try {
+    const d = new Date(dateString);
+    return d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+  } catch (e) {
+    return dateString;
+  }
+};
+
 export const mapToRideData = (trip: TripProvider): RideData => {
   const features: ("instant_booking" | "max_2_back" | "pets_allowed")[] = [];
   if (trip.instantBooking) features.push("instant_booking");
@@ -28,11 +37,13 @@ export const mapToRideData = (trip: TripProvider): RideData => {
     departure: {
       city: trip.departureCity,
       time: formatTime(trip.departureDate),
+      date: formatDate(trip.departureDate),
       place: trip.departurePlace || "Lieu non spécifié",
     },
     arrival: {
       city: trip.arrivalCity,
-      time: "--:--", 
+      time: "--:--",
+      date: formatDate(trip.departureDate),
       place: trip.arrivalPlace || "Lieu non spécifié",
     },
     price: trip.price,
