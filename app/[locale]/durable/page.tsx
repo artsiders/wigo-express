@@ -77,11 +77,11 @@ export default function EcoPage() {
       <section className="relative w-full pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-40 bg-[url('/images/bg-texture.png')] mix-blend-overlay"></div>
 
-        <div className="container mx-auto max-w-5xl relative z-10 text-center">
+        <div className="container mx-auto max-w-3xl relative z-10 text-center">
           <div className="inline-flex items-center gap-2 text-green-700 font-bold text-xs uppercase tracking-widest rounded-full mb-6 hero-elem">
             <IoLeafOutline className="text-lg" /> Notre impact
           </div>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 text-dark leading-tight hero-elem">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 text-dark leading-tight hero-elem">
             Un siège vide est une{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-600 to-emerald-800">
               opportunité manquée.

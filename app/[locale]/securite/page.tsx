@@ -73,14 +73,12 @@ export default function SecurityPage() {
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-dark-900 to-transparent z-0"></div>
 
         <div className="container mx-auto max-w-4xl relative z-10 text-center text-white">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 font-bold text-xs uppercase tracking-widest rounded-full mb-8 hero-elem shadow-sm">
-            <IoShieldCheckmarkOutline className="text-lg" /> Tolérance Zéro
+          <div className="inline-flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-widest mb-8 hero-elem">
+            <IoShieldCheckmarkOutline className="text-sm" /> Tolérance Zéro
           </div>
           <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 leading-tight hero-elem text-white">
             Votre sécurité n'est pas <br />
-            <span className="text-blue-400 drop-shadow-[0_0_20px_rgba(96,165,250,0.3)]">
-              une option.
-            </span>
+            <span className="text-primary">une option.</span>
           </h1>
           <p className="text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed font-medium hero-elem">
             Chaque identité est contrôlée. Chaque paiement est sécurisé. Chaque

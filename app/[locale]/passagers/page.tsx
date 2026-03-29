@@ -87,8 +87,8 @@ export default function PassagersPage() {
           <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[80%] bg-primary-100/50 rounded-full blur-[120px] pointer-events-none"></div>
         </div>
 
-        <div className="container mx-auto max-w-5xl relative z-10 text-center">
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 text-dark leading-tight hero-elem">
+        <div className="container mx-auto max-w-3xl relative z-10 text-center">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 text-dark leading-tight hero-elem">
             Votre prochain départ commence{" "}
             <span className="text-primary-gradient">ici.</span>
           </h1>
