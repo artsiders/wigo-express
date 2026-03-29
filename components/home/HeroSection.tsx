@@ -13,6 +13,8 @@ import {
 import RideSearchWidget from "../search/RideSearchWidget";
 import { Link } from "@/i18n/routing";
 
+import heroBanner from "@/public/images/hero-banner.webp";
+
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
@@ -58,10 +60,11 @@ export default function HeroSection() {
           {/* Background Image */}
           <div className="absolute inset-0 z-0" data-speed="0.15">
             <Image
-              src="/images/close-up-group-friends-traveling-car-concept-speed.webp"
+              src={heroBanner}
               alt="Hero Background"
               fill
               className="object-cover object-center rounded-2xl md:rounded-3xl"
+              placeholder="blur"
               priority
             />
           </div>
