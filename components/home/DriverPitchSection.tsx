@@ -21,23 +21,17 @@ export default function DriverPitchSection() {
 
   useGSAP(
     () => {
-      // Staggered Simple Reveals
-      gsap.utils.toArray(".reveal-fade").forEach((elem: any) => {
-        gsap.fromTo(
-          elem,
-          { opacity: 0, y: 60 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: elem,
-              start: "top 85%",
-              once: true,
-            },
-          },
-        );
+      gsap.from(".reveal-fade", {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top 80%",
+          once: true,
+        },
       });
     },
     { scope: container },
